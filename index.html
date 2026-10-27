@@ -1,427 +1,831 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth scroll-pt-20">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Afterquiet — Sound & Stillness</title>
-  <meta name="description" content="Afterquiet — Ruang digital eksplorasi audio, ambient, dan proyek kreatif oleh jiwajiwatulang.">
-  <meta name="theme-color" content="#09090b">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%237c3aed'/><text x='50%' y='68%' font-size='55' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>A</text></svg>">
-  
+  <title>afterquiet — wear what you can't always say</title>
+  <meta name="description" content="independent accessories for personal expression, restless thoughts, and everything in between. pins, stickers, and wearable objects.">
+  <meta name="theme-color" content="#171717">
+
   <!-- Open Graph -->
-  <meta property="og:title" content="Afterquiet — Sound & Stillness">
-  <meta property="og:description" content="Menemukan Bunyi di Balik Keheningan.">
+  <meta property="og:title" content="afterquiet — wear what you can't always say">
+  <meta property="og:description" content="independent accessories & visual culture. exploring identity, emotions, and personal expression.">
   <meta property="og:type" content="website">
+
+  <!-- Favicon: Clean Brutalist 'aq' -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='monospace' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
+
+  <!-- Web Fonts: Space Grotesk, Inter, IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             display: ['"Space Grotesk"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
           },
           colors: {
-            brand: {
-              50: '#f5f3ff',
-              400: '#a78bfa',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              900: '#1e1b4b',
-              950: '#09090b',
-            }
+            'after-dark': '#171717',
+            'archive-paper': '#F1EFE9',
+            'faded-grey': '#85827D',
+            'distorted-red': '#843B40',
+            'subtle-border': '#262626',
+            'card-bg': '#1C1C1C',
           }
         }
       }
     }
   </script>
+
   <style>
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.35; transform: scale(1); }
-      50% { opacity: 0.65; transform: scale(1.08); }
+    /* Grain overlay effect for editorial/photocopy texture */
+    .bg-grain {
+      background-image: radial-gradient(rgba(241, 239, 233, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
     }
-    .glow-bg {
-      animation: pulseGlow 8s ease-in-out infinite;
+    .badge-stamp {
+      border: 1px dashed #85827D;
+    }
+    /* Hide scrollbar for category pills on mobile */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 font-sans min-h-screen selection:bg-violet-600 selection:text-white flex flex-col justify-between overflow-x-hidden">
+<body class="bg-after-dark text-archive-paper font-sans antialiased min-h-screen selection:bg-distorted-red selection:text-archive-paper flex flex-col justify-between bg-grain">
 
-  <!-- Background decorative glows -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-violet-600/20 rounded-full blur-[128px] glow-bg"></div>
-    <div class="absolute top-1/2 -right-40 w-[420px] h-[420px] bg-indigo-600/15 rounded-full blur-[140px] glow-bg" style="animation-delay: -4s;"></div>
+  <!-- Top Announcement Bar -->
+  <div class="border-b border-subtle-border bg-after-dark/90 text-xs font-mono py-2 px-4 flex items-center justify-between text-faded-grey">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-1.5 h-1.5 bg-distorted-red rounded-full animate-pulse"></span>
+      <span>vol. 02 — fragile archives now live</span>
+    </div>
+    <div class="hidden sm:block">
+      <span>worldwide shipping • independent visual culture</span>
+    </div>
+    <div>
+      <span class="text-archive-paper/80">autumn 2026</span>
+    </div>
   </div>
 
-  <!-- Navbar -->
-  <header class="relative z-20 border-b border-zinc-800/60 backdrop-blur-md bg-zinc-950/70 sticky top-0">
-    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-3 group">
-        <span class="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-400 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-500/25 group-hover:scale-105 transition-transform">
-          A
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-after-dark/95 backdrop-blur-md border-b border-subtle-border">
+    <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">
+      
+      <!-- Logo Wordmark (all lowercase) -->
+      <a href="#" class="flex items-baseline gap-2 group">
+        <span class="font-display font-bold text-2xl tracking-tighter text-archive-paper group-hover:text-faded-grey transition-colors lowercase">
+          afterquiet
         </span>
-        <span class="font-display font-bold text-lg tracking-wider text-zinc-100 group-hover:text-violet-400 transition-colors">AFTERQUIET</span>
+        <span class="font-mono text-[10px] text-faded-grey border border-subtle-border px-1.5 py-0.5 rounded uppercase">
+          est. 2026
+        </span>
       </a>
 
-      <!-- Desktop Nav Links -->
-      <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-400 font-medium">
-        <a href="#about" class="hover:text-zinc-100 transition-colors">Tentang</a>
-        <a href="#tracks" class="hover:text-zinc-100 transition-colors">Karya & Soundscape</a>
-        <a href="#contact" class="hover:text-zinc-100 transition-colors">Kontak</a>
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-mono tracking-wider lowercase">
+        <a href="#shop" class="text-archive-paper hover:text-distorted-red transition-colors">shop [01]</a>
+        <a href="#collections" class="text-faded-grey hover:text-archive-paper transition-colors">collections [02]</a>
+        <a href="#about" class="text-faded-grey hover:text-archive-paper transition-colors">philosophy [03]</a>
+        <a href="#archive" class="text-faded-grey hover:text-archive-paper transition-colors">lookbook [04]</a>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <!-- Ambient Sound Generator Toggle Button -->
-        <button id="ambientBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium border border-violet-500/40 bg-violet-950/50 text-violet-300 hover:bg-violet-900/60 hover:border-violet-400 transition-all cursor-pointer shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-violet-400 animate-ping" id="soundDot" style="display:none;"></span>
-          <svg id="soundIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span id="soundText">Play Ambient</span>
+      <!-- Cart Button & Mobile Menu Toggle -->
+      <div class="flex items-center gap-4">
+        <!-- Bag Trigger -->
+        <button id="openCartBtn" class="flex items-center gap-2 px-3.5 py-1.5 border border-subtle-border bg-card-bg hover:border-faded-grey transition-all text-xs font-mono rounded cursor-pointer group">
+          <span class="text-faded-grey group-hover:text-archive-paper">bag</span>
+          <span id="cartCountBadge" class="bg-distorted-red text-archive-paper font-bold px-1.5 py-0.2 rounded-sm text-[11px]">0</span>
         </button>
 
-        <!-- Mobile Menu Toggle Button -->
-        <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/80 transition-colors" aria-label="Toggle navigation">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
+        <button id="mobileMenuBtn" class="md:hidden text-faded-grey hover:text-archive-paper p-1" aria-label="Toggle Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
+
     </div>
 
-    <!-- Mobile Dropdown Menu -->
-    <div id="mobileMenu" class="hidden md:hidden border-b border-zinc-800/80 bg-zinc-950/95 px-6 py-4 space-y-3">
-      <a href="#about" class="block text-sm text-zinc-300 hover:text-white py-1 transition-colors">Tentang</a>
-      <a href="#tracks" class="block text-sm text-zinc-300 hover:text-white py-1 transition-colors">Karya & Soundscape</a>
-      <a href="#contact" class="block text-sm text-zinc-300 hover:text-white py-1 transition-colors">Kontak</a>
+    <!-- Mobile Dropdown Nav -->
+    <div id="mobileMenu" class="hidden md:hidden border-b border-subtle-border bg-after-dark px-6 py-4 space-y-3 font-mono text-xs lowercase">
+      <a href="#shop" class="block py-1 text-archive-paper hover:text-distorted-red">shop [01]</a>
+      <a href="#collections" class="block py-1 text-faded-grey hover:text-archive-paper">collections [02]</a>
+      <a href="#about" class="block py-1 text-faded-grey hover:text-archive-paper">philosophy [03]</a>
+      <a href="#archive" class="block py-1 text-faded-grey hover:text-archive-paper">lookbook [04]</a>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <main class="relative z-10 flex-grow flex flex-col justify-center max-w-6xl mx-auto px-6 py-16 sm:py-24">
-    <div class="text-center max-w-3xl mx-auto space-y-6">
+  <section class="relative border-b border-subtle-border overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12 items-center">
       
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-zinc-700 bg-zinc-900/80 text-zinc-300 shadow-inner">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        Vercel Live Production
+      <!-- Hero Copy -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 font-mono text-xs text-distorted-red tracking-widest lowercase border border-distorted-red/30 px-3 py-1 rounded bg-distorted-red/10">
+          <span>// release 02.0</span>
+          <span>•</span>
+          <span>wear what you can't always say</span>
+        </div>
+
+        <h1 class="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-[1.08] text-archive-paper lowercase">
+          wear what you <br class="hidden sm:inline">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-archive-paper via-archive-paper to-faded-grey underline decoration-distorted-red decoration-4 underline-offset-8">
+            can't always say.
+          </span>
+        </h1>
+
+        <p class="font-sans text-faded-grey text-base sm:text-lg max-w-xl leading-relaxed">
+          independent accessories for personal expression, restless thoughts, and everything in between. graphic-led pins, stickers, and wearable statements.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-4 font-mono text-xs">
+          <a href="#shop" class="px-6 py-3.5 bg-archive-paper text-after-dark font-semibold hover:bg-white transition-all lowercase flex items-center gap-2">
+            explore the collection
+            <span>→</span>
+          </a>
+          <a href="#about" class="px-6 py-3.5 border border-subtle-border hover:border-faded-grey text-archive-paper transition-all lowercase">
+            about afterquiet
+          </a>
+        </div>
+
+        <!-- Archival Quote Strip -->
+        <div class="pt-8 border-t border-subtle-border/60 flex items-center gap-4 text-xs font-mono text-faded-grey italic">
+          <span class="text-distorted-red font-bold not-italic">"</span>
+          <span>some things are easier to wear than to explain.</span>
+        </div>
       </div>
 
-      <h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight text-white leading-tight">
-        Menemukan Bunyi di Balik <span class="bg-gradient-to-r from-violet-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Keheningan</span>.
-      </h1>
+      <!-- Hero Visual: Editorial Card -->
+      <div class="lg:col-span-5 relative">
+        <div class="border border-subtle-border bg-card-bg p-6 rounded relative shadow-2xl">
+          <div class="flex items-center justify-between border-b border-subtle-border pb-3 mb-6 text-xs font-mono text-faded-grey">
+            <span>specimen // aq-vol02</span>
+            <span>archival preview</span>
+          </div>
 
-      <p class="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto font-light">
-        Selamat datang di ruang digital <strong class="text-zinc-200">Afterquiet</strong>. Tempat di mana ide, atmosfer, dan nada berpadu dalam frekuensi yang tenang namun bertenaga.
-      </p>
+          <!-- Stylized Pin Graphic -->
+          <div class="aspect-square bg-after-dark border border-subtle-border rounded flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-tr from-distorted-red/15 to-transparent pointer-events-none"></div>
+            
+            <!-- Pin representation -->
+            <div class="w-32 h-32 rounded-full border-2 border-archive-paper/80 bg-after-dark flex flex-col items-center justify-center p-4 shadow-xl shadow-black/80 relative mb-4 group-hover:scale-105 transition-transform">
+              <span class="text-[9px] font-mono tracking-widest text-faded-grey mb-1">AFTERQUIET</span>
+              <span class="font-display font-bold text-xs text-archive-paper text-center leading-tight lowercase">
+                restless<br>mind.
+              </span>
+              <span class="text-[8px] font-mono text-distorted-red mt-1">VOL. 01</span>
+              <!-- Metal clasp back simulation dot -->
+              <div class="absolute -top-1 w-2 h-2 rounded-full bg-archive-paper"></div>
+            </div>
 
-      <!-- Wave Visualizer Canvas (High DPI crisp rendering) -->
-      <div class="pt-4 pb-2 flex justify-center w-full">
-        <canvas id="waveCanvas" class="w-full max-w-xl h-20 rounded-xl bg-zinc-900/60 border border-zinc-800/80 shadow-2xl backdrop-blur-sm"></canvas>
+            <p class="font-mono text-xs text-archive-paper mt-2 lowercase">restless mind enamel pin</p>
+            <p class="font-sans text-xs text-faded-grey mt-1">hard enamel • black nickel finish • 32mm</p>
+            <span class="mt-3 font-mono text-xs text-distorted-red font-semibold">Rp 55.000</span>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-subtle-border flex justify-between items-center text-[11px] font-mono text-faded-grey">
+            <span>edition of 100 pcs</span>
+            <span class="text-archive-paper underline cursor-pointer hover:text-distorted-red" onclick="addToCart(1)">+ quick add to bag</span>
+          </div>
+        </div>
       </div>
 
-      <div class="flex flex-wrap justify-center gap-4 pt-4">
-        <a href="#tracks" class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-600/30 hover:brightness-110 active:scale-95 transition-all">
-          Dengarkan Karya ↓
-        </a>
-        <a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener" class="px-6 py-3 rounded-lg font-medium text-sm border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:border-zinc-600 transition-all flex items-center gap-2">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          Repository GitHub
-        </a>
+    </div>
+  </section>
+
+  <!-- Store / Catalog Section -->
+  <section id="shop" class="max-w-7xl mx-auto px-6 py-20 w-full">
+    
+    <!-- Header & Category Filter Bar -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-subtle-border pb-6 gap-6">
+      <div>
+        <span class="font-mono text-xs text-distorted-red tracking-widest uppercase">// catalogue</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-archive-paper mt-1 lowercase">
+          available objects
+        </h2>
+        <p class="font-sans text-xs sm:text-sm text-faded-grey mt-1">
+          pins, stickers, and graphic merchandise. wearable thoughts.
+        </p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar font-mono text-xs">
+        <button onclick="filterCategory('all')" class="cat-btn active px-3.5 py-1.5 border border-archive-paper bg-archive-paper text-after-dark font-medium rounded-sm lowercase transition-all" data-category="all">
+          all [6]
+        </button>
+        <button onclick="filterCategory('pins')" class="cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all" data-category="pins">
+          pins
+        </button>
+        <button onclick="filterCategory('stickers')" class="cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all" data-category="stickers">
+          stickers
+        </button>
+        <button onclick="filterCategory('accessories')" class="cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all" data-category="accessories">
+          accessories
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-10">
+      <!-- Injected via JavaScript below -->
+    </div>
+
+  </section>
+
+  <!-- Collections Preview Banner -->
+  <section id="collections" class="border-y border-subtle-border bg-card-bg/40 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="font-mono text-xs text-faded-grey uppercase tracking-widest mb-4">// collection archive</div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Vol 01 -->
+        <div class="border border-subtle-border bg-after-dark p-8 relative group hover:border-faded-grey transition-all">
+          <div class="flex justify-between items-start font-mono text-xs text-faded-grey mb-4">
+            <span>archive // vol. 01</span>
+            <span class="text-archive-paper">spring 2026</span>
+          </div>
+          <h3 class="font-display font-bold text-2xl text-archive-paper lowercase group-hover:text-distorted-red transition-colors">
+            too soft for this world
+          </h3>
+          <p class="font-sans text-sm text-faded-grey mt-2 leading-relaxed">
+            a collection exploring vulnerability, sensitivity, emotional honesty, and the burden of feeling too deeply in a hurried society.
+          </p>
+          <div class="mt-6 flex items-center gap-3 font-mono text-xs text-archive-paper underline">
+            <span>view vol. 01 pieces</span>
+            <span>→</span>
+          </div>
+        </div>
+
+        <!-- Vol 02 -->
+        <div class="border border-distorted-red/40 bg-after-dark p-8 relative group hover:border-distorted-red transition-all">
+          <div class="flex justify-between items-start font-mono text-xs text-faded-grey mb-4">
+            <span class="text-distorted-red font-semibold">// current release — vol. 02</span>
+            <span class="text-archive-paper">autumn 2026</span>
+          </div>
+          <h3 class="font-display font-bold text-2xl text-archive-paper lowercase group-hover:text-distorted-red transition-colors">
+            fragile archives
+          </h3>
+          <p class="font-sans text-sm text-faded-grey mt-2 leading-relaxed">
+            centered on identity, memory, visual resistance, and the invisible things people carry internally. wearable artifacts of unrest.
+          </p>
+          <div class="mt-6 flex items-center gap-3 font-mono text-xs text-distorted-red underline">
+            <span>explore current drop</span>
+            <span>→</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Philosophy Section -->
+  <section id="about" class="max-w-7xl mx-auto px-6 py-24 w-full">
+    <div class="grid lg:grid-cols-12 gap-12 items-start">
+      
+      <div class="lg:col-span-5 space-y-6">
+        <span class="font-mono text-xs text-distorted-red tracking-widest uppercase">// brand philosophy</span>
+        <h2 class="font-display font-bold text-3xl sm:text-5xl tracking-tight text-archive-paper lowercase">
+          quiet, but not empty.
+        </h2>
+        <p class="font-sans text-faded-grey leading-relaxed text-sm sm:text-base">
+          afterquiet believes that an object can be more than an accessory. it can be a reminder, a personal statement, a memory, or a quiet form of resistance.
+        </p>
+        <p class="font-sans text-faded-grey leading-relaxed text-sm sm:text-base">
+          the brand embraces imperfection, individuality, emotional honesty, and the freedom to express yourself without needing everyone's approval.
+        </p>
+
+        <div class="p-4 border border-subtle-border bg-card-bg text-xs font-mono text-archive-paper space-y-1">
+          <div class="text-faded-grey">// manifesto excerpt</div>
+          <div class="italic">"afterquiet exists for people who don't always have the right words, but still have something to say."</div>
+        </div>
+      </div>
+
+      <!-- Core Values 01-05 Grid -->
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+        
+        <div class="p-6 border border-subtle-border bg-card-bg/60">
+          <span class="font-mono text-xs text-distorted-red font-semibold">01 — INDIVIDUALITY</span>
+          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">personal expression</h4>
+          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
+            expression should feel personal, not dictated by trends, expectations, or algorithms.
+          </p>
+        </div>
+
+        <div class="p-6 border border-subtle-border bg-card-bg/60">
+          <span class="font-mono text-xs text-distorted-red font-semibold">02 — EMOTIONAL HONESTY</span>
+          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">raw & unfiltered</h4>
+          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
+            feelings, contradictions, uncertainty, and vulnerability are all legitimate parts of being human.
+          </p>
+        </div>
+
+        <div class="p-6 border border-subtle-border bg-card-bg/60">
+          <span class="font-mono text-xs text-distorted-red font-semibold">03 — INDEPENDENCE</span>
+          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">own perspective</h4>
+          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
+            maintaining its own vision instead of following every popular hype cycle or aesthetic template.
+          </p>
+        </div>
+
+        <div class="p-6 border border-subtle-border bg-card-bg/60">
+          <span class="font-mono text-xs text-distorted-red font-semibold">04 — CREATIVE RESISTANCE</span>
+          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">uncomfortable truths</h4>
+          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
+            art and design can question social expectations, challenge familiar ideas, and say what's left unsaid.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Lookbook / Archival Visual Grid -->
+  <section id="archive" class="border-t border-subtle-border py-20 bg-after-dark">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <span class="font-mono text-xs text-faded-grey uppercase tracking-widest">// in the wild</span>
+          <h2 class="font-display font-bold text-3xl text-archive-paper lowercase mt-1">wearable expression</h2>
+        </div>
+        <p class="font-sans text-xs sm:text-sm text-faded-grey max-w-sm">
+          pins and stickers in real environments — jackets, tote bags, notebooks, and everyday gear.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
+          <div class="w-full h-full flex items-center justify-center">
+            <div class="w-20 h-20 rounded-full border border-faded-grey bg-after-dark flex items-center justify-center text-center p-2">
+              <span class="font-mono text-[9px] text-archive-paper lowercase">silence isn't peace.</span>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-faded-grey">denim jacket • lapel pin</span>
+        </div>
+
+        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
+          <div class="w-full h-full flex items-center justify-center">
+            <div class="w-28 h-14 border border-distorted-red bg-distorted-red/20 flex items-center justify-center text-center px-2">
+              <span class="font-mono text-[9px] text-archive-paper lowercase tracking-wider">too soft for this world</span>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-faded-grey">notebook • vinyl sticker</span>
+        </div>
+
+        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
+          <div class="w-full h-full flex items-center justify-center">
+            <div class="w-20 h-20 border border-archive-paper bg-after-dark flex items-center justify-center text-center p-2 rotate-6">
+              <span class="font-display font-bold text-xs text-archive-paper lowercase">after<br>quiet</span>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-faded-grey">canvas tote bag • pin badge</span>
+        </div>
+
+        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
+          <div class="w-full h-full flex items-center justify-center">
+            <div class="w-24 h-16 border border-subtle-border bg-after-dark flex flex-col items-center justify-center p-2">
+              <span class="font-mono text-[8px] text-faded-grey">VOL. 02 ARCHIVE</span>
+              <span class="font-mono text-[10px] text-distorted-red lowercase mt-1">restless mind</span>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-faded-grey">camera strap • metal badge</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide-Over Shopping Bag Drawer -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+    <!-- Backdrop -->
+    <div id="cartBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm pointer-events-auto"></div>
+
+    <!-- Drawer Panel -->
+    <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-after-dark border-l border-subtle-border p-6 shadow-2xl flex flex-col justify-between pointer-events-auto transform translate-x-full transition-transform duration-300 ease-in-out" id="cartPanel">
+      
+      <div>
+        <div class="flex items-center justify-between border-b border-subtle-border pb-4 mb-6">
+          <div class="flex items-center gap-2">
+            <span class="font-display font-bold text-xl text-archive-paper lowercase">your bag</span>
+            <span id="drawerCount" class="font-mono text-xs text-faded-grey">(0 items)</span>
+          </div>
+          <button id="closeCartBtn" class="text-faded-grey hover:text-archive-paper font-mono text-xs cursor-pointer p-1">
+            [close ✕]
+          </button>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cartItemsList" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+          <p class="font-mono text-xs text-faded-grey py-8 text-center">your bag is empty. find something that speaks for you.</p>
+        </div>
+      </div>
+
+      <!-- Checkout Footer -->
+      <div class="border-t border-subtle-border pt-4 space-y-4">
+        <div class="flex justify-between items-center font-mono text-xs">
+          <span class="text-faded-grey">subtotal</span>
+          <span id="cartSubtotal" class="text-archive-paper font-bold text-sm">Rp 0</span>
+        </div>
+        <p class="font-sans text-[11px] text-faded-grey">taxes & shipping calculated at checkout via WhatsApp direct order.</p>
+        
+        <button id="checkoutBtn" onclick="checkoutWhatsApp()" class="w-full py-3.5 bg-archive-paper text-after-dark font-mono text-xs font-bold hover:bg-white transition-all lowercase flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+          <span>proceed to order (whatsapp)</span>
+          <span>→</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Product Quick Detail Modal -->
+  <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none opacity-0 transition-opacity duration-200">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm pointer-events-auto" onclick="closeModal()"></div>
+    <div class="relative bg-after-dark border border-subtle-border w-full max-w-lg p-6 sm:p-8 rounded shadow-2xl pointer-events-auto z-10 space-y-6">
+      <div class="flex justify-between items-start">
+        <span id="modalCategory" class="font-mono text-xs text-distorted-red uppercase">VOL. 01 — ENAMEL PIN</span>
+        <button onclick="closeModal()" class="text-faded-grey hover:text-archive-paper font-mono text-xs p-1">[esc ✕]</button>
+      </div>
+
+      <div class="space-y-2">
+        <h3 id="modalTitle" class="font-display font-bold text-2xl sm:text-3xl text-archive-paper lowercase">product title</h3>
+        <p id="modalPrice" class="font-mono text-sm text-distorted-red font-semibold">Rp 0</p>
+      </div>
+
+      <p id="modalDesc" class="font-sans text-sm text-faded-grey leading-relaxed">product description</p>
+
+      <div class="border-y border-subtle-border py-3 grid grid-cols-2 gap-4 font-mono text-xs text-faded-grey">
+        <div>material: <span id="modalMaterial" class="text-archive-paper">hard enamel</span></div>
+        <div>dimensions: <span id="modalDimensions" class="text-archive-paper">32mm</span></div>
+      </div>
+
+      <div class="flex gap-4">
+        <button id="modalAddBtn" class="flex-1 py-3 bg-archive-paper text-after-dark font-mono text-xs font-bold hover:bg-white transition-all lowercase">
+          + add to bag
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-subtle-border bg-after-dark py-12 text-xs font-mono text-faded-grey">
+    <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      
+      <div class="space-y-3">
+        <span class="font-display font-bold text-lg text-archive-paper tracking-tighter lowercase">afterquiet</span>
+        <p class="font-sans text-xs text-faded-grey leading-relaxed">
+          independent accessories & visual culture. wearable thoughts and quiet resistance.
+        </p>
+        <p class="text-[11px] text-faded-grey">designed for people who don't always have the words.</p>
+      </div>
+
+      <div class="space-y-2">
+        <span class="text-archive-paper font-semibold">// navigation</span>
+        <ul class="space-y-1.5 lowercase">
+          <li><a href="#shop" class="hover:text-archive-paper transition-colors">shop all</a></li>
+          <li><a href="#collections" class="hover:text-archive-paper transition-colors">collections</a></li>
+          <li><a href="#about" class="hover:text-archive-paper transition-colors">brand philosophy</a></li>
+          <li><a href="#archive" class="hover:text-archive-paper transition-colors">lookbook</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-2">
+        <span class="text-archive-paper font-semibold">// customer care</span>
+        <ul class="space-y-1.5 lowercase">
+          <li><a href="#" class="hover:text-archive-paper transition-colors">shipping & rates</a></li>
+          <li><a href="#" class="hover:text-archive-paper transition-colors">care instructions</a></li>
+          <li><a href="#" class="hover:text-archive-paper transition-colors">return policy</a></li>
+          <li><a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener" class="hover:text-archive-paper transition-colors">github repository</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-2">
+        <span class="text-archive-paper font-semibold">// newsletter</span>
+        <p class="font-sans text-[11px] text-faded-grey">new pieces. same restless mind. no spam.</p>
+        <div class="flex gap-2">
+          <input type="email" placeholder="your@email.com" class="bg-card-bg border border-subtle-border px-3 py-1.5 text-xs text-archive-paper focus:outline-none focus:border-archive-paper w-full">
+          <button class="bg-archive-paper text-after-dark px-3 py-1.5 font-bold hover:bg-white text-xs">join</button>
+        </div>
       </div>
 
     </div>
 
-    <!-- About Section -->
-    <section id="about" class="mt-28 grid md:grid-cols-3 gap-6">
-      <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-violet-500/40 transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-violet-600/10 border border-violet-500/20 flex items-center justify-center text-violet-400 mb-4">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-        </div>
-        <h3 class="text-lg font-semibold text-white mb-2 font-display">Audio & Soundscape</h3>
-        <p class="text-sm text-zinc-400 leading-relaxed">Eksplorasi komposisi suara santai, ambient drone, lo-fi beats, serta lanskap audio sinematik.</p>
-      </div>
-
-      <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-violet-500/40 transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-        </div>
-        <h3 class="text-lg font-semibold text-white mb-2 font-display">Modern Web Code</h3>
-        <p class="text-sm text-zinc-400 leading-relaxed">Dibangun secara dinamis dan efisien dengan standar web modern dan performa optimal.</p>
-      </div>
-
-      <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-violet-500/40 transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <h3 class="text-lg font-semibold text-white mb-2 font-display">Instant Auto-Deploy</h3>
-        <p class="text-sm text-zinc-400 leading-relaxed">Terkoneksi langsung dengan Vercel, pembaruan kode otomatis tayang secara instan.</p>
-      </div>
-    </section>
-
-    <!-- Tracks & Soundscapes Section (Fixed missing section) -->
-    <section id="tracks" class="mt-28">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-        <div>
-          <span class="text-xs uppercase tracking-widest text-violet-400 font-semibold">Koleksi Suasana</span>
-          <h2 class="text-3xl font-display font-bold text-white mt-1">Soundscapes & Moods</h2>
-        </div>
-        <p class="text-sm text-zinc-400 max-w-sm">Dengarkan simulasi harmoni suara ambient real-time melalui synthesizer bawaan web.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Preset 1 -->
-        <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-violet-500/50 transition-all flex flex-col justify-between group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs px-2.5 py-1 rounded-md bg-violet-950/60 border border-violet-800/50 text-violet-300">Preset 01</span>
-              <span class="text-xs text-zinc-500">432 Hz Drone</span>
-            </div>
-            <h3 class="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">Midnight Stillness</h3>
-            <p class="text-sm text-zinc-400 mt-2">Frekuensi relaksasi malam hari yang menenangkan pikiran dan meredam kebisingan.</p>
-          </div>
-          <button data-preset-btn="midnight" onclick="playPreset('midnight')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-violet-600 hover:border-violet-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
-            Putar Suasana Ini
-          </button>
-        </div>
-
-        <!-- Preset 2 -->
-        <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-indigo-500/50 transition-all flex flex-col justify-between group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-950/60 border border-indigo-800/50 text-indigo-300">Preset 02</span>
-              <span class="text-xs text-zinc-500">Deep Space</span>
-            </div>
-            <h3 class="text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors">Cosmic Echoes</h3>
-            <p class="text-sm text-zinc-400 mt-2">Resonansi gelombang sinus berfrekuensi rendah dengan modulasi perlahan layaknya ruang hampa.</p>
-          </div>
-          <button data-preset-btn="cosmic" onclick="playPreset('cosmic')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-indigo-600 hover:border-indigo-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
-            Putar Suasana Ini
-          </button>
-        </div>
-
-        <!-- Preset 3 -->
-        <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-purple-500/50 transition-all flex flex-col justify-between group">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs px-2.5 py-1 rounded-md bg-purple-950/60 border border-purple-800/50 text-purple-300">Preset 03</span>
-              <span class="text-xs text-zinc-500">Warm Analog</span>
-            </div>
-            <h3 class="text-lg font-semibold text-white group-hover:text-purple-300 transition-colors">Dawn Twilight</h3>
-            <p class="text-sm text-zinc-400 mt-2">Nuansa hangat transisi subuh menuju pagi, harmoni akord minor yang damai.</p>
-          </div>
-          <button data-preset-btn="dawn" onclick="playPreset('dawn')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-purple-600 hover:border-purple-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
-            Putar Suasana Ini
-          </button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer id="contact" class="relative z-10 border-t border-zinc-800/60 bg-zinc-950/80 py-8">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-      <p>© 2026 Afterquiet by <a href="https://github.com/jiwajiwatulang" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white transition-colors">@jiwajiwatulang</a>. All rights reserved.</p>
-      <div class="flex items-center gap-6">
-        <a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener" class="hover:text-zinc-300 transition-colors">GitHub</a>
-        <a href="#about" class="hover:text-zinc-300 transition-colors">Tentang</a>
-        <a href="#tracks" class="hover:text-zinc-300 transition-colors">Karya</a>
-        <a href="#" class="hover:text-zinc-300 transition-colors">Kembali ke Atas ↑</a>
-      </div>
+    <div class="max-w-7xl mx-auto px-6 border-t border-subtle-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 afterquiet by <a href="https://github.com/jiwajiwatulang" target="_blank" rel="noopener" class="text-archive-paper hover:underline">@jiwajiwatulang</a>. all rights reserved.</p>
+      <p class="text-distorted-red">"wear what you can't always say."</p>
     </div>
   </footer>
 
-  <!-- Interactive Visualizer & Web Audio Synth Script -->
+  <!-- Application Logic (Catalog, Bag & Modals) -->
   <script>
+    // --- Products Catalog conforming to Afterquiet Brand Guidelines ---
+    const products = [
+      {
+        id: 1,
+        title: "restless mind enamel pin",
+        category: "pins",
+        collection: "vol. 01 — too soft for this world",
+        price: 55000,
+        formattedPrice: "Rp 55.000",
+        description: "a small physical anchor for an active, racing consciousness. hard enamel pin with black nickel plating and dual rubber clutches.",
+        material: "hard enamel / black nickel",
+        dimensions: "32mm diameter",
+        badge: "bestseller",
+        graphicText: "restless\nmind."
+      },
+      {
+        id: 2,
+        title: "silence isn't peace sticker pack",
+        category: "stickers",
+        collection: "vol. 02 — fragile archives",
+        price: 32000,
+        formattedPrice: "Rp 32.000",
+        description: "5-piece screenprinted weatherproof vinyl stickers. scratch resistant, UV protected, matte laminated for helmets, laptops, or street fixtures.",
+        material: "screenprinted vinyl matte",
+        dimensions: "varying 50mm - 90mm",
+        badge: "new release",
+        graphicText: "silence isn't\nalways peace."
+      },
+      {
+        id: 3,
+        title: "too soft for this world badge",
+        category: "pins",
+        collection: "vol. 01 — too soft for this world",
+        price: 45000,
+        formattedPrice: "Rp 45.000",
+        description: "for those who feel everything with high intensity. antique silver finish badge with debossed typographic detailing.",
+        material: "die-struck metal / antique silver",
+        dimensions: "28mm x 28mm",
+        badge: "vol. 01",
+        graphicText: "too soft\nfor this world"
+      },
+      {
+        id: 4,
+        title: "uncomfortable truths sticker",
+        category: "stickers",
+        collection: "vol. 02 — fragile archives",
+        price: 18000,
+        formattedPrice: "Rp 18.000",
+        description: "bold photocopied aesthetics translated into archival weather-resistant vinyl. resistance through everyday visual artifacts.",
+        material: "die-cut vinyl matte",
+        dimensions: "75mm x 40mm",
+        badge: "drop 02",
+        graphicText: "uncomfortable\ntruths."
+      },
+      {
+        id: 5,
+        title: "emotional honesty heavyweight keychain",
+        category: "accessories",
+        collection: "vol. 02 — fragile archives",
+        price: 48000,
+        formattedPrice: "Rp 48.000",
+        description: "solid zinc alloy motel-style tag with laser-etched typographic reminder. heavy tactile feel in hand.",
+        material: "cast zinc alloy / gunmetal",
+        dimensions: "90mm x 45mm",
+        badge: "limited",
+        graphicText: "emotional\nhonesty"
+      },
+      {
+        id: 6,
+        title: "fragile archives mini zine & patch pack",
+        category: "accessories",
+        collection: "vol. 02 — fragile archives",
+        price: 65000,
+        formattedPrice: "Rp 65.000",
+        description: "16-page risograph printed art zine exploring thoughts left unsaid, accompanied by an embroidered iron-on canvas patch.",
+        material: "risograph paper + canvas patch",
+        dimensions: "A6 zine / 70mm patch",
+        badge: "bundle",
+        graphicText: "fragile\narchives"
+      }
+    ];
+
+    // --- State ---
+    let cart = [];
+    let activeFilter = 'all';
+
+    // --- DOM Elements ---
+    const productGrid = document.getElementById('productGrid');
+    const openCartBtn = document.getElementById('openCartBtn');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartBackdrop = document.getElementById('cartBackdrop');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartCountBadge = document.getElementById('cartCountBadge');
+    const drawerCount = document.getElementById('drawerCount');
+    const cartSubtotal = document.getElementById('cartSubtotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    // --- Modal Elements ---
+    const productModal = document.getElementById('productModal');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalMaterial = document.getElementById('modalMaterial');
+    const modalDimensions = document.getElementById('modalDimensions');
+    const modalAddBtn = document.getElementById('modalAddBtn');
+
     // --- Mobile Menu Toggle ---
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     mobileMenuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
-    // Close mobile menu on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-    });
 
-    // --- High-DPI Canvas Visualizer ---
-    const canvas = document.getElementById('waveCanvas');
-    const ctx = canvas.getContext('2d');
-    let phase = 0;
-    let isPlaying = false;
+    // --- Render Products ---
+    function renderProducts() {
+      productGrid.innerHTML = '';
+      const filtered = activeFilter === 'all' 
+        ? products 
+        : products.filter(p => p.category === activeFilter);
 
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      const displayWidth = rect.width || canvas.parentElement.clientWidth || 600;
-      canvas.width = displayWidth * dpr;
-      canvas.height = 80 * dpr;
-      if (ctx.resetTransform) {
-        ctx.resetTransform();
-      }
-      ctx.scale(dpr, dpr);
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "border border-subtle-border bg-card-bg rounded p-6 flex flex-col justify-between group hover:border-faded-grey transition-all shadow-sm";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-faded-grey mb-3">
+              <span>${p.collection}</span>
+              <span class="text-distorted-red border border-distorted-red/40 px-1.5 py-0.5 rounded text-[10px]">${p.badge}</span>
+            </div>
 
-    function drawWave() {
-      const rect = canvas.getBoundingClientRect();
-      const width = rect.width || 600;
-      const height = 80;
-      const mid = height / 2;
+            <!-- Visual Representation of Product -->
+            <div class="aspect-square bg-after-dark border border-subtle-border rounded flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group-hover:border-subtle-border cursor-pointer" onclick="openModal(${p.id})">
+              <div class="w-24 h-24 rounded-full border border-archive-paper/40 bg-card-bg flex flex-col items-center justify-center p-3 shadow-inner group-hover:scale-105 transition-transform">
+                <span class="font-display font-bold text-xs text-archive-paper lowercase text-center whitespace-pre-line leading-tight">${p.graphicText}</span>
+              </div>
+              <span class="absolute bottom-2 right-2 text-[10px] font-mono text-faded-grey opacity-0 group-hover:opacity-100 transition-opacity">quick view ↗</span>
+            </div>
 
-      ctx.clearRect(0, 0, width, height);
+            <div class="mt-5 space-y-1">
+              <h3 class="font-display font-bold text-lg text-archive-paper lowercase group-hover:text-distorted-red transition-colors cursor-pointer" onclick="openModal(${p.id})">
+                ${p.title}
+              </h3>
+              <p class="font-sans text-xs text-faded-grey line-clamp-2">${p.description}</p>
+            </div>
+          </div>
 
-      ctx.lineWidth = 2;
-      const gradient = ctx.createLinearGradient(0, 0, width, 0);
-      gradient.addColorStop(0, '#8b5cf6');
-      gradient.addColorStop(0.5, '#6366f1');
-      gradient.addColorStop(1, '#a855f7');
-      ctx.strokeStyle = gradient;
-
-      ctx.beginPath();
-      const amplitude = isPlaying ? 22 : 6;
-      const frequency = isPlaying ? 0.025 : 0.015;
-
-      for (let x = 0; x < width; x++) {
-        const y = mid + Math.sin(x * frequency + phase) * amplitude * Math.sin((x / width) * Math.PI);
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      phase += isPlaying ? 0.06 : 0.02;
-      requestAnimationFrame(drawWave);
-    }
-    requestAnimationFrame(drawWave);
-
-    // --- Web Audio API Synth Engine ---
-    let audioCtx = null;
-    let masterGain = null;
-    let currentOscs = [];
-    let currentPreset = null;
-    let stopTimeoutId = null;
-
-    const ambientBtn = document.getElementById('ambientBtn');
-    const soundDot = document.getElementById('soundDot');
-    const soundText = document.getElementById('soundText');
-
-    const presets = {
-      midnight: { label: 'Midnight Stillness', freqs: [146.83, 220.00, 293.66, 369.99] }, // D3, A3, D4, F#4
-      cosmic: { label: 'Cosmic Echoes', freqs: [110.00, 164.81, 220.00, 329.63] },         // A2, E3, A3, E4
-      dawn: { label: 'Dawn Twilight', freqs: [130.81, 196.00, 261.63, 329.63] }           // C3, G3, C4, E4
-    };
-
-    function initAudio() {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-    }
-
-    function stopSound(fadeDuration = 0.5) {
-      if (stopTimeoutId) {
-        clearTimeout(stopTimeoutId);
-        stopTimeoutId = null;
-      }
-      if (masterGain && audioCtx) {
-        const now = audioCtx.currentTime;
-        masterGain.gain.cancelScheduledValues(now);
-        masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-        masterGain.gain.exponentialRampToValueAtTime(0.0001, now + fadeDuration);
-
-        const oscsToStop = [...currentOscs];
-        currentOscs = [];
-        stopTimeoutId = setTimeout(() => {
-          oscsToStop.forEach(({ osc, gain }) => {
-            try {
-              osc.stop();
-              osc.disconnect();
-              gain.disconnect();
-            } catch(e) {}
-          });
-        }, fadeDuration * 1000 + 50);
-      }
-      isPlaying = false;
-      currentPreset = null;
-      soundDot.style.display = 'none';
-      soundText.innerText = 'Play Ambient';
-      updatePresetButtons();
-    }
-
-    function playFrequencies(presetKey) {
-      initAudio();
-      stopSound(0.25);
-
-      const targetPreset = presets[presetKey] || presets.midnight;
-
-      setTimeout(() => {
-        masterGain = audioCtx.createGain();
-        const now = audioCtx.currentTime;
-        masterGain.gain.setValueAtTime(0.001, now);
-        masterGain.gain.exponentialRampToValueAtTime(0.12, now + 1.2);
-        masterGain.connect(audioCtx.destination);
-
-        currentOscs = targetPreset.freqs.map((f, i) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(f, now);
-          gain.gain.value = 0.25;
-          osc.connect(gain);
-          gain.connect(masterGain);
-          osc.start();
-          return { osc, gain };
-        });
-
-        isPlaying = true;
-        currentPreset = presetKey;
-        soundDot.style.display = 'inline-block';
-        soundText.innerText = 'Pause Ambient';
-        updatePresetButtons();
-      }, 280);
-    }
-
-    function updatePresetButtons() {
-      document.querySelectorAll('[data-preset-btn]').forEach(btn => {
-        const key = btn.getAttribute('data-preset-btn');
-        if (isPlaying && currentPreset === key) {
-          btn.innerHTML = `<span class="w-2 h-2 rounded-full bg-violet-400 animate-ping"></span> Sedang Diputar (Jeda)`;
-          btn.classList.add('bg-violet-600', 'text-white', 'border-violet-500');
-        } else {
-          btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg> Putar Suasana Ini`;
-          btn.classList.remove('bg-violet-600', 'text-white', 'border-violet-500');
-        }
+          <div class="mt-6 pt-4 border-t border-subtle-border flex items-center justify-between">
+            <span class="font-mono text-sm text-archive-paper font-semibold">${p.formattedPrice}</span>
+            <button onclick="addToCart(${p.id})" class="px-3.5 py-1.5 bg-archive-paper hover:bg-white text-after-dark font-mono text-xs font-semibold lowercase transition-all rounded-sm flex items-center gap-1 cursor-pointer">
+              <span>+ bag</span>
+            </button>
+          </div>
+        `;
+        productGrid.appendChild(card);
       });
     }
 
-    ambientBtn.addEventListener('click', () => {
-      if (!isPlaying) {
-        playFrequencies(currentPreset || 'midnight');
-      } else {
-        stopSound(0.4);
-      }
-    });
-
-    window.playPreset = function(presetKey) {
-      if (isPlaying && currentPreset === presetKey) {
-        stopSound(0.3);
-      } else {
-        playFrequencies(presetKey);
-      }
+    // --- Category Filter Handler ---
+    window.filterCategory = function(cat) {
+      activeFilter = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-category') === cat) {
+          btn.className = "cat-btn active px-3.5 py-1.5 border border-archive-paper bg-archive-paper text-after-dark font-medium rounded-sm lowercase transition-all";
+        } else {
+          btn.className = "cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all";
+        }
+      });
+      renderProducts();
     };
+
+    // --- Cart Functions ---
+    window.addToCart = function(productId) {
+      const item = products.find(p => p.id === productId);
+      if (!item) return;
+
+      const existing = cart.find(c => c.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...item, qty: 1 });
+      }
+
+      updateCartUI();
+      openCart();
+    };
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartCountBadge.innerText = totalItems;
+      drawerCount.innerText = `(${totalItems} items)`;
+
+      if (cart.length === 0) {
+        cartItemsList.innerHTML = `<p class="font-mono text-xs text-faded-grey py-8 text-center">your bag is empty. find something that speaks for you.</p>`;
+        cartSubtotal.innerText = "Rp 0";
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      checkoutBtn.disabled = false;
+      let totalAmount = 0;
+
+      cartItemsList.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.qty;
+        totalAmount += itemTotal;
+        return `
+          <div class="flex items-center justify-between border-b border-subtle-border pb-3">
+            <div class="space-y-1">
+              <h4 class="font-display font-semibold text-xs text-archive-paper lowercase">${item.title}</h4>
+              <p class="font-mono text-[11px] text-faded-grey">Rp ${item.price.toLocaleString('id-ID')}</p>
+              <div class="flex items-center gap-2 font-mono text-xs text-archive-paper pt-1">
+                <button onclick="changeQty(${item.id}, -1)" class="w-5 h-5 border border-subtle-border hover:border-faded-grey flex items-center justify-center">-</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${item.id}, 1)" class="w-5 h-5 border border-subtle-border hover:border-faded-grey flex items-center justify-center">+</button>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-mono text-xs text-archive-paper">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+              <button onclick="removeFromCart(${item.id})" class="block text-[10px] font-mono text-distorted-red hover:underline mt-1">remove</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      cartSubtotal.innerText = `Rp ${totalAmount.toLocaleString('id-ID')}`;
+    }
+
+    window.changeQty = function(id, delta) {
+      const item = cart.find(c => c.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(c => c.id !== id);
+      }
+      updateCartUI();
+    };
+
+    window.removeFromCart = function(id) {
+      cart = cart.filter(c => c.id !== id);
+      updateCartUI();
+    };
+
+    function openCart() {
+      cartDrawer.classList.remove('opacity-0', 'pointer-events-none');
+      cartPanel.classList.remove('translate-x-full');
+    }
+
+    function closeCart() {
+      cartDrawer.classList.add('opacity-0', 'pointer-events-none');
+      cartPanel.classList.add('translate-x-full');
+    }
+
+    openCartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    cartBackdrop.addEventListener('click', closeCart);
+
+    // --- Modal Functions ---
+    window.openModal = function(id) {
+      const item = products.find(p => p.id === id);
+      if (!item) return;
+
+      modalCategory.innerText = item.collection;
+      modalTitle.innerText = item.title;
+      modalPrice.innerText = item.formattedPrice;
+      modalDesc.innerText = item.description;
+      modalMaterial.innerText = item.material;
+      modalDimensions.innerText = item.dimensions;
+
+      modalAddBtn.onclick = function() {
+        addToCart(item.id);
+        closeModal();
+      };
+
+      productModal.classList.remove('opacity-0', 'pointer-events-none');
+    };
+
+    window.closeModal = function() {
+      productModal.classList.add('opacity-0', 'pointer-events-none');
+    };
+
+    // --- Checkout via WhatsApp Handler ---
+    window.checkoutWhatsApp = function() {
+      if (cart.length === 0) return;
+
+      const orderLines = cart.map(item => `• ${item.title} (x${item.qty}) - Rp ${(item.price * item.qty).toLocaleString('id-ID')}`).join('%0A');
+      const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      
+      const message = `Halo afterquiet,%0A%0ASaya ingin memesan koleksi berikut:%0A${orderLines}%0A%0ATotal: Rp ${totalAmount.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stock & ongkos kirim. Terima kasih.`;
+      
+      // WhatsApp link (bisa diganti nomor admin saat sudah ada)
+      window.open(`https://wa.me/?text=${message}`, '_blank');
+    };
+
+    // Initialize View
+    renderProducts();
+    updateCartUI();
   </script>
 </body>
 </html>

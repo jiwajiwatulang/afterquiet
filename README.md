@@ -1,20 +1,24 @@
-# Afterquiet
+# afterquiet
 
-> Menemukan Bunyi di Balik Keheningan.
+> wear what you can't always say.
 
-Ruang digital untuk eksplorasi audio, ambient, dan proyek kreatif oleh [@jiwajiwatulang](https://github.com/jiwajiwatulang).
+**afterquiet** is an independent accessories brand exploring identity, emotions, personal expression, and the culture surrounding us through wearable objects and visual storytelling — from pins and stickers to future accessories and apparel.
+
+## Brand Identity & Guidelines
+- **Philosophy**: *wear what you can't always say.*
+- **Palette**:
+  - `after dark`: `#171717`
+  - `archive paper`: `#F1EFE9`
+  - `faded grey`: `#85827D`
+  - `distorted red`: `#843B40`
+- **Typography**: Space Grotesk, Inter, IBM Plex Mono
+
+## Website & E-Commerce Features
+- **Online Storefront**: Interactive product catalogue with categories (`all`, `pins`, `stickers`, `accessories`).
+- **Interactive Shopping Bag**: Real-time quantity adjustments, subtotal calculation, and instant direct ordering via WhatsApp.
+- **Product Spec Modals**: Detailed material, dimension, and collection information.
+- **Brand Philosophy & Archives**: Editorial layout highlighting core values (*01 Individuality*, *02 Emotional Honesty*, *03 Independence*, *04 Creative Resistance*).
+- **Responsive & Minimalist**: Built with Tailwind CSS, brutalist aesthetic, and mobile-first experience.
 
 ## Deployment
-Website ini terhubung dan di-deploy secara otomatis menggunakan **Vercel**. Setiap pembaruan kode pada branch `main` akan langsung di-deploy secara instan.
-
-## Fitur Halaman
-- **Dark Aesthetic & Minimalist Design**: Desain modern berbasis Tailwind CSS.
-- **Wave Visualizer**: Animasi gelombang suara interaktif berbasis HTML5 Canvas.
-- **Synthesizer Ambient Bawaan**: Penghasil suara ambient relaksasi menggunakan Web Audio API tanpa dependensi eksternal.
-- **Responsive**: Dioptimalkan untuk tampilan desktop maupun mobile.
-
-## Pengembangan Lokal
-Cukup buka file `index.html` di browser Anda atau jalankan web server lokal:
-```bash
-npx serve .
-```
+Connected to **Vercel** with automatic deployments on push to `main`.
