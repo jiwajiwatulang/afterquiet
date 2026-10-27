@@ -4,9 +4,8 @@
 
 Ruang digital untuk eksplorasi audio, ambient, dan proyek kreatif oleh [@jiwajiwatulang](https://github.com/jiwajiwatulang).
 
-## Live Demo
-Website ini dapat diakses langsung via **GitHub Pages**:
-- URL: `https://jiwajiwatulang.github.io/afterquiet/`
+## Deployment
+Website ini terhubung dan di-deploy secara otomatis menggunakan **Vercel**. Setiap pembaruan kode pada branch `main` akan langsung di-deploy secara instan.
 
 ## Fitur Halaman
 - **Dark Aesthetic & Minimalist Design**: Desain modern berbasis Tailwind CSS.
@@ -15,8 +14,7 @@ Website ini dapat diakses langsung via **GitHub Pages**:
 - **Responsive**: Dioptimalkan untuk tampilan desktop maupun mobile.
 
 ## Pengembangan Lokal
-Cukup buka file `index.html` di browser Anda atau gunakan live server:
+Cukup buka file `index.html` di browser Anda atau jalankan web server lokal:
 ```bash
-# Jalankan menggunakan server lokal sederhana jika diperlukan:
 npx serve .
 ```
