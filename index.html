@@ -1,831 +1,1072 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>afterquiet — wear what you can't always say</title>
-  <meta name="description" content="independent accessories for personal expression, restless thoughts, and everything in between. pins, stickers, and wearable objects.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>afterquiet — wear what you can't always say.</title>
+  <meta name="description" content="Independent accessories and visual culture for the unfiltered mind. Bags, totes, pins, and wearable objects.">
   <meta name="theme-color" content="#171717">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="afterquiet — wear what you can't always say">
-  <meta property="og:description" content="independent accessories & visual culture. exploring identity, emotions, and personal expression.">
-  <meta property="og:type" content="website">
-
-  <!-- Favicon: Clean Brutalist 'aq' -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='monospace' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
 
-  <!-- Web Fonts: Space Grotesk, Inter, IBM Plex Mono -->
+  <!-- Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"Space Grotesk"', 'sans-serif'],
-            sans: ['"Inter"', 'sans-serif'],
-            mono: ['"IBM Plex Mono"', 'monospace'],
-          },
-          colors: {
-            'after-dark': '#171717',
-            'archive-paper': '#F1EFE9',
-            'faded-grey': '#85827D',
-            'distorted-red': '#843B40',
-            'subtle-border': '#262626',
-            'card-bg': '#1C1C1C',
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* Grain overlay effect for editorial/photocopy texture */
-    .bg-grain {
-      background-image: radial-gradient(rgba(241, 239, 233, 0.04) 1px, transparent 0);
-      background-size: 24px 24px;
+    :root {
+      --ink: #171717;
+      --paper: #f1efe9;
+      --red: #843b40;
+      --muted: #67645f;
+      --line: #c9c6bf;
+      --mono: "IBM Plex Mono", monospace;
+      --sans: Inter, Arial, sans-serif;
+      --display: "Space Grotesk", sans-serif;
     }
-    .badge-stamp {
-      border: 1px dashed #85827D;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 22px; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    /* Hide scrollbar for category pills on mobile */
-    .no-scrollbar::-webkit-scrollbar {
+    .mono {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; color: inherit; }
+
+    /* Announcement Bar */
+    .announcement {
+      background: var(--ink);
+      min-height: 34px;
+      color: var(--paper);
+      font: 600 10px/1 var(--mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 5%;
+      display: flex;
+    }
+
+    /* Site Header */
+    .site-header {
+      border-bottom: 1px solid var(--ink);
+      align-items: center;
+      gap: 40px;
+      min-height: 102px;
+      padding: 0 5%;
+      display: flex;
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .logo {
+      font: 700 clamp(31px, 3.2vw, 45px)/1 var(--display);
+      letter-spacing: -0.09em;
+      white-space: nowrap;
+    }
+    .desktop-nav {
+      align-items: center;
+      gap: clamp(20px, 3vw, 44px);
+      margin-left: auto;
+      display: flex;
+    }
+    .desktop-nav a, .link-button {
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .desktop-nav a:hover, .text-arrow:hover {
+      text-underline-offset: 5px;
+      text-decoration: underline;
+    }
+    .header-actions {
+      align-items: center;
+      gap: 20px;
+      display: flex;
+    }
+    .admin-shortcut {
+      text-underline-offset: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: underline;
+      color: var(--red);
+    }
+    .link-button {
+      background: none;
+      border: 1px solid var(--ink);
+      padding: 8px 14px;
+      border-radius: 2px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .link-button:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .menu-button {
+      width: 34px;
+      height: 34px;
+      padding: 6px;
       display: none;
+      background: none;
+      border: none;
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    .menu-button span {
+      background: var(--ink);
+      width: 22px;
+      height: 2px;
+      margin: 5px 0;
+      display: block;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 40px 5% 65px;
+      border-bottom: 1px solid var(--ink);
+    }
+    .hero-meta, .section-top {
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      display: flex;
+    }
+    .hero-meta span:first-child, .section-top span:first-child { color: var(--red); }
+    .hero h1 {
+      max-width: 1240px;
+      font: 700 clamp(48px, 7.6vw, 106px)/1.04 var(--display);
+      letter-spacing: -0.075em;
+      margin: 45px 0 35px;
+    }
+    .hero .period { color: var(--red); }
+    .hero-bottom {
+      grid-template-columns: minmax(200px, 1fr) auto minmax(180px, 1fr);
+      align-items: center;
+      gap: 32px;
+      display: grid;
+    }
+    .hero-bottom p { font-size: 16px; line-height: 1.6; }
+    .hero-side { color: var(--muted); justify-self: end; }
+    
+    .button-dark {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      min-height: 54px;
+      color: var(--paper);
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 15px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.18s, border-color 0.18s;
+      display: inline-flex;
+    }
+    .button-dark:hover { background: var(--red); border-color: var(--red); }
+
+    /* Poster Section */
+    .poster-section {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 65px 5% 35px;
+    }
+    .poster-grid {
+      background: #141414;
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+    }
+    .poster-grid:before {
+      z-index: 0;
+      background: var(--red);
+      content: "";
+      width: 41%;
+      height: 118%;
+      position: absolute;
+      top: -6%;
+      right: -1%;
+    }
+    .poster-paper {
+      z-index: 1;
+      background: var(--paper);
+      width: 44%;
+      height: 72%;
+      color: var(--ink);
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 30px;
+      display: flex;
+      position: absolute;
+      top: 14%;
+      left: 7%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .poster-copy {
+      font: 700 clamp(32px, 3.5vw, 48px)/1.02 var(--display);
+      letter-spacing: -0.075em;
+    }
+    .poster-copy span { color: var(--red); }
+    .poster-bottom { color: var(--muted); }
+    .poster-right {
+      z-index: 2;
+      align-items: center;
+      width: 33%;
+      display: flex;
+      position: absolute;
+      top: 35%;
+      right: 5%;
+    }
+    .poster-right p {
+      max-width: 390px;
+      font: 600 clamp(22px, 2.2vw, 32px)/1.2 var(--display);
+      letter-spacing: -0.045em;
+      color: var(--paper);
+    }
+    .poster-caption {
+      color: #e0dad3;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 22px;
+      display: flex;
+    }
+
+    /* Section Pad */
+    .section-pad { padding: 90px 5%; }
+    .section-top { border-top: 1px solid var(--ink); padding-top: 16px; }
+    .section-title-row {
+      justify-content: space-between;
+      align-items: end;
+      gap: 25px;
+      margin: 35px 0 40px;
+      display: flex;
+    }
+    .section-title-row h2 {
+      font: 700 clamp(38px, 5.1vw, 68px)/1.03 var(--display);
+      letter-spacing: -0.075em;
+    }
+    .section-title-row h2 i { font-weight: 400; font-style: italic; }
+    .text-arrow {
+      border-bottom: 1px solid var(--ink);
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+    }
+
+    /* Filters */
+    .filters {
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+      display: flex;
+    }
+    .filter {
+      border: 1px solid var(--line);
+      background: none;
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 9px 18px;
+      font-size: 12px;
+      font-family: var(--mono);
+      transition: all 0.15s;
+    }
+    .filter span { color: var(--muted); margin-left: 8px; }
+    .filter.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .filter.active span { color: #e2ddd6; }
+    .filter:hover:not(.active) { border-color: var(--ink); }
+
+    /* Product Grid */
+    .product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px 24px;
+      display: grid;
+    }
+    .product-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: #faf8f5;
+      padding: 16px;
+      transition: border-color 0.15s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-card:hover {
+      border-color: var(--ink);
+    }
+    .product-art {
+      aspect-ratio: 1.15;
+      background: var(--ink);
+      width: 100%;
+      color: var(--paper);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .product-card:nth-child(2) .product-art { background: #262422; }
+    .product-card:nth-child(3) .product-art { background: var(--red); }
+    .product-card:nth-child(4) .product-art { background: #1f2326; }
+    
+    .placeholder-index, .placeholder-type {
+      color: #d2ccc4;
+      font-size: 9px;
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      font-family: var(--mono);
+    }
+    .placeholder-index { top: 14px; }
+    .placeholder-type { text-align: right; bottom: 14px; }
+    .placeholder-copy {
+      font: 700 clamp(18px, 2vw, 26px)/1.1 var(--display);
+      letter-spacing: -0.04em;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .card-meta {
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-top: 14px;
+      display: flex;
+    }
+    .card-title {
+      font: 600 17px/1.25 var(--display);
+      letter-spacing: -0.04em;
+      display: block;
+      cursor: pointer;
+    }
+    .card-kind {
+      color: var(--muted);
+      font: 500 9px/1.5 var(--mono);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+    .card-price {
+      font: 700 13px var(--mono);
+      white-space: nowrap;
+    }
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--line);
+    }
+    .btn-add {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 6px 12px;
+      font-size: 11px;
+      font-family: var(--mono);
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .btn-add:hover { background: var(--red); border-color: var(--red); }
+    .try-link {
+      font-size: 11px;
+      font-family: var(--mono);
+      text-decoration: underline;
+      color: var(--red);
+    }
+
+    /* Try On Interactive Feature Banner */
+    .tryon-banner {
+      background: var(--ink);
+      color: var(--paper);
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 70px 5%;
+    }
+    .tryon-banner-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 50px;
+      display: grid;
+    }
+    .tryon-badge {
+      background: var(--red);
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 8px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    /* Manifesto Section */
+    .manifesto-layout {
+      grid-template-columns: minmax(0, 1.4fr) minmax(255px, 0.8fr);
+      align-items: end;
+      gap: clamp(40px, 7vw, 100px);
+      margin-top: 45px;
+      display: grid;
+    }
+    .manifesto h2 {
+      font: 700 clamp(36px, 3.8vw, 52px)/1.15 var(--display);
+      letter-spacing: -0.065em;
+    }
+    .manifesto h2 em { font-weight: 400; font-style: italic; }
+    .manifesto-copy p { margin-bottom: 18px; font-size: 15px; line-height: 1.8; color: var(--muted); }
+
+    /* Archive Section */
+    .archive-section {
+      background: var(--ink);
+      min-height: 380px;
+      color: var(--paper);
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 42px 5% 26px;
+      display: flex;
+    }
+    .archive-content {
+      justify-content: space-between;
+      align-items: end;
+      gap: 34px;
+      display: flex;
+    }
+    .archive-content h2 {
+      font: 700 clamp(54px, 7.5vw, 100px)/0.98 var(--display);
+      letter-spacing: -0.085em;
+    }
+    .archive-content h2 span { color: #d89599; }
+    .archive-content p { max-width: 320px; font-size: 14px; line-height: 1.75; color: #b0aaa2; }
+    .archive-bottom {
+      color: #e0dad3;
+      border-top: 1px solid #444;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 17px;
+      display: flex;
+    }
+
+    /* Footer */
+    footer {
+      color: var(--paper);
+      background: #141414;
+      padding: 56px 5% 25px;
+    }
+    .footer-top {
+      justify-content: space-between;
+      align-items: start;
+      gap: 35px;
+      padding-bottom: 60px;
+      display: flex;
+    }
+    .footer-brand {
+      font: 700 clamp(50px, 10vw, 130px)/1 var(--display);
+      letter-spacing: -0.1em;
+    }
+    .footer-links { gap: 65px; display: flex; }
+    .footer-links > div { flex-direction: column; gap: 12px; font-size: 13px; display: flex; }
+    .footer-links .mono { color: #d3cec8; margin-bottom: 6px; font-size: 9px; }
+    .footer-bottom {
+      color: #888;
+      border-top: 1px solid #333;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 19px;
+      font-size: 10px;
+      display: flex;
+      font-family: var(--mono);
+    }
+
+    /* Cart Slide-Over Drawer */
+    .cart-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .cart-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(440px, 100%);
+      height: 100vh;
+      background: var(--paper);
+      z-index: 51;
+      padding: 30px;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translateX(100%);
+      transition: transform 0.25s ease-in-out;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .drawer-head {
+      border-bottom: 1px solid var(--ink);
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      display: flex;
+    }
+    .drawer-head h2 { font: 700 28px/1 var(--display); letter-spacing: -0.05em; }
+    .close-btn { background: none; border: none; font-size: 26px; cursor: pointer; }
+    .cart-items-list { flex: 1; overflow-y: auto; padding: 20px 0; }
+    .drawer-bottom { border-top: 1px solid var(--ink); padding-top: 18px; }
+    .subtotal-row { justify-content: space-between; display: flex; font-size: 16px; margin-bottom: 16px; font-weight: 700; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .desktop-nav { display: none; }
+      .menu-button { display: block; }
+      .hero-bottom { grid-template-columns: 1fr; }
+      .hero-side { display: none; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tryon-banner-inner { grid-template-columns: 1fr; gap: 30px; }
+      .poster-paper { width: 80%; }
+      .poster-right { display: none; }
+      .manifesto-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .footer-links { flex-direction: column; gap: 30px; }
+      .site-header { min-height: 75px; }
     }
   </style>
 </head>
-<body class="bg-after-dark text-archive-paper font-sans antialiased min-h-screen selection:bg-distorted-red selection:text-archive-paper flex flex-col justify-between bg-grain">
+<body>
 
-  <!-- Top Announcement Bar -->
-  <div class="border-b border-subtle-border bg-after-dark/90 text-xs font-mono py-2 px-4 flex items-center justify-between text-faded-grey">
-    <div class="flex items-center gap-2">
-      <span class="inline-block w-1.5 h-1.5 bg-distorted-red rounded-full animate-pulse"></span>
-      <span>vol. 02 — fragile archives now live</span>
-    </div>
-    <div class="hidden sm:block">
-      <span>worldwide shipping • independent visual culture</span>
-    </div>
-    <div>
-      <span class="text-archive-paper/80">autumn 2026</span>
-    </div>
+  <!-- Announcement Bar -->
+  <div class="announcement">
+    <span>independent objects for the unfiltered mind</span>
+    <span>afterquiet — est. 2026</span>
   </div>
 
-  <!-- Navigation Bar -->
-  <header class="sticky top-0 z-40 bg-after-dark/95 backdrop-blur-md border-b border-subtle-border">
-    <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">
-      
-      <!-- Logo Wordmark (all lowercase) -->
-      <a href="#" class="flex items-baseline gap-2 group">
-        <span class="font-display font-bold text-2xl tracking-tighter text-archive-paper group-hover:text-faded-grey transition-colors lowercase">
-          afterquiet
-        </span>
-        <span class="font-mono text-[10px] text-faded-grey border border-subtle-border px-1.5 py-0.5 rounded uppercase">
-          est. 2026
-        </span>
-      </a>
+  <!-- Header -->
+  <header class="site-header" id="top">
+    <a href="#top" class="logo">afterquiet</a>
 
-      <!-- Desktop Links -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-mono tracking-wider lowercase">
-        <a href="#shop" class="text-archive-paper hover:text-distorted-red transition-colors">shop [01]</a>
-        <a href="#collections" class="text-faded-grey hover:text-archive-paper transition-colors">collections [02]</a>
-        <a href="#about" class="text-faded-grey hover:text-archive-paper transition-colors">philosophy [03]</a>
-        <a href="#archive" class="text-faded-grey hover:text-archive-paper transition-colors">lookbook [04]</a>
-      </nav>
+    <nav class="desktop-nav">
+      <a href="#shop">shop</a>
+      <a href="#tryon">try-on studio</a>
+      <a href="#collections">collections</a>
+      <a href="#about">about</a>
+      <a href="#archive">archive</a>
+    </nav>
 
-      <!-- Cart Button & Mobile Menu Toggle -->
-      <div class="flex items-center gap-4">
-        <!-- Bag Trigger -->
-        <button id="openCartBtn" class="flex items-center gap-2 px-3.5 py-1.5 border border-subtle-border bg-card-bg hover:border-faded-grey transition-all text-xs font-mono rounded cursor-pointer group">
-          <span class="text-faded-grey group-hover:text-archive-paper">bag</span>
-          <span id="cartCountBadge" class="bg-distorted-red text-archive-paper font-bold px-1.5 py-0.2 rounded-sm text-[11px]">0</span>
-        </button>
-
-        <button id="mobileMenuBtn" class="md:hidden text-faded-grey hover:text-archive-paper p-1" aria-label="Toggle Menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
-
-    </div>
-
-    <!-- Mobile Dropdown Nav -->
-    <div id="mobileMenu" class="hidden md:hidden border-b border-subtle-border bg-after-dark px-6 py-4 space-y-3 font-mono text-xs lowercase">
-      <a href="#shop" class="block py-1 text-archive-paper hover:text-distorted-red">shop [01]</a>
-      <a href="#collections" class="block py-1 text-faded-grey hover:text-archive-paper">collections [02]</a>
-      <a href="#about" class="block py-1 text-faded-grey hover:text-archive-paper">philosophy [03]</a>
-      <a href="#archive" class="block py-1 text-faded-grey hover:text-archive-paper">lookbook [04]</a>
+    <div class="header-actions">
+      <a class="admin-shortcut" href="/try-on">try on bags ↗</a>
+      <button class="link-button" id="cartOpenBtn">bag (<span id="cartCount">0</span>)</button>
+      <button class="menu-button" id="menuToggle" aria-label="Toggle Navigation">
+        <span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="relative border-b border-subtle-border overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12 items-center">
-      
-      <!-- Hero Copy -->
-      <div class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2 font-mono text-xs text-distorted-red tracking-widest lowercase border border-distorted-red/30 px-3 py-1 rounded bg-distorted-red/10">
-          <span>// release 02.0</span>
-          <span>•</span>
-          <span>wear what you can't always say</span>
-        </div>
+  <!-- Mobile Dropdown -->
+  <div id="mobileNav" style="display:none; background:var(--paper); border-bottom:1px solid var(--ink); padding:20px 5%; font-family:var(--mono); font-size:13px; line-height:2.2;">
+    <a href="#shop" style="display:block;">shop</a>
+    <a href="/try-on" style="display:block; color:var(--red);">try-on studio ↗</a>
+    <a href="#collections" style="display:block;">collections</a>
+    <a href="#about" style="display:block;">about philosophy</a>
+    <a href="#archive" style="display:block;">archive</a>
+  </div>
 
-        <h1 class="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-[1.08] text-archive-paper lowercase">
-          wear what you <br class="hidden sm:inline">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-archive-paper via-archive-paper to-faded-grey underline decoration-distorted-red decoration-4 underline-offset-8">
-            can't always say.
-          </span>
-        </h1>
-
-        <p class="font-sans text-faded-grey text-base sm:text-lg max-w-xl leading-relaxed">
-          independent accessories for personal expression, restless thoughts, and everything in between. graphic-led pins, stickers, and wearable statements.
-        </p>
-
-        <div class="flex flex-wrap gap-4 pt-4 font-mono text-xs">
-          <a href="#shop" class="px-6 py-3.5 bg-archive-paper text-after-dark font-semibold hover:bg-white transition-all lowercase flex items-center gap-2">
-            explore the collection
-            <span>→</span>
-          </a>
-          <a href="#about" class="px-6 py-3.5 border border-subtle-border hover:border-faded-grey text-archive-paper transition-all lowercase">
-            about afterquiet
-          </a>
-        </div>
-
-        <!-- Archival Quote Strip -->
-        <div class="pt-8 border-t border-subtle-border/60 flex items-center gap-4 text-xs font-mono text-faded-grey italic">
-          <span class="text-distorted-red font-bold not-italic">"</span>
-          <span>some things are easier to wear than to explain.</span>
-        </div>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-meta mono">
+        <span>AQ / independent accessories & visual culture</span>
+        <span>an independent state of mind</span>
       </div>
 
-      <!-- Hero Visual: Editorial Card -->
-      <div class="lg:col-span-5 relative">
-        <div class="border border-subtle-border bg-card-bg p-6 rounded relative shadow-2xl">
-          <div class="flex items-center justify-between border-b border-subtle-border pb-3 mb-6 text-xs font-mono text-faded-grey">
-            <span>specimen // aq-vol02</span>
-            <span>archival preview</span>
-          </div>
+      <h1>
+        wear what you<br>
+        can't always say<span class="period">.</span>
+      </h1>
 
-          <!-- Stylized Pin Graphic -->
-          <div class="aspect-square bg-after-dark border border-subtle-border rounded flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group">
-            <div class="absolute inset-0 bg-gradient-to-tr from-distorted-red/15 to-transparent pointer-events-none"></div>
-            
-            <!-- Pin representation -->
-            <div class="w-32 h-32 rounded-full border-2 border-archive-paper/80 bg-after-dark flex flex-col items-center justify-center p-4 shadow-xl shadow-black/80 relative mb-4 group-hover:scale-105 transition-transform">
-              <span class="text-[9px] font-mono tracking-widest text-faded-grey mb-1">AFTERQUIET</span>
-              <span class="font-display font-bold text-xs text-archive-paper text-center leading-tight lowercase">
-                restless<br>mind.
-              </span>
-              <span class="text-[8px] font-mono text-distorted-red mt-1">VOL. 01</span>
-              <!-- Metal clasp back simulation dot -->
-              <div class="absolute -top-1 w-2 h-2 rounded-full bg-archive-paper"></div>
-            </div>
-
-            <p class="font-mono text-xs text-archive-paper mt-2 lowercase">restless mind enamel pin</p>
-            <p class="font-sans text-xs text-faded-grey mt-1">hard enamel • black nickel finish • 32mm</p>
-            <span class="mt-3 font-mono text-xs text-distorted-red font-semibold">Rp 55.000</span>
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-subtle-border flex justify-between items-center text-[11px] font-mono text-faded-grey">
-            <span>edition of 100 pcs</span>
-            <span class="text-archive-paper underline cursor-pointer hover:text-distorted-red" onclick="addToCart(1)">+ quick add to bag</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Store / Catalog Section -->
-  <section id="shop" class="max-w-7xl mx-auto px-6 py-20 w-full">
-    
-    <!-- Header & Category Filter Bar -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-subtle-border pb-6 gap-6">
-      <div>
-        <span class="font-mono text-xs text-distorted-red tracking-widest uppercase">// catalogue</span>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-archive-paper mt-1 lowercase">
-          available objects
-        </h2>
-        <p class="font-sans text-xs sm:text-sm text-faded-grey mt-1">
-          pins, stickers, and graphic merchandise. wearable thoughts.
+      <div class="hero-bottom">
+        <p>some things are easier to wear than to explain.</p>
+        <a class="button-dark" href="#shop">
+          <span>explore the collection</span>
+          <span>↗</span>
+        </a>
+        <p class="hero-side">
+          small objects. loud thoughts.<br>
+          no explanation required.
         </p>
       </div>
+    </section>
 
-      <!-- Filter Buttons -->
-      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar font-mono text-xs">
-        <button onclick="filterCategory('all')" class="cat-btn active px-3.5 py-1.5 border border-archive-paper bg-archive-paper text-after-dark font-medium rounded-sm lowercase transition-all" data-category="all">
-          all [6]
-        </button>
-        <button onclick="filterCategory('pins')" class="cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all" data-category="pins">
-          pins
-        </button>
-        <button onclick="filterCategory('stickers')" class="cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all" data-category="stickers">
-          stickers
-        </button>
-        <button onclick="filterCategory('accessories')" class="cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all" data-category="accessories">
-          accessories
-        </button>
-      </div>
-    </div>
-
-    <!-- Product Grid -->
-    <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-10">
-      <!-- Injected via JavaScript below -->
-    </div>
-
-  </section>
-
-  <!-- Collections Preview Banner -->
-  <section id="collections" class="border-y border-subtle-border bg-card-bg/40 py-16">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="font-mono text-xs text-faded-grey uppercase tracking-widest mb-4">// collection archive</div>
-      
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Vol 01 -->
-        <div class="border border-subtle-border bg-after-dark p-8 relative group hover:border-faded-grey transition-all">
-          <div class="flex justify-between items-start font-mono text-xs text-faded-grey mb-4">
-            <span>archive // vol. 01</span>
-            <span class="text-archive-paper">spring 2026</span>
+    <!-- Poster Section -->
+    <section class="poster-section" id="collections">
+      <div class="poster-grid">
+        <div class="poster-paper">
+          <div class="mono">AFTERQUIET / VISUAL ARCHIVE</div>
+          <div class="poster-copy">
+            NOT<br>
+            EVERYTHING<br>
+            NEEDS AN<br>
+            <span>ANSWER.</span>
           </div>
-          <h3 class="font-display font-bold text-2xl text-archive-paper lowercase group-hover:text-distorted-red transition-colors">
-            too soft for this world
-          </h3>
-          <p class="font-sans text-sm text-faded-grey mt-2 leading-relaxed">
-            a collection exploring vulnerability, sensitivity, emotional honesty, and the burden of feeling too deeply in a hurried society.
-          </p>
-          <div class="mt-6 flex items-center gap-3 font-mono text-xs text-archive-paper underline">
-            <span>view vol. 01 pieces</span>
-            <span>→</span>
-          </div>
+          <div class="poster-bottom mono">VOL. 01 / EXPRESSION AS AN OBJECT</div>
         </div>
-
-        <!-- Vol 02 -->
-        <div class="border border-distorted-red/40 bg-after-dark p-8 relative group hover:border-distorted-red transition-all">
-          <div class="flex justify-between items-start font-mono text-xs text-faded-grey mb-4">
-            <span class="text-distorted-red font-semibold">// current release — vol. 02</span>
-            <span class="text-archive-paper">autumn 2026</span>
-          </div>
-          <h3 class="font-display font-bold text-2xl text-archive-paper lowercase group-hover:text-distorted-red transition-colors">
-            fragile archives
-          </h3>
-          <p class="font-sans text-sm text-faded-grey mt-2 leading-relaxed">
-            centered on identity, memory, visual resistance, and the invisible things people carry internally. wearable artifacts of unrest.
+        <div class="poster-right">
+          <p>
+            a collection of things<br>
+            we never said out loud.
           </p>
-          <div class="mt-6 flex items-center gap-3 font-mono text-xs text-distorted-red underline">
-            <span>explore current drop</span>
-            <span>→</span>
-          </div>
         </div>
       </div>
-    </div>
-  </section>
+      <div class="poster-caption mono">
+        <span>fig. 01 — visual archive</span>
+        <span>small objects / loud thoughts</span>
+      </div>
+    </section>
 
-  <!-- Brand Philosophy Section -->
-  <section id="about" class="max-w-7xl mx-auto px-6 py-24 w-full">
-    <div class="grid lg:grid-cols-12 gap-12 items-start">
-      
-      <div class="lg:col-span-5 space-y-6">
-        <span class="font-mono text-xs text-distorted-red tracking-widest uppercase">// brand philosophy</span>
-        <h2 class="font-display font-bold text-3xl sm:text-5xl tracking-tight text-archive-paper lowercase">
-          quiet, but not empty.
-        </h2>
-        <p class="font-sans text-faded-grey leading-relaxed text-sm sm:text-base">
-          afterquiet believes that an object can be more than an accessory. it can be a reminder, a personal statement, a memory, or a quiet form of resistance.
-        </p>
-        <p class="font-sans text-faded-grey leading-relaxed text-sm sm:text-base">
-          the brand embraces imperfection, individuality, emotional honesty, and the freedom to express yourself without needing everyone's approval.
-        </p>
-
-        <div class="p-4 border border-subtle-border bg-card-bg text-xs font-mono text-archive-paper space-y-1">
-          <div class="text-faded-grey">// manifesto excerpt</div>
-          <div class="italic">"afterquiet exists for people who don't always have the right words, but still have something to say."</div>
-        </div>
+    <!-- Shop Section -->
+    <section class="shop-section section-pad" id="shop">
+      <div class="section-top mono">
+        <span>01 / LATEST OBJECTS</span>
+        <span>bags, totes & accessories</span>
       </div>
 
-      <!-- Core Values 01-05 Grid -->
-      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-        
-        <div class="p-6 border border-subtle-border bg-card-bg/60">
-          <span class="font-mono text-xs text-distorted-red font-semibold">01 — INDIVIDUALITY</span>
-          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">personal expression</h4>
-          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
-            expression should feel personal, not dictated by trends, expectations, or algorithms.
-          </p>
-        </div>
-
-        <div class="p-6 border border-subtle-border bg-card-bg/60">
-          <span class="font-mono text-xs text-distorted-red font-semibold">02 — EMOTIONAL HONESTY</span>
-          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">raw & unfiltered</h4>
-          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
-            feelings, contradictions, uncertainty, and vulnerability are all legitimate parts of being human.
-          </p>
-        </div>
-
-        <div class="p-6 border border-subtle-border bg-card-bg/60">
-          <span class="font-mono text-xs text-distorted-red font-semibold">03 — INDEPENDENCE</span>
-          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">own perspective</h4>
-          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
-            maintaining its own vision instead of following every popular hype cycle or aesthetic template.
-          </p>
-        </div>
-
-        <div class="p-6 border border-subtle-border bg-card-bg/60">
-          <span class="font-mono text-xs text-distorted-red font-semibold">04 — CREATIVE RESISTANCE</span>
-          <h4 class="font-display font-bold text-lg text-archive-paper mt-1 lowercase">uncomfortable truths</h4>
-          <p class="font-sans text-xs text-faded-grey mt-2 leading-relaxed">
-            art and design can question social expectations, challenge familiar ideas, and say what's left unsaid.
-          </p>
-        </div>
-
+      <div class="section-title-row">
+        <h2>made to mean<br><i>something.</i></h2>
+        <a href="/try-on" class="text-arrow">try a bag on ↗</a>
       </div>
 
-    </div>
-  </section>
+      <!-- Filters: All Objects, Bags, Totes, Accessories -->
+      <div class="filters" role="group" aria-label="Filter products">
+        <button class="filter active" onclick="filterItems('all')">all objects <span id="countAll">08</span></button>
+        <button class="filter" onclick="filterItems('bags')">bags <span id="countBags">02</span></button>
+        <button class="filter" onclick="filterItems('totes')">totes <span id="countTotes">02</span></button>
+        <button class="filter" onclick="filterItems('accessories')">accessories <span id="countAcc">04</span></button>
+      </div>
 
-  <!-- Lookbook / Archival Visual Grid -->
-  <section id="archive" class="border-t border-subtle-border py-20 bg-after-dark">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Try On Feature Showcase Section -->
+    <section class="tryon-banner" id="tryon">
+      <div class="tryon-banner-inner">
         <div>
-          <span class="font-mono text-xs text-faded-grey uppercase tracking-widest">// in the wild</span>
-          <h2 class="font-display font-bold text-3xl text-archive-paper lowercase mt-1">wearable expression</h2>
+          <span class="tryon-badge">FEATURED STUDIO</span>
+          <h2 style="font:700 clamp(36px, 4.5vw, 56px)/1.08 var(--display); letter-spacing:-0.06em; margin:14px 0 16px;">
+            see how it feels<br><i>to carry.</i>
+          </h2>
+          <p style="color:#b0aaa2; font-size:15px; line-height:1.7; margin-bottom:28px;">
+            Want to see how the heavyweight canvas tote or the tactical messenger bag fits your daily style? Test it in our interactive Try-On Studio. Upload a picture or choose a sample silhouette, drag, rotate, and even attach pins.
+          </p>
+          <a href="/try-on" class="button-dark" style="background:var(--red); border-color:var(--red);">
+            <span>launch try-on studio</span>
+            <span>↗</span>
+          </a>
         </div>
-        <p class="font-sans text-xs sm:text-sm text-faded-grey max-w-sm">
-          pins and stickers in real environments — jackets, tote bags, notebooks, and everyday gear.
-        </p>
-      </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        
-        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
-          <div class="w-full h-full flex items-center justify-center">
-            <div class="w-20 h-20 rounded-full border border-faded-grey bg-after-dark flex items-center justify-center text-center p-2">
-              <span class="font-mono text-[9px] text-archive-paper lowercase">silence isn't peace.</span>
-            </div>
+        <div style="background:#1f1e1c; border:1px solid #333; padding:28px; text-align:center;">
+          <div style="aspect-ratio:1.2; background:#141414; border:1px dashed #444; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+            <!-- Mini visual tote icon -->
+            <svg width="120" height="150" viewBox="0 0 260 340" fill="none">
+              <path d="M75 140 C75 10, 185 10, 185 140" stroke="#f1efe9" stroke-width="16" fill="none"/>
+              <rect x="25" y="110" width="210" height="220" rx="4" fill="#f1efe9" stroke="#171717" stroke-width="3"/>
+              <text x="130" y="200" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20" fill="#171717" text-anchor="middle">AFTERQUIET</text>
+              <text x="130" y="235" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#843b40" text-anchor="middle">ARCHIVE TOTE</text>
+            </svg>
+            <span class="mono" style="font-size:10px; color:#888; margin-top:14px;">DRAG & ATTACH PINS IN STUDIO</span>
           </div>
-          <span class="font-mono text-[10px] text-faded-grey">denim jacket • lapel pin</span>
-        </div>
-
-        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
-          <div class="w-full h-full flex items-center justify-center">
-            <div class="w-28 h-14 border border-distorted-red bg-distorted-red/20 flex items-center justify-center text-center px-2">
-              <span class="font-mono text-[9px] text-archive-paper lowercase tracking-wider">too soft for this world</span>
-            </div>
+          <div style="display:flex; justify-content:space-between; margin-top:14px; font-family:var(--mono); font-size:10px; color:#aaa;">
+            <span>SUPPORTED: TOTES & BAGS</span>
+            <span style="color:var(--red);">PRIVATE LOCAL PREVIEW</span>
           </div>
-          <span class="font-mono text-[10px] text-faded-grey">notebook • vinyl sticker</span>
-        </div>
-
-        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
-          <div class="w-full h-full flex items-center justify-center">
-            <div class="w-20 h-20 border border-archive-paper bg-after-dark flex items-center justify-center text-center p-2 rotate-6">
-              <span class="font-display font-bold text-xs text-archive-paper lowercase">after<br>quiet</span>
-            </div>
-          </div>
-          <span class="font-mono text-[10px] text-faded-grey">canvas tote bag • pin badge</span>
-        </div>
-
-        <div class="aspect-square bg-card-bg border border-subtle-border p-4 flex flex-col justify-between group hover:border-faded-grey transition-all relative overflow-hidden">
-          <div class="w-full h-full flex items-center justify-center">
-            <div class="w-24 h-16 border border-subtle-border bg-after-dark flex flex-col items-center justify-center p-2">
-              <span class="font-mono text-[8px] text-faded-grey">VOL. 02 ARCHIVE</span>
-              <span class="font-mono text-[10px] text-distorted-red lowercase mt-1">restless mind</span>
-            </div>
-          </div>
-          <span class="font-mono text-[10px] text-faded-grey">camera strap • metal badge</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Slide-Over Shopping Bag Drawer -->
-  <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
-    <!-- Backdrop -->
-    <div id="cartBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm pointer-events-auto"></div>
-
-    <!-- Drawer Panel -->
-    <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-after-dark border-l border-subtle-border p-6 shadow-2xl flex flex-col justify-between pointer-events-auto transform translate-x-full transition-transform duration-300 ease-in-out" id="cartPanel">
-      
-      <div>
-        <div class="flex items-center justify-between border-b border-subtle-border pb-4 mb-6">
-          <div class="flex items-center gap-2">
-            <span class="font-display font-bold text-xl text-archive-paper lowercase">your bag</span>
-            <span id="drawerCount" class="font-mono text-xs text-faded-grey">(0 items)</span>
-          </div>
-          <button id="closeCartBtn" class="text-faded-grey hover:text-archive-paper font-mono text-xs cursor-pointer p-1">
-            [close ✕]
-          </button>
-        </div>
-
-        <!-- Cart Items List -->
-        <div id="cartItemsList" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
-          <p class="font-mono text-xs text-faded-grey py-8 text-center">your bag is empty. find something that speaks for you.</p>
         </div>
       </div>
+    </section>
 
-      <!-- Checkout Footer -->
-      <div class="border-t border-subtle-border pt-4 space-y-4">
-        <div class="flex justify-between items-center font-mono text-xs">
-          <span class="text-faded-grey">subtotal</span>
-          <span id="cartSubtotal" class="text-archive-paper font-bold text-sm">Rp 0</span>
+    <!-- Manifesto / About Section -->
+    <section class="manifesto section-pad" id="about">
+      <div class="section-top mono">
+        <span>02 / A LITTLE ABOUT US</span>
+        <span>this is afterquiet</span>
+      </div>
+
+      <div class="manifesto-layout">
+        <h2>
+          not made for everyone.<br>
+          <em>that's kind of the point.</em>
+        </h2>
+
+        <div class="manifesto-copy">
+          <p>
+            afterquiet is an independent accessories brand exploring identity, emotions, and the culture around us through small everyday objects.
+          </p>
+          <p>
+            the things you carry can say something about you — even when you don't have the words.
+          </p>
+          <a href="#archive" class="text-arrow">read the story ↗</a>
         </div>
-        <p class="font-sans text-[11px] text-faded-grey">taxes & shipping calculated at checkout via WhatsApp direct order.</p>
-        
-        <button id="checkoutBtn" onclick="checkoutWhatsApp()" class="w-full py-3.5 bg-archive-paper text-after-dark font-mono text-xs font-bold hover:bg-white transition-all lowercase flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
-          <span>proceed to order (whatsapp)</span>
-          <span>→</span>
-        </button>
       </div>
+    </section>
 
-    </div>
-  </div>
-
-  <!-- Product Quick Detail Modal -->
-  <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none opacity-0 transition-opacity duration-200">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm pointer-events-auto" onclick="closeModal()"></div>
-    <div class="relative bg-after-dark border border-subtle-border w-full max-w-lg p-6 sm:p-8 rounded shadow-2xl pointer-events-auto z-10 space-y-6">
-      <div class="flex justify-between items-start">
-        <span id="modalCategory" class="font-mono text-xs text-distorted-red uppercase">VOL. 01 — ENAMEL PIN</span>
-        <button onclick="closeModal()" class="text-faded-grey hover:text-archive-paper font-mono text-xs p-1">[esc ✕]</button>
+    <!-- Archive Section -->
+    <section class="archive-section" id="archive">
+      <div class="mono">03 / VISUAL ARCHIVE</div>
+      <div class="archive-content">
+        <h2>
+          ideas don't<br>
+          expire<span>.</span>
+        </h2>
+        <p>An evolving space for releases, unfinished thoughts, and things worth keeping.</p>
       </div>
-
-      <div class="space-y-2">
-        <h3 id="modalTitle" class="font-display font-bold text-2xl sm:text-3xl text-archive-paper lowercase">product title</h3>
-        <p id="modalPrice" class="font-mono text-sm text-distorted-red font-semibold">Rp 0</p>
+      <div class="archive-bottom mono">
+        <span>INDEX: 000 → ∞</span>
+        <span>afterquiet / visual culture</span>
       </div>
-
-      <p id="modalDesc" class="font-sans text-sm text-faded-grey leading-relaxed">product description</p>
-
-      <div class="border-y border-subtle-border py-3 grid grid-cols-2 gap-4 font-mono text-xs text-faded-grey">
-        <div>material: <span id="modalMaterial" class="text-archive-paper">hard enamel</span></div>
-        <div>dimensions: <span id="modalDimensions" class="text-archive-paper">32mm</span></div>
-      </div>
-
-      <div class="flex gap-4">
-        <button id="modalAddBtn" class="flex-1 py-3 bg-archive-paper text-after-dark font-mono text-xs font-bold hover:bg-white transition-all lowercase">
-          + add to bag
-        </button>
-      </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <!-- Footer -->
-  <footer class="border-t border-subtle-border bg-after-dark py-12 text-xs font-mono text-faded-grey">
-    <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      
-      <div class="space-y-3">
-        <span class="font-display font-bold text-lg text-archive-paper tracking-tighter lowercase">afterquiet</span>
-        <p class="font-sans text-xs text-faded-grey leading-relaxed">
-          independent accessories & visual culture. wearable thoughts and quiet resistance.
-        </p>
-        <p class="text-[11px] text-faded-grey">designed for people who don't always have the words.</p>
-      </div>
-
-      <div class="space-y-2">
-        <span class="text-archive-paper font-semibold">// navigation</span>
-        <ul class="space-y-1.5 lowercase">
-          <li><a href="#shop" class="hover:text-archive-paper transition-colors">shop all</a></li>
-          <li><a href="#collections" class="hover:text-archive-paper transition-colors">collections</a></li>
-          <li><a href="#about" class="hover:text-archive-paper transition-colors">brand philosophy</a></li>
-          <li><a href="#archive" class="hover:text-archive-paper transition-colors">lookbook</a></li>
-        </ul>
-      </div>
-
-      <div class="space-y-2">
-        <span class="text-archive-paper font-semibold">// customer care</span>
-        <ul class="space-y-1.5 lowercase">
-          <li><a href="#" class="hover:text-archive-paper transition-colors">shipping & rates</a></li>
-          <li><a href="#" class="hover:text-archive-paper transition-colors">care instructions</a></li>
-          <li><a href="#" class="hover:text-archive-paper transition-colors">return policy</a></li>
-          <li><a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener" class="hover:text-archive-paper transition-colors">github repository</a></li>
-        </ul>
-      </div>
-
-      <div class="space-y-2">
-        <span class="text-archive-paper font-semibold">// newsletter</span>
-        <p class="font-sans text-[11px] text-faded-grey">new pieces. same restless mind. no spam.</p>
-        <div class="flex gap-2">
-          <input type="email" placeholder="your@email.com" class="bg-card-bg border border-subtle-border px-3 py-1.5 text-xs text-archive-paper focus:outline-none focus:border-archive-paper w-full">
-          <button class="bg-archive-paper text-after-dark px-3 py-1.5 font-bold hover:bg-white text-xs">join</button>
+  <footer>
+    <div class="footer-top">
+      <a href="#top" class="footer-brand">afterquiet</a>
+      <div class="footer-links">
+        <div>
+          <span class="mono">EXPLORE</span>
+          <a href="#shop">shop all</a>
+          <a href="/try-on">try on studio</a>
+          <a href="#collections">collections</a>
+        </div>
+        <div>
+          <span class="mono">ABOUT</span>
+          <a href="#about">our point of view</a>
+          <a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener">github repository ↗</a>
         </div>
       </div>
-
     </div>
-
-    <div class="max-w-7xl mx-auto px-6 border-t border-subtle-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>© 2026 afterquiet by <a href="https://github.com/jiwajiwatulang" target="_blank" rel="noopener" class="text-archive-paper hover:underline">@jiwajiwatulang</a>. all rights reserved.</p>
-      <p class="text-distorted-red">"wear what you can't always say."</p>
+    <div class="footer-bottom">
+      <span>© 2026 afterquiet — independent accessories & visual culture</span>
+      <span>wear what you can't always say.</span>
+      <a href="#top">back to top ↑</a>
     </div>
   </footer>
 
-  <!-- Application Logic (Catalog, Bag & Modals) -->
+  <!-- Slide-Over Shopping Bag Drawer -->
+  <div class="cart-drawer-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div>
+      <div class="drawer-head">
+        <h2>your bag</h2>
+        <button class="close-btn" id="cartCloseBtn">×</button>
+      </div>
+      <div class="cart-items-list" id="cartItemsList">
+        <p style="color:var(--muted); font-size:13px; font-family:var(--mono); padding:30px 0; text-align:center;">
+          your bag is currently empty.
+        </p>
+      </div>
+    </div>
+
+    <div class="drawer-bottom">
+      <div class="subtotal-row">
+        <span>subtotal</span>
+        <span id="cartSubtotal">Rp 0</span>
+      </div>
+      <p style="font-size:11px; color:var(--muted); margin-bottom:14px; font-family:var(--mono);">
+        orders processed directly via official whatsapp support.
+      </p>
+      <button class="button-dark" style="width:100%; justify-content:center;" onclick="checkoutWhatsApp()">
+        <span>checkout via whatsapp</span>
+        <span>↗</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Application Logic -->
   <script>
-    // --- Products Catalog conforming to Afterquiet Brand Guidelines ---
+    // Products Catalogue
     const products = [
       {
-        id: 1,
+        id: "tote_ecru",
+        title: "archive canvas tote bag",
+        category: "totes",
+        kind: "16oz raw cotton • ecru archive",
+        price: 135000,
+        formattedPrice: "Rp 135.000",
+        index: "OBJ / 01",
+        copy: "archive\ntote.",
+        hasTryOn: true
+      },
+      {
+        id: "tote_black",
+        title: "utility black canvas tote",
+        category: "totes",
+        kind: "washed heavyweight canvas • webbing strip",
+        price: 145000,
+        formattedPrice: "Rp 145.000",
+        index: "OBJ / 02",
+        copy: "utility\nblack.",
+        hasTryOn: true
+      },
+      {
+        id: "bag_messenger",
+        title: "restless mind tactical messenger",
+        category: "bags",
+        kind: "crossbody sling • cordura nylon",
+        price: 185000,
+        formattedPrice: "Rp 185.000",
+        index: "OBJ / 03",
+        copy: "tactical\nmessenger.",
+        hasTryOn: true
+      },
+      {
+        id: "bag_shoulder",
+        title: "fragile archives mini shoulder bag",
+        category: "bags",
+        kind: "everyday mini pouch • rope strap",
+        price: 115000,
+        formattedPrice: "Rp 115.000",
+        index: "OBJ / 04",
+        copy: "mini\nshoulder.",
+        hasTryOn: true
+      },
+      {
+        id: "pin_restless",
         title: "restless mind enamel pin",
-        category: "pins",
-        collection: "vol. 01 — too soft for this world",
+        category: "accessories",
+        kind: "hard enamel • black nickel finish",
         price: 55000,
         formattedPrice: "Rp 55.000",
-        description: "a small physical anchor for an active, racing consciousness. hard enamel pin with black nickel plating and dual rubber clutches.",
-        material: "hard enamel / black nickel",
-        dimensions: "32mm diameter",
-        badge: "bestseller",
-        graphicText: "restless\nmind."
+        index: "OBJ / 05",
+        copy: "restless\nmind.",
+        hasTryOn: false
       },
       {
-        id: 2,
+        id: "sticker_pack",
         title: "silence isn't peace sticker pack",
-        category: "stickers",
-        collection: "vol. 02 — fragile archives",
+        category: "accessories",
+        kind: "5-piece screenprinted matte vinyl",
         price: 32000,
         formattedPrice: "Rp 32.000",
-        description: "5-piece screenprinted weatherproof vinyl stickers. scratch resistant, UV protected, matte laminated for helmets, laptops, or street fixtures.",
-        material: "screenprinted vinyl matte",
-        dimensions: "varying 50mm - 90mm",
-        badge: "new release",
-        graphicText: "silence isn't\nalways peace."
+        index: "OBJ / 06",
+        copy: "silence\nisn't peace.",
+        hasTryOn: false
       },
       {
-        id: 3,
+        id: "badge_soft",
         title: "too soft for this world badge",
-        category: "pins",
-        collection: "vol. 01 — too soft for this world",
+        category: "accessories",
+        kind: "die-struck metal • antique silver",
         price: 45000,
         formattedPrice: "Rp 45.000",
-        description: "for those who feel everything with high intensity. antique silver finish badge with debossed typographic detailing.",
-        material: "die-struck metal / antique silver",
-        dimensions: "28mm x 28mm",
-        badge: "vol. 01",
-        graphicText: "too soft\nfor this world"
+        index: "OBJ / 07",
+        copy: "too soft\nfor this world.",
+        hasTryOn: false
       },
       {
-        id: 4,
-        title: "uncomfortable truths sticker",
-        category: "stickers",
-        collection: "vol. 02 — fragile archives",
-        price: 18000,
-        formattedPrice: "Rp 18.000",
-        description: "bold photocopied aesthetics translated into archival weather-resistant vinyl. resistance through everyday visual artifacts.",
-        material: "die-cut vinyl matte",
-        dimensions: "75mm x 40mm",
-        badge: "drop 02",
-        graphicText: "uncomfortable\ntruths."
-      },
-      {
-        id: 5,
-        title: "emotional honesty heavyweight keychain",
+        id: "keychain_honesty",
+        title: "emotional honesty zinc keychain",
         category: "accessories",
-        collection: "vol. 02 — fragile archives",
+        kind: "heavyweight motel tag • gunmetal",
         price: 48000,
         formattedPrice: "Rp 48.000",
-        description: "solid zinc alloy motel-style tag with laser-etched typographic reminder. heavy tactile feel in hand.",
-        material: "cast zinc alloy / gunmetal",
-        dimensions: "90mm x 45mm",
-        badge: "limited",
-        graphicText: "emotional\nhonesty"
-      },
-      {
-        id: 6,
-        title: "fragile archives mini zine & patch pack",
-        category: "accessories",
-        collection: "vol. 02 — fragile archives",
-        price: 65000,
-        formattedPrice: "Rp 65.000",
-        description: "16-page risograph printed art zine exploring thoughts left unsaid, accompanied by an embroidered iron-on canvas patch.",
-        material: "risograph paper + canvas patch",
-        dimensions: "A6 zine / 70mm patch",
-        badge: "bundle",
-        graphicText: "fragile\narchives"
+        index: "OBJ / 08",
+        copy: "emotional\nhonesty.",
+        hasTryOn: false
       }
     ];
 
-    // --- State ---
     let cart = [];
-    let activeFilter = 'all';
+    let currentFilter = 'all';
 
-    // --- DOM Elements ---
     const productGrid = document.getElementById('productGrid');
-    const openCartBtn = document.getElementById('openCartBtn');
-    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartOverlay = document.getElementById('cartOverlay');
     const cartDrawer = document.getElementById('cartDrawer');
-    const cartBackdrop = document.getElementById('cartBackdrop');
-    const cartPanel = document.getElementById('cartPanel');
+    const cartOpenBtn = document.getElementById('cartOpenBtn');
+    const cartCloseBtn = document.getElementById('cartCloseBtn');
     const cartItemsList = document.getElementById('cartItemsList');
-    const cartCountBadge = document.getElementById('cartCountBadge');
-    const drawerCount = document.getElementById('drawerCount');
     const cartSubtotal = document.getElementById('cartSubtotal');
-    const checkoutBtn = document.getElementById('checkoutBtn');
+    const cartCount = document.getElementById('cartCount');
 
-    // --- Modal Elements ---
-    const productModal = document.getElementById('productModal');
-    const modalCategory = document.getElementById('modalCategory');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalMaterial = document.getElementById('modalMaterial');
-    const modalDimensions = document.getElementById('modalDimensions');
-    const modalAddBtn = document.getElementById('modalAddBtn');
-
-    // --- Mobile Menu Toggle ---
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+    // Mobile nav toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    menuToggle.addEventListener('click', () => {
+      mobileNav.style.display = mobileNav.style.display === 'none' ? 'block' : 'none';
     });
 
-    // --- Render Products ---
-    function renderProducts() {
+    function renderGrid() {
       productGrid.innerHTML = '';
-      const filtered = activeFilter === 'all' 
+      const items = currentFilter === 'all' 
         ? products 
-        : products.filter(p => p.category === activeFilter);
+        : products.filter(p => p.category === currentFilter);
 
-      filtered.forEach(p => {
+      items.forEach(p => {
         const card = document.createElement('div');
-        card.className = "border border-subtle-border bg-card-bg rounded p-6 flex flex-col justify-between group hover:border-faded-grey transition-all shadow-sm";
+        card.className = 'product-card';
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between text-[11px] font-mono text-faded-grey mb-3">
-              <span>${p.collection}</span>
-              <span class="text-distorted-red border border-distorted-red/40 px-1.5 py-0.5 rounded text-[10px]">${p.badge}</span>
+            <div class="product-art" onclick="handleCardClick('${p.id}', ${p.hasTryOn})">
+              <span class="placeholder-index">${p.index}</span>
+              <span class="placeholder-copy">${p.copy}</span>
+              <span class="placeholder-type">${p.hasTryOn ? 'TRY-ON AVAILABLE ↗' : 'ACCESSORY'}</span>
             </div>
 
-            <!-- Visual Representation of Product -->
-            <div class="aspect-square bg-after-dark border border-subtle-border rounded flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group-hover:border-subtle-border cursor-pointer" onclick="openModal(${p.id})">
-              <div class="w-24 h-24 rounded-full border border-archive-paper/40 bg-card-bg flex flex-col items-center justify-center p-3 shadow-inner group-hover:scale-105 transition-transform">
-                <span class="font-display font-bold text-xs text-archive-paper lowercase text-center whitespace-pre-line leading-tight">${p.graphicText}</span>
-              </div>
-              <span class="absolute bottom-2 right-2 text-[10px] font-mono text-faded-grey opacity-0 group-hover:opacity-100 transition-opacity">quick view ↗</span>
-            </div>
-
-            <div class="mt-5 space-y-1">
-              <h3 class="font-display font-bold text-lg text-archive-paper lowercase group-hover:text-distorted-red transition-colors cursor-pointer" onclick="openModal(${p.id})">
-                ${p.title}
-              </h3>
-              <p class="font-sans text-xs text-faded-grey line-clamp-2">${p.description}</p>
+            <div class="card-meta">
+              <span>
+                <strong class="card-title" onclick="handleCardClick('${p.id}', ${p.hasTryOn})">${p.title}</strong>
+                <span class="card-kind">${p.kind}</span>
+              </span>
+              <span class="card-price">${p.formattedPrice}</span>
             </div>
           </div>
 
-          <div class="mt-6 pt-4 border-t border-subtle-border flex items-center justify-between">
-            <span class="font-mono text-sm text-archive-paper font-semibold">${p.formattedPrice}</span>
-            <button onclick="addToCart(${p.id})" class="px-3.5 py-1.5 bg-archive-paper hover:bg-white text-after-dark font-mono text-xs font-semibold lowercase transition-all rounded-sm flex items-center gap-1 cursor-pointer">
-              <span>+ bag</span>
-            </button>
+          <div class="card-actions">
+            ${p.hasTryOn ? '<a href="/try-on" class="try-link">try on ↗</a>' : '<span style="font-size:10px; color:var(--muted); font-family:var(--mono);">VOL. 01 / 02</span>'}
+            <button class="btn-add" onclick="addToBag('${p.id}')">+ add to bag</button>
           </div>
         `;
         productGrid.appendChild(card);
       });
     }
 
-    // --- Category Filter Handler ---
-    window.filterCategory = function(cat) {
-      activeFilter = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        if (btn.getAttribute('data-category') === cat) {
-          btn.className = "cat-btn active px-3.5 py-1.5 border border-archive-paper bg-archive-paper text-after-dark font-medium rounded-sm lowercase transition-all";
+    window.filterItems = function(cat) {
+      currentFilter = cat;
+      document.querySelectorAll('.filter').forEach(b => {
+        if (b.innerText.toLowerCase().includes(cat)) {
+          b.classList.add('active');
         } else {
-          btn.className = "cat-btn px-3.5 py-1.5 border border-subtle-border text-faded-grey hover:text-archive-paper hover:border-faded-grey rounded-sm lowercase transition-all";
+          b.classList.remove('active');
         }
       });
-      renderProducts();
+      renderGrid();
     };
 
-    // --- Cart Functions ---
-    window.addToCart = function(productId) {
-      const item = products.find(p => p.id === productId);
-      if (!item) return;
-
-      const existing = cart.find(c => c.id === productId);
-      if (existing) {
-        existing.qty += 1;
+    window.handleCardClick = function(id, hasTryOn) {
+      if (hasTryOn) {
+        window.location.href = '/try-on';
       } else {
-        cart.push({ ...item, qty: 1 });
+        addToBag(id);
       }
+    };
 
-      updateCartUI();
+    window.addToBag = function(id) {
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+      const exist = cart.find(c => c.id === id);
+      if (exist) {
+        exist.qty += 1;
+      } else {
+        cart.push({ ...prod, qty: 1 });
+      }
+      updateCart();
       openCart();
     };
 
-    function updateCartUI() {
-      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-      cartCountBadge.innerText = totalItems;
-      drawerCount.innerText = `(${totalItems} items)`;
+    function updateCart() {
+      const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+      cartCount.innerText = totalQty;
 
       if (cart.length === 0) {
-        cartItemsList.innerHTML = `<p class="font-mono text-xs text-faded-grey py-8 text-center">your bag is empty. find something that speaks for you.</p>`;
+        cartItemsList.innerHTML = `<p style="color:var(--muted); font-size:13px; font-family:var(--mono); padding:30px 0; text-align:center;">your bag is currently empty.</p>`;
         cartSubtotal.innerText = "Rp 0";
-        checkoutBtn.disabled = true;
         return;
       }
 
-      checkoutBtn.disabled = false;
-      let totalAmount = 0;
-
+      let subtotal = 0;
       cartItemsList.innerHTML = cart.map(item => {
         const itemTotal = item.price * item.qty;
-        totalAmount += itemTotal;
+        subtotal += itemTotal;
         return `
-          <div class="flex items-center justify-between border-b border-subtle-border pb-3">
-            <div class="space-y-1">
-              <h4 class="font-display font-semibold text-xs text-archive-paper lowercase">${item.title}</h4>
-              <p class="font-mono text-[11px] text-faded-grey">Rp ${item.price.toLocaleString('id-ID')}</p>
-              <div class="flex items-center gap-2 font-mono text-xs text-archive-paper pt-1">
-                <button onclick="changeQty(${item.id}, -1)" class="w-5 h-5 border border-subtle-border hover:border-faded-grey flex items-center justify-center">-</button>
+          <div style="border-bottom:1px solid var(--line); padding:14px 0; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; font-family:var(--display);">${item.title}</strong>
+              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin:4px 0;">Rp ${item.price.toLocaleString('id-ID')}</div>
+              <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-family:var(--mono);">
+                <button onclick="changeQty('${item.id}', -1)" style="border:1px solid var(--line); width:24px; height:24px;">-</button>
                 <span>${item.qty}</span>
-                <button onclick="changeQty(${item.id}, 1)" class="w-5 h-5 border border-subtle-border hover:border-faded-grey flex items-center justify-center">+</button>
+                <button onclick="changeQty('${item.id}', 1)" style="border:1px solid var(--line); width:24px; height:24px;">+</button>
               </div>
             </div>
-            <div class="text-right">
-              <span class="font-mono text-xs text-archive-paper">Rp ${itemTotal.toLocaleString('id-ID')}</span>
-              <button onclick="removeFromCart(${item.id})" class="block text-[10px] font-mono text-distorted-red hover:underline mt-1">remove</button>
+            <div style="text-align:right;">
+              <span style="font-family:var(--mono); font-size:12px; font-weight:700;">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+              <button onclick="removeItem('${item.id}')" style="display:block; font-size:10px; color:var(--red); text-decoration:underline; margin-top:6px;">remove</button>
             </div>
           </div>
         `;
       }).join('');
 
-      cartSubtotal.innerText = `Rp ${totalAmount.toLocaleString('id-ID')}`;
+      cartSubtotal.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
     }
 
-    window.changeQty = function(id, delta) {
+    window.changeQty = function(id, d) {
       const item = cart.find(c => c.id === id);
       if (!item) return;
-      item.qty += delta;
+      item.qty += d;
       if (item.qty <= 0) {
         cart = cart.filter(c => c.id !== id);
       }
-      updateCartUI();
+      updateCart();
     };
 
-    window.removeFromCart = function(id) {
+    window.removeItem = function(id) {
       cart = cart.filter(c => c.id !== id);
-      updateCartUI();
+      updateCart();
     };
 
     function openCart() {
-      cartDrawer.classList.remove('opacity-0', 'pointer-events-none');
-      cartPanel.classList.remove('translate-x-full');
+      cartOverlay.classList.add('open');
+      cartDrawer.classList.add('open');
     }
 
     function closeCart() {
-      cartDrawer.classList.add('opacity-0', 'pointer-events-none');
-      cartPanel.classList.add('translate-x-full');
+      cartOverlay.classList.remove('open');
+      cartDrawer.classList.remove('open');
     }
 
-    openCartBtn.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    cartBackdrop.addEventListener('click', closeCart);
+    cartOpenBtn.addEventListener('click', openCart);
+    cartCloseBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
 
-    // --- Modal Functions ---
-    window.openModal = function(id) {
-      const item = products.find(p => p.id === id);
-      if (!item) return;
-
-      modalCategory.innerText = item.collection;
-      modalTitle.innerText = item.title;
-      modalPrice.innerText = item.formattedPrice;
-      modalDesc.innerText = item.description;
-      modalMaterial.innerText = item.material;
-      modalDimensions.innerText = item.dimensions;
-
-      modalAddBtn.onclick = function() {
-        addToCart(item.id);
-        closeModal();
-      };
-
-      productModal.classList.remove('opacity-0', 'pointer-events-none');
-    };
-
-    window.closeModal = function() {
-      productModal.classList.add('opacity-0', 'pointer-events-none');
-    };
-
-    // --- Checkout via WhatsApp Handler ---
     window.checkoutWhatsApp = function() {
       if (cart.length === 0) return;
-
-      const orderLines = cart.map(item => `• ${item.title} (x${item.qty}) - Rp ${(item.price * item.qty).toLocaleString('id-ID')}`).join('%0A');
-      const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      
-      const message = `Halo afterquiet,%0A%0ASaya ingin memesan koleksi berikut:%0A${orderLines}%0A%0ATotal: Rp ${totalAmount.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stock & ongkos kirim. Terima kasih.`;
-      
-      // WhatsApp link (bisa diganti nomor admin saat sudah ada)
-      window.open(`https://wa.me/?text=${message}`, '_blank');
+      const lines = cart.map(i => `• ${i.title} (x${i.qty}) - Rp ${(i.price * i.qty).toLocaleString('id-ID')}`).join('%0A');
+      const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+      const msg = `Halo afterquiet,%0A%0ASaya ingin checkout:%0A${lines}%0A%0ATotal: Rp ${total.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stock & detail pengiriman. Terima kasih.`;
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
     };
 
-    // Initialize View
-    renderProducts();
-    updateCartUI();
+    renderGrid();
   </script>
 </body>
 </html>
