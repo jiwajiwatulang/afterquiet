@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Afterquiet — Sound & Stillness</title>
+  <meta name="description" content="Afterquiet — Ruang digital eksplorasi audio, ambient, dan proyek kreatif oleh jiwajiwatulang.">
+  <meta name="theme-color" content="#09090b">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Afterquiet — Sound & Stillness">
+  <meta property="og:description" content="Menemukan Bunyi di Balik Keheningan.">
+  <meta property="og:type" content="website">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,7 +59,7 @@
   </div>
 
   <!-- Navbar -->
-  <header class="relative z-10 border-b border-zinc-800/60 backdrop-blur-md bg-zinc-950/60 sticky top-0">
+  <header class="relative z-20 border-b border-zinc-800/60 backdrop-blur-md bg-zinc-950/70 sticky top-0">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3 group">
         <span class="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-400 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-500/25 group-hover:scale-105 transition-transform">
@@ -60,51 +68,66 @@
         <span class="font-display font-bold text-lg tracking-wider text-zinc-100 group-hover:text-violet-400 transition-colors">AFTERQUIET</span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-400">
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-400 font-medium">
         <a href="#about" class="hover:text-zinc-100 transition-colors">Tentang</a>
-        <a href="#tracks" class="hover:text-zinc-100 transition-colors">Karya</a>
+        <a href="#tracks" class="hover:text-zinc-100 transition-colors">Karya & Soundscape</a>
         <a href="#contact" class="hover:text-zinc-100 transition-colors">Kontak</a>
       </nav>
 
       <div class="flex items-center gap-3">
         <!-- Ambient Sound Generator Toggle Button -->
-        <button id="ambientBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium border border-violet-500/30 bg-violet-950/40 text-violet-300 hover:bg-violet-900/50 hover:border-violet-400/50 transition-all cursor-pointer">
+        <button id="ambientBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium border border-violet-500/40 bg-violet-950/50 text-violet-300 hover:bg-violet-900/60 hover:border-violet-400 transition-all cursor-pointer shadow-sm">
           <span class="w-2 h-2 rounded-full bg-violet-400 animate-ping" id="soundDot" style="display:none;"></span>
-          <svg id="soundIconPlay" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="soundIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           <span id="soundText">Play Ambient</span>
         </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/80 transition-colors" aria-label="Toggle navigation">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-b border-zinc-800/80 bg-zinc-950/95 px-6 py-4 space-y-3">
+      <a href="#about" class="block text-sm text-zinc-300 hover:text-white py-1 transition-colors">Tentang</a>
+      <a href="#tracks" class="block text-sm text-zinc-300 hover:text-white py-1 transition-colors">Karya & Soundscape</a>
+      <a href="#contact" class="block text-sm text-zinc-300 hover:text-white py-1 transition-colors">Kontak</a>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <main class="relative z-10 flex-grow flex flex-col justify-center max-w-6xl mx-auto px-6 py-20">
+  <main class="relative z-10 flex-grow flex flex-col justify-center max-w-6xl mx-auto px-6 py-16 sm:py-24">
     <div class="text-center max-w-3xl mx-auto space-y-6">
       
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-zinc-700 bg-zinc-900/80 text-zinc-300 shadow-inner">
         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        GitHub Pages Live Demo
+        Vercel Live Production
       </div>
 
-      <h1 class="text-5xl sm:text-7xl font-display font-extrabold tracking-tight text-white leading-tight">
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight text-white leading-tight">
         Menemukan Bunyi di Balik <span class="bg-gradient-to-r from-violet-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Keheningan</span>.
       </h1>
 
-      <p class="text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto font-light">
+      <p class="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto font-light">
         Selamat datang di ruang digital <strong class="text-zinc-200">Afterquiet</strong>. Tempat di mana ide, atmosfer, dan nada berpadu dalam frekuensi yang tenang namun bertenaga.
       </p>
 
-      <!-- Wave Visualizer Canvas -->
-      <div class="pt-4 pb-2 flex justify-center">
-        <canvas id="waveCanvas" width="600" height="90" class="w-full max-w-xl h-20 rounded-xl bg-zinc-900/60 border border-zinc-800/80 shadow-2xl backdrop-blur-sm"></canvas>
+      <!-- Wave Visualizer Canvas (High DPI crisp rendering) -->
+      <div class="pt-4 pb-2 flex justify-center w-full">
+        <canvas id="waveCanvas" class="w-full max-w-xl h-20 rounded-xl bg-zinc-900/60 border border-zinc-800/80 shadow-2xl backdrop-blur-sm"></canvas>
       </div>
 
       <div class="flex flex-wrap justify-center gap-4 pt-4">
-        <a href="#about" class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-600/30 hover:brightness-110 active:scale-95 transition-all">
-          Jelajahi Projek
+        <a href="#tracks" class="px-6 py-3 rounded-lg font-medium text-sm bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-600/30 hover:brightness-110 active:scale-95 transition-all">
+          Dengarkan Karya ↓
         </a>
         <a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener" class="px-6 py-3 rounded-lg font-medium text-sm border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:border-zinc-600 transition-all flex items-center gap-2">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -114,7 +137,7 @@
 
     </div>
 
-    <!-- Features / Highlights -->
+    <!-- About Section -->
     <section id="about" class="mt-28 grid md:grid-cols-3 gap-6">
       <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-violet-500/40 transition-colors">
         <div class="w-10 h-10 rounded-xl bg-violet-600/10 border border-violet-500/20 flex items-center justify-center text-violet-400 mb-4">
@@ -129,15 +152,76 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-white mb-2 font-display">Modern Web Code</h3>
-        <p class="text-sm text-zinc-400 leading-relaxed">Dibangun secara dinamis dan efisien dengan standar web modern dan performa tinggi.</p>
+        <p class="text-sm text-zinc-400 leading-relaxed">Dibangun secara dinamis dan efisien dengan standar web modern dan performa optimal.</p>
       </div>
 
       <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-violet-500/40 transition-colors">
         <div class="w-10 h-10 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
-        <h3 class="text-lg font-semibold text-white mb-2 font-display">Automated Deploy</h3>
-        <p class="text-sm text-zinc-400 leading-relaxed">Terkoneksi langsung dengan GitHub Pages dan CI/CD otomatis setiap ada perubahan kode.</p>
+        <h3 class="text-lg font-semibold text-white mb-2 font-display">Instant Auto-Deploy</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">Terkoneksi langsung dengan Vercel, pembaruan kode otomatis tayang secara instan.</p>
+      </div>
+    </section>
+
+    <!-- Tracks & Soundscapes Section (Fixed missing section) -->
+    <section id="tracks" class="mt-28">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <span class="text-xs uppercase tracking-widest text-violet-400 font-semibold">Koleksi Suasana</span>
+          <h2 class="text-3xl font-display font-bold text-white mt-1">Soundscapes & Moods</h2>
+        </div>
+        <p class="text-sm text-zinc-400 max-w-sm">Dengarkan simulasi harmoni suara ambient real-time melalui synthesizer bawaan web.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Preset 1 -->
+        <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-violet-500/50 transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs px-2.5 py-1 rounded-md bg-violet-950/60 border border-violet-800/50 text-violet-300">Preset 01</span>
+              <span class="text-xs text-zinc-500">432 Hz Drone</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">Midnight Stillness</h3>
+            <p class="text-sm text-zinc-400 mt-2">Frekuensi relaksasi malam hari yang menenangkan pikiran dan meredam kebisingan.</p>
+          </div>
+          <button onclick="playPreset('midnight')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-violet-600 hover:border-violet-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+            Putar Suasana Ini
+          </button>
+        </div>
+
+        <!-- Preset 2 -->
+        <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-indigo-500/50 transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-950/60 border border-indigo-800/50 text-indigo-300">Preset 02</span>
+              <span class="text-xs text-zinc-500">Deep Space</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors">Cosmic Echoes</h3>
+            <p class="text-sm text-zinc-400 mt-2">Resonansi gelombang sinus berfrekuensi rendah dengan modulasi perlahan layaknya ruang hampa.</p>
+          </div>
+          <button onclick="playPreset('cosmic')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-indigo-600 hover:border-indigo-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+            Putar Suasana Ini
+          </button>
+        </div>
+
+        <!-- Preset 3 -->
+        <div class="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-purple-500/50 transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs px-2.5 py-1 rounded-md bg-purple-950/60 border border-purple-800/50 text-purple-300">Preset 03</span>
+              <span class="text-xs text-zinc-500">Warm Analog</span>
+            </div>
+            <h3 class="text-lg font-semibold text-white group-hover:text-purple-300 transition-colors">Dawn Twilight</h3>
+            <p class="text-sm text-zinc-400 mt-2">Nuansa hangat transisi subuh menuju pagi, harmoni akord minor yang damai.</p>
+          </div>
+          <button onclick="playPreset('dawn')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-purple-600 hover:border-purple-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+            Putar Suasana Ini
+          </button>
+        </div>
       </div>
     </section>
   </main>
@@ -145,10 +229,11 @@
   <!-- Footer -->
   <footer id="contact" class="relative z-10 border-t border-zinc-800/60 bg-zinc-950/80 py-8">
     <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-      <p>© 2026 Afterquiet by <a href="https://github.com/jiwajiwatulang" class="text-zinc-300 hover:text-white transition-colors">@jiwajiwatulang</a>. All rights reserved.</p>
+      <p>© 2026 Afterquiet by <a href="https://github.com/jiwajiwatulang" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white transition-colors">@jiwajiwatulang</a>. All rights reserved.</p>
       <div class="flex items-center gap-6">
-        <a href="https://github.com/jiwajiwatulang/afterquiet" class="hover:text-zinc-300 transition-colors">GitHub</a>
+        <a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener" class="hover:text-zinc-300 transition-colors">GitHub</a>
         <a href="#about" class="hover:text-zinc-300 transition-colors">Tentang</a>
+        <a href="#tracks" class="hover:text-zinc-300 transition-colors">Karya</a>
         <a href="#" class="hover:text-zinc-300 transition-colors">Kembali ke Atas ↑</a>
       </div>
     </div>
@@ -156,24 +241,40 @@
 
   <!-- Interactive Visualizer & Web Audio Synth Script -->
   <script>
-    // --- Canvas Visualizer ---
+    // --- Mobile Menu Toggle ---
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // --- High-DPI Canvas Visualizer ---
     const canvas = document.getElementById('waveCanvas');
     const ctx = canvas.getContext('2d');
     let phase = 0;
     let isPlaying = false;
 
     function resizeCanvas() {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = 80;
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = 80 * dpr;
+      ctx.scale(dpr, dpr);
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
     function drawWave() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const width = canvas.width;
-      const height = canvas.height;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = 80;
       const mid = height / 2;
+
+      ctx.clearRect(0, 0, width, height);
 
       ctx.lineWidth = 2;
       const gradient = ctx.createLinearGradient(0, 0, width, 0);
@@ -183,12 +284,11 @@
       ctx.strokeStyle = gradient;
 
       ctx.beginPath();
-      const waveCount = isPlaying ? 3 : 1;
-      const amplitude = isPlaying ? 18 : 6;
+      const amplitude = isPlaying ? 22 : 6;
       const frequency = isPlaying ? 0.025 : 0.015;
 
       for (let x = 0; x < width; x++) {
-        const y = mid + Math.sin(x * frequency + phase) * amplitude * Math.sin(x / width * Math.PI);
+        const y = mid + Math.sin(x * frequency + phase) * amplitude * Math.sin((x / width) * Math.PI);
         if (x === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
@@ -197,65 +297,90 @@
       phase += isPlaying ? 0.06 : 0.02;
       requestAnimationFrame(drawWave);
     }
-    drawWave();
+    requestAnimationFrame(drawWave);
 
-    // --- Web Audio API Ambient Synth ---
+    // --- Web Audio API Synth Engine ---
     let audioCtx = null;
     let masterGain = null;
-    let oscillators = [];
+    let activeOscillators = [];
 
     const ambientBtn = document.getElementById('ambientBtn');
     const soundDot = document.getElementById('soundDot');
     const soundText = document.getElementById('soundText');
 
-    function startAmbient() {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContext();
-      masterGain = audioCtx.createGain();
-      masterGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 2);
-      masterGain.connect(audioCtx.destination);
+    const presets = {
+      midnight: [146.83, 220.00, 293.66, 369.99], // D3, A3, D4, F#4
+      cosmic: [110.00, 164.81, 220.00, 329.63],   // A2, E3, A3, E4
+      dawn: [130.81, 196.00, 261.63, 329.63]     // C3, G3, C4, E4
+    };
 
-      // Relaxing chord (Frequencies: D3, A3, D4, F#4 chord vibe)
-      const freqs = [146.83, 220.00, 293.66, 369.99];
-      oscillators = freqs.map((f, idx) => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-        osc.frequency.setValueAtTime(f, audioCtx.currentTime);
-        gain.gain.value = 0.25;
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start();
-        return { osc, gain };
-      });
-      isPlaying = true;
-      soundDot.style.display = 'inline-block';
-      soundText.innerText = 'Pause Ambient';
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
     }
 
-    function stopAmbient() {
+    function stopSound() {
       if (masterGain && audioCtx) {
-        masterGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+        masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+        masterGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
         setTimeout(() => {
-          oscillators.forEach(o => o.osc.stop());
-          audioCtx.close();
-          oscillators = [];
-          audioCtx = null;
-        }, 1000);
+          activeOscillators.forEach(({ osc }) => {
+            try { osc.stop(); osc.disconnect(); } catch(e) {}
+          });
+          activeOscillators = [];
+        }, 900);
       }
       isPlaying = false;
       soundDot.style.display = 'none';
       soundText.innerText = 'Play Ambient';
     }
 
+    function playFrequencies(freqs) {
+      initAudio();
+      stopSound();
+
+      setTimeout(() => {
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        masterGain.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 1.5);
+        masterGain.connect(audioCtx.destination);
+
+        activeOscillators = freqs.map((f, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+          gain.gain.value = 0.25;
+          osc.connect(gain);
+          gain.connect(masterGain);
+          osc.start();
+          return { osc, gain };
+        });
+
+        isPlaying = true;
+        soundDot.style.display = 'inline-block';
+        soundText.innerText = 'Pause Ambient';
+      }, 100);
+    }
+
     ambientBtn.addEventListener('click', () => {
       if (!isPlaying) {
-        startAmbient();
+        playFrequencies(presets.midnight);
       } else {
-        stopAmbient();
+        stopSound();
       }
     });
+
+    window.playPreset = function(presetKey) {
+      if (presets[presetKey]) {
+        playFrequencies(presets[presetKey]);
+      }
+    };
   </script>
 </body>
 </html>
