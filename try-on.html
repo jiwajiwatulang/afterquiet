@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>afterquiet — try-on studio / bags + totes</title>
-  <meta name="description" content="Try on afterquiet bags and totes on your own photo. Local preview studio.">
+  <title>afterquiet — bag & tote pin customizer / try-on</title>
+  <meta name="description" content="Customize your afterquiet bag or tote with pins, badges, and accessories from the catalog. Real-time pin placement studio.">
   <meta name="theme-color" content="#171717">
 
   <!-- Favicon -->
@@ -35,6 +35,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow-x: hidden;
     }
     .mono {
       font-family: var(--mono);
@@ -52,12 +53,16 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
-      min-height: 86px;
+      min-height: 80px;
       padding: 0 5%;
       display: flex;
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
     .logo {
-      font: 700 clamp(28px, 3.2vw, 42px)/1 var(--display);
+      font: 700 clamp(26px, 3vw, 38px)/1 var(--display);
       letter-spacing: -0.09em;
       white-space: nowrap;
     }
@@ -69,219 +74,332 @@
       text-underline-offset: 4px;
     }
 
-    /* Layout */
-    .tryon-layout {
-      grid-template-columns: minmax(280px, 0.78fr) minmax(380px, 1fr);
-      align-items: start;
-      gap: clamp(34px, 6vw, 90px);
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 48px 5%;
+    /* Main Studio Grid */
+    .studio-layout {
       display: grid;
-      width: 100%;
-    }
-    .admin-kicker {
-      color: var(--red);
-      letter-spacing: 0.12em;
-      font: 500 9px/1.5 var(--mono);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 8px;
-    }
-    .tryon-copy h1 {
-      letter-spacing: -0.075em;
-      margin: 12px 0 16px;
-      font: 700 clamp(42px, 5vw, 65px)/1.01 var(--display);
-    }
-    .tryon-copy h1 i { font-weight: 400; font-style: italic; }
-    .tryon-copy > p {
-      color: var(--muted);
-      max-width: 420px;
-      margin-bottom: 24px;
-      font-size: 14px;
-      line-height: 1.7;
+      grid-template-columns: minmax(320px, 420px) minmax(360px, 1fr) minmax(280px, 320px);
+      gap: 0;
+      min-height: calc(100vh - 80px);
+      border-bottom: 1px solid var(--ink);
     }
 
-    /* Form Controls */
-    .tryon-upload {
-      color: var(--paper);
-      cursor: pointer;
-      background: var(--ink);
-      border: 1px solid var(--ink);
+    /* Column 1: Bag & Pin Selection */
+    .sidebar-controls {
+      border-right: 1px solid var(--ink);
+      padding: 28px 24px;
+      display: flex;
       flex-direction: column;
-      gap: 5px;
-      min-height: 56px;
-      margin: 16px 0;
-      padding: 14px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      border-radius: 2px;
-      transition: background 0.15s;
+      justify-content: space-between;
+      background: #faf8f5;
+      overflow-y: auto;
+      max-height: calc(100vh - 80px);
     }
-    .tryon-upload:hover { background: var(--red); border-color: var(--red); }
-    .tryon-upload input { opacity: 0; width: 1px; height: 1px; position: absolute; }
-    .tryon-upload span { color: #d3cec8; font-size: 9px; font-weight: 400; font-family: var(--mono); }
-
-    .sample-pill-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .sample-pill {
+    .section-label {
+      color: var(--red);
       font-family: var(--mono);
       font-size: 10px;
-      padding: 5px 10px;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .sidebar-controls h1 {
+      font: 700 clamp(28px, 2.5vw, 38px)/1.05 var(--display);
+      letter-spacing: -0.06em;
+      margin-bottom: 12px;
+    }
+    .sidebar-controls h1 i { font-weight: 400; font-style: italic; }
+    .sidebar-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .bag-select-wrap {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    .bag-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .bag-option-btn {
       border: 1px solid var(--line);
-      background: #faf8f5;
-      border-radius: 2px;
+      background: var(--paper);
+      padding: 10px;
+      text-align: left;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
       transition: all 0.15s;
     }
-    .sample-pill:hover, .sample-pill.active {
+    .bag-option-btn:hover { border-color: var(--ink); }
+    .bag-option-btn.active {
+      border-color: var(--ink);
       background: var(--ink);
       color: var(--paper);
-      border-color: var(--ink);
     }
+    .bag-option-btn.active .mono { color: #e2ddd6; }
 
-    .control-group {
-      margin-top: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .control-group label {
-      font-size: 11px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-    }
-    .control-group label span {
-      font-family: var(--mono);
-      color: var(--muted);
-      font-size: 10px;
-    }
-    select, input[type="range"] {
-      background: #faf8f5;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      width: 100%;
-      min-height: 42px;
-      padding: 8px 12px;
-      font: 400 13px var(--sans);
-    }
-    input[type="range"] {
-      accent-color: var(--red);
-      min-height: 28px;
-      padding: 0;
-      cursor: pointer;
-    }
-
-    /* Pin Attachment Toggles */
-    .pin-options {
-      border: 1px dashed var(--line);
-      background: #faf8f5;
-      padding: 14px;
-      margin-top: 18px;
+    /* Catalog Pin Tray */
+    .pin-catalog-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-top: 10px;
     }
-    .pin-option {
+    .pin-tray-card {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 10px 12px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      font-size: 12px;
-      cursor: pointer;
+      transition: border-color 0.15s;
     }
-    .pin-option input {
-      accent-color: var(--red);
-      width: 16px;
-      height: 16px;
-    }
-
-    .btn-buy {
-      margin-top: 24px;
+    .pin-tray-card:hover { border-color: var(--ink); }
+    .pin-preview-thumb {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
       background: var(--ink);
       color: var(--paper);
-      border: 1px solid var(--ink);
-      width: 100%;
-      min-height: 50px;
-      font-size: 13px;
-      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      font: 700 8px/1 var(--display);
+      text-align: center;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+    }
+    .pin-info strong {
+      display: block;
+      font: 600 12px var(--display);
+      letter-spacing: -0.02em;
+    }
+    .pin-info span {
+      font: 500 10px var(--mono);
+      color: var(--red);
+    }
+    .btn-pin-add {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 6px 10px;
+      font: 600 10px var(--mono);
+      white-space: nowrap;
       transition: background 0.15s;
     }
-    .btn-buy:hover { background: var(--red); border-color: var(--red); }
+    .btn-pin-add:hover { background: var(--red); border-color: var(--red); }
 
-    /* Stage Canvas */
-    .tryon-stage-wrap { min-width: 0; width: 100%; }
-    .tryon-stage {
-      aspect-ratio: 4/5;
-      background: #d8d3cc 50%/cover no-repeat;
-      width: 100%;
-      max-height: 72vh;
+    /* Column 2: Interactive Totebag Stage */
+    .stage-wrap {
+      background: #e5e1da;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
       overflow: hidden;
-      border: 1px solid var(--ink);
-      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
       user-select: none;
       -webkit-user-select: none;
-      touch-action: none;
     }
-    
-    /* Overlay Draggable Item */
-    .tryon-overlay-wrapper {
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      cursor: grab;
-      touch-action: none;
-      z-index: 10;
-      transition: filter 0.15s;
+    .stage-canvas {
+      width: min(520px, 94%);
+      aspect-ratio: 1 / 1.18;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .tryon-overlay-wrapper:active { cursor: grabbing; }
 
-    .bag-svg {
-      display: block;
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.45));
+    /* Realistic Bag SVG Artwork */
+    .bag-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bag-svg-art {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.18));
       pointer-events: none;
     }
 
-    .tryon-stage-caption {
-      color: var(--muted);
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 12px;
-      font-size: 9px;
-      display: flex;
+    /* Draggable Pins Layer (strictly on top of totebag) */
+    .pin-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
     }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--ink);
-      padding: 24px 5%;
-      font-size: 10px;
-      display: flex;
-      justify-content: space-between;
+    .placed-pin {
+      position: absolute;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s ease-out, filter 0.15s;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+    }
+    .placed-pin:active { cursor: grabbing; }
+    .placed-pin.selected {
+      filter: drop-shadow(0 0 0 2px var(--red)) drop-shadow(0 8px 14px rgba(0,0,0,0.6));
+    }
+    .placed-pin .pin-delete-btn {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      border: none;
+      font: 700 11px/1 monospace;
+      display: none;
       align-items: center;
-      color: var(--muted);
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .placed-pin:hover .pin-delete-btn,
+    .placed-pin.selected .pin-delete-btn {
+      display: flex;
     }
 
-    @media (max-width: 860px) {
-      .tryon-layout {
-        grid-template-columns: 1fr;
-        gap: 36px;
-        padding: 30px 5%;
+    .stage-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+      font-family: var(--mono);
+      pointer-events: none;
+    }
+
+    /* Column 3: Tally & Checkout Summary */
+    .sidebar-summary {
+      border-left: 1px solid var(--ink);
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--paper);
+      overflow-y: auto;
+      max-height: calc(100vh - 80px);
+    }
+    .summary-title {
+      font: 700 20px/1.2 var(--display);
+      letter-spacing: -0.04em;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .custom-bill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .bill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      font-size: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .bill-item span:first-child {
+      max-width: 170px;
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+    .bill-item span:last-child {
+      font-family: var(--mono);
+      font-weight: 600;
+    }
+    .total-box {
+      border-top: 2px solid var(--ink);
+      padding-top: 16px;
+      margin-top: 20px;
+    }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px;
+    }
+    .total-row strong {
+      font: 700 24px/1 var(--display);
+    }
+    .btn-checkout {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      width: 100%;
+      min-height: 52px;
+      font: 700 13px var(--mono);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-checkout:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+    .btn-clear {
+      margin-top: 10px;
+      background: none;
+      border: 1px solid var(--line);
+      width: 100%;
+      padding: 8px;
+      font: 500 11px var(--mono);
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+    .btn-clear:hover {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .studio-layout {
+        grid-template-columns: 340px 1fr;
       }
-      .tryon-stage {
-        max-width: 440px;
-        margin: 0 auto;
+      .sidebar-summary {
+        grid-column: 1 / -1;
+        border-left: none;
+        border-top: 1px solid var(--ink);
+        max-height: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .studio-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-controls {
+        border-right: none;
+        border-bottom: 1px solid var(--ink);
+        max-height: none;
+      }
+      .stage-wrap {
+        min-height: 480px;
+        padding: 20px 10px;
       }
     }
   </style>
@@ -291,330 +409,506 @@
   <!-- Studio Header -->
   <header class="tryon-header">
     <a href="/" class="logo">afterquiet</a>
-    <span class="mono">TRY-ON STUDIO / BAGS + TOTES</span>
+    <span class="mono">BAG & TOTE PIN STUDIO // ATTACH YOUR STATEMENTS</span>
     <a href="/" class="back-link">← back to store</a>
   </header>
 
-  <!-- Studio Main Layout -->
-  <main class="tryon-layout">
-    
-    <!-- Left Controls -->
-    <section class="tryon-copy">
-      <span class="admin-kicker">AFTERQUIET / INTERACTIVE STUDIO</span>
-      <h1>see how it<br><i>feels to carry.</i></h1>
-      <p>
-        Upload your own photo or pick a sample mannequin, choose a tote or bag, then drag and resize to test your fit. Your photo stays in your browser and is never stored.
-      </p>
+  <!-- Studio 3-Column Interactive Layout -->
+  <main class="studio-layout">
 
-      <!-- Upload photo button -->
-      <label class="tryon-upload">
-        Upload your photo
-        <input type="file" id="photoInput" accept="image/*">
-        <span>JPG, PNG OR WEBP / PHOTO REMAINS LOCAL</span>
-      </label>
+    <!-- Column 1: Choose Bag & Pin Tray -->
+    <section class="sidebar-controls">
+      <div>
+        <span class="section-label">// PIN & TOTE CUSTOMIZER</span>
+        <h1>pin your<br><i>wearable thoughts.</i></h1>
+        <p class="sidebar-desc">
+          Pilih tas atau totebag Afterquiet di bawah, lalu pasang pin dan badge dari katalog untuk melihat bagaimana tampilannya saat kamu pakai.
+        </p>
 
-      <!-- Sample Model Silhouettes -->
-      <div class="sample-pill-group">
-        <span class="mono" style="font-size:9px; color:var(--muted); margin-right:4px;">PRESETS:</span>
-        <button class="sample-pill active" onclick="loadSamplePreset('model1')">mannequin (streetwear)</button>
-        <button class="sample-pill" onclick="loadSamplePreset('model2')">minimalist jacket</button>
-        <button class="sample-pill" onclick="loadSamplePreset('clear')">studio neutral</button>
-      </div>
+        <!-- Bag Selector -->
+        <div class="bag-select-wrap">
+          <span class="mono" style="font-size:10px; color:var(--ink);">01 / PILIH MODEL TAS:</span>
+          <div class="bag-options">
+            <button class="bag-option-btn active" onclick="selectBag('tote_ecru')">
+              <strong>Archive Tote</strong>
+              <span class="mono">Ecru 16oz • Rp 135k</span>
+            </button>
+            <button class="bag-option-btn" onclick="selectBag('tote_black')">
+              <strong>Utility Tote</strong>
+              <span class="mono">Black Canvas • Rp 145k</span>
+            </button>
+            <button class="bag-option-btn" onclick="selectBag('bag_messenger')">
+              <strong>Messenger Bag</strong>
+              <span class="mono">Tactical • Rp 185k</span>
+            </button>
+            <button class="bag-option-btn" onclick="selectBag('bag_mini')">
+              <strong>Mini Shoulder</strong>
+              <span class="mono">Pouch • Rp 115k</span>
+            </button>
+          </div>
+        </div>
 
-      <!-- Choose Bag Model -->
-      <div class="control-group">
-        <label>
-          Choose a bag or tote
-          <span id="productPriceTag">Rp 135.000</span>
-        </label>
-        <select id="bagSelect" onchange="changeBag()">
-          <option value="ecru_tote" selected>archive heavyweight canvas tote (ecru archive paper)</option>
-          <option value="black_tote">after dark utility black tote (washed black 16oz)</option>
-          <option value="messenger_bag">restless mind tactical messenger bag</option>
-          <option value="mini_shoulder">fragile archives mini shoulder bag</option>
-        </select>
-      </div>
+        <!-- Pin & Badge Tray from Afterquiet Catalogue -->
+        <div>
+          <span class="mono" style="font-size:10px; color:var(--ink);">02 / PILIH PIN DARI KATALOG:</span>
+          <div class="pin-catalog-list">
+            
+            <!-- Pin 1 -->
+            <div class="pin-tray-card">
+              <div class="pin-preview-thumb" style="border:2px solid #843b40;">
+                RESTLESS<br>MIND
+              </div>
+              <div class="pin-info">
+                <strong>restless mind enamel pin</strong>
+                <span>+ Rp 55.000</span>
+              </div>
+              <button class="btn-pin-add" onclick="addPinToBag('pin_restless')">+ Pasang</button>
+            </div>
 
-      <!-- Scale Slider -->
-      <div class="control-group">
-        <label>
-          Scale / Size
-          <span id="scaleLabel">100%</span>
-        </label>
-        <input type="range" id="scaleSlider" min="50" max="160" value="100" oninput="updateScale(this.value)">
-      </div>
+            <!-- Pin 2 -->
+            <div class="pin-tray-card">
+              <div class="pin-preview-thumb" style="border-radius:4px; background:#843b40;">
+                TOO<br>SOFT
+              </div>
+              <div class="pin-info">
+                <strong>too soft for this world badge</strong>
+                <span>+ Rp 45.000</span>
+              </div>
+              <button class="btn-pin-add" onclick="addPinToBag('badge_soft')">+ Pasang</button>
+            </div>
 
-      <!-- Rotation Slider -->
-      <div class="control-group">
-        <label>
-          Rotation / Angle
-          <span id="rotateLabel">0°</span>
-        </label>
-        <input type="range" id="rotateSlider" min="-35" max="35" value="0" oninput="updateRotate(this.value)">
-      </div>
+            <!-- Pin 3 -->
+            <div class="pin-tray-card">
+              <div class="pin-preview-thumb" style="background:#222; border:1px solid #eee;">
+                SILENCE<br>PEACE
+              </div>
+              <div class="pin-info">
+                <strong>silence isn't peace patch</strong>
+                <span>+ Rp 32.000</span>
+              </div>
+              <button class="btn-pin-add" onclick="addPinToBag('patch_silence')">+ Pasang</button>
+            </div>
 
-      <!-- Accessory Pin Attachment Toggles -->
-      <div class="pin-options">
-        <span class="mono" style="font-size:9px; color:var(--red);">CUSTOMIZE / ATTACH ACCESSORIES:</span>
-        <label class="pin-option">
-          <input type="checkbox" id="pinToggle" onchange="togglePin(this.checked)" checked>
-          <span>attach "restless mind" enamel pin (+Rp 55.000)</span>
-        </label>
-        <label class="pin-option">
-          <input type="checkbox" id="patchToggle" onchange="togglePatch(this.checked)">
-          <span>attach "too soft for this world" metal badge (+Rp 45.000)</span>
-        </label>
-      </div>
+            <!-- Pin 4 -->
+            <div class="pin-tray-card">
+              <div class="pin-preview-thumb" style="border-radius:2px; background:#4a4744;">
+                HONESTY<br>TAG
+              </div>
+              <div class="pin-info">
+                <strong>emotional honesty zinc tag</strong>
+                <span>+ Rp 48.000</span>
+              </div>
+              <button class="btn-pin-add" onclick="addPinToBag('tag_honesty')">+ Pasang</button>
+            </div>
 
-      <!-- Action Button -->
-      <button class="btn-buy" onclick="orderCurrentBag()">
-        <span>order this tote via whatsapp ↗</span>
-      </button>
+            <!-- Pin 5 -->
+            <div class="pin-tray-card">
+              <div class="pin-preview-thumb" style="background:#171717; color:#843b40; border:2px solid #f1efe9;">
+                AQ<br>LOGO
+              </div>
+              <div class="pin-info">
+                <strong>afterquiet official brand pin</strong>
+                <span>+ Rp 40.000</span>
+              </div>
+              <button class="btn-pin-add" onclick="addPinToBag('pin_logo')">+ Pasang</button>
+            </div>
 
-      <div style="margin-top:16px;">
-        <span class="mono" style="font-size:9px; color:var(--muted);">LOCAL PREVIEW / DRAG ON CANVAS TO REPOSITION</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Right Interactive Stage -->
-    <section class="tryon-stage-wrap">
-      <div class="tryon-stage" id="stage">
+    <!-- Column 2: Interactive Totebag Stage -->
+    <section class="stage-wrap">
+      <div class="stage-canvas" id="stageCanvas">
         
-        <!-- Draggable Bag Overlay Container -->
-        <div class="tryon-overlay-wrapper" id="bagOverlay">
+        <!-- Bag SVG Container -->
+        <div class="bag-container" id="bagVisual">
           
           <!-- Ecru Canvas Tote SVG -->
-          <svg id="svgEcruTote" class="bag-svg" width="260" height="340" viewBox="0 0 260 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg id="artToteEcru" class="bag-svg-art" viewBox="0 0 380 460" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Straps -->
-            <path d="M75 140 C75 10, 185 10, 185 140" stroke="#d5cfc4" stroke-width="22" stroke-linecap="round" fill="none"/>
-            <path d="M75 140 C75 10, 185 10, 185 140" stroke="#f1efe9" stroke-width="18" stroke-linecap="round" fill="none"/>
-            <path d="M75 140 C75 10, 185 10, 185 140" stroke="#a39e94" stroke-width="1" stroke-dasharray="3 3" fill="none"/>
-            <!-- Main Tote Body -->
-            <rect x="25" y="110" width="210" height="220" rx="4" fill="#f1efe9" stroke="#171717" stroke-width="2.5"/>
-            <!-- Texture folds -->
-            <path d="M28 115 L45 325 M232 115 L215 325" stroke="#ded8cd" stroke-width="2"/>
-            <!-- Stitched Hem Line -->
-            <line x1="25" y1="135" x2="235" y2="135" stroke="#171717" stroke-dasharray="4 3" stroke-width="1.5"/>
-            <!-- Graphic Print on Tote -->
-            <rect x="55" y="160" width="150" height="130" fill="#171717" rx="2"/>
-            <text x="130" y="200" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16" fill="#f1efe9" text-anchor="middle" letter-spacing="-0.05em">AFTERQUIET</text>
-            <text x="130" y="222" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12" fill="#843b40" text-anchor="middle" letter-spacing="-0.02em">wear what you can't say.</text>
-            <text x="130" y="258" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#85827d" text-anchor="middle">VOL. 01 ARCHIVE TOTE</text>
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#d5cfc4" stroke-width="32" stroke-linecap="round" fill="none"/>
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#f1efe9" stroke-width="26" stroke-linecap="round" fill="none"/>
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#85827d" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
             
-            <!-- Pin Attachment Hook Placeholder -->
-            <g id="attachedPin" style="display:block;">
-              <circle cx="65" cy="135" r="16" fill="#171717" stroke="#843b40" stroke-width="2" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))"/>
-              <text x="65" y="137" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="7" fill="#f1efe9" text-anchor="middle">RESTLESS</text>
-              <text x="65" y="145" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="6" fill="#843b40" text-anchor="middle">MIND</text>
-            </g>
-
-            <!-- Badge Attachment Hook Placeholder -->
-            <g id="attachedPatch" style="display:none;">
-              <rect x="180" y="130" width="34" height="24" rx="2" fill="#843b40" stroke="#f1efe9" stroke-width="1.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))"/>
-              <text x="197" y="145" font-family="'IBM Plex Mono', monospace" font-weight="600" font-size="6" fill="#f1efe9" text-anchor="middle">TOO SOFT</text>
-            </g>
+            <!-- Main Canvas Bag Body -->
+            <rect x="40" y="160" width="300" height="280" rx="6" fill="#f1efe9" stroke="#171717" stroke-width="3"/>
+            <!-- Stitched hemline -->
+            <line x1="40" y1="195" x2="340" y2="195" stroke="#171717" stroke-width="2" stroke-dasharray="6 4"/>
+            <line x1="40" y1="200" x2="340" y2="200" stroke="#a39d93" stroke-width="1"/>
+            
+            <!-- Fabric folds -->
+            <path d="M46 170 L75 435 M334 170 L305 435" stroke="#ded8cd" stroke-width="3"/>
+            
+            <!-- Silkscreen Print on Tote -->
+            <rect x="85" y="235" width="210" height="150" fill="#171717" rx="3"/>
+            <text x="190" y="280" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="22" fill="#f1efe9" text-anchor="middle" letter-spacing="-0.04em">AFTERQUIET</text>
+            <text x="190" y="310" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14" fill="#843b40" text-anchor="middle">wear what you can't say.</text>
+            <text x="190" y="350" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#85827d" text-anchor="middle">VOL. 01 / RAW 16OZ COTTON</text>
           </svg>
 
           <!-- Black Utility Tote SVG -->
-          <svg id="svgBlackTote" class="bag-svg" width="260" height="340" viewBox="0 0 260 340" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
-            <!-- Straps -->
-            <path d="M75 140 C75 10, 185 10, 185 140" stroke="#101010" stroke-width="22" stroke-linecap="round" fill="none"/>
-            <path d="M75 140 C75 10, 185 10, 185 140" stroke="#1f1f1f" stroke-width="18" stroke-linecap="round" fill="none"/>
-            <!-- Main Tote Body -->
-            <rect x="25" y="110" width="210" height="220" rx="4" fill="#1b1b1b" stroke="#333" stroke-width="2"/>
-            <!-- Stitched Hem Line -->
-            <line x1="25" y1="135" x2="235" y2="135" stroke="#444" stroke-dasharray="4 3" stroke-width="1.5"/>
-            <!-- Webbing Belt strip for pins -->
-            <rect x="25" y="170" width="210" height="32" fill="#121212" stroke="#2a2a2a" stroke-width="1"/>
-            <line x1="80" y1="170" x2="80" y2="202" stroke="#333" stroke-width="1"/>
-            <line x1="135" y1="170" x2="135" y2="202" stroke="#333" stroke-width="1"/>
-            <line x1="190" y1="170" x2="190" y2="202" stroke="#333" stroke-width="1"/>
-            <text x="130" y="250" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#f1efe9" text-anchor="middle" letter-spacing="-0.04em">afterquiet</text>
-            <text x="130" y="272" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#843b40" text-anchor="middle">UTILITY 16OZ CANVAS</text>
-
-            <!-- Black Tote Pin -->
-            <g id="attachedPinBlack" style="display:block;">
-              <circle cx="108" cy="186" r="14" fill="#f1efe9" stroke="#171717" stroke-width="2" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.8))"/>
-              <text x="108" y="189" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="7" fill="#171717" text-anchor="middle">AQ</text>
-            </g>
+          <svg id="artToteBlack" class="bag-svg-art" viewBox="0 0 380 460" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#0e0e0e" stroke-width="32" stroke-linecap="round" fill="none"/>
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#1e1e1e" stroke-width="26" stroke-linecap="round" fill="none"/>
+            <rect x="40" y="160" width="300" height="280" rx="6" fill="#1b1b1b" stroke="#333" stroke-width="3"/>
+            <line x1="40" y1="195" x2="340" y2="195" stroke="#444" stroke-width="2" stroke-dasharray="6 4"/>
+            <!-- Webbing bar for pins -->
+            <rect x="40" y="215" width="300" height="36" fill="#121212" stroke="#2c2c2c" stroke-width="1.5"/>
+            <line x1="110" y1="215" x2="110" y2="251" stroke="#333" stroke-width="2"/>
+            <line x1="190" y1="215" x2="190" y2="251" stroke="#333" stroke-width="2"/>
+            <line x1="270" y1="215" x2="270" y2="251" stroke="#333" stroke-width="2"/>
+            <text x="190" y="325" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28" fill="#f1efe9" text-anchor="middle" letter-spacing="-0.04em">afterquiet</text>
+            <text x="190" y="360" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#843b40" text-anchor="middle">UTILITY HEAVYWEIGHT TOTE</text>
           </svg>
 
           <!-- Tactical Messenger Bag SVG -->
-          <svg id="svgMessenger" class="bag-svg" width="300" height="250" viewBox="0 0 300 250" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
-            <!-- Crossbody Strap -->
-            <path d="M0 40 L50 90 M250 90 L300 40" stroke="#121212" stroke-width="24" stroke-linecap="square"/>
-            <!-- Messenger Flap Body -->
-            <rect x="40" y="80" width="220" height="150" rx="8" fill="#1c1c1c" stroke="#333" stroke-width="2"/>
-            <path d="M40 80 L260 80 L250 160 L50 160 Z" fill="#242424" stroke="#111" stroke-width="1.5"/>
-            <!-- Buckle Straps -->
-            <rect x="80" y="150" width="18" height="40" fill="#111"/>
-            <rect x="78" y="165" width="22" height="10" fill="#843b40"/>
-            <rect x="200" y="150" width="18" height="40" fill="#111"/>
-            <rect x="198" y="165" width="22" height="10" fill="#843b40"/>
-            <!-- Monospace Label -->
-            <text x="150" y="125" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14" fill="#f1efe9" text-anchor="middle">RESTLESS MESSENGER</text>
-            <text x="150" y="142" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#85827d" text-anchor="middle">SPEC. 02 / CORDURA NYLON</text>
+          <svg id="artMessenger" class="bag-svg-art" viewBox="0 0 380 460" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 70 L90 170 M290 170 L360 70" stroke="#121212" stroke-width="32" stroke-linecap="square"/>
+            <rect x="50" y="160" width="280" height="230" rx="10" fill="#1a1a1a" stroke="#383838" stroke-width="3"/>
+            <path d="M50 160 L330 160 L315 280 L65 280 Z" fill="#242424" stroke="#141414" stroke-width="2"/>
+            <rect x="105" y="260" width="24" height="60" fill="#111"/>
+            <rect x="102" y="285" width="30" height="14" fill="#843b40"/>
+            <rect x="250" y="260" width="24" height="60" fill="#111"/>
+            <rect x="247" y="285" width="30" height="14" fill="#843b40"/>
+            <text x="190" y="225" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#f1efe9" text-anchor="middle">RESTLESS MESSENGER</text>
+            <text x="190" y="250" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#85827d" text-anchor="middle">SPEC. 02 / CORDURA SLING</text>
           </svg>
 
           <!-- Mini Shoulder Bag SVG -->
-          <svg id="svgMiniShoulder" class="bag-svg" width="200" height="270" viewBox="0 0 200 270" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
-            <!-- Thin Rope Strap -->
-            <path d="M40 100 C40 10, 160 10, 160 100" stroke="#843b40" stroke-width="6" fill="none"/>
-            <!-- Pouch Body -->
-            <rect x="30" y="90" width="140" height="170" rx="6" fill="#f1efe9" stroke="#171717" stroke-width="2"/>
-            <!-- Front Mesh/Pocket -->
-            <rect x="30" y="150" width="140" height="110" fill="#e2ded4" stroke="#171717" stroke-width="1"/>
-            <text x="100" y="125" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="12" fill="#171717" text-anchor="middle">afterquiet</text>
-            <text x="100" y="205" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#843b40" text-anchor="middle">MINI ARCHIVE</text>
+          <svg id="artMini" class="bag-svg-art" viewBox="0 0 380 460" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+            <path d="M120 180 C120 40, 260 40, 260 180" stroke="#843b40" stroke-width="10" fill="none"/>
+            <rect x="90" y="160" width="200" height="260" rx="8" fill="#f1efe9" stroke="#171717" stroke-width="3"/>
+            <rect x="90" y="250" width="200" height="170" fill="#e2ded4" stroke="#171717" stroke-width="2"/>
+            <text x="190" y="215" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#171717" text-anchor="middle">afterquiet</text>
+            <text x="190" y="325" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#843b40" text-anchor="middle">MINI ARCHIVE</text>
           </svg>
+
+          <!-- Draggable Pin Layer -->
+          <div class="pin-layer" id="pinLayer"></div>
 
         </div>
       </div>
 
-      <!-- Stage Caption -->
-      <div class="tryon-stage-caption mono">
-        <span>DRAG BAG TO POSITION OVER PHOTO</span>
-        <span>PREVIEW STUDIO / REAL FIT MAY VARY</span>
+      <div class="stage-hint">
+        <span>GESER PIN KE POSISI YANG KAMU MAU PADA TAS</span>
+        <span>KLIK TANDA (×) UNTUK MENGHAPUS PIN</span>
+      </div>
+    </section>
+
+    <!-- Column 3: Live Custom Setup Summary & Checkout -->
+    <section class="sidebar-summary">
+      <div>
+        <h2 class="summary-title">custom setup</h2>
+        
+        <div class="custom-bill-list" id="billList">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="total-box">
+        <div class="total-row">
+          <span class="mono" style="color:var(--muted);">TOTAL ESTIMASI:</span>
+          <strong id="totalPriceDisplay">Rp 135.000</strong>
+        </div>
+
+        <button class="btn-checkout" onclick="checkoutCustomSetup()">
+          <span>order setup ini (whatsapp)</span>
+          <span>↗</span>
+        </button>
+
+        <button class="btn-clear" onclick="clearAllPins()">
+          hapus semua pin dari tas
+        </button>
       </div>
     </section>
 
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <span>© 2026 afterquiet — try-on studio</span>
-    <span>wear what you can't always say.</span>
-    <a href="/">back to store ↑</a>
-  </footer>
-
-  <!-- Script for Interactive Try-On Controls & Dragging -->
+  <!-- Interactive JavaScript Logic -->
   <script>
-    const stage = document.getElementById('stage');
-    const bagOverlay = document.getElementById('bagOverlay');
-    const scaleSlider = document.getElementById('scaleSlider');
-    const scaleLabel = document.getElementById('scaleLabel');
-    const rotateSlider = document.getElementById('rotateSlider');
-    const rotateLabel = document.getElementById('rotateLabel');
-    const bagSelect = document.getElementById('bagSelect');
-    const productPriceTag = document.getElementById('productPriceTag');
-    const photoInput = document.getElementById('photoInput');
-
-    // SVG elements
-    const svgEcruTote = document.getElementById('svgEcruTote');
-    const svgBlackTote = document.getElementById('svgBlackTote');
-    const svgMessenger = document.getElementById('svgMessenger');
-    const svgMiniShoulder = document.getElementById('svgMiniShoulder');
-
-    // Accessories
-    const attachedPin = document.getElementById('attachedPin');
-    const attachedPatch = document.getElementById('attachedPatch');
-    const attachedPinBlack = document.getElementById('attachedPinBlack');
-
-    let currentScale = 1;
-    let currentRotate = 0;
-    let isDragging = false;
-    let startX, startY;
-    let currentX = 0, currentY = 0;
-
-    // Presets
-    const sampleBackgrounds = {
-      model1: "linear-gradient(rgba(23,23,23,0.1), rgba(23,23,23,0.25)), radial-gradient(circle at 50% 35%, #b5b0a6 0%, #8c867b 45%, #423f3b 100%)",
-      model2: "linear-gradient(rgba(23,23,23,0.1), rgba(23,23,23,0.4)), radial-gradient(circle at 50% 40%, #c4beb4 0%, #7d776f 55%, #2b2927 100%)",
-      clear: "#d8d3cc"
+    // Available Bags Data
+    const bagData = {
+      tote_ecru: {
+        name: "archive canvas tote bag (ecru)",
+        price: 135000,
+        formattedPrice: "Rp 135.000",
+        svgId: "artToteEcru"
+      },
+      tote_black: {
+        name: "utility black canvas tote",
+        price: 145000,
+        formattedPrice: "Rp 145.000",
+        svgId: "artToteBlack"
+      },
+      bag_messenger: {
+        name: "restless tactical messenger",
+        price: 185000,
+        formattedPrice: "Rp 185.000",
+        svgId: "artMessenger"
+      },
+      bag_mini: {
+        name: "fragile archives mini shoulder",
+        price: 115000,
+        formattedPrice: "Rp 115.000",
+        svgId: "artMini"
+      }
     };
 
-    const bagPrices = {
-      ecru_tote: "Rp 135.000",
-      black_tote: "Rp 145.000",
-      messenger_bag: "Rp 185.000",
-      mini_shoulder: "Rp 115.000"
+    // Available Pins Data
+    const catalogPins = {
+      pin_restless: {
+        name: "restless mind enamel pin",
+        price: 55000,
+        formattedPrice: "Rp 55.000",
+        type: "circle",
+        html: `
+          <div style="width:48px; height:48px; border-radius:50%; background:#171717; border:2.5px solid #843b40; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; box-shadow:inset 0 0 4px #000;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:7px; color:#f1efe9; line-height:1;">RESTLESS</span>
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#843b40; line-height:1; margin-top:2px;">MIND</span>
+          </div>
+        `
+      },
+      badge_soft: {
+        name: "too soft for this world badge",
+        price: 45000,
+        formattedPrice: "Rp 45.000",
+        type: "rect",
+        html: `
+          <div style="width:58px; height:38px; border-radius:3px; background:#843b40; border:2px solid #f1efe9; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'IBM Plex Mono'; font-weight:600; font-size:6.5px; color:#f1efe9; letter-spacing:0.04em;">TOO SOFT</span>
+            <span style="font-family:'IBM Plex Mono'; font-size:5.5px; color:#d89599;">VOL. 01</span>
+          </div>
+        `
+      },
+      patch_silence: {
+        name: "silence isn't peace patch",
+        price: 32000,
+        formattedPrice: "Rp 32.000",
+        type: "rect",
+        html: `
+          <div style="width:64px; height:32px; background:#1c1c1c; border:1.5px dashed #f1efe9; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f1efe9; line-height:1.1;">SILENCE ISN'T<br>ALWAYS PEACE.</span>
+          </div>
+        `
+      },
+      tag_honesty: {
+        name: "emotional honesty zinc tag",
+        price: 48000,
+        formattedPrice: "Rp 48.000",
+        type: "tag",
+        html: `
+          <div style="width:40px; height:60px; background:#4a4744; border:2px solid #171717; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3px;">
+            <div style="width:6px; height:6px; border-radius:50%; background:#171717; margin-bottom:4px;"></div>
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f1efe9; line-height:1;">EMOTIONAL<br>HONESTY</span>
+          </div>
+        `
+      },
+      pin_logo: {
+        name: "afterquiet official brand pin",
+        price: 40000,
+        formattedPrice: "Rp 40.000",
+        type: "circle",
+        html: `
+          <div style="width:42px; height:42px; border-radius:50%; background:#f1efe9; border:2.5px solid #171717; display:flex; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:12px; color:#171717;">aq</span>
+          </div>
+        `
+      }
     };
 
-    function updateTransform() {
-      bagOverlay.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) scale(${currentScale}) rotate(${currentRotate}deg)`;
+    // State
+    let currentBagKey = 'tote_ecru';
+    let placedPins = []; // Array of { id, key, x, y }
+    let pinCounter = 0;
+
+    const pinLayer = document.getElementById('pinLayer');
+    const billList = document.getElementById('billList');
+    const totalPriceDisplay = document.getElementById('totalPriceDisplay');
+
+    // Switch Bag
+    window.selectBag = function(bagKey) {
+      currentBagKey = bagKey;
+      
+      document.querySelectorAll('.bag-option-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+
+      // Hide all SVGs, show active
+      Object.keys(bagData).forEach(k => {
+        const svg = document.getElementById(bagData[k].svgId);
+        if (svg) svg.style.display = k === bagKey ? 'block' : 'none';
+      });
+
+      updateSummary();
+    };
+
+    // Add Pin onto the Bag
+    window.addPinToBag = function(pinKey) {
+      const pinTemplate = catalogPins[pinKey];
+      if (!pinTemplate) return;
+
+      pinCounter++;
+      const uniqueId = `pin_${pinCounter}`;
+
+      // Default placement around center of bag with slight random offset
+      const offsetX = 50 + (Math.random() * 24 - 12);
+      const offsetY = 50 + (Math.random() * 24 - 12);
+
+      const pinObj = {
+        id: uniqueId,
+        key: pinKey,
+        name: pinTemplate.name,
+        price: pinTemplate.price,
+        x: offsetX,
+        y: offsetY
+      };
+
+      placedPins.push(pinObj);
+      renderPlacedPin(pinObj, pinTemplate);
+      updateSummary();
+    };
+
+    // Render Pin DOM element
+    function renderPlacedPin(pinObj, pinTemplate) {
+      const pinEl = document.createElement('div');
+      pinEl.className = 'placed-pin';
+      pinEl.id = pinObj.id;
+      pinEl.style.left = `${pinObj.x}%`;
+      pinEl.style.top = `${pinObj.y}%`;
+
+      pinEl.innerHTML = `
+        ${pinTemplate.html}
+        <button class="pin-delete-btn" onclick="removePin('${pinObj.id}', event)">×</button>
+      `;
+
+      // Pointer drag handlers (Mouse and Touch)
+      let isDragging = false;
+      let startX, startY;
+      let initialLeft, initialTop;
+
+      pinEl.addEventListener('pointerdown', function(e) {
+        if (e.target.classList.contains('pin-delete-btn')) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const parentRect = pinLayer.getBoundingClientRect();
+        initialLeft = (pinObj.x / 100) * parentRect.width;
+        initialTop = (pinObj.y / 100) * parentRect.height;
+
+        pinEl.setPointerCapture(e.pointerId);
+        pinEl.classList.add('selected');
+        e.stopPropagation();
+      });
+
+      window.addEventListener('pointermove', function(e) {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        const parentRect = pinLayer.getBoundingClientRect();
+        let newX = ((initialLeft + dx) / parentRect.width) * 100;
+        let newY = ((initialTop + dy) / parentRect.height) * 100;
+
+        // Keep pin within bounds of bag
+        newX = Math.max(15, Math.min(85, newX));
+        newY = Math.max(35, Math.min(88, newY));
+
+        pinObj.x = newX;
+        pinObj.y = newY;
+
+        pinEl.style.left = `${newX}%`;
+        pinEl.style.top = `${newY}%`;
+      });
+
+      window.addEventListener('pointerup', function(e) {
+        if (isDragging) {
+          isDragging = false;
+          pinEl.classList.remove('selected');
+        }
+      });
+
+      pinLayer.appendChild(pinEl);
     }
 
-    window.updateScale = function(val) {
-      currentScale = val / 100;
-      scaleLabel.innerText = `${val}%`;
-      updateTransform();
+    // Remove single pin
+    window.removePin = function(pinId, e) {
+      if (e) e.stopPropagation();
+      placedPins = placedPins.filter(p => p.id !== pinId);
+      const el = document.getElementById(pinId);
+      if (el) el.remove();
+      updateSummary();
     };
 
-    window.updateRotate = function(val) {
-      currentRotate = val;
-      rotateLabel.innerText = `${val}°`;
-      updateTransform();
+    // Clear all pins
+    window.clearAllPins = function() {
+      placedPins = [];
+      pinLayer.innerHTML = '';
+      updateSummary();
     };
 
-    window.changeBag = function() {
-      const selected = bagSelect.value;
-      productPriceTag.innerText = bagPrices[selected] || "Rp 135.000";
+    // Update Bill & Total
+    function updateSummary() {
+      const bag = bagData[currentBagKey];
+      let total = bag.price;
 
-      svgEcruTote.style.display = selected === 'ecru_tote' ? 'block' : 'none';
-      svgBlackTote.style.display = selected === 'black_tote' ? 'block' : 'none';
-      svgMessenger.style.display = selected === 'messenger_bag' ? 'block' : 'none';
-      svgMiniShoulder.style.display = selected === 'mini_shoulder' ? 'block' : 'none';
-    };
+      let billHtml = `
+        <div class="bill-item">
+          <span><strong>1x ${bag.name}</strong></span>
+          <span>${bag.formattedPrice}</span>
+        </div>
+      `;
 
-    window.togglePin = function(active) {
-      if (attachedPin) attachedPin.style.display = active ? 'block' : 'none';
-      if (attachedPinBlack) attachedPinBlack.style.display = active ? 'block' : 'none';
-    };
-
-    window.togglePatch = function(active) {
-      if (attachedPatch) attachedPatch.style.display = active ? 'block' : 'none';
-    };
-
-    window.loadSamplePreset = function(key) {
-      document.querySelectorAll('.sample-pill').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      stage.style.backgroundImage = sampleBackgrounds[key] || '#d8d3cc';
-    };
-
-    // User photo upload
-    photoInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          stage.style.backgroundImage = `url('${evt.target.result}')`;
-          document.querySelectorAll('.sample-pill').forEach(btn => btn.classList.remove('active'));
-        };
-        reader.readAsDataURL(file);
+      if (placedPins.length === 0) {
+        billHtml += `
+          <div style="color:var(--muted); font-size:11px; font-family:var(--mono); padding:16px 0;">
+            belum ada pin yang dipasang. klik tombol "+ Pasang" di sebelah kiri untuk menambah pin.
+          </div>
+        `;
+      } else {
+        placedPins.forEach((p, idx) => {
+          total += p.price;
+          billHtml += `
+            <div class="bill-item">
+              <span>• ${p.name}</span>
+              <span>Rp ${p.price.toLocaleString('id-ID')}</span>
+            </div>
+          `;
+        });
       }
-    });
 
-    // Pointer Dragging (Mouse & Touch)
-    bagOverlay.addEventListener('pointerdown', function(e) {
-      isDragging = true;
-      startX = e.clientX - currentX;
-      startY = e.clientY - currentY;
-      bagOverlay.setPointerCapture(e.pointerId);
-    });
+      billList.innerHTML = billHtml;
+      totalPriceDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+    }
 
-    window.addEventListener('pointermove', function(e) {
-      if (!isDragging) return;
-      currentX = e.clientX - startX;
-      currentY = e.clientY - startY;
-      updateTransform();
-    });
+    // Checkout via WhatsApp with full breakdown
+    window.checkoutCustomSetup = function() {
+      const bag = bagData[currentBagKey];
+      let total = bag.price;
 
-    window.addEventListener('pointerup', function(e) {
-      isDragging = false;
-    });
+      let pinTextList = "";
+      if (placedPins.length > 0) {
+        pinTextList = placedPins.map(p => {
+          total += p.price;
+          return `  - ${p.name} (Rp ${p.price.toLocaleString('id-ID')})`;
+        }).join('%0A');
+      } else {
+        pinTextList = "  (Tanpa pin tambahan)";
+      }
 
-    window.orderCurrentBag = function() {
-      const selectedBagName = bagSelect.options[bagSelect.selectedIndex].text;
-      const price = productPriceTag.innerText;
-      const hasPin = document.getElementById('pinToggle').checked ? ' + restless mind enamel pin' : '';
-      const hasPatch = document.getElementById('patchToggle').checked ? ' + metal badge' : '';
-
-      const text = `Halo afterquiet,%0A%0ASaya ingin memesan dari Try-On Studio:%0A• ${selectedBagName} (${price})${hasPin}${hasPatch}%0A%0AMohon konfirmasi pemesanan dan pengiriman. Terima kasih.`;
-      window.open(`https://wa.me/?text=${text}`, '_blank');
+      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom setup dari Try-On Studio:%0A%0A*TAS / TOTE:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*PIN & BADGE YANG DIPASANG (${placedPins.length} pcs):*%0A${pinTextList}%0A%0A*TOTAL HARGA:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan dan detail pengiriman. Terima kasih!`;
+      
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
     };
 
-    // Initialize with street preset
-    loadSamplePreset('model1');
+    // Initial default pins on the bag to demonstrate instantly
+    window.addEventListener('DOMContentLoaded', () => {
+      addPinToBag('pin_restless');
+      addPinToBag('badge_soft');
+    });
   </script>
 </body>
 </html>
