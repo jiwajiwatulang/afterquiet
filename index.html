@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" class="scroll-smooth scroll-pt-20">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Afterquiet — Sound & Stillness</title>
   <meta name="description" content="Afterquiet — Ruang digital eksplorasi audio, ambient, dan proyek kreatif oleh jiwajiwatulang.">
   <meta name="theme-color" content="#09090b">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%237c3aed'/><text x='50%' y='68%' font-size='55' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'>A</text></svg>">
   
   <!-- Open Graph -->
   <meta property="og:title" content="Afterquiet — Sound & Stillness">
@@ -185,7 +186,7 @@
             <h3 class="text-lg font-semibold text-white group-hover:text-violet-300 transition-colors">Midnight Stillness</h3>
             <p class="text-sm text-zinc-400 mt-2">Frekuensi relaksasi malam hari yang menenangkan pikiran dan meredam kebisingan.</p>
           </div>
-          <button onclick="playPreset('midnight')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-violet-600 hover:border-violet-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <button data-preset-btn="midnight" onclick="playPreset('midnight')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-violet-600 hover:border-violet-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
             Putar Suasana Ini
           </button>
@@ -201,7 +202,7 @@
             <h3 class="text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors">Cosmic Echoes</h3>
             <p class="text-sm text-zinc-400 mt-2">Resonansi gelombang sinus berfrekuensi rendah dengan modulasi perlahan layaknya ruang hampa.</p>
           </div>
-          <button onclick="playPreset('cosmic')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-indigo-600 hover:border-indigo-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <button data-preset-btn="cosmic" onclick="playPreset('cosmic')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-indigo-600 hover:border-indigo-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
             Putar Suasana Ini
           </button>
@@ -217,7 +218,7 @@
             <h3 class="text-lg font-semibold text-white group-hover:text-purple-300 transition-colors">Dawn Twilight</h3>
             <p class="text-sm text-zinc-400 mt-2">Nuansa hangat transisi subuh menuju pagi, harmoni akord minor yang damai.</p>
           </div>
-          <button onclick="playPreset('dawn')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-purple-600 hover:border-purple-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
+          <button data-preset-btn="dawn" onclick="playPreset('dawn')" class="mt-6 w-full py-2.5 rounded-lg border border-zinc-700 bg-zinc-800/60 hover:bg-purple-600 hover:border-purple-500 hover:text-white text-zinc-200 text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
             Putar Suasana Ini
           </button>
@@ -261,8 +262,12 @@
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
+      const displayWidth = rect.width || canvas.parentElement.clientWidth || 600;
+      canvas.width = displayWidth * dpr;
       canvas.height = 80 * dpr;
+      if (ctx.resetTransform) {
+        ctx.resetTransform();
+      }
       ctx.scale(dpr, dpr);
     }
     window.addEventListener('resize', resizeCanvas);
@@ -270,7 +275,7 @@
 
     function drawWave() {
       const rect = canvas.getBoundingClientRect();
-      const width = rect.width;
+      const width = rect.width || 600;
       const height = 80;
       const mid = height / 2;
 
@@ -302,16 +307,18 @@
     // --- Web Audio API Synth Engine ---
     let audioCtx = null;
     let masterGain = null;
-    let activeOscillators = [];
+    let currentOscs = [];
+    let currentPreset = null;
+    let stopTimeoutId = null;
 
     const ambientBtn = document.getElementById('ambientBtn');
     const soundDot = document.getElementById('soundDot');
     const soundText = document.getElementById('soundText');
 
     const presets = {
-      midnight: [146.83, 220.00, 293.66, 369.99], // D3, A3, D4, F#4
-      cosmic: [110.00, 164.81, 220.00, 329.63],   // A2, E3, A3, E4
-      dawn: [130.81, 196.00, 261.63, 329.63]     // C3, G3, C4, E4
+      midnight: { label: 'Midnight Stillness', freqs: [146.83, 220.00, 293.66, 369.99] }, // D3, A3, D4, F#4
+      cosmic: { label: 'Cosmic Echoes', freqs: [110.00, 164.81, 220.00, 329.63] },         // A2, E3, A3, E4
+      dawn: { label: 'Dawn Twilight', freqs: [130.81, 196.00, 261.63, 329.63] }           // C3, G3, C4, E4
     };
 
     function initAudio() {
@@ -324,37 +331,54 @@
       }
     }
 
-    function stopSound() {
+    function stopSound(fadeDuration = 0.5) {
+      if (stopTimeoutId) {
+        clearTimeout(stopTimeoutId);
+        stopTimeoutId = null;
+      }
       if (masterGain && audioCtx) {
-        masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-        masterGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
-        setTimeout(() => {
-          activeOscillators.forEach(({ osc }) => {
-            try { osc.stop(); osc.disconnect(); } catch(e) {}
+        const now = audioCtx.currentTime;
+        masterGain.gain.cancelScheduledValues(now);
+        masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+        masterGain.gain.exponentialRampToValueAtTime(0.0001, now + fadeDuration);
+
+        const oscsToStop = [...currentOscs];
+        currentOscs = [];
+        stopTimeoutId = setTimeout(() => {
+          oscsToStop.forEach(({ osc, gain }) => {
+            try {
+              osc.stop();
+              osc.disconnect();
+              gain.disconnect();
+            } catch(e) {}
           });
-          activeOscillators = [];
-        }, 900);
+        }, fadeDuration * 1000 + 50);
       }
       isPlaying = false;
+      currentPreset = null;
       soundDot.style.display = 'none';
       soundText.innerText = 'Play Ambient';
+      updatePresetButtons();
     }
 
-    function playFrequencies(freqs) {
+    function playFrequencies(presetKey) {
       initAudio();
-      stopSound();
+      stopSound(0.25);
+
+      const targetPreset = presets[presetKey] || presets.midnight;
 
       setTimeout(() => {
         masterGain = audioCtx.createGain();
-        masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-        masterGain.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 1.5);
+        const now = audioCtx.currentTime;
+        masterGain.gain.setValueAtTime(0.001, now);
+        masterGain.gain.exponentialRampToValueAtTime(0.12, now + 1.2);
         masterGain.connect(audioCtx.destination);
 
-        activeOscillators = freqs.map((f, i) => {
+        currentOscs = targetPreset.freqs.map((f, i) => {
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
           osc.type = i % 2 === 0 ? 'sine' : 'triangle';
-          osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+          osc.frequency.setValueAtTime(f, now);
           gain.gain.value = 0.25;
           osc.connect(gain);
           gain.connect(masterGain);
@@ -363,22 +387,39 @@
         });
 
         isPlaying = true;
+        currentPreset = presetKey;
         soundDot.style.display = 'inline-block';
         soundText.innerText = 'Pause Ambient';
-      }, 100);
+        updatePresetButtons();
+      }, 280);
+    }
+
+    function updatePresetButtons() {
+      document.querySelectorAll('[data-preset-btn]').forEach(btn => {
+        const key = btn.getAttribute('data-preset-btn');
+        if (isPlaying && currentPreset === key) {
+          btn.innerHTML = `<span class="w-2 h-2 rounded-full bg-violet-400 animate-ping"></span> Sedang Diputar (Jeda)`;
+          btn.classList.add('bg-violet-600', 'text-white', 'border-violet-500');
+        } else {
+          btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg> Putar Suasana Ini`;
+          btn.classList.remove('bg-violet-600', 'text-white', 'border-violet-500');
+        }
+      });
     }
 
     ambientBtn.addEventListener('click', () => {
       if (!isPlaying) {
-        playFrequencies(presets.midnight);
+        playFrequencies(currentPreset || 'midnight');
       } else {
-        stopSound();
+        stopSound(0.4);
       }
     });
 
     window.playPreset = function(presetKey) {
-      if (presets[presetKey]) {
-        playFrequencies(presets[presetKey]);
+      if (isPlaying && currentPreset === presetKey) {
+        stopSound(0.3);
+      } else {
+        playFrequencies(presetKey);
       }
     };
   </script>
