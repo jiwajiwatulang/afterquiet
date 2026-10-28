@@ -2,23 +2,23 @@
 
 > wear what you can't always say.
 
-**afterquiet** is an independent accessories brand exploring identity, emotions, personal expression, and the culture surrounding us through wearable objects and visual storytelling — from pins and stickers to future accessories and apparel.
+**afterquiet** is an independent accessories brand exploring identity, emotions, and personal expression through wearable objects and visual storytelling.
 
-## Brand Identity & Guidelines
-- **Philosophy**: *wear what you can't always say.*
-- **Palette**:
-  - `after dark`: `#171717`
-  - `archive paper`: `#F1EFE9`
-  - `faded grey`: `#85827D`
-  - `distorted red`: `#843B40`
-- **Typography**: Space Grotesk, Inter, IBM Plex Mono
+---
 
-## Website & E-Commerce Features
-- **Online Storefront**: Interactive product catalogue with categories (`all`, `pins`, `stickers`, `accessories`).
-- **Interactive Shopping Bag**: Real-time quantity adjustments, subtotal calculation, and instant direct ordering via WhatsApp.
-- **Product Spec Modals**: Detailed material, dimension, and collection information.
-- **Brand Philosophy & Archives**: Editorial layout highlighting core values (*01 Individuality*, *02 Emotional Honesty*, *03 Independence*, *04 Creative Resistance*).
-- **Responsive & Minimalist**: Built with Tailwind CSS, brutalist aesthetic, and mobile-first experience.
+## Brand Philosophy
+An object can be more than an accessory. It can be a reminder, a personal statement, a memory, or a quiet form of resistance.
 
-## Deployment
-Connected to **Vercel** with automatic deployments on push to `main`.
+afterquiet embraces imperfection, individuality, emotional honesty, and the freedom to express yourself without needing everyone's approval.
+
+## Core Collections
+- **Volume 01 — Too Soft for This World**: Exploring vulnerability, sensitivity, and emotional expression.
+- **Volume 02 — Fragile Archives**: Centered on identity, memory, and the things people carry internally.
+
+## Digital Studio
+- **Curated Catalogue**: Heavyweight canvas totes, tactical messenger bags, enamel pins, and screenprinted weatherproof stickers.
+- **Custom Bag Studio**: Interactive pin placement studio enabling customers to personalize tote bags with pins and badges from the collection.
+
+---
+
+*© 2026 afterquiet. Independent accessories & visual culture.*

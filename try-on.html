@@ -3,29 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>afterquiet — bag & tote pin customizer / try-on</title>
-  <meta name="description" content="Customize your afterquiet bag or tote with pins, badges, and accessories from the catalog. Real-time pin placement studio.">
-  <meta name="theme-color" content="#171717">
+  <title>afterquiet — Custom Bag & Pin Studio</title>
+  <meta name="description" content="Personalize your afterquiet bag or tote with pins, badges, and wearable statements.">
+  <meta name="theme-color" content="#161616">
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='monospace' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23161616'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F4F2ED' text-anchor='middle'>aq</text></svg>">
 
-  <!-- Web Fonts -->
+  <!-- Google Fonts: Space Grotesk & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --ink: #171717;
-      --paper: #f1efe9;
+      --ink: #161616;
+      --paper: #f4f2ed;
+      --paper-card: #ece8e1;
+      --paper-light: #faf9f6;
       --red: #843b40;
-      --muted: #67645f;
-      --line: #c9c6bf;
-      --mono: "IBM Plex Mono", monospace;
-      --sans: Inter, Arial, sans-serif;
-      --display: "Space Grotesk", sans-serif;
+      --muted: #6e6b66;
+      --line: #d6d2c9;
+      --line-dark: #2a2a2a;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', -apple-system, sans-serif;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--paper);
@@ -36,181 +39,203 @@
       flex-direction: column;
       justify-content: space-between;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    .mono {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
+
     a { color: inherit; text-decoration: none; }
     button { font: inherit; cursor: pointer; color: inherit; }
 
-    /* Header */
-    .tryon-header {
-      border-bottom: 1px solid var(--ink);
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      min-height: 80px;
+    /* Studio Header */
+    .studio-header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      height: 76px;
       padding: 0 5%;
       display: flex;
-      background: var(--paper);
+      justify-content: space-between;
+      align-items: center;
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 50;
     }
-    .logo {
-      font: 700 clamp(26px, 3vw, 38px)/1 var(--display);
-      letter-spacing: -0.09em;
-      white-space: nowrap;
+    .brand-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.07em;
     }
-    .tryon-header .mono { color: var(--red); font-size: 10px; }
-    .back-link {
-      font-size: 13px;
+    .studio-tag {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       font-weight: 600;
-      text-decoration: underline;
-      text-underline-offset: 4px;
+      color: var(--red);
     }
+    .return-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .return-link:hover { color: var(--ink); }
 
-    /* Main Studio Grid */
-    .studio-layout {
+    /* 3-Column Studio Layout */
+    .studio-grid {
       display: grid;
-      grid-template-columns: minmax(320px, 420px) minmax(360px, 1fr) minmax(280px, 320px);
-      gap: 0;
-      min-height: calc(100vh - 80px);
-      border-bottom: 1px solid var(--ink);
+      grid-template-columns: 380px 1fr 340px;
+      min-height: calc(100vh - 76px);
+      border-bottom: 1px solid var(--line);
     }
 
-    /* Column 1: Bag & Pin Selection */
-    .sidebar-controls {
-      border-right: 1px solid var(--ink);
-      padding: 28px 24px;
+    /* Left Drawer: Product Selection & Pin Tray */
+    .catalog-panel {
+      border-right: 1px solid var(--line);
+      background: var(--paper-light);
+      padding: 32px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: #faf8f5;
       overflow-y: auto;
-      max-height: calc(100vh - 80px);
+      max-height: calc(100vh - 76px);
     }
-    .section-label {
-      color: var(--red);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      margin-bottom: 8px;
-      display: block;
+    .panel-heading {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.05em;
+      line-height: 1.05;
+      margin-bottom: 10px;
     }
-    .sidebar-controls h1 {
-      font: 700 clamp(28px, 2.5vw, 38px)/1.05 var(--display);
-      letter-spacing: -0.06em;
-      margin-bottom: 12px;
-    }
-    .sidebar-controls h1 i { font-weight: 400; font-style: italic; }
-    .sidebar-desc {
-      color: var(--muted);
+    .panel-heading i { font-weight: 400; font-style: italic; }
+    .panel-intro {
       font-size: 13px;
       line-height: 1.6;
-      margin-bottom: 24px;
+      color: var(--muted);
+      margin-bottom: 28px;
     }
 
-    .bag-select-wrap {
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 20px;
+    .step-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 10px;
     }
-    .bag-options {
+
+    /* Bag Selector Cards */
+    .bag-picker-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 10px;
+      margin-bottom: 28px;
     }
-    .bag-option-btn {
+    .bag-pick-btn {
       border: 1px solid var(--line);
       background: var(--paper);
-      padding: 10px;
+      padding: 12px;
       text-align: left;
-      font-size: 11px;
+      border-radius: 4px;
       display: flex;
       flex-direction: column;
       gap: 4px;
       transition: all 0.15s;
     }
-    .bag-option-btn:hover { border-color: var(--ink); }
-    .bag-option-btn.active {
+    .bag-pick-btn:hover { border-color: var(--ink); }
+    .bag-pick-btn.active {
       border-color: var(--ink);
       background: var(--ink);
       color: var(--paper);
     }
-    .bag-option-btn.active .mono { color: #e2ddd6; }
+    .bag-pick-btn strong {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: -0.02em;
+    }
+    .bag-pick-btn span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .bag-pick-btn.active span {
+      color: #ccc;
+    }
 
-    /* Catalog Pin Tray */
-    .pin-catalog-list {
+    /* Pin Catalogue Cards */
+    .pin-tray-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 10px;
     }
-    .pin-tray-card {
+    .pin-row {
       border: 1px solid var(--line);
       background: var(--paper);
-      padding: 10px 12px;
+      border-radius: 4px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       transition: border-color 0.15s;
     }
-    .pin-tray-card:hover { border-color: var(--ink); }
-    .pin-preview-thumb {
-      width: 42px;
-      height: 42px;
+    .pin-row:hover { border-color: var(--ink); }
+    .pin-thumb {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--ink);
       color: var(--paper);
       display: flex;
       align-items: center;
       justify-content: center;
-      font: 700 8px/1 var(--display);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 8px;
       text-align: center;
+      line-height: 1;
       flex-shrink: 0;
-      border: 1px solid var(--line);
     }
-    .pin-info strong {
+    .pin-details strong {
       display: block;
-      font: 600 12px var(--display);
+      font-size: 12px;
+      font-weight: 600;
       letter-spacing: -0.02em;
     }
-    .pin-info span {
-      font: 500 10px var(--mono);
+    .pin-details span {
+      font-size: 11px;
       color: var(--red);
+      font-weight: 500;
     }
-    .btn-pin-add {
+    .btn-add-pin {
       background: var(--ink);
       color: var(--paper);
       border: 1px solid var(--ink);
-      padding: 6px 10px;
-      font: 600 10px var(--mono);
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 2px;
       white-space: nowrap;
       transition: background 0.15s;
     }
-    .btn-pin-add:hover { background: var(--red); border-color: var(--red); }
+    .btn-add-pin:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
 
-    /* Column 2: Interactive Totebag Stage */
-    .stage-wrap {
-      background: #e5e1da;
-      position: relative;
+    /* Center Stage Canvas */
+    .stage-center {
+      background: #e6e3dc;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
       padding: 30px;
-      overflow: hidden;
       user-select: none;
       -webkit-user-select: none;
     }
-    .stage-canvas {
+    .bag-artboard {
       width: min(520px, 94%);
       aspect-ratio: 1 / 1.18;
       position: relative;
@@ -218,353 +243,341 @@
       align-items: center;
       justify-content: center;
     }
-
-    /* Realistic Bag SVG Artwork */
-    .bag-container {
+    .bag-svg-artwork {
       width: 100%;
       height: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .bag-svg-art {
-      width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.18));
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.2));
       pointer-events: none;
     }
 
-    /* Draggable Pins Layer (strictly on top of totebag) */
-    .pin-layer {
+    /* Pin Placement Layer */
+    .pin-drop-surface {
       position: absolute;
       inset: 0;
       z-index: 20;
     }
-    .placed-pin {
+    .draggable-pin {
       position: absolute;
       cursor: grab;
       touch-action: none;
-      user-select: none;
       transform: translate(-50%, -50%);
-      transition: transform 0.05s ease-out, filter 0.15s;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+      transition: filter 0.15s;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
     }
-    .placed-pin:active { cursor: grabbing; }
-    .placed-pin.selected {
-      filter: drop-shadow(0 0 0 2px var(--red)) drop-shadow(0 8px 14px rgba(0,0,0,0.6));
+    .draggable-pin:active { cursor: grabbing; }
+    .draggable-pin.active-selected {
+      filter: drop-shadow(0 0 0 2px var(--red)) drop-shadow(0 10px 16px rgba(0,0,0,0.55));
     }
-    .placed-pin .pin-delete-btn {
+    .remove-pin-btn {
       position: absolute;
       top: -8px;
       right: -8px;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: var(--red);
       color: white;
-      border: none;
-      font: 700 11px/1 monospace;
+      border: 1.5px solid white;
+      font-size: 12px;
+      font-weight: 700;
       display: none;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    .placed-pin:hover .pin-delete-btn,
-    .placed-pin.selected .pin-delete-btn {
+    .draggable-pin:hover .remove-pin-btn,
+    .draggable-pin.active-selected .remove-pin-btn {
       display: flex;
     }
 
-    .stage-hint {
+    .canvas-instruction {
       position: absolute;
-      bottom: 14px;
-      left: 20px;
-      right: 20px;
+      bottom: 16px;
+      left: 24px;
+      right: 24px;
       display: flex;
       justify-content: space-between;
+      font-size: 11px;
       color: var(--muted);
-      font-size: 10px;
-      font-family: var(--mono);
+      letter-spacing: 0.02em;
       pointer-events: none;
     }
 
-    /* Column 3: Tally & Checkout Summary */
-    .sidebar-summary {
-      border-left: 1px solid var(--ink);
-      padding: 28px 22px;
+    /* Right Order Breakdown Panel */
+    .summary-panel {
+      border-left: 1px solid var(--line);
+      background: var(--paper);
+      padding: 32px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: var(--paper);
       overflow-y: auto;
-      max-height: calc(100vh - 80px);
+      max-height: calc(100vh - 76px);
     }
-    .summary-title {
-      font: 700 20px/1.2 var(--display);
+    .summary-heading {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
       letter-spacing: -0.04em;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--ink);
-      padding-bottom: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
-    .custom-bill-list {
+    .order-tally-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
       flex: 1;
     }
-    .bill-item {
+    .order-tally-item {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      font-size: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed var(--line);
+      font-size: 13px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
     }
-    .bill-item span:first-child {
-      max-width: 170px;
+    .order-tally-item span:first-child {
       color: var(--ink);
-      font-family: var(--sans);
+      max-width: 180px;
+      line-height: 1.4;
     }
-    .bill-item span:last-child {
-      font-family: var(--mono);
+    .order-tally-item span:last-child {
       font-weight: 600;
     }
-    .total-box {
+
+    .summary-bottom {
       border-top: 2px solid var(--ink);
-      padding-top: 16px;
-      margin-top: 20px;
+      padding-top: 20px;
+      margin-top: 24px;
     }
-    .total-row {
+    .total-display-row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
-    .total-row strong {
-      font: 700 24px/1 var(--display);
+    .total-display-row span {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    .btn-checkout {
+    .total-display-row strong {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .btn-submit-order {
       background: var(--ink);
       color: var(--paper);
       border: 1px solid var(--ink);
       width: 100%;
       min-height: 52px;
-      font: 700 13px var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
+      border-radius: 2px;
       transition: background 0.15s;
     }
-    .btn-checkout:hover {
+    .btn-submit-order:hover {
       background: var(--red);
       border-color: var(--red);
     }
-    .btn-clear {
+    .btn-reset-canvas {
       margin-top: 10px;
       background: none;
       border: 1px solid var(--line);
       width: 100%;
-      padding: 8px;
-      font: 500 11px var(--mono);
+      padding: 10px;
+      font-size: 12px;
       color: var(--muted);
+      border-radius: 2px;
       transition: all 0.15s;
     }
-    .btn-clear:hover {
+    .btn-reset-canvas:hover {
       color: var(--red);
       border-color: var(--red);
     }
 
-    /* Responsive */
     @media (max-width: 1100px) {
-      .studio-layout {
+      .studio-grid {
         grid-template-columns: 340px 1fr;
       }
-      .sidebar-summary {
+      .summary-panel {
         grid-column: 1 / -1;
         border-left: none;
-        border-top: 1px solid var(--ink);
+        border-top: 1px solid var(--line);
         max-height: none;
       }
     }
     @media (max-width: 768px) {
-      .studio-layout {
+      .studio-grid {
         grid-template-columns: 1fr;
       }
-      .sidebar-controls {
+      .catalog-panel {
         border-right: none;
-        border-bottom: 1px solid var(--ink);
+        border-bottom: 1px solid var(--line);
         max-height: none;
       }
-      .stage-wrap {
+      .stage-center {
         min-height: 480px;
-        padding: 20px 10px;
+        padding: 24px 10px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Studio Header -->
-  <header class="tryon-header">
-    <a href="/" class="logo">afterquiet</a>
-    <span class="mono">BAG & TOTE PIN STUDIO // ATTACH YOUR STATEMENTS</span>
-    <a href="/" class="back-link">← back to store</a>
+  <!-- Studio Top Bar -->
+  <header class="studio-header">
+    <a href="/" class="brand-logo">afterquiet</a>
+    <span class="studio-tag">Custom Bag & Pin Placement Studio</span>
+    <a href="/" class="return-link">← Return to Store</a>
   </header>
 
-  <!-- Studio 3-Column Interactive Layout -->
-  <main class="studio-layout">
+  <!-- 3-Column Studio Interface -->
+  <main class="studio-grid">
 
-    <!-- Column 1: Choose Bag & Pin Tray -->
-    <section class="sidebar-controls">
+    <!-- Column 1: Model & Pin Tray -->
+    <section class="catalog-panel">
       <div>
-        <span class="section-label">// PIN & TOTE CUSTOMIZER</span>
-        <h1>pin your<br><i>wearable thoughts.</i></h1>
-        <p class="sidebar-desc">
-          Pilih tas atau totebag Afterquiet di bawah, lalu pasang pin dan badge dari katalog untuk melihat bagaimana tampilannya saat kamu pakai.
+        <h1 class="panel-heading">personalize<br><i>your bag.</i></h1>
+        <p class="panel-intro">
+          Select a bag silhouette, then choose pins and badges from our collection to place anywhere on the canvas to preview your custom look.
         </p>
 
-        <!-- Bag Selector -->
-        <div class="bag-select-wrap">
-          <span class="mono" style="font-size:10px; color:var(--ink);">01 / PILIH MODEL TAS:</span>
-          <div class="bag-options">
-            <button class="bag-option-btn active" onclick="selectBag('tote_ecru')">
-              <strong>Archive Tote</strong>
-              <span class="mono">Ecru 16oz • Rp 135k</span>
-            </button>
-            <button class="bag-option-btn" onclick="selectBag('tote_black')">
-              <strong>Utility Tote</strong>
-              <span class="mono">Black Canvas • Rp 145k</span>
-            </button>
-            <button class="bag-option-btn" onclick="selectBag('bag_messenger')">
-              <strong>Messenger Bag</strong>
-              <span class="mono">Tactical • Rp 185k</span>
-            </button>
-            <button class="bag-option-btn" onclick="selectBag('bag_mini')">
-              <strong>Mini Shoulder</strong>
-              <span class="mono">Pouch • Rp 115k</span>
-            </button>
-          </div>
+        <!-- Step 1: Base Bag -->
+        <span class="step-label">1. Choose Base Bag</span>
+        <div class="bag-picker-grid">
+          <button class="bag-pick-btn active" onclick="setBaseBag('tote_ecru')">
+            <strong>Archive Tote</strong>
+            <span>Ecru 16oz • Rp 135k</span>
+          </button>
+          <button class="bag-pick-btn" onclick="setBaseBag('tote_black')">
+            <strong>Utility Tote</strong>
+            <span>Black Canvas • Rp 145k</span>
+          </button>
+          <button class="bag-pick-btn" onclick="setBaseBag('bag_messenger')">
+            <strong>Messenger Bag</strong>
+            <span>Cordura • Rp 185k</span>
+          </button>
+          <button class="bag-pick-btn" onclick="setBaseBag('bag_mini')">
+            <strong>Mini Shoulder</strong>
+            <span>Pouch • Rp 115k</span>
+          </button>
         </div>
 
-        <!-- Pin & Badge Tray from Afterquiet Catalogue -->
-        <div>
-          <span class="mono" style="font-size:10px; color:var(--ink);">02 / PILIH PIN DARI KATALOG:</span>
-          <div class="pin-catalog-list">
-            
-            <!-- Pin 1 -->
-            <div class="pin-tray-card">
-              <div class="pin-preview-thumb" style="border:2px solid #843b40;">
-                RESTLESS<br>MIND
-              </div>
-              <div class="pin-info">
-                <strong>restless mind enamel pin</strong>
-                <span>+ Rp 55.000</span>
-              </div>
-              <button class="btn-pin-add" onclick="addPinToBag('pin_restless')">+ Pasang</button>
+        <!-- Step 2: Pins Tray -->
+        <span class="step-label">2. Select Pins & Badges</span>
+        <div class="pin-tray-list">
+          
+          <div class="pin-row">
+            <div class="pin-thumb" style="border: 2px solid #843b40;">
+              RESTLESS<br>MIND
             </div>
-
-            <!-- Pin 2 -->
-            <div class="pin-tray-card">
-              <div class="pin-preview-thumb" style="border-radius:4px; background:#843b40;">
-                TOO<br>SOFT
-              </div>
-              <div class="pin-info">
-                <strong>too soft for this world badge</strong>
-                <span>+ Rp 45.000</span>
-              </div>
-              <button class="btn-pin-add" onclick="addPinToBag('badge_soft')">+ Pasang</button>
+            <div class="pin-details">
+              <strong>Restless Mind Enamel Pin</strong>
+              <span>+ Rp 55.000</span>
             </div>
-
-            <!-- Pin 3 -->
-            <div class="pin-tray-card">
-              <div class="pin-preview-thumb" style="background:#222; border:1px solid #eee;">
-                SILENCE<br>PEACE
-              </div>
-              <div class="pin-info">
-                <strong>silence isn't peace patch</strong>
-                <span>+ Rp 32.000</span>
-              </div>
-              <button class="btn-pin-add" onclick="addPinToBag('patch_silence')">+ Pasang</button>
-            </div>
-
-            <!-- Pin 4 -->
-            <div class="pin-tray-card">
-              <div class="pin-preview-thumb" style="border-radius:2px; background:#4a4744;">
-                HONESTY<br>TAG
-              </div>
-              <div class="pin-info">
-                <strong>emotional honesty zinc tag</strong>
-                <span>+ Rp 48.000</span>
-              </div>
-              <button class="btn-pin-add" onclick="addPinToBag('tag_honesty')">+ Pasang</button>
-            </div>
-
-            <!-- Pin 5 -->
-            <div class="pin-tray-card">
-              <div class="pin-preview-thumb" style="background:#171717; color:#843b40; border:2px solid #f1efe9;">
-                AQ<br>LOGO
-              </div>
-              <div class="pin-info">
-                <strong>afterquiet official brand pin</strong>
-                <span>+ Rp 40.000</span>
-              </div>
-              <button class="btn-pin-add" onclick="addPinToBag('pin_logo')">+ Pasang</button>
-            </div>
-
+            <button class="btn-add-pin" onclick="attachPin('pin_restless')">+ Place</button>
           </div>
+
+          <div class="pin-row">
+            <div class="pin-thumb" style="border-radius: 4px; background: #843b40;">
+              TOO<br>SOFT
+            </div>
+            <div class="pin-details">
+              <strong>Too Soft for This World Badge</strong>
+              <span>+ Rp 45.000</span>
+            </div>
+            <button class="btn-add-pin" onclick="attachPin('badge_soft')">+ Place</button>
+          </div>
+
+          <div class="pin-row">
+            <div class="pin-thumb" style="background: #222; border: 1px solid #eee;">
+              SILENCE<br>PEACE
+            </div>
+            <div class="pin-details">
+              <strong>Silence Isn't Peace Patch</strong>
+              <span>+ Rp 32.000</span>
+            </div>
+            <button class="btn-add-pin" onclick="attachPin('patch_silence')">+ Place</button>
+          </div>
+
+          <div class="pin-row">
+            <div class="pin-thumb" style="border-radius: 3px; background: #4a4744;">
+              HONESTY<br>TAG
+            </div>
+            <div class="pin-details">
+              <strong>Emotional Honesty Zinc Tag</strong>
+              <span>+ Rp 48.000</span>
+            </div>
+            <button class="btn-add-pin" onclick="attachPin('tag_honesty')">+ Place</button>
+          </div>
+
+          <div class="pin-row">
+            <div class="pin-thumb" style="background: #f4f2ed; color: #161616; border: 2px solid #161616;">
+              AQ<br>LOGO
+            </div>
+            <div class="pin-details">
+              <strong>Official Monogram Pin</strong>
+              <span>+ Rp 40.000</span>
+            </div>
+            <button class="btn-add-pin" onclick="attachPin('pin_logo')">+ Place</button>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- Column 2: Interactive Totebag Stage -->
-    <section class="stage-wrap">
-      <div class="stage-canvas" id="stageCanvas">
+    <!-- Column 2: Center Artboard -->
+    <section class="stage-center">
+      <div class="bag-artboard" id="artboard">
         
-        <!-- Bag SVG Container -->
-        <div class="bag-container" id="bagVisual">
+        <!-- Bag Artwork SVG Container -->
+        <div style="width:100%; height:100%; position:relative;">
           
           <!-- Ecru Canvas Tote SVG -->
-          <svg id="artToteEcru" class="bag-svg-art" viewBox="0 0 380 460" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Straps -->
+          <svg id="svgEcru" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none">
             <path d="M110 200 C110 20, 270 20, 270 200" stroke="#d5cfc4" stroke-width="32" stroke-linecap="round" fill="none"/>
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#f1efe9" stroke-width="26" stroke-linecap="round" fill="none"/>
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#85827d" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#f4f2ed" stroke-width="26" stroke-linecap="round" fill="none"/>
+            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#999" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
             
-            <!-- Main Canvas Bag Body -->
-            <rect x="40" y="160" width="300" height="280" rx="6" fill="#f1efe9" stroke="#171717" stroke-width="3"/>
-            <!-- Stitched hemline -->
-            <line x1="40" y1="195" x2="340" y2="195" stroke="#171717" stroke-width="2" stroke-dasharray="6 4"/>
-            <line x1="40" y1="200" x2="340" y2="200" stroke="#a39d93" stroke-width="1"/>
+            <rect x="40" y="160" width="300" height="280" rx="6" fill="#f4f2ed" stroke="#161616" stroke-width="3"/>
+            <line x1="40" y1="195" x2="340" y2="195" stroke="#161616" stroke-width="2" stroke-dasharray="6 4"/>
             
-            <!-- Fabric folds -->
-            <path d="M46 170 L75 435 M334 170 L305 435" stroke="#ded8cd" stroke-width="3"/>
-            
-            <!-- Silkscreen Print on Tote -->
-            <rect x="85" y="235" width="210" height="150" fill="#171717" rx="3"/>
-            <text x="190" y="280" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="22" fill="#f1efe9" text-anchor="middle" letter-spacing="-0.04em">AFTERQUIET</text>
-            <text x="190" y="310" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="14" fill="#843b40" text-anchor="middle">wear what you can't say.</text>
-            <text x="190" y="350" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#85827d" text-anchor="middle">VOL. 01 / RAW 16OZ COTTON</text>
+            <rect x="85" y="235" width="210" height="150" fill="#161616" rx="3"/>
+            <text x="190" y="280" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="22" fill="#f4f2ed" text-anchor="middle" letter-spacing="-0.04em">AFTERQUIET</text>
+            <text x="190" y="310" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="14" fill="#843b40" text-anchor="middle">wear what you can't say.</text>
+            <text x="190" y="348" font-family="'Inter', sans-serif" font-size="10" fill="#9e9a93" text-anchor="middle">ARCHIVE 16OZ CANVAS</text>
           </svg>
 
           <!-- Black Utility Tote SVG -->
-          <svg id="artToteBlack" class="bag-svg-art" viewBox="0 0 380 460" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+          <svg id="svgBlack" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none" style="display:none;">
             <path d="M110 200 C110 20, 270 20, 270 200" stroke="#0e0e0e" stroke-width="32" stroke-linecap="round" fill="none"/>
             <path d="M110 200 C110 20, 270 20, 270 200" stroke="#1e1e1e" stroke-width="26" stroke-linecap="round" fill="none"/>
             <rect x="40" y="160" width="300" height="280" rx="6" fill="#1b1b1b" stroke="#333" stroke-width="3"/>
             <line x1="40" y1="195" x2="340" y2="195" stroke="#444" stroke-width="2" stroke-dasharray="6 4"/>
-            <!-- Webbing bar for pins -->
+            <!-- Webbing line -->
             <rect x="40" y="215" width="300" height="36" fill="#121212" stroke="#2c2c2c" stroke-width="1.5"/>
             <line x1="110" y1="215" x2="110" y2="251" stroke="#333" stroke-width="2"/>
             <line x1="190" y1="215" x2="190" y2="251" stroke="#333" stroke-width="2"/>
             <line x1="270" y1="215" x2="270" y2="251" stroke="#333" stroke-width="2"/>
-            <text x="190" y="325" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28" fill="#f1efe9" text-anchor="middle" letter-spacing="-0.04em">afterquiet</text>
-            <text x="190" y="360" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#843b40" text-anchor="middle">UTILITY HEAVYWEIGHT TOTE</text>
+            <text x="190" y="325" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28" fill="#f4f2ed" text-anchor="middle" letter-spacing="-0.04em">afterquiet</text>
+            <text x="190" y="360" font-family="'Inter', sans-serif" font-size="11" fill="#843b40" text-anchor="middle">UTILITY HEAVYWEIGHT TOTE</text>
           </svg>
 
-          <!-- Tactical Messenger Bag SVG -->
-          <svg id="artMessenger" class="bag-svg-art" viewBox="0 0 380 460" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Tactical Messenger SVG -->
+          <svg id="svgMessenger" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none" style="display:none;">
             <path d="M20 70 L90 170 M290 170 L360 70" stroke="#121212" stroke-width="32" stroke-linecap="square"/>
             <rect x="50" y="160" width="280" height="230" rx="10" fill="#1a1a1a" stroke="#383838" stroke-width="3"/>
             <path d="M50 160 L330 160 L315 280 L65 280 Z" fill="#242424" stroke="#141414" stroke-width="2"/>
@@ -572,235 +585,216 @@
             <rect x="102" y="285" width="30" height="14" fill="#843b40"/>
             <rect x="250" y="260" width="24" height="60" fill="#111"/>
             <rect x="247" y="285" width="30" height="14" fill="#843b40"/>
-            <text x="190" y="225" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#f1efe9" text-anchor="middle">RESTLESS MESSENGER</text>
-            <text x="190" y="250" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#85827d" text-anchor="middle">SPEC. 02 / CORDURA SLING</text>
+            <text x="190" y="225" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#f4f2ed" text-anchor="middle">RESTLESS MESSENGER</text>
+            <text x="190" y="250" font-family="'Inter', sans-serif" font-size="10" fill="#85827d" text-anchor="middle">CORDURA SLING</text>
           </svg>
 
-          <!-- Mini Shoulder Bag SVG -->
-          <svg id="artMini" class="bag-svg-art" viewBox="0 0 380 460" fill="none" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Mini Shoulder SVG -->
+          <svg id="svgMini" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none" style="display:none;">
             <path d="M120 180 C120 40, 260 40, 260 180" stroke="#843b40" stroke-width="10" fill="none"/>
-            <rect x="90" y="160" width="200" height="260" rx="8" fill="#f1efe9" stroke="#171717" stroke-width="3"/>
-            <rect x="90" y="250" width="200" height="170" fill="#e2ded4" stroke="#171717" stroke-width="2"/>
-            <text x="190" y="215" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#171717" text-anchor="middle">afterquiet</text>
-            <text x="190" y="325" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#843b40" text-anchor="middle">MINI ARCHIVE</text>
+            <rect x="90" y="160" width="200" height="260" rx="8" fill="#f4f2ed" stroke="#161616" stroke-width="3"/>
+            <rect x="90" y="250" width="200" height="170" fill="#e2ded4" stroke="#161616" stroke-width="2"/>
+            <text x="190" y="215" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#161616" text-anchor="middle">afterquiet</text>
+            <text x="190" y="325" font-family="'Inter', sans-serif" font-size="11" fill="#843b40" text-anchor="middle">MINI ARCHIVE</text>
           </svg>
 
-          <!-- Draggable Pin Layer -->
-          <div class="pin-layer" id="pinLayer"></div>
+          <!-- Interactive Pins Layer -->
+          <div class="pin-drop-surface" id="pinDropSurface"></div>
 
         </div>
       </div>
 
-      <div class="stage-hint">
-        <span>GESER PIN KE POSISI YANG KAMU MAU PADA TAS</span>
-        <span>KLIK TANDA (×) UNTUK MENGHAPUS PIN</span>
+      <div class="canvas-instruction">
+        <span>Drag pins across the bag surface to position your design</span>
+        <span>Click (×) to remove pin</span>
       </div>
     </section>
 
-    <!-- Column 3: Live Custom Setup Summary & Checkout -->
-    <section class="sidebar-summary">
+    <!-- Column 3: Order Breakdown -->
+    <section class="summary-panel">
       <div>
-        <h2 class="summary-title">custom setup</h2>
-        
-        <div class="custom-bill-list" id="billList">
-          <!-- Populated by JavaScript -->
+        <h2 class="summary-heading">Custom Setup</h2>
+
+        <div class="order-tally-list" id="orderTallyList">
+          <!-- Dynamically populated -->
         </div>
       </div>
 
-      <div class="total-box">
-        <div class="total-row">
-          <span class="mono" style="color:var(--muted);">TOTAL ESTIMASI:</span>
-          <strong id="totalPriceDisplay">Rp 135.000</strong>
+      <div class="summary-bottom">
+        <div class="total-display-row">
+          <span>Estimated Total</span>
+          <strong id="totalSumDisplay">Rp 135.000</strong>
         </div>
 
-        <button class="btn-checkout" onclick="checkoutCustomSetup()">
-          <span>order setup ini (whatsapp)</span>
+        <button class="btn-submit-order" onclick="submitCustomOrder()">
+          <span>Order This Setup via WhatsApp</span>
           <span>↗</span>
         </button>
 
-        <button class="btn-clear" onclick="clearAllPins()">
-          hapus semua pin dari tas
+        <button class="btn-reset-canvas" onclick="clearCanvasPins()">
+          Reset Pin Placement
         </button>
       </div>
     </section>
 
   </main>
 
-  <!-- Interactive JavaScript Logic -->
   <script>
-    // Available Bags Data
-    const bagData = {
+    const bagCatalogue = {
       tote_ecru: {
-        name: "archive canvas tote bag (ecru)",
+        name: "Archive Canvas Tote Bag (Ecru)",
         price: 135000,
         formattedPrice: "Rp 135.000",
-        svgId: "artToteEcru"
+        svgId: "svgEcru"
       },
       tote_black: {
-        name: "utility black canvas tote",
+        name: "Utility Black Canvas Tote",
         price: 145000,
         formattedPrice: "Rp 145.000",
-        svgId: "artToteBlack"
+        svgId: "svgBlack"
       },
       bag_messenger: {
-        name: "restless tactical messenger",
+        name: "Restless Tactical Messenger",
         price: 185000,
         formattedPrice: "Rp 185.000",
-        svgId: "artMessenger"
+        svgId: "svgMessenger"
       },
       bag_mini: {
-        name: "fragile archives mini shoulder",
+        name: "Fragile Archives Mini Shoulder",
         price: 115000,
         formattedPrice: "Rp 115.000",
-        svgId: "artMini"
+        svgId: "svgMini"
       }
     };
 
-    // Available Pins Data
-    const catalogPins = {
+    const pinCatalogue = {
       pin_restless: {
-        name: "restless mind enamel pin",
+        name: "Restless Mind Enamel Pin",
         price: 55000,
         formattedPrice: "Rp 55.000",
-        type: "circle",
         html: `
-          <div style="width:48px; height:48px; border-radius:50%; background:#171717; border:2.5px solid #843b40; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; box-shadow:inset 0 0 4px #000;">
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:7px; color:#f1efe9; line-height:1;">RESTLESS</span>
+          <div style="width:48px; height:48px; border-radius:50%; background:#161616; border:2.5px solid #843b40; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:7px; color:#f4f2ed; line-height:1;">RESTLESS</span>
             <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#843b40; line-height:1; margin-top:2px;">MIND</span>
           </div>
         `
       },
       badge_soft: {
-        name: "too soft for this world badge",
+        name: "Too Soft for This World Badge",
         price: 45000,
         formattedPrice: "Rp 45.000",
-        type: "rect",
         html: `
-          <div style="width:58px; height:38px; border-radius:3px; background:#843b40; border:2px solid #f1efe9; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-            <span style="font-family:'IBM Plex Mono'; font-weight:600; font-size:6.5px; color:#f1efe9; letter-spacing:0.04em;">TOO SOFT</span>
-            <span style="font-family:'IBM Plex Mono'; font-size:5.5px; color:#d89599;">VOL. 01</span>
+          <div style="width:58px; height:38px; border-radius:3px; background:#843b40; border:2px solid #f4f2ed; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Inter'; font-weight:600; font-size:6.5px; color:#f4f2ed; letter-spacing:0.04em;">TOO SOFT</span>
+            <span style="font-family:'Inter'; font-size:5.5px; color:#d89599;">VOL. 01</span>
           </div>
         `
       },
       patch_silence: {
-        name: "silence isn't peace patch",
+        name: "Silence Isn't Peace Patch",
         price: 32000,
         formattedPrice: "Rp 32.000",
-        type: "rect",
         html: `
-          <div style="width:64px; height:32px; background:#1c1c1c; border:1.5px dashed #f1efe9; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;">
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f1efe9; line-height:1.1;">SILENCE ISN'T<br>ALWAYS PEACE.</span>
+          <div style="width:64px; height:32px; background:#1c1c1c; border:1.5px dashed #f4f2ed; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f4f2ed; line-height:1.1;">SILENCE ISN'T<br>ALWAYS PEACE.</span>
           </div>
         `
       },
       tag_honesty: {
-        name: "emotional honesty zinc tag",
+        name: "Emotional Honesty Zinc Tag",
         price: 48000,
         formattedPrice: "Rp 48.000",
-        type: "tag",
         html: `
-          <div style="width:40px; height:60px; background:#4a4744; border:2px solid #171717; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3px;">
-            <div style="width:6px; height:6px; border-radius:50%; background:#171717; margin-bottom:4px;"></div>
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f1efe9; line-height:1;">EMOTIONAL<br>HONESTY</span>
+          <div style="width:40px; height:60px; background:#4a4744; border:2px solid #161616; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3px;">
+            <div style="width:6px; height:6px; border-radius:50%; background:#161616; margin-bottom:4px;"></div>
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f4f2ed; line-height:1;">EMOTIONAL<br>HONESTY</span>
           </div>
         `
       },
       pin_logo: {
-        name: "afterquiet official brand pin",
+        name: "Official Monogram Pin",
         price: 40000,
         formattedPrice: "Rp 40.000",
-        type: "circle",
         html: `
-          <div style="width:42px; height:42px; border-radius:50%; background:#f1efe9; border:2.5px solid #171717; display:flex; align-items:center; justify-content:center; text-align:center;">
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:12px; color:#171717;">aq</span>
+          <div style="width:42px; height:42px; border-radius:50%; background:#f4f2ed; border:2.5px solid #161616; display:flex; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:12px; color:#161616;">aq</span>
           </div>
         `
       }
     };
 
-    // State
-    let currentBagKey = 'tote_ecru';
-    let placedPins = []; // Array of { id, key, x, y }
+    let activeBag = 'tote_ecru';
+    let attachedPins = [];
     let pinCounter = 0;
 
-    const pinLayer = document.getElementById('pinLayer');
-    const billList = document.getElementById('billList');
-    const totalPriceDisplay = document.getElementById('totalPriceDisplay');
+    const pinDropSurface = document.getElementById('pinDropSurface');
+    const orderTallyList = document.getElementById('orderTallyList');
+    const totalSumDisplay = document.getElementById('totalSumDisplay');
 
-    // Switch Bag
-    window.selectBag = function(bagKey) {
-      currentBagKey = bagKey;
-      
-      document.querySelectorAll('.bag-option-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
+    window.setBaseBag = function(bagKey) {
+      activeBag = bagKey;
+      document.querySelectorAll('.bag-pick-btn').forEach(btn => btn.classList.remove('active'));
       event.currentTarget.classList.add('active');
 
-      // Hide all SVGs, show active
-      Object.keys(bagData).forEach(k => {
-        const svg = document.getElementById(bagData[k].svgId);
+      Object.keys(bagCatalogue).forEach(k => {
+        const svg = document.getElementById(bagCatalogue[k].svgId);
         if (svg) svg.style.display = k === bagKey ? 'block' : 'none';
       });
 
-      updateSummary();
+      refreshSummary();
     };
 
-    // Add Pin onto the Bag
-    window.addPinToBag = function(pinKey) {
-      const pinTemplate = catalogPins[pinKey];
-      if (!pinTemplate) return;
+    window.attachPin = function(pinKey) {
+      const template = pinCatalogue[pinKey];
+      if (!template) return;
 
       pinCounter++;
       const uniqueId = `pin_${pinCounter}`;
+      const posX = 50 + (Math.random() * 20 - 10);
+      const posY = 50 + (Math.random() * 20 - 10);
 
-      // Default placement around center of bag with slight random offset
-      const offsetX = 50 + (Math.random() * 24 - 12);
-      const offsetY = 50 + (Math.random() * 24 - 12);
-
-      const pinObj = {
+      const pinObject = {
         id: uniqueId,
         key: pinKey,
-        name: pinTemplate.name,
-        price: pinTemplate.price,
-        x: offsetX,
-        y: offsetY
+        name: template.name,
+        price: template.price,
+        x: posX,
+        y: posY
       };
 
-      placedPins.push(pinObj);
-      renderPlacedPin(pinObj, pinTemplate);
-      updateSummary();
+      attachedPins.push(pinObject);
+      renderPinElement(pinObject, template);
+      refreshSummary();
     };
 
-    // Render Pin DOM element
-    function renderPlacedPin(pinObj, pinTemplate) {
-      const pinEl = document.createElement('div');
-      pinEl.className = 'placed-pin';
-      pinEl.id = pinObj.id;
-      pinEl.style.left = `${pinObj.x}%`;
-      pinEl.style.top = `${pinObj.y}%`;
+    function renderPinElement(pinObj, template) {
+      const el = document.createElement('div');
+      el.className = 'draggable-pin';
+      el.id = pinObj.id;
+      el.style.left = `${pinObj.x}%`;
+      el.style.top = `${pinObj.y}%`;
 
-      pinEl.innerHTML = `
-        ${pinTemplate.html}
-        <button class="pin-delete-btn" onclick="removePin('${pinObj.id}', event)">×</button>
+      el.innerHTML = `
+        ${template.html}
+        <button class="remove-pin-btn" onclick="detachPin('${pinObj.id}', event)">×</button>
       `;
 
-      // Pointer drag handlers (Mouse and Touch)
       let isDragging = false;
       let startX, startY;
       let initialLeft, initialTop;
 
-      pinEl.addEventListener('pointerdown', function(e) {
-        if (e.target.classList.contains('pin-delete-btn')) return;
+      el.addEventListener('pointerdown', function(e) {
+        if (e.target.classList.contains('remove-pin-btn')) return;
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
 
-        const parentRect = pinLayer.getBoundingClientRect();
-        initialLeft = (pinObj.x / 100) * parentRect.width;
-        initialTop = (pinObj.y / 100) * parentRect.height;
+        const surfaceRect = pinDropSurface.getBoundingClientRect();
+        initialLeft = (pinObj.x / 100) * surfaceRect.width;
+        initialTop = (pinObj.y / 100) * surfaceRect.height;
 
-        pinEl.setPointerCapture(e.pointerId);
-        pinEl.classList.add('selected');
+        el.setPointerCapture(e.pointerId);
+        el.classList.add('active-selected');
         e.stopPropagation();
       });
 
@@ -809,70 +803,66 @@
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
 
-        const parentRect = pinLayer.getBoundingClientRect();
-        let newX = ((initialLeft + dx) / parentRect.width) * 100;
-        let newY = ((initialTop + dy) / parentRect.height) * 100;
+        const surfaceRect = pinDropSurface.getBoundingClientRect();
+        let newX = ((initialLeft + dx) / surfaceRect.width) * 100;
+        let newY = ((initialTop + dy) / surfaceRect.height) * 100;
 
-        // Keep pin within bounds of bag
-        newX = Math.max(15, Math.min(85, newX));
-        newY = Math.max(35, Math.min(88, newY));
+        newX = Math.max(14, Math.min(86, newX));
+        newY = Math.max(34, Math.min(88, newY));
 
         pinObj.x = newX;
         pinObj.y = newY;
 
-        pinEl.style.left = `${newX}%`;
-        pinEl.style.top = `${newY}%`;
+        el.style.left = `${newX}%`;
+        el.style.top = `${newY}%`;
       });
 
       window.addEventListener('pointerup', function(e) {
         if (isDragging) {
           isDragging = false;
-          pinEl.classList.remove('selected');
+          el.classList.remove('active-selected');
         }
       });
 
-      pinLayer.appendChild(pinEl);
+      pinDropSurface.appendChild(el);
     }
 
-    // Remove single pin
-    window.removePin = function(pinId, e) {
+    window.detachPin = function(pinId, e) {
       if (e) e.stopPropagation();
-      placedPins = placedPins.filter(p => p.id !== pinId);
-      const el = document.getElementById(pinId);
-      if (el) el.remove();
-      updateSummary();
+      attachedPins = attachedPins.filter(p => p.id !== pinId);
+      const domEl = document.getElementById(pinId);
+      if (domEl) domEl.remove();
+      refreshSummary();
     };
 
-    // Clear all pins
-    window.clearAllPins = function() {
-      placedPins = [];
-      pinLayer.innerHTML = '';
-      updateSummary();
+    window.clearCanvasPins = function() {
+      attachedPins = [];
+      pinDropSurface.innerHTML = '';
+      refreshSummary();
     };
 
-    // Update Bill & Total
-    function updateSummary() {
-      const bag = bagData[currentBagKey];
+    function refreshSummary() {
+      const bag = bagCatalogue[activeBag];
       let total = bag.price;
 
-      let billHtml = `
-        <div class="bill-item">
+      let itemsHtml = `
+        <div class="order-tally-item">
           <span><strong>1x ${bag.name}</strong></span>
           <span>${bag.formattedPrice}</span>
         </div>
       `;
 
-      if (placedPins.length === 0) {
-        billHtml += `
-          <div style="color:var(--muted); font-size:11px; font-family:var(--mono); padding:16px 0;">
-            belum ada pin yang dipasang. klik tombol "+ Pasang" di sebelah kiri untuk menambah pin.
+      if (attachedPins.length === 0) {
+        itemsHtml += `
+          <div style="color:var(--muted); font-size:12px; padding:18px 0; font-style:italic;">
+            No pins attached yet. Select pins from the left to place them on your bag.
           </div>
         `;
       } else {
-        placedPins.forEach((p, idx) => {
+        attachedPins.forEach(p => {
           total += p.price;
-          billHtml += `
-            <div class="bill-item">
+          itemsHtml += `
+            <div class="order-tally-item">
               <span>• ${p.name}</span>
               <span>Rp ${p.price.toLocaleString('id-ID')}</span>
             </div>
@@ -880,34 +870,32 @@
         });
       }
 
-      billList.innerHTML = billHtml;
-      totalPriceDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+      orderTallyList.innerHTML = itemsHtml;
+      totalSumDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
     }
 
-    // Checkout via WhatsApp with full breakdown
-    window.checkoutCustomSetup = function() {
-      const bag = bagData[currentBagKey];
+    window.submitCustomOrder = function() {
+      const bag = bagCatalogue[activeBag];
       let total = bag.price;
 
-      let pinTextList = "";
-      if (placedPins.length > 0) {
-        pinTextList = placedPins.map(p => {
+      let pinLines = "";
+      if (attachedPins.length > 0) {
+        pinLines = attachedPins.map(p => {
           total += p.price;
           return `  - ${p.name} (Rp ${p.price.toLocaleString('id-ID')})`;
         }).join('%0A');
       } else {
-        pinTextList = "  (Tanpa pin tambahan)";
+        pinLines = "  (No extra pins)";
       }
 
-      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom setup dari Try-On Studio:%0A%0A*TAS / TOTE:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*PIN & BADGE YANG DIPASANG (${placedPins.length} pcs):*%0A${pinTextList}%0A%0A*TOTAL HARGA:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan dan detail pengiriman. Terima kasih!`;
+      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom arrangement dari Studio:%0A%0A*BASE BAG:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*ATTACHED PINS & BADGES (${attachedPins.length} pcs):*%0A${pinLines}%0A%0A*TOTAL:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan & alamat pengiriman. Terima kasih.`;
       
       window.open(`https://wa.me/?text=${msg}`, '_blank');
     };
 
-    // Initial default pins on the bag to demonstrate instantly
     window.addEventListener('DOMContentLoaded', () => {
-      addPinToBag('pin_restless');
-      addPinToBag('badge_soft');
+      attachPin('pin_restless');
+      attachPin('badge_soft');
     });
   </script>
 </body>

@@ -3,31 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>afterquiet — wear what you can't always say.</title>
-  <meta name="description" content="Independent accessories and visual culture for the unfiltered mind. Bags, totes, pins, and wearable objects.">
-  <meta name="theme-color" content="#171717">
+  <title>afterquiet — independent accessories & visual culture</title>
+  <meta name="description" content="afterquiet is an independent accessories brand exploring identity, emotions, and personal expression through wearable objects.">
+  <meta name="theme-color" content="#161616">
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='monospace' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23161616'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F4F2ED' text-anchor='middle'>aq</text></svg>">
 
-  <!-- Web Fonts -->
+  <!-- Google Fonts: Space Grotesk & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --ink: #171717;
-      --paper: #f1efe9;
+      --ink: #161616;
+      --paper: #f4f2ed;
+      --paper-card: #ece8e1;
+      --paper-light: #faf9f6;
       --red: #843b40;
-      --muted: #67645f;
-      --line: #c9c6bf;
-      --mono: "IBM Plex Mono", monospace;
-      --sans: Inter, Arial, sans-serif;
-      --display: "Space Grotesk", sans-serif;
+      --muted: #6e6b66;
+      --line: #d6d2c9;
+      --line-dark: #2a2a2a;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', -apple-system, sans-serif;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 22px; }
+    html { scroll-behavior: smooth; scroll-padding-top: 30px; }
     body {
       background: var(--paper);
       color: var(--ink);
@@ -36,484 +39,574 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    .mono {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
+
     a { color: inherit; text-decoration: none; }
     button { font: inherit; cursor: pointer; color: inherit; }
 
     /* Announcement Bar */
-    .announcement {
+    .announcement-bar {
       background: var(--ink);
-      min-height: 34px;
       color: var(--paper);
-      font: 600 10px/1 var(--mono);
-      letter-spacing: 0.14em;
+      padding: 10px 5%;
+      font-size: 11px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      font-weight: 500;
+      display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 5%;
+    }
+    .announcement-bar span:first-child {
       display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
     }
 
-    /* Site Header */
-    .site-header {
-      border-bottom: 1px solid var(--ink);
-      align-items: center;
-      gap: 40px;
-      min-height: 102px;
-      padding: 0 5%;
-      display: flex;
-      background: var(--paper);
+    /* Main Header Navigation */
+    .site-nav {
       position: sticky;
       top: 0;
-      z-index: 30;
-    }
-    .logo {
-      font: 700 clamp(31px, 3.2vw, 45px)/1 var(--display);
-      letter-spacing: -0.09em;
-      white-space: nowrap;
-    }
-    .desktop-nav {
-      align-items: center;
-      gap: clamp(20px, 3vw, 44px);
-      margin-left: auto;
+      z-index: 50;
+      background: rgba(244, 242, 237, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      height: 80px;
     }
-    .desktop-nav a, .link-button {
-      font-size: 14px;
-      font-weight: 600;
+    .brand-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(26px, 3vw, 36px);
+      letter-spacing: -0.07em;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .brand-logo:hover { opacity: 0.75; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--muted);
       transition: color 0.15s;
     }
-    .desktop-nav a:hover, .text-arrow:hover {
-      text-underline-offset: 5px;
-      text-decoration: underline;
-    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active-link { color: var(--ink); font-weight: 600; }
+
     .header-actions {
-      align-items: center;
-      gap: 20px;
       display: flex;
+      align-items: center;
+      gap: 16px;
     }
-    .admin-shortcut {
-      text-underline-offset: 4px;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: underline;
-      color: var(--red);
-    }
-    .link-button {
+    .btn-customizer-shortcut {
       background: none;
       border: 1px solid var(--ink);
-      padding: 8px 14px;
-      border-radius: 2px;
-      font-family: var(--mono);
+      color: var(--ink);
+      padding: 9px 18px;
+      border-radius: 999px;
       font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .link-button:hover {
+    .btn-customizer-shortcut:hover {
       background: var(--ink);
       color: var(--paper);
     }
-    .menu-button {
-      width: 34px;
-      height: 34px;
-      padding: 6px;
+    .btn-cart {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.15s;
+    }
+    .btn-cart:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .mobile-menu-trigger {
       display: none;
       background: none;
       border: none;
+      padding: 6px;
     }
-    .menu-button span {
-      background: var(--ink);
+    .mobile-menu-trigger span {
+      display: block;
       width: 22px;
       height: 2px;
+      background: var(--ink);
       margin: 5px 0;
-      display: block;
     }
 
     /* Hero Section */
     .hero {
-      padding: 40px 5% 65px;
+      padding: 70px 5% 90px;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+    .hero-meta span:first-child { color: var(--red); }
+    
+    .hero-heading {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(48px, 8vw, 114px);
+      letter-spacing: -0.065em;
+      line-height: 0.98;
+      max-width: 1200px;
+      margin-bottom: 45px;
+    }
+    .hero-heading span.accent-period { color: var(--red); }
+
+    .hero-footer {
+      display: grid;
+      grid-template-columns: minmax(240px, 1.2fr) auto minmax(200px, 1fr);
+      align-items: center;
+      gap: 40px;
+    }
+    .hero-philosophy {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 460px;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 16px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+    .hero-caption {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: right;
+    }
+
+    /* Editorial Poster Section */
+    .editorial-section {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 80px 5% 50px;
       border-bottom: 1px solid var(--ink);
     }
-    .hero-meta, .section-top {
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      display: flex;
-    }
-    .hero-meta span:first-child, .section-top span:first-child { color: var(--red); }
-    .hero h1 {
-      max-width: 1240px;
-      font: 700 clamp(48px, 7.6vw, 106px)/1.04 var(--display);
-      letter-spacing: -0.075em;
-      margin: 45px 0 35px;
-    }
-    .hero .period { color: var(--red); }
-    .hero-bottom {
-      grid-template-columns: minmax(200px, 1fr) auto minmax(180px, 1fr);
-      align-items: center;
-      gap: 32px;
-      display: grid;
-    }
-    .hero-bottom p { font-size: 16px; line-height: 1.6; }
-    .hero-side { color: var(--muted); justify-self: end; }
-    
-    .button-dark {
-      border: 1px solid var(--ink);
-      background: var(--ink);
-      min-height: 54px;
-      color: var(--paper);
-      justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-      padding: 15px 22px;
-      font-size: 13px;
-      font-weight: 700;
-      transition: background 0.18s, border-color 0.18s;
-      display: inline-flex;
-    }
-    .button-dark:hover { background: var(--red); border-color: var(--red); }
-
-    /* Poster Section */
-    .poster-section {
-      background: var(--ink);
-      color: var(--paper);
-      padding: 65px 5% 35px;
-    }
-    .poster-grid {
-      background: #141414;
+    .editorial-box {
+      border: 1px solid var(--line-dark);
+      background: #111;
       min-height: 480px;
       position: relative;
       overflow: hidden;
-      border: 1px solid #2a2a2a;
-    }
-    .poster-grid:before {
-      z-index: 0;
-      background: var(--red);
-      content: "";
-      width: 41%;
-      height: 118%;
-      position: absolute;
-      top: -6%;
-      right: -1%;
-    }
-    .poster-paper {
-      z-index: 1;
-      background: var(--paper);
-      width: 44%;
-      height: 72%;
-      color: var(--ink);
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 28px 30px;
       display: flex;
-      position: absolute;
-      top: 14%;
-      left: 7%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .poster-copy {
-      font: 700 clamp(32px, 3.5vw, 48px)/1.02 var(--display);
-      letter-spacing: -0.075em;
-    }
-    .poster-copy span { color: var(--red); }
-    .poster-bottom { color: var(--muted); }
-    .poster-right {
-      z-index: 2;
       align-items: center;
-      width: 33%;
-      display: flex;
+      justify-content: center;
+    }
+    .editorial-box:after {
+      content: "";
       position: absolute;
-      top: 35%;
-      right: 5%;
+      top: -10%;
+      right: -5%;
+      width: 44%;
+      height: 120%;
+      background: var(--red);
+      z-index: 1;
     }
-    .poster-right p {
-      max-width: 390px;
-      font: 600 clamp(22px, 2.2vw, 32px)/1.2 var(--display);
-      letter-spacing: -0.045em;
-      color: var(--paper);
+    .editorial-card {
+      position: relative;
+      z-index: 2;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 40px;
+      max-width: 520px;
+      width: 88%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
-    .poster-caption {
-      color: #e0dad3;
-      justify-content: space-between;
-      gap: 18px;
-      margin-top: 22px;
-      display: flex;
+    .editorial-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .editorial-statement {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(32px, 4vw, 50px);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      margin-bottom: 30px;
+    }
+    .editorial-statement span { color: var(--red); }
+    .editorial-footer {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
     }
 
-    /* Section Pad */
-    .section-pad { padding: 90px 5%; }
-    .section-top { border-top: 1px solid var(--ink); padding-top: 16px; }
-    .section-title-row {
-      justify-content: space-between;
-      align-items: end;
-      gap: 25px;
-      margin: 35px 0 40px;
+    /* Catalog / Shop Section */
+    .shop-section {
+      padding: 90px 5%;
+    }
+    .section-header {
+      border-top: 1px solid var(--ink);
+      padding-top: 20px;
+      margin-bottom: 40px;
+    }
+    .section-tag {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--red);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title-wrap {
       display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
     }
-    .section-title-row h2 {
-      font: 700 clamp(38px, 5.1vw, 68px)/1.03 var(--display);
-      letter-spacing: -0.075em;
+    .section-title-wrap h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: -0.06em;
+      line-height: 1.04;
     }
-    .section-title-row h2 i { font-weight: 400; font-style: italic; }
-    .text-arrow {
-      border-bottom: 1px solid var(--ink);
-      align-items: center;
-      gap: 8px;
-      padding-bottom: 7px;
+    .section-title-wrap h2 i { font-weight: 400; font-style: italic; }
+
+    .link-arrow {
       font-size: 14px;
       font-weight: 600;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 4px;
       display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s, border-color 0.15s;
     }
+    .link-arrow:hover { color: var(--red); border-color: var(--red); }
 
-    /* Filters */
-    .filters {
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 30px;
+    /* Category Filter Pills */
+    .filter-bar {
       display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
     }
-    .filter {
-      border: 1px solid var(--line);
+    .filter-pill {
       background: none;
+      border: 1px solid var(--line);
+      padding: 9px 20px;
       border-radius: 999px;
-      min-height: 40px;
-      padding: 9px 18px;
-      font-size: 12px;
-      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
       transition: all 0.15s;
     }
-    .filter span { color: var(--muted); margin-left: 8px; }
-    .filter.active {
+    .filter-pill:hover {
       border-color: var(--ink);
+      color: var(--ink);
+    }
+    .filter-pill.active {
       background: var(--ink);
+      border-color: var(--ink);
       color: var(--paper);
     }
-    .filter.active span { color: #e2ddd6; }
-    .filter:hover:not(.active) { border-color: var(--ink); }
 
-    /* Product Grid */
+    /* Products Grid */
     .product-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px 24px;
       display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px 24px;
     }
     .product-card {
-      min-width: 0;
-      border: 1px solid var(--line);
-      background: #faf8f5;
-      padding: 16px;
-      transition: border-color 0.15s, transform 0.15s;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      background: var(--paper-light);
+      border: 1px solid var(--line);
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
     }
     .product-card:hover {
       border-color: var(--ink);
     }
-    .product-art {
-      aspect-ratio: 1.15;
-      background: var(--ink);
-      width: 100%;
+    .product-thumbnail {
+      aspect-ratio: 1;
+      background: #1e1e1e;
       color: var(--paper);
+      display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
+      justify-content: center;
+      padding: 24px;
       position: relative;
-      overflow: hidden;
       cursor: pointer;
+      overflow: hidden;
+      margin-bottom: 16px;
     }
-    .product-card:nth-child(2) .product-art { background: #262422; }
-    .product-card:nth-child(3) .product-art { background: var(--red); }
-    .product-card:nth-child(4) .product-art { background: #1f2326; }
-    
-    .placeholder-index, .placeholder-type {
-      color: #d2ccc4;
-      font-size: 9px;
+    .product-card:nth-child(2) .product-thumbnail { background: #2b2725; }
+    .product-card:nth-child(3) .product-thumbnail { background: var(--red); }
+    .product-card:nth-child(4) .product-thumbnail { background: #1c2225; }
+
+    .thumb-spec {
       position: absolute;
+      top: 14px;
       left: 14px;
-      right: 14px;
-      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #b5b0a7;
     }
-    .placeholder-index { top: 14px; }
-    .placeholder-type { text-align: right; bottom: 14px; }
-    .placeholder-copy {
-      font: 700 clamp(18px, 2vw, 26px)/1.1 var(--display);
+    .thumb-type {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #b5b0a7;
+    }
+    .thumb-graphic {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(20px, 2vw, 26px);
       letter-spacing: -0.04em;
       text-align: center;
+      line-height: 1.1;
       white-space: pre-line;
     }
 
-    .card-meta {
-      justify-content: space-between;
-      align-items: start;
-      gap: 12px;
-      margin-top: 14px;
-      display: flex;
-    }
-    .card-title {
-      font: 600 17px/1.25 var(--display);
-      letter-spacing: -0.04em;
-      display: block;
+    .product-title {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
       cursor: pointer;
     }
-    .card-kind {
+    .product-subtitle {
+      font-size: 12px;
       color: var(--muted);
-      font: 500 9px/1.5 var(--mono);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 4px;
-      display: block;
+      line-height: 1.4;
+      margin-bottom: 14px;
     }
-    .card-price {
-      font: 700 13px var(--mono);
-      white-space: nowrap;
-    }
-    .card-actions {
+    .product-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--line);
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
     }
-    .btn-add {
+    .product-price {
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+    .btn-buy-card {
       background: var(--ink);
       color: var(--paper);
       border: 1px solid var(--ink);
-      padding: 6px 12px;
+      padding: 7px 14px;
       font-size: 11px;
-      font-family: var(--mono);
       font-weight: 600;
+      border-radius: 2px;
       transition: background 0.15s;
     }
-    .btn-add:hover { background: var(--red); border-color: var(--red); }
-    .try-link {
-      font-size: 11px;
-      font-family: var(--mono);
-      text-decoration: underline;
-      color: var(--red);
+    .btn-buy-card:hover {
+      background: var(--red);
+      border-color: var(--red);
     }
 
-    /* Try On Interactive Feature Banner */
-    .tryon-banner {
+    /* Try-On Customizer Feature Banner */
+    .studio-feature-banner {
       background: var(--ink);
       color: var(--paper);
+      padding: 90px 5%;
       border-top: 1px solid var(--ink);
       border-bottom: 1px solid var(--ink);
-      padding: 70px 5%;
     }
-    .tryon-banner-inner {
+    .studio-feature-content {
       max-width: 1240px;
       margin: 0 auto;
-      grid-template-columns: 1fr 1fr;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
       align-items: center;
-      gap: 50px;
-      display: grid;
+      gap: 60px;
     }
-    .tryon-badge {
-      background: var(--red);
-      color: var(--paper);
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 4px 8px;
-      display: inline-block;
-      margin-bottom: 12px;
+    .studio-feature-text h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(38px, 4.5vw, 60px);
+      letter-spacing: -0.06em;
+      line-height: 1.05;
+      margin: 16px 0 20px;
+    }
+    .studio-feature-text h2 i { font-weight: 400; font-style: italic; }
+    .studio-feature-text p {
+      color: #a8a39b;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 480px;
     }
 
-    /* Manifesto Section */
-    .manifesto-layout {
-      grid-template-columns: minmax(0, 1.4fr) minmax(255px, 0.8fr);
-      align-items: end;
-      gap: clamp(40px, 7vw, 100px);
-      margin-top: 45px;
-      display: grid;
-    }
-    .manifesto h2 {
-      font: 700 clamp(36px, 3.8vw, 52px)/1.15 var(--display);
-      letter-spacing: -0.065em;
-    }
-    .manifesto h2 em { font-weight: 400; font-style: italic; }
-    .manifesto-copy p { margin-bottom: 18px; font-size: 15px; line-height: 1.8; color: var(--muted); }
-
-    /* Archive Section */
-    .archive-section {
-      background: var(--ink);
-      min-height: 380px;
-      color: var(--paper);
+    .studio-preview-box {
+      background: #1c1b19;
+      border: 1px solid #333;
+      padding: 36px;
+      display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 42px 5% 26px;
-      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
-    .archive-content {
-      justify-content: space-between;
+    .studio-tote-art {
+      width: 180px;
+      height: 220px;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+    }
+
+    /* Philosophy / Manifesto Section */
+    .manifesto-section {
+      padding: 100px 5%;
+      border-bottom: 1px solid var(--line);
+    }
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+      gap: clamp(40px, 8vw, 120px);
       align-items: end;
-      gap: 34px;
-      display: flex;
+      margin-top: 40px;
     }
-    .archive-content h2 {
-      font: 700 clamp(54px, 7.5vw, 100px)/0.98 var(--display);
-      letter-spacing: -0.085em;
+    .manifesto-grid h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(38px, 4.2vw, 56px);
+      letter-spacing: -0.06em;
+      line-height: 1.14;
     }
-    .archive-content h2 span { color: #d89599; }
-    .archive-content p { max-width: 320px; font-size: 14px; line-height: 1.75; color: #b0aaa2; }
-    .archive-bottom {
-      color: #e0dad3;
-      border-top: 1px solid #444;
-      justify-content: space-between;
-      gap: 16px;
-      padding-top: 17px;
-      display: flex;
+    .manifesto-grid h2 em { font-weight: 400; font-style: italic; }
+    .manifesto-body p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
 
     /* Footer */
     footer {
+      background: var(--ink);
       color: var(--paper);
-      background: #141414;
-      padding: 56px 5% 25px;
+      padding: 70px 5% 30px;
     }
     .footer-top {
-      justify-content: space-between;
-      align-items: start;
-      gap: 35px;
-      padding-bottom: 60px;
       display: flex;
-    }
-    .footer-brand {
-      font: 700 clamp(50px, 10vw, 130px)/1 var(--display);
-      letter-spacing: -0.1em;
-    }
-    .footer-links { gap: 65px; display: flex; }
-    .footer-links > div { flex-direction: column; gap: 12px; font-size: 13px; display: flex; }
-    .footer-links .mono { color: #d3cec8; margin-bottom: 6px; font-size: 9px; }
-    .footer-bottom {
-      color: #888;
-      border-top: 1px solid #333;
       justify-content: space-between;
-      gap: 20px;
-      padding-top: 19px;
+      align-items: flex-start;
+      gap: 40px;
+      padding-bottom: 70px;
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(50px, 11vw, 130px);
+      letter-spacing: -0.09em;
+      line-height: 1;
+    }
+    .footer-nav-groups {
+      display: flex;
+      gap: 70px;
+    }
+    .footer-nav-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .footer-nav-col strong {
       font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .footer-nav-col a { color: #d0ccc4; transition: color 0.15s; }
+    .footer-nav-col a:hover { color: var(--paper); }
+
+    .footer-bottom {
+      padding-top: 24px;
       display: flex;
-      font-family: var(--mono);
+      justify-content: space-between;
+      font-size: 11px;
+      color: #777;
     }
 
     /* Cart Slide-Over Drawer */
-    .cart-drawer-overlay {
+    .cart-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 50;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 90;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s;
+      transition: opacity 0.25s ease;
     }
-    .cart-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .cart-backdrop.open { opacity: 1; pointer-events: auto; }
     .cart-drawer {
       position: fixed;
       top: 0;
@@ -521,393 +614,406 @@
       width: min(440px, 100%);
       height: 100vh;
       background: var(--paper);
-      z-index: 51;
-      padding: 30px;
-      box-shadow: -10px 0 40px rgba(0,0,0,0.25);
+      z-index: 100;
+      padding: 32px 28px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: -15px 0 50px rgba(0,0,0,0.25);
       transform: translateX(100%);
-      transition: transform 0.25s ease-in-out;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .cart-drawer.open { transform: translateX(0); }
-    .drawer-head {
-      border-bottom: 1px solid var(--ink);
+
+    .cart-head {
+      display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid var(--ink);
       padding-bottom: 18px;
+    }
+    .cart-head h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.05em;
+    }
+    .cart-close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .cart-items-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 0;
+    }
+    .cart-foot {
+      border-top: 1px solid var(--ink);
+      padding-top: 20px;
+    }
+    .subtotal-line {
       display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+      font-size: 15px;
     }
-    .drawer-head h2 { font: 700 28px/1 var(--display); letter-spacing: -0.05em; }
-    .close-btn { background: none; border: none; font-size: 26px; cursor: pointer; }
-    .cart-items-list { flex: 1; overflow-y: auto; padding: 20px 0; }
-    .drawer-bottom { border-top: 1px solid var(--ink); padding-top: 18px; }
-    .subtotal-row { justify-content: space-between; display: flex; font-size: 16px; margin-bottom: 16px; font-weight: 700; }
+    .subtotal-line strong {
+      font-family: var(--display);
+      font-size: 22px;
+    }
+    .btn-checkout-wa {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      width: 100%;
+      min-height: 52px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .btn-checkout-wa:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .desktop-nav { display: none; }
-      .menu-button { display: block; }
-      .hero-bottom { grid-template-columns: 1fr; }
-      .hero-side { display: none; }
-      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .tryon-banner-inner { grid-template-columns: 1fr; gap: 30px; }
-      .poster-paper { width: 80%; }
-      .poster-right { display: none; }
-      .manifesto-layout { grid-template-columns: 1fr; }
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .studio-feature-content { grid-template-columns: 1fr; }
+      .footer-nav-groups { gap: 40px; }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-menu-trigger { display: block; }
+      .hero-footer { grid-template-columns: 1fr; gap: 24px; }
+      .hero-caption { text-align: left; }
+      .editorial-card { width: 95%; padding: 28px 20px; }
+      .manifesto-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-top { flex-direction: column; gap: 40px; }
+      .footer-nav-groups { flex-wrap: wrap; gap: 32px; }
+    }
+    @media (max-width: 540px) {
       .product-grid { grid-template-columns: 1fr; }
-      .footer-links { flex-direction: column; gap: 30px; }
-      .site-header { min-height: 75px; }
+      .site-nav { height: 70px; }
     }
   </style>
 </head>
 <body>
 
   <!-- Announcement Bar -->
-  <div class="announcement">
-    <span>independent objects for the unfiltered mind</span>
-    <span>afterquiet — est. 2026</span>
-  </div>
+  <aside class="announcement-bar">
+    <span>
+      <span class="dot-pulse"></span>
+      Volume 02 — Fragile Archives Release
+    </span>
+    <span>Complimentary shipping on select orders</span>
+  </aside>
 
-  <!-- Header -->
-  <header class="site-header" id="top">
-    <a href="#top" class="logo">afterquiet</a>
+  <!-- Sticky Navigation Header -->
+  <header class="site-nav" id="top">
+    <a href="#top" class="brand-logo">afterquiet</a>
 
-    <nav class="desktop-nav">
-      <a href="#shop">shop</a>
-      <a href="#tryon">try-on studio</a>
-      <a href="#collections">collections</a>
-      <a href="#about">about</a>
-      <a href="#archive">archive</a>
+    <nav class="nav-links">
+      <a href="#shop" class="active-link">Catalogue</a>
+      <a href="/try-on">Customizer Studio</a>
+      <a href="#collections">Archive</a>
+      <a href="#about">Philosophy</a>
     </nav>
 
     <div class="header-actions">
-      <a class="admin-shortcut" href="/try-on">try on bags ↗</a>
-      <button class="link-button" id="cartOpenBtn">bag (<span id="cartCount">0</span>)</button>
-      <button class="menu-button" id="menuToggle" aria-label="Toggle Navigation">
+      <a href="/try-on" class="btn-customizer-shortcut">
+        <span>Personalize a Bag</span>
+        <span>↗</span>
+      </a>
+      <button class="btn-cart" id="openBagBtn">
+        Bag (<span id="bagCounter">0</span>)
+      </button>
+      <button class="mobile-menu-trigger" id="mobileMenuBtn" aria-label="Toggle navigation">
         <span></span><span></span>
       </button>
     </div>
   </header>
 
   <!-- Mobile Dropdown -->
-  <div id="mobileNav" style="display:none; background:var(--paper); border-bottom:1px solid var(--ink); padding:20px 5%; font-family:var(--mono); font-size:13px; line-height:2.2;">
-    <a href="#shop" style="display:block;">shop</a>
-    <a href="/try-on" style="display:block; color:var(--red);">try-on studio ↗</a>
-    <a href="#collections" style="display:block;">collections</a>
-    <a href="#about" style="display:block;">about philosophy</a>
-    <a href="#archive" style="display:block;">archive</a>
+  <div id="mobileDropdown" style="display:none; background:var(--paper); border-bottom:1px solid var(--ink); padding:20px 5%; font-size:14px; line-height:2.4; font-weight:500;">
+    <a href="#shop" style="display:block;">Catalogue</a>
+    <a href="/try-on" style="display:block; color:var(--red);">Customizer Studio ↗</a>
+    <a href="#collections" style="display:block;">Archive</a>
+    <a href="#about" style="display:block;">Philosophy</a>
   </div>
 
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <div class="hero-meta mono">
-        <span>AQ / independent accessories & visual culture</span>
-        <span>an independent state of mind</span>
+      <div class="hero-meta">
+        <span>Independent Accessories & Visual Culture</span>
+        <span>Autumn 2026</span>
       </div>
 
-      <h1>
+      <h1 class="hero-heading">
         wear what you<br>
-        can't always say<span class="period">.</span>
+        can't always say<span class="accent-period">.</span>
       </h1>
 
-      <div class="hero-bottom">
-        <p>some things are easier to wear than to explain.</p>
-        <a class="button-dark" href="#shop">
-          <span>explore the collection</span>
+      <div class="hero-footer">
+        <p class="hero-philosophy">
+          afterquiet translates thoughts, emotions, and personal observations into wearable objects — from heavyweight canvas bags to pins and graphic badges.
+        </p>
+
+        <a href="#shop" class="btn-primary">
+          <span>Explore the Collection</span>
           <span>↗</span>
         </a>
-        <p class="hero-side">
-          small objects. loud thoughts.<br>
+
+        <p class="hero-caption">
+          objects with a point of view.<br>
           no explanation required.
         </p>
       </div>
     </section>
 
-    <!-- Poster Section -->
-    <section class="poster-section" id="collections">
-      <div class="poster-grid">
-        <div class="poster-paper">
-          <div class="mono">AFTERQUIET / VISUAL ARCHIVE</div>
-          <div class="poster-copy">
-            NOT<br>
-            EVERYTHING<br>
+    <!-- Editorial Poster Section -->
+    <section class="editorial-section" id="collections">
+      <div class="editorial-box">
+        <div class="editorial-card">
+          <div class="editorial-label">Visual Archive // Volume 01</div>
+          <h2 class="editorial-statement">
+            NOT EVERYTHING<br>
             NEEDS AN<br>
             <span>ANSWER.</span>
-          </div>
-          <div class="poster-bottom mono">VOL. 01 / EXPRESSION AS AN OBJECT</div>
+          </h2>
+          <div class="editorial-footer">Expression as an Object</div>
         </div>
-        <div class="poster-right">
-          <p>
-            a collection of things<br>
-            we never said out loud.
-          </p>
-        </div>
-      </div>
-      <div class="poster-caption mono">
-        <span>fig. 01 — visual archive</span>
-        <span>small objects / loud thoughts</span>
       </div>
     </section>
 
-    <!-- Shop Section -->
-    <section class="shop-section section-pad" id="shop">
-      <div class="section-top mono">
-        <span>01 / LATEST OBJECTS</span>
-        <span>bags, totes & accessories</span>
+    <!-- Catalogue / Storefront Section -->
+    <section class="shop-section" id="shop">
+      <div class="section-header">
+        <span class="section-tag">Curated Catalogue</span>
+        <div class="section-title-wrap">
+          <h2>made to mean<br><i>something.</i></h2>
+          <a href="/try-on" class="link-arrow">Customize with Pins ↗</a>
+        </div>
       </div>
 
-      <div class="section-title-row">
-        <h2>made to mean<br><i>something.</i></h2>
-        <a href="/try-on" class="text-arrow">try a bag on ↗</a>
+      <!-- Category Filter Pills -->
+      <div class="filter-bar">
+        <button class="filter-pill active" onclick="filterCatalogue('all')">All Objects</button>
+        <button class="filter-pill" onclick="filterCatalogue('bags')">Bags</button>
+        <button class="filter-pill" onclick="filterCatalogue('totes')">Totes</button>
+        <button class="filter-pill" onclick="filterCatalogue('accessories')">Pins & Badges</button>
       </div>
 
-      <!-- Filters: All Objects, Bags, Totes, Accessories -->
-      <div class="filters" role="group" aria-label="Filter products">
-        <button class="filter active" onclick="filterItems('all')">all objects <span id="countAll">08</span></button>
-        <button class="filter" onclick="filterItems('bags')">bags <span id="countBags">02</span></button>
-        <button class="filter" onclick="filterItems('totes')">totes <span id="countTotes">02</span></button>
-        <button class="filter" onclick="filterItems('accessories')">accessories <span id="countAcc">04</span></button>
-      </div>
-
-      <!-- Product Grid -->
+      <!-- Products Grid -->
       <div class="product-grid" id="productGrid">
         <!-- Rendered dynamically -->
       </div>
     </section>
 
-    <!-- Try On Feature Showcase Section -->
-    <section class="tryon-banner" id="tryon">
-      <div class="tryon-banner-inner">
-        <div>
-          <span class="tryon-badge">INTERACTIVE STUDIO</span>
-          <h2 style="font:700 clamp(36px, 4.5vw, 56px)/1.08 var(--display); letter-spacing:-0.06em; margin:14px 0 16px;">
-            pin your bag,<br><i>tell your story.</i>
-          </h2>
-          <p style="color:#b0aaa2; font-size:15px; line-height:1.7; margin-bottom:28px;">
-            Pilih tas atau totebag Afterquiet favoritmu, lalu pasang dan tata letak pin, badge, serta patch dari katalog Afterquiet langsung di tas secara interaktif sebelum membeli.
+    <!-- Studio Feature Showcase -->
+    <section class="studio-feature-banner" id="studio">
+      <div class="studio-feature-content">
+        <div class="studio-feature-text">
+          <span class="section-tag" style="color:var(--red);">Interactive Studio</span>
+          <h2>personalize your bag,<br><i>tell your story.</i></h2>
+          <p>
+            Choose any totebag or bag, then pick and position pins, badges, and tags from our catalogue directly onto the canvas to create your own signature arrangement before ordering.
           </p>
-          <a href="/try-on" class="button-dark" style="background:var(--red); border-color:var(--red);">
-            <span>buka pin & tote studio</span>
+          <a href="/try-on" class="btn-primary" style="background:var(--red); border-color:var(--red);">
+            <span>Open Customizer Studio</span>
             <span>↗</span>
           </a>
         </div>
 
-        <div style="background:#1f1e1c; border:1px solid #333; padding:28px; text-align:center;">
-          <div style="aspect-ratio:1.2; background:#141414; border:1px dashed #444; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; position:relative;">
-            <!-- Mini visual tote icon with pins on it -->
-            <svg width="130" height="160" viewBox="0 0 260 340" fill="none">
-              <path d="M75 140 C75 10, 185 10, 185 140" stroke="#f1efe9" stroke-width="16" fill="none"/>
-              <rect x="25" y="110" width="210" height="220" rx="4" fill="#f1efe9" stroke="#171717" stroke-width="3"/>
-              <text x="130" y="200" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20" fill="#171717" text-anchor="middle">AFTERQUIET</text>
-              <text x="130" y="235" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#843b40" text-anchor="middle">ARCHIVE TOTE</text>
-              <!-- Sample pinned badges -->
-              <circle cx="65" cy="140" r="15" fill="#171717" stroke="#843b40" stroke-width="2"/>
-              <text x="65" y="143" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="6" fill="#f1efe9" text-anchor="middle">PIN</text>
-              <rect x="175" y="132" width="28" height="18" rx="2" fill="#843b40" stroke="#f1efe9" stroke-width="1.5"/>
-              <text x="189" y="144" font-family="'IBM Plex Mono', monospace" font-size="6" fill="#f1efe9" text-anchor="middle">BADGE</text>
-            </svg>
-            <span class="mono" style="font-size:10px; color:#aaa; margin-top:14px;">DRAG & SUSUN PIN BEBAS DI TAS</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-top:14px; font-family:var(--mono); font-size:10px; color:#aaa;">
-            <span>KATALOG: ENAMEL PINS & BADGES</span>
-            <span style="color:var(--red);">REAL-TIME TOTAL ORDER</span>
-          </div>
+        <div class="studio-preview-box">
+          <svg class="studio-tote-art" viewBox="0 0 260 340" fill="none">
+            <path d="M75 140 C75 10, 185 10, 185 140" stroke="#f4f2ed" stroke-width="16" fill="none"/>
+            <rect x="25" y="110" width="210" height="220" rx="4" fill="#f4f2ed" stroke="#161616" stroke-width="3"/>
+            <text x="130" y="200" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="20" fill="#161616" text-anchor="middle">AFTERQUIET</text>
+            <text x="130" y="230" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="12" fill="#843b40" text-anchor="middle">ARCHIVE TOTE</text>
+            <!-- Placed pins simulation -->
+            <circle cx="65" cy="142" r="16" fill="#161616" stroke="#843b40" stroke-width="2"/>
+            <text x="65" y="145" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="7" fill="#f4f2ed" text-anchor="middle">PIN</text>
+            <rect x="175" y="132" width="30" height="20" rx="2" fill="#843b40" stroke="#f4f2ed" stroke-width="1.5"/>
+            <text x="190" y="145" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="6" fill="#f4f2ed" text-anchor="middle">BADGE</text>
+          </svg>
+          <span style="font-size:11px; color:#888; margin-top:18px; letter-spacing:0.04em; text-transform:uppercase;">Custom Placement Studio</span>
         </div>
       </div>
     </section>
 
-    <!-- Manifesto / About Section -->
-    <section class="manifesto section-pad" id="about">
-      <div class="section-top mono">
-        <span>02 / A LITTLE ABOUT US</span>
-        <span>this is afterquiet</span>
-      </div>
-
-      <div class="manifesto-layout">
+    <!-- Brand Philosophy Section -->
+    <section class="manifesto-section" id="about">
+      <span class="section-tag">Brand Philosophy</span>
+      <div class="manifesto-grid">
         <h2>
           not made for everyone.<br>
           <em>that's kind of the point.</em>
         </h2>
 
-        <div class="manifesto-copy">
+        <div class="manifesto-body">
           <p>
-            afterquiet is an independent accessories brand exploring identity, emotions, and the culture around us through small everyday objects.
+            afterquiet is an independent brand exploring identity, emotion, and everyday culture through tactile wearable objects.
           </p>
           <p>
-            the things you carry can say something about you — even when you don't have the words.
+            the things you wear can speak for you — especially when you don't always have the words.
           </p>
-          <a href="#archive" class="text-arrow">read the story ↗</a>
+          <a href="#collections" class="link-arrow">Read the Full Story ↗</a>
         </div>
-      </div>
-    </section>
-
-    <!-- Archive Section -->
-    <section class="archive-section" id="archive">
-      <div class="mono">03 / VISUAL ARCHIVE</div>
-      <div class="archive-content">
-        <h2>
-          ideas don't<br>
-          expire<span>.</span>
-        </h2>
-        <p>An evolving space for releases, unfinished thoughts, and things worth keeping.</p>
-      </div>
-      <div class="archive-bottom mono">
-        <span>INDEX: 000 → ∞</span>
-        <span>afterquiet / visual culture</span>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Clean Fashion Store Footer -->
   <footer>
     <div class="footer-top">
-      <a href="#top" class="footer-brand">afterquiet</a>
-      <div class="footer-links">
-        <div>
-          <span class="mono">EXPLORE</span>
-          <a href="#shop">shop all</a>
-          <a href="/try-on">try on studio</a>
-          <a href="#collections">collections</a>
+      <div class="footer-logo">afterquiet</div>
+
+      <div class="footer-nav-groups">
+        <div class="footer-nav-col">
+          <strong>Collection</strong>
+          <a href="#shop">Catalogue</a>
+          <a href="/try-on">Customizer Studio</a>
+          <a href="#collections">Archive</a>
         </div>
-        <div>
-          <span class="mono">ABOUT</span>
-          <a href="#about">our point of view</a>
-          <a href="https://github.com/jiwajiwatulang/afterquiet" target="_blank" rel="noopener">github repository ↗</a>
+        <div class="footer-nav-col">
+          <strong>Brand</strong>
+          <a href="#about">Philosophy</a>
+          <a href="#">Care & Quality</a>
+          <a href="#">Shipping & Returns</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>Connect</strong>
+          <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <a href="#">Customer Support</a>
         </div>
       </div>
     </div>
+
     <div class="footer-bottom">
-      <span>© 2026 afterquiet — independent accessories & visual culture</span>
+      <span>© 2026 afterquiet. all rights reserved.</span>
       <span>wear what you can't always say.</span>
-      <a href="#top">back to top ↑</a>
+      <a href="#top" style="color:inherit;">back to top ↑</a>
     </div>
   </footer>
 
   <!-- Slide-Over Shopping Bag Drawer -->
-  <div class="cart-drawer-overlay" id="cartOverlay"></div>
-  <div class="cart-drawer" id="cartDrawer">
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer">
     <div>
-      <div class="drawer-head">
-        <h2>your bag</h2>
-        <button class="close-btn" id="cartCloseBtn">×</button>
+      <div class="cart-head">
+        <h3>Shopping Bag</h3>
+        <button class="cart-close-btn" id="closeCartBtn">×</button>
       </div>
-      <div class="cart-items-list" id="cartItemsList">
-        <p style="color:var(--muted); font-size:13px; font-family:var(--mono); padding:30px 0; text-align:center;">
-          your bag is currently empty.
+      <div class="cart-items-body" id="cartItemsContainer">
+        <p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">
+          Your bag is currently empty.
         </p>
       </div>
     </div>
 
-    <div class="drawer-bottom">
-      <div class="subtotal-row">
-        <span>subtotal</span>
-        <span id="cartSubtotal">Rp 0</span>
+    <div class="cart-foot">
+      <div class="subtotal-line">
+        <span>Subtotal</span>
+        <strong id="cartSubtotalValue">Rp 0</strong>
       </div>
-      <p style="font-size:11px; color:var(--muted); margin-bottom:14px; font-family:var(--mono);">
-        orders processed directly via official whatsapp support.
-      </p>
-      <button class="button-dark" style="width:100%; justify-content:center;" onclick="checkoutWhatsApp()">
-        <span>checkout via whatsapp</span>
+      <button class="btn-checkout-wa" onclick="checkoutOrderWA()">
+        <span>Complete Order via WhatsApp</span>
         <span>↗</span>
       </button>
     </div>
-  </div>
+  </aside>
 
-  <!-- Application Logic -->
+  <!-- Store Logic -->
   <script>
-    // Products Catalogue
     const products = [
       {
         id: "tote_ecru",
-        title: "archive canvas tote bag",
+        title: "Archive Canvas Tote Bag",
         category: "totes",
-        kind: "16oz raw cotton • ecru archive",
+        kind: "16oz Raw Organic Cotton • Ecru Archive",
         price: 135000,
         formattedPrice: "Rp 135.000",
-        index: "OBJ / 01",
-        copy: "archive\ntote.",
-        hasTryOn: true
+        tag: "Tote 01",
+        graphic: "archive\ntote."
       },
       {
         id: "tote_black",
-        title: "utility black canvas tote",
+        title: "Utility Black Canvas Tote",
         category: "totes",
-        kind: "washed heavyweight canvas • webbing strip",
+        kind: "Washed Heavyweight Canvas • Webbing Bar",
         price: 145000,
         formattedPrice: "Rp 145.000",
-        index: "OBJ / 02",
-        copy: "utility\nblack.",
-        hasTryOn: true
+        tag: "Tote 02",
+        graphic: "utility\nblack."
       },
       {
         id: "bag_messenger",
-        title: "restless mind tactical messenger",
+        title: "Restless Mind Messenger Bag",
         category: "bags",
-        kind: "crossbody sling • cordura nylon",
+        kind: "Tactical Crossbody • Cordura Nylon",
         price: 185000,
         formattedPrice: "Rp 185.000",
-        index: "OBJ / 03",
-        copy: "tactical\nmessenger.",
-        hasTryOn: true
+        tag: "Bag 01",
+        graphic: "tactical\nmessenger."
       },
       {
         id: "bag_shoulder",
-        title: "fragile archives mini shoulder bag",
+        title: "Fragile Archives Mini Shoulder Bag",
         category: "bags",
-        kind: "everyday mini pouch • rope strap",
+        kind: "Everyday Mini Carrier • Rope Strap",
         price: 115000,
         formattedPrice: "Rp 115.000",
-        index: "OBJ / 04",
-        copy: "mini\nshoulder.",
-        hasTryOn: true
+        tag: "Bag 02",
+        graphic: "mini\nshoulder."
       },
       {
         id: "pin_restless",
-        title: "restless mind enamel pin",
+        title: "Restless Mind Enamel Pin",
         category: "accessories",
-        kind: "hard enamel • black nickel finish",
+        kind: "Hard Enamel • Black Nickel Finish",
         price: 55000,
         formattedPrice: "Rp 55.000",
-        index: "OBJ / 05",
-        copy: "restless\nmind.",
-        hasTryOn: false
+        tag: "Pin",
+        graphic: "restless\nmind."
       },
       {
         id: "sticker_pack",
-        title: "silence isn't peace sticker pack",
+        title: "Silence Isn't Peace Sticker Pack",
         category: "accessories",
-        kind: "5-piece screenprinted matte vinyl",
+        kind: "5-Piece Screenprinted Matte Vinyl",
         price: 32000,
         formattedPrice: "Rp 32.000",
-        index: "OBJ / 06",
-        copy: "silence\nisn't peace.",
-        hasTryOn: false
+        tag: "Pack",
+        graphic: "silence isn't\nalways peace."
       },
       {
         id: "badge_soft",
-        title: "too soft for this world badge",
+        title: "Too Soft for This World Badge",
         category: "accessories",
-        kind: "die-struck metal • antique silver",
+        kind: "Die-Struck Metal • Antique Silver",
         price: 45000,
         formattedPrice: "Rp 45.000",
-        index: "OBJ / 07",
-        copy: "too soft\nfor this world.",
-        hasTryOn: false
+        tag: "Badge",
+        graphic: "too soft\nfor this world"
       },
       {
         id: "keychain_honesty",
-        title: "emotional honesty zinc keychain",
+        title: "Emotional Honesty Zinc Keychain",
         category: "accessories",
-        kind: "heavyweight motel tag • gunmetal",
+        kind: "Solid Motel Tag • Gunmetal Plated",
         price: 48000,
         formattedPrice: "Rp 48.000",
-        index: "OBJ / 08",
-        copy: "emotional\nhonesty.",
-        hasTryOn: false
+        tag: "Tag",
+        graphic: "emotional\nhonesty"
       }
     ];
 
@@ -915,19 +1021,18 @@
     let currentFilter = 'all';
 
     const productGrid = document.getElementById('productGrid');
-    const cartOverlay = document.getElementById('cartOverlay');
+    const cartBackdrop = document.getElementById('cartBackdrop');
     const cartDrawer = document.getElementById('cartDrawer');
-    const cartOpenBtn = document.getElementById('cartOpenBtn');
-    const cartCloseBtn = document.getElementById('cartCloseBtn');
-    const cartItemsList = document.getElementById('cartItemsList');
-    const cartSubtotal = document.getElementById('cartSubtotal');
-    const cartCount = document.getElementById('cartCount');
+    const openBagBtn = document.getElementById('openBagBtn');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const cartSubtotalValue = document.getElementById('cartSubtotalValue');
+    const bagCounter = document.getElementById('bagCounter');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDropdown = document.getElementById('mobileDropdown');
 
-    // Mobile nav toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    menuToggle.addEventListener('click', () => {
-      mobileNav.style.display = mobileNav.style.display === 'none' ? 'block' : 'none';
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileDropdown.style.display = mobileDropdown.style.display === 'none' ? 'block' : 'none';
     });
 
     function renderGrid() {
@@ -941,34 +1046,29 @@
         card.className = 'product-card';
         card.innerHTML = `
           <div>
-            <div class="product-art" onclick="handleCardClick('${p.id}', ${p.hasTryOn})">
-              <span class="placeholder-index">${p.index}</span>
-              <span class="placeholder-copy">${p.copy}</span>
-              <span class="placeholder-type">${p.hasTryOn ? 'TRY-ON AVAILABLE ↗' : 'ACCESSORY'}</span>
+            <div class="product-thumbnail" onclick="addToCart('${p.id}')">
+              <span class="thumb-spec">${p.tag}</span>
+              <span class="thumb-graphic">${p.graphic}</span>
+              <span class="thumb-type">${p.category === 'totes' || p.category === 'bags' ? 'Customize ↗' : 'Add to Bag'}</span>
             </div>
 
-            <div class="card-meta">
-              <span>
-                <strong class="card-title" onclick="handleCardClick('${p.id}', ${p.hasTryOn})">${p.title}</strong>
-                <span class="card-kind">${p.kind}</span>
-              </span>
-              <span class="card-price">${p.formattedPrice}</span>
-            </div>
+            <h3 class="product-title" onclick="addToCart('${p.id}')">${p.title}</h3>
+            <p class="product-subtitle">${p.kind}</p>
           </div>
 
-          <div class="card-actions">
-            ${p.hasTryOn ? '<a href="/try-on" class="try-link">try on ↗</a>' : '<span style="font-size:10px; color:var(--muted); font-family:var(--mono);">VOL. 01 / 02</span>'}
-            <button class="btn-add" onclick="addToBag('${p.id}')">+ add to bag</button>
+          <div class="product-footer">
+            <span class="product-price">${p.formattedPrice}</span>
+            <button class="btn-buy-card" onclick="addToCart('${p.id}')">+ Add to Bag</button>
           </div>
         `;
         productGrid.appendChild(card);
       });
     }
 
-    window.filterItems = function(cat) {
+    window.filterCatalogue = function(cat) {
       currentFilter = cat;
-      document.querySelectorAll('.filter').forEach(b => {
-        if (b.innerText.toLowerCase().includes(cat)) {
+      document.querySelectorAll('.filter-pill').forEach(b => {
+        if (b.innerText.toLowerCase().includes(cat.slice(0, 3))) {
           b.classList.add('active');
         } else {
           b.classList.remove('active');
@@ -977,97 +1077,88 @@
       renderGrid();
     };
 
-    window.handleCardClick = function(id, hasTryOn) {
-      if (hasTryOn) {
-        window.location.href = '/try-on';
-      } else {
-        addToBag(id);
-      }
-    };
-
-    window.addToBag = function(id) {
-      const prod = products.find(p => p.id === id);
-      if (!prod) return;
+    window.addToCart = function(id) {
+      const item = products.find(p => p.id === id);
+      if (!item) return;
       const exist = cart.find(c => c.id === id);
       if (exist) {
         exist.qty += 1;
       } else {
-        cart.push({ ...prod, qty: 1 });
+        cart.push({ ...item, qty: 1 });
       }
-      updateCart();
-      openCart();
+      updateCartUI();
+      openCartDrawer();
     };
 
-    function updateCart() {
+    function updateCartUI() {
       const totalQty = cart.reduce((s, i) => s + i.qty, 0);
-      cartCount.innerText = totalQty;
+      bagCounter.innerText = totalQty;
 
       if (cart.length === 0) {
-        cartItemsList.innerHTML = `<p style="color:var(--muted); font-size:13px; font-family:var(--mono); padding:30px 0; text-align:center;">your bag is currently empty.</p>`;
-        cartSubtotal.innerText = "Rp 0";
+        cartItemsContainer.innerHTML = `<p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">Your bag is currently empty.</p>`;
+        cartSubtotalValue.innerText = "Rp 0";
         return;
       }
 
       let subtotal = 0;
-      cartItemsList.innerHTML = cart.map(item => {
+      cartItemsContainer.innerHTML = cart.map(item => {
         const itemTotal = item.price * item.qty;
         subtotal += itemTotal;
         return `
-          <div style="border-bottom:1px solid var(--line); padding:14px 0; display:flex; justify-content:space-between; align-items:center;">
+          <div style="border-bottom:1px solid var(--line); padding:16px 0; display:flex; justify-content:space-between; align-items:center;">
             <div>
               <strong style="font-size:14px; font-family:var(--display);">${item.title}</strong>
-              <div style="font-size:11px; color:var(--muted); font-family:var(--mono); margin:4px 0;">Rp ${item.price.toLocaleString('id-ID')}</div>
-              <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-family:var(--mono);">
-                <button onclick="changeQty('${item.id}', -1)" style="border:1px solid var(--line); width:24px; height:24px;">-</button>
+              <div style="font-size:12px; color:var(--muted); margin:4px 0;">Rp ${item.price.toLocaleString('id-ID')}</div>
+              <div style="display:flex; align-items:center; gap:8px; font-size:12px;">
+                <button onclick="adjustQty('${item.id}', -1)" style="border:1px solid var(--line); width:24px; height:24px; background:none;">-</button>
                 <span>${item.qty}</span>
-                <button onclick="changeQty('${item.id}', 1)" style="border:1px solid var(--line); width:24px; height:24px;">+</button>
+                <button onclick="adjustQty('${item.id}', 1)" style="border:1px solid var(--line); width:24px; height:24px; background:none;">+</button>
               </div>
             </div>
             <div style="text-align:right;">
-              <span style="font-family:var(--mono); font-size:12px; font-weight:700;">Rp ${itemTotal.toLocaleString('id-ID')}</span>
-              <button onclick="removeItem('${item.id}')" style="display:block; font-size:10px; color:var(--red); text-decoration:underline; margin-top:6px;">remove</button>
+              <span style="font-size:13px; font-weight:600;">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+              <button onclick="removeCartItem('${item.id}')" style="display:block; font-size:11px; color:var(--red); text-decoration:underline; margin-top:6px; background:none; border:none; margin-left:auto;">remove</button>
             </div>
           </div>
         `;
       }).join('');
 
-      cartSubtotal.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+      cartSubtotalValue.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
     }
 
-    window.changeQty = function(id, d) {
+    window.adjustQty = function(id, delta) {
       const item = cart.find(c => c.id === id);
       if (!item) return;
-      item.qty += d;
+      item.qty += delta;
       if (item.qty <= 0) {
         cart = cart.filter(c => c.id !== id);
       }
-      updateCart();
+      updateCartUI();
     };
 
-    window.removeItem = function(id) {
+    window.removeCartItem = function(id) {
       cart = cart.filter(c => c.id !== id);
-      updateCart();
+      updateCartUI();
     };
 
-    function openCart() {
-      cartOverlay.classList.add('open');
+    function openCartDrawer() {
+      cartBackdrop.classList.add('open');
       cartDrawer.classList.add('open');
     }
-
-    function closeCart() {
-      cartOverlay.classList.remove('open');
+    function closeCartDrawer() {
+      cartBackdrop.classList.remove('open');
       cartDrawer.classList.remove('open');
     }
 
-    cartOpenBtn.addEventListener('click', openCart);
-    cartCloseBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
+    openBagBtn.addEventListener('click', openCartDrawer);
+    closeCartBtn.addEventListener('click', closeCartDrawer);
+    cartBackdrop.addEventListener('click', closeCartDrawer);
 
-    window.checkoutWhatsApp = function() {
+    window.checkoutOrderWA = function() {
       if (cart.length === 0) return;
       const lines = cart.map(i => `• ${i.title} (x${i.qty}) - Rp ${(i.price * i.qty).toLocaleString('id-ID')}`).join('%0A');
       const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-      const msg = `Halo afterquiet,%0A%0ASaya ingin checkout:%0A${lines}%0A%0ATotal: Rp ${total.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stock & detail pengiriman. Terima kasih.`;
+      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan item berikut:%0A${lines}%0A%0ATotal: Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan & alamat pengiriman. Terima kasih.`;
       window.open(`https://wa.me/?text=${msg}`, '_blank');
     };
 
