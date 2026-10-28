@@ -997,8 +997,10 @@
 
     @media (max-width: 540px) {
       .metric-summary-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .metric-summary-card {
         padding: 12px 10px;

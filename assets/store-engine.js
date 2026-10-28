@@ -1884,13 +1884,14 @@
         style.textContent = `
           @media (max-width: 600px) {
             #aqCartPanel {
-              width: 100vw !important;
-              max-width: 100vw !important;
+              width: 100% !important;
+              max-width: 100% !important;
               left: 0 !important;
               right: 0 !important;
               border-left: none !important;
               padding: 18px 16px max(18px, env(safe-area-inset-bottom, 18px)) !important;
               box-shadow: none !important;
+              box-sizing: border-box !important;
             }
             #aqCartBodyContainer {
               padding-bottom: 120px !important; /* Clearance for sticky checkout and virtual keyboards */
