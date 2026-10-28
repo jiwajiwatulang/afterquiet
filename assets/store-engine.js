@@ -35,11 +35,11 @@
     adminSalt: 'afterquiet_sec_2026',
     sessionTimeoutMinutes: 30,
     cloudDb: {
-      enabled: false,
-      provider: 'firebase', // 'firebase' | 'rest' | 'local'
-      endpoint: '', // e.g. https://afterquiet-store-default-rtdb.firebaseio.com
+      enabled: true,
+      provider: 'rest',
+      endpoint: '/api/sync',
       authSecret: '',
-      pollIntervalMs: 25000
+      pollIntervalMs: 20000
     }
   };
 
@@ -351,6 +351,7 @@
     lastSyncTime: null,
     pollTimer: null,
     bus: null,
+    offlineQueue: [],
 
     init() {
       // 1. Cross-tab BroadcastChannel for real-time bus
@@ -367,7 +368,15 @@
         console.warn('BroadcastChannel not available:', e);
       }
 
-      // 2. Schedule polling loop
+      // 2. Auto-drain queue when connection restores
+      if (typeof window !== 'undefined') {
+        window.addEventListener('online', () => {
+          this.drainOfflineQueue();
+          this.syncAll();
+        });
+      }
+
+      // 3. Schedule polling loop
       this.schedulePolling();
     },
 
@@ -384,6 +393,36 @@
       return settings.cloudDb || DEFAULT_SETTINGS.cloudDb;
     },
 
+    buildTargetUrl(cfg, key) {
+      const cleanUrl = (cfg.endpoint || '').replace(/\/+$/, '');
+      if (cfg.provider === 'firebase') {
+        return `${cleanUrl}/afterquiet/${key}.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
+      }
+      if (cleanUrl.includes('?') || cleanUrl.includes('api/sync')) {
+        const sep = cleanUrl.includes('?') ? '&' : '?';
+        return `${cleanUrl}${sep}key=${encodeURIComponent(key)}`;
+      }
+      return `${cleanUrl}/${encodeURIComponent(key)}`;
+    },
+
+    queueOfflinePush(key, data) {
+      this.offlineQueue = this.offlineQueue.filter(item => item.key !== key);
+      this.offlineQueue.push({ key, data, queuedAt: Date.now() });
+    },
+
+    async drainOfflineQueue() {
+      if (!this.offlineQueue || this.offlineQueue.length === 0) return;
+      const pending = [...this.offlineQueue];
+      this.offlineQueue = [];
+      for (const item of pending) {
+        try {
+          await this.push(item.key, item.data);
+        } catch (e) {
+          this.offlineQueue.push(item);
+        }
+      }
+    },
+
     async testConnection(customConfig = null) {
       const cfg = customConfig || this.getConfig();
       if (!cfg || !cfg.endpoint) {
@@ -394,15 +433,16 @@
         let targetUrl = '';
         if (cfg.provider === 'firebase') {
           targetUrl = `${cleanUrl}/afterquiet/ping.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
+        } else if (cleanUrl.includes('api/sync')) {
+          targetUrl = `${cleanUrl}?key=ping`;
         } else {
           targetUrl = `${cleanUrl}/ping`;
         }
 
         const start = Date.now();
         const res = await fetch(targetUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ping: Date.now(), client: 'afterquiet_os' })
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
         });
         const latency = Date.now() - start;
 
@@ -425,16 +465,10 @@
         this.status = 'syncing';
         window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'syncing' } }));
 
-        const cleanUrl = cfg.endpoint.replace(/\/+$/, '');
-        let targetUrl = '';
-        if (cfg.provider === 'firebase') {
-          targetUrl = `${cleanUrl}/afterquiet/${key}.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
-        } else {
-          targetUrl = `${cleanUrl}/${key}`;
-        }
+        const targetUrl = this.buildTargetUrl(cfg, key);
 
         await fetch(targetUrl, {
-          method: 'PUT',
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
@@ -443,8 +477,9 @@
         this.lastSyncTime = new Date().toISOString();
         window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'connected', lastSync: this.lastSyncTime } }));
       } catch (err) {
-        console.warn('Cloud sync push deferred:', err);
+        console.warn('Cloud sync push deferred to offline queue:', err);
         this.status = 'offline';
+        this.queueOfflinePush(key, data);
         window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'offline', error: err.message } }));
       }
     },
@@ -454,13 +489,7 @@
       if (!cfg || !cfg.enabled || !cfg.endpoint) return null;
 
       try {
-        const cleanUrl = cfg.endpoint.replace(/\/+$/, '');
-        let targetUrl = '';
-        if (cfg.provider === 'firebase') {
-          targetUrl = `${cleanUrl}/afterquiet/${key}.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
-        } else {
-          targetUrl = `${cleanUrl}/${key}`;
-        }
+        const targetUrl = this.buildTargetUrl(cfg, key);
 
         const res = await fetch(targetUrl);
         if (!res.ok) return null;
@@ -479,8 +508,11 @@
       const local = getJson(key, null);
       if (!local) {
         setJson(key, remote);
+        window.dispatchEvent(new CustomEvent('aq_store_updated', { detail: { key, source: 'remote' } }));
         return;
       }
+
+      let updated = false;
 
       if (key === STORAGE_KEYS.ORDERS) {
         const map = new Map();
@@ -490,17 +522,21 @@
           if (!ro || !ro.id) return;
           if (!map.has(ro.id)) {
             map.set(ro.id, ro);
+            updated = true;
           } else {
             const lo = map.get(ro.id);
             const rTime = new Date(ro.updatedAt || ro.paidAt || ro.createdAt || 0).getTime();
             const lTime = new Date(lo.updatedAt || lo.paidAt || lo.createdAt || 0).getTime();
-            if (rTime >= lTime) {
+            if (rTime > lTime) {
               map.set(ro.id, ro);
+              updated = true;
             }
           }
         });
-        const merged = Array.from(map.values()).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setJson(key, merged);
+        if (updated) {
+          const merged = Array.from(map.values()).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setJson(key, merged);
+        }
       } else if (key === STORAGE_KEYS.PRODUCTS) {
         const map = new Map();
         local.forEach(p => map.set(p.id, p));
@@ -509,16 +545,55 @@
           if (!rp || !rp.id) return;
           if (!map.has(rp.id)) {
             map.set(rp.id, rp);
+            updated = true;
           } else {
             const lp = map.get(rp.id);
             const rTime = new Date(rp.updatedAt || rp.createdAt || 0).getTime();
             const lTime = new Date(lp.updatedAt || lp.createdAt || 0).getTime();
-            if (rTime >= lTime) {
-              map.set(rp.id, rp);
+            if (rTime > lTime) {
+              const activeReserved = Math.max(Number(lp.reserved || 0), Number(rp.reserved || 0));
+              map.set(rp.id, { ...rp, reserved: activeReserved });
+              updated = true;
             }
           }
         });
-        setJson(key, Array.from(map.values()));
+        if (updated) {
+          setJson(key, Array.from(map.values()));
+        }
+      } else if (key === STORAGE_KEYS.COLLECTIONS) {
+        const map = new Map();
+        local.forEach(c => map.set(c.slug || c.id, c));
+        const remoteList = Array.isArray(remote) ? remote : Object.values(remote);
+        remoteList.forEach(rc => {
+          if (!rc || (!rc.slug && !rc.id)) return;
+          const k = rc.slug || rc.id;
+          if (!map.has(k)) {
+            map.set(k, rc);
+            updated = true;
+          } else {
+            const lc = map.get(k);
+            const rTime = new Date(rc.updatedAt || 0).getTime();
+            const lTime = new Date(lc.updatedAt || 0).getTime();
+            if (rTime > lTime) {
+              map.set(k, rc);
+              updated = true;
+            }
+          }
+        });
+        if (updated) {
+          setJson(key, Array.from(map.values()));
+        }
+      } else if (key === STORAGE_KEYS.CATEGORIES) {
+        const remoteList = Array.isArray(remote) ? remote : Object.values(remote);
+        const set = new Set([...local, ...remoteList.filter(Boolean)]);
+        if (set.size !== local.length) {
+          setJson(key, Array.from(set));
+          updated = true;
+        }
+      }
+
+      if (updated) {
+        window.dispatchEvent(new CustomEvent('aq_store_updated', { detail: { key, source: 'remote' } }));
       }
     },
 
@@ -548,9 +623,10 @@
     schedulePolling() {
       if (typeof clearInterval !== 'undefined') clearInterval(this.pollTimer);
       const cfg = this.getConfig();
-      const interval = (cfg && cfg.pollIntervalMs) || 25000;
+      const interval = (cfg && cfg.pollIntervalMs) || 20000;
       if (typeof setInterval !== 'undefined') {
         this.pollTimer = setInterval(() => {
+          this.drainOfflineQueue();
           this.syncAll();
           Engine.checkExpiredReservations();
         }, interval);
@@ -572,7 +648,7 @@
           setJson(STORAGE_KEYS.SETTINGS, settings);
         });
       }
-      if (!settings.cloudDb) {
+      if (!settings.cloudDb || !settings.cloudDb.endpoint) {
         settings.cloudDb = DEFAULT_SETTINGS.cloudDb;
         setJson(STORAGE_KEYS.SETTINGS, settings);
       }
@@ -753,6 +829,20 @@
     getOrderById(id) {
       const list = this.getOrders();
       return list.find(o => o.id === id) || null;
+    },
+
+    /**
+     * Accurate financial accounting:
+     * Only verified paid orders contribute to Total Revenue and AOV.
+     */
+    calculateFinancials(customOrders = null) {
+      const orders = customOrders || this.getOrders();
+      const paidOrders = orders.filter(o => o.paymentStatus === 'paid');
+      const unpaidOrders = orders.filter(o => o.paymentStatus === 'unpaid');
+      const totalRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+      const pendingRevenue = unpaidOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+      const aov = paidOrders.length > 0 ? Math.round(totalRevenue / paidOrders.length) : 0;
+      return { totalRevenue, pendingRevenue, aov, paidCount: paidOrders.length, unpaidCount: unpaidOrders.length };
     },
 
     /**
@@ -1756,14 +1846,16 @@
   Engine.init();
 
   // DOM ready hook
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        Engine.mountCartDrawer();
+        Engine.syncCartBadge();
+      });
+    } else {
       Engine.mountCartDrawer();
       Engine.syncCartBadge();
-    });
-  } else {
-    Engine.mountCartDrawer();
-    Engine.syncCartBadge();
+    }
   }
 
   // Cross-tab Synchronization

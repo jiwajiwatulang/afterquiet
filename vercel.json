@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/api/sync/:key", "destination": "/api/sync?key=:key" },
     { "source": "/try-on", "destination": "/try-on.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/allcollection", "destination": "/allcollection.html" },
