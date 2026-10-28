@@ -3,34 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>afterquiet — Store Admin</title>
-  <meta name="theme-color" content="#161616">
+  <title>afterquiet — store admin</title>
+  <meta name="theme-color" content="#171717">
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23161616'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F4F2ED' text-anchor='middle'>aq</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
 
-  <!-- Fonts -->
+  <!-- Fonts: Space Grotesk, Inter, and IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --ink: #161616;
-      --paper: #f4f2ed;
-      --paper-card: #ffffff;
-      --red: #843b40;
-      --muted: #6e6b66;
-      --line: #e2dfd7;
-      --line-dark: #333333;
-      --sidebar-bg: #1c1b19;
-      --sans: 'Inter', -apple-system, sans-serif;
-      --display: 'Space Grotesk', sans-serif;
+      --ink: #171717;
+      --paper: #F1EFE9;
+      --paper-card: #FFFFFF;
+      --paper-subtle: #F7F5F0;
+      --red: #843B40;
+      --muted: #85827D;
+      --line: #E2DFD7;
+      --line-dark: #2A2927;
+      --sidebar-bg: #141414;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #f7f6f3;
+      background: #F7F5F0;
       color: var(--ink);
       font-family: var(--sans);
       min-height: 100vh;
@@ -54,18 +56,18 @@
     .pin-box {
       background: white;
       border: 1px solid var(--line);
-      padding: 40px 32px;
-      max-width: 380px;
+      padding: 42px 32px;
+      max-width: 400px;
       width: 100%;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      border-radius: 6px;
+      border-radius: 8px;
     }
     .pin-logo {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      border: 1.5px solid var(--ink);
+      border: 2px solid var(--ink);
       object-fit: cover;
       margin-bottom: 16px;
     }
@@ -83,18 +85,20 @@
     }
     .pin-input {
       width: 100%;
-      letter-spacing: 0.4em;
-      font-size: 24px;
+      letter-spacing: 0.5em;
+      font-size: 26px;
       text-align: center;
       padding: 12px;
       border: 1.5px solid var(--line);
-      border-radius: 4px;
+      border-radius: 6px;
       margin-bottom: 14px;
-      font-family: monospace;
+      font-family: var(--mono);
+      background: #FAFAFA;
     }
     .pin-input:focus {
       outline: none;
       border-color: var(--ink);
+      background: white;
     }
     .btn-pin-submit {
       width: 100%;
@@ -104,7 +108,7 @@
       padding: 14px;
       font-size: 13px;
       font-weight: 600;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: background 0.15s;
     }
     .btn-pin-submit:hover { background: var(--red); }
@@ -113,43 +117,55 @@
       font-size: 12px;
       margin-top: 10px;
       display: none;
+      font-weight: 500;
     }
 
     /* Main Admin Dashboard Shell */
     .admin-shell {
       display: grid;
-      grid-template-columns: 240px 1fr;
+      grid-template-columns: 250px 1fr;
       min-height: 100vh;
     }
 
-    /* Sidebar */
+    /* Sidebar Navigation */
     .admin-sidebar {
       background: var(--sidebar-bg);
-      color: #e2ddd6;
+      color: #E2DDD6;
       padding: 24px 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-right: 1px solid #2a2927;
+      border-right: 1px solid #222;
     }
     .admin-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       padding: 0 10px 24px;
-      border-bottom: 1px solid #2a2927;
+      border-bottom: 1px solid #252525;
       margin-bottom: 20px;
     }
     .admin-brand img {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
+      border: 1px solid #444;
     }
-    .admin-brand strong {
+    .admin-brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .admin-brand-info strong {
       font-family: var(--display);
-      font-size: 18px;
+      font-size: 17px;
       letter-spacing: -0.04em;
+      color: #FFF;
+    }
+    .admin-brand-info span {
+      font-size: 11px;
+      color: #888;
+      font-family: var(--mono);
     }
 
     .sidebar-menu {
@@ -161,29 +177,29 @@
     .nav-tab-btn {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 4px;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 6px;
       font-size: 13px;
       font-weight: 500;
-      color: #a8a39a;
+      color: #A8A39A;
       background: none;
       border: none;
       text-align: left;
       transition: all 0.15s;
     }
     .nav-tab-btn:hover {
-      background: #282724;
+      background: #222;
       color: white;
     }
     .nav-tab-btn.active {
-      background: #2d2b27;
+      background: #2C2A26;
       color: white;
       font-weight: 600;
     }
 
     .sidebar-footer {
-      border-top: 1px solid #2a2927;
+      border-top: 1px solid #252525;
       padding-top: 16px;
       display: flex;
       flex-direction: column;
@@ -191,24 +207,31 @@
     }
     .btn-view-store {
       font-size: 12px;
-      color: #bbb;
-      text-decoration: underline;
+      color: #BBB;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.15s;
     }
+    .btn-view-store:hover { background: #222; color: white; }
     .btn-logout {
       background: none;
-      border: 1px solid #444;
+      border: 1px solid #3A3A3A;
       color: #999;
-      padding: 6px 10px;
+      padding: 8px 12px;
       font-size: 11px;
-      border-radius: 3px;
+      border-radius: 4px;
       text-align: center;
+      transition: all 0.15s;
     }
-    .btn-logout:hover { color: white; border-color: #666; }
+    .btn-logout:hover { color: white; border-color: #666; background: #222; }
 
     /* Admin Content */
     .admin-main {
       padding: 32px 40px;
-      max-width: 1200px;
+      max-width: 1260px;
       width: 100%;
     }
     .topbar {
@@ -226,9 +249,14 @@
     .topbar p {
       font-size: 13px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
+    .header-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
     .btn-primary-action {
       background: var(--ink);
       color: var(--paper);
@@ -236,17 +264,76 @@
       padding: 10px 18px;
       font-size: 13px;
       font-weight: 600;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .btn-primary-action:hover { background: var(--red); border-color: var(--red); }
+    .btn-secondary-action {
+      background: white;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-secondary-action:hover {
+      border-color: var(--ink);
+      background: #FAFAFA;
+    }
+
+    /* Metrics Grid (Shopify-like Analytics) */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .metric-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .metric-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .metric-value {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+      font-family: var(--mono);
+    }
 
     /* Cards & Panels */
     .content-panel {
       background: white;
       border: 1px solid var(--line);
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
       padding: 24px;
       margin-bottom: 24px;
     }
@@ -255,7 +342,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      padding-bottom: 12px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--line);
     }
     .panel-header-line h3 {
@@ -265,7 +352,58 @@
       letter-spacing: -0.02em;
     }
 
+    /* Toolbar for Table Search & Filters */
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px 14px 10px 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .filter-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .filter-select {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: white;
+    }
+
     /* Product Table */
+    .product-table-wrapper {
+      overflow-x: auto;
+    }
     .product-table {
       width: 100%;
       border-collapse: collapse;
@@ -280,51 +418,92 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       border-bottom: 1px solid var(--line);
+      background: #FAFAF8;
     }
     .product-table td {
       padding: 14px;
-      border-bottom: 1px solid #f0ede6;
+      border-bottom: 1px solid #F0EDE6;
       vertical-align: middle;
     }
     .product-table tr:hover td {
-      background: #faf9f6;
+      background: #FAF9F6;
     }
-    .product-table img {
-      width: 40px;
-      height: 40px;
-      border-radius: 4px;
-      background: #eee;
-      object-fit: cover;
+    .product-cell {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .product-thumb-preview {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 10px;
+      text-align: center;
+      padding: 4px;
+      line-height: 1.1;
+      border: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .product-title-text {
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 13px;
+    }
+    .product-sub-text {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      font-family: var(--mono);
     }
     .tag-category {
-      background: #f0eee8;
-      padding: 4px 8px;
-      border-radius: 3px;
+      background: #F0EEE8;
+      padding: 3px 8px;
+      border-radius: 4px;
       font-size: 11px;
       font-weight: 500;
-      text-transform: uppercase;
+      font-family: var(--mono);
+    }
+    .tag-volume {
+      background: #EAE6DF;
+      color: #555;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--mono);
     }
     .status-badge {
       display: inline-block;
-      padding: 3px 8px;
+      padding: 3px 10px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 600;
     }
-    .status-badge.active { background: #e3f2e4; color: #236829; }
-    .status-badge.draft { background: #f0f0f0; color: #777; }
+    .status-badge.active { background: #E3F2E4; color: #236829; }
+    .status-badge.draft { background: #F0F0F0; color: #777; }
 
     .action-links {
       display: flex;
       gap: 12px;
+      align-items: center;
     }
-    .action-link {
+    .action-btn-link {
       color: var(--ink);
       font-size: 12px;
       font-weight: 600;
+      background: none;
+      border: none;
       text-decoration: underline;
+      cursor: pointer;
     }
-    .action-link.delete { color: var(--red); }
+    .action-btn-link:hover { color: var(--red); }
+    .action-btn-link.delete { color: var(--red); }
 
     /* Form Inputs */
     .form-grid {
@@ -346,7 +525,7 @@
     .form-control {
       padding: 10px 12px;
       border: 1px solid var(--line);
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 13px;
       font-family: inherit;
     }
@@ -371,8 +550,8 @@
     .modal-backdrop.open { display: flex; }
     .modal-box {
       background: white;
-      border-radius: 6px;
-      max-width: 600px;
+      border-radius: 8px;
+      max-width: 680px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -388,7 +567,7 @@
       background: var(--ink);
       color: white;
       padding: 12px 20px;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 13px;
       font-weight: 500;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
@@ -396,11 +575,33 @@
       z-index: 1000;
     }
 
+    /* Recent Orders / Inquiries Stream */
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: #FAFAFA;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1024px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 860px) {
       .admin-shell { grid-template-columns: 1fr; }
       .admin-sidebar { display: none; }
       .admin-main { padding: 20px 16px; }
       .form-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; gap: 14px; }
     }
   </style>
 </head>
@@ -411,7 +612,7 @@
     <div class="pin-box">
       <img src="/assets/profile.jpg" alt="afterquiet" class="pin-logo">
       <h2>afterquiet store</h2>
-      <p>Enter 4-digit administrator PIN</p>
+      <p>administrator access • enter 4-digit PIN</p>
       
       <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus>
       <button class="btn-pin-submit" onclick="verifyPin()">Unlock Dashboard</button>
@@ -427,25 +628,37 @@
       <div>
         <div class="admin-brand">
           <img src="/assets/profile.jpg" alt="afterquiet logo">
-          <strong>afterquiet</strong>
+          <div class="admin-brand-info">
+            <strong>afterquiet</strong>
+            <span>store management</span>
+          </div>
         </div>
 
         <nav class="sidebar-menu">
-          <button class="nav-tab-btn active" onclick="switchTab('products')">
+          <button class="nav-tab-btn active" id="tabBtn-dashboard" onclick="switchTab('dashboard')">
+            <span>📊</span> Dashboard
+          </button>
+          <button class="nav-tab-btn" id="tabBtn-products" onclick="switchTab('products')">
             <span>📦</span> Products
           </button>
-          <button class="nav-tab-btn" onclick="switchTab('theme')">
-            <span>🎨</span> Theme & Branding
+          <button class="nav-tab-btn" id="tabBtn-theme" onclick="switchTab('theme')">
+            <span>🎨</span> Theme & Copy
           </button>
-          <button class="nav-tab-btn" onclick="switchTab('settings')">
-            <span>⚙️</span> Store Settings
+          <button class="nav-tab-btn" id="tabBtn-settings" onclick="switchTab('settings')">
+            <span>⚙️</span> Export & Import
           </button>
         </nav>
       </div>
 
       <div class="sidebar-footer">
-        <a href="/" target="_blank" class="btn-view-store">View Live Store ↗</a>
-        <a href="/try-on" target="_blank" class="btn-view-store">Customizer Studio ↗</a>
+        <a href="/" target="_blank" class="btn-view-store">
+          <span>View Live Store</span>
+          <span>↗</span>
+        </a>
+        <a href="/try-on" target="_blank" class="btn-view-store">
+          <span>Customizer Studio</span>
+          <span>↗</span>
+        </a>
         <button class="btn-logout" onclick="logoutAdmin()">Lock Admin</button>
       </div>
     </aside>
@@ -453,74 +666,194 @@
     <!-- Main Workspace -->
     <main class="admin-main">
       
-      <!-- Tab 1: Products Management -->
-      <section id="tabProducts">
+      <!-- ================= TAB 1: DASHBOARD ================= -->
+      <section id="tabDashboard">
         <div class="topbar">
           <div>
-            <h1>Products</h1>
-            <p>Manage your catalogue, add new pins, totes, and edit pricing.</p>
+            <h1>Dashboard</h1>
+            <p>Store performance, active catalogue stats, and quick actions.</p>
           </div>
-          <button class="btn-primary-action" onclick="openProductModal()">+ Add Product</button>
+          <div class="header-actions-group">
+            <button class="btn-secondary-action" onclick="exportProductsCSV()">
+              <span>↓ Export CSV</span>
+            </button>
+            <button class="btn-primary-action" onclick="openProductModal()">
+              <span>+ Add Product</span>
+            </button>
+          </div>
         </div>
 
+        <!-- Metric Cards (Shopify-style) -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Total Products <span>📦</span></div>
+            <div class="metric-value" id="dashTotalProducts">0</div>
+            <div class="metric-sub">Curated catalogue items</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Active Listings <span>🟢</span></div>
+            <div class="metric-value" id="dashActiveProducts">0</div>
+            <div class="metric-sub">Visible to customers</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Standard Price <span>🏷️</span></div>
+            <div class="metric-value">Rp 5.000</div>
+            <div class="metric-sub">All items flat 5K</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Total Stock Value <span>💰</span></div>
+            <div class="metric-value" id="dashCatalogValue">Rp 0</div>
+            <div class="metric-sub">Estimated inventory worth</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions Banner -->
+        <div class="content-panel" style="background: linear-gradient(135deg, #171717 0%, #2A2624 100%); color: #F1EFE9; border: none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <span style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:#D89599; text-transform:uppercase;">Quick Actions</span>
+              <h3 style="font-family:var(--display); font-size:22px; margin-top:4px;">Catalogue is set to Flat 5K</h3>
+              <p style="font-size:13px; color:#BBB; margin-top:4px;">Need to bulk update prices or import new product drops from Excel/Sheets?</p>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn-secondary-action" style="border:none;" onclick="triggerCsvFileInput()">
+                ↑ Import CSV
+              </button>
+              <button class="btn-primary-action" style="background:var(--red); border-color:var(--red);" onclick="bulkSetAllTo5K()">
+                Apply 5K to All
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Store Inquiries / Activity -->
         <div class="content-panel">
           <div class="panel-header-line">
-            <h3 id="productCountHeader">All Products (8)</h3>
-            <span style="font-size:12px; color:var(--muted);">Stored & Synchronized Live</span>
+            <h3>Recent Store Activity & Inquiries</h3>
+            <span style="font-size:12px; color:var(--muted); font-family:var(--mono);">WhatsApp & Studio</span>
           </div>
-
-          <table class="product-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="productTableBody">
-              <!-- Populated by JS -->
-            </tbody>
-          </table>
+          <div class="activity-list" id="activityList">
+            <div class="activity-item">
+              <div>
+                <strong>Customer inquiry via WhatsApp</strong>
+                <div style="font-size:11px; color:var(--muted); margin-top:2px;">order: restless mind enamel pin (x2), silence sticker (x1) • total Rp 15.000</div>
+              </div>
+              <span style="font-family:var(--mono); font-size:11px; color:#236829; background:#E3F2E4; padding:2px 8px; border-radius:4px;">inquiry</span>
+            </div>
+            <div class="activity-item">
+              <div>
+                <strong>Customizer Studio session completed</strong>
+                <div style="font-size:11px; color:var(--muted); margin-top:2px;">archive tote + 3 custom positioned pins generated</div>
+              </div>
+              <span style="font-family:var(--mono); font-size:11px; color:#555; background:#EEE; padding:2px 8px; border-radius:4px;">studio</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Tab 2: Theme & Appearance Customizer -->
+      <!-- ================= TAB 2: PRODUCTS ================= -->
+      <section id="tabProducts" style="display:none;">
+        <div class="topbar">
+          <div>
+            <h1>Products</h1>
+            <p>Manage catalogue listings, adjust inventory, edit specifications, and import/export CSV.</p>
+          </div>
+          <div class="header-actions-group">
+            <input type="file" id="csvFileInput" accept=".csv" style="display:none;" onchange="handleCsvFile(event)">
+            <button class="btn-secondary-action" onclick="triggerCsvFileInput()">
+              <span>↑ Import CSV</span>
+            </button>
+            <button class="btn-secondary-action" onclick="exportProductsCSV()">
+              <span>↓ Export CSV</span>
+            </button>
+            <button class="btn-primary-action" onclick="openProductModal()">
+              <span>+ Add Product</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="content-panel">
+          <!-- Toolbar -->
+          <div class="table-toolbar">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="productSearchInput" class="search-input" placeholder="Search by title, tag, or volume..." oninput="filterAndRenderProducts()">
+            </div>
+            <div class="filter-group">
+              <select id="filterCategorySelect" class="filter-select" onchange="filterAndRenderProducts()">
+                <option value="all">All Categories</option>
+                <option value="accessories">Pins & Badges</option>
+                <option value="totes">Totes</option>
+                <option value="bags">Bags</option>
+              </select>
+              <select id="filterStatusSelect" class="filter-select" onchange="filterAndRenderProducts()">
+                <option value="all">All Status</option>
+                <option value="active">Active Only</option>
+                <option value="draft">Draft Only</option>
+              </select>
+              <button class="btn-secondary-action" style="padding:9px 12px; font-size:12px;" onclick="bulkSetAllTo5K()" title="Set all items to Rp 5.000">
+                Fix All to 5K
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Table -->
+          <div class="product-table-wrapper">
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th style="width:40%;">Product</th>
+                  <th>Category</th>
+                  <th>Volume / Release</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 3: THEME & COPY ================= -->
       <section id="tabTheme" style="display:none;">
         <div class="topbar">
           <div>
-            <h1>Theme & Branding</h1>
-            <p>Customize announcements, hero headlines, and WhatsApp order settings.</p>
+            <h1>Theme & Copy</h1>
+            <p>Customize announcements, hero headlines, WhatsApp numbers, and branding.</p>
           </div>
           <button class="btn-primary-action" onclick="saveThemeSettings()">Save Changes</button>
         </div>
 
         <div class="content-panel">
           <div class="panel-header-line">
-            <h3>Storefront Text & Messaging</h3>
+            <h3>Storefront Messaging & Copy</h3>
           </div>
 
           <div class="form-grid">
             <div class="form-group full-width">
               <label>Top Announcement Bar Text</label>
-              <input type="text" id="themeAnnouncement" class="form-control" value="Pins & Etc. — @afterquiet_____ • All item 5k • Order by DM or WhatsApp">
+              <input type="text" id="themeAnnouncement" class="form-control" value="all items 5k • independent accessories & visual culture • free placement studio">
             </div>
 
             <div class="form-group full-width">
-              <label>Hero Headline</label>
+              <label>Hero Headline (lowercase preferred)</label>
               <input type="text" id="themeHeadline" class="form-control" value="wear what you can't always say.">
             </div>
 
             <div class="form-group full-width">
               <label>Hero Philosophy Paragraph</label>
-              <textarea id="themePhilosophy" class="form-control">afterquiet translates thoughts, emotions, and personal observations into wearable objects — from heavyweight canvas bags to pins and graphic badges.</textarea>
+              <textarea id="themePhilosophy" class="form-control">independent accessories for personal expression, restless thoughts, and everything in between.</textarea>
             </div>
 
             <div class="form-group">
-              <label>WhatsApp Number for Orders (without +)</label>
+              <label>WhatsApp Order Number (without + / with country code)</label>
               <input type="text" id="themeWaNumber" class="form-control" placeholder="628123456789" value="">
-              <small style="color:var(--muted); font-size:11px;">e.g. 628123456789. If blank, opens general WhatsApp share.</small>
+              <small style="color:var(--muted); font-size:11px;">e.g. 628123456789. Orders from cart will be routed directly to this WhatsApp.</small>
             </div>
 
             <div class="form-group">
@@ -532,13 +865,13 @@
 
         <div class="content-panel">
           <div class="panel-header-line">
-            <h3>Visual Style</h3>
+            <h3>Visual Style & Palette</h3>
           </div>
 
           <div class="form-grid">
             <div class="form-group">
-              <label>Accent Highlight Color</label>
-              <input type="color" id="themeAccentColor" class="form-control" value="#843b40" style="height:44px; padding:2px;">
+              <label>Accent Color (Distorted Red default: #843B40)</label>
+              <input type="color" id="themeAccentColor" class="form-control" value="#843B40" style="height:44px; padding:2px;">
             </div>
 
             <div class="form-group">
@@ -549,26 +882,44 @@
         </div>
       </section>
 
-      <!-- Tab 3: Store Settings & Backup -->
+      <!-- ================= TAB 4: EXPORT & IMPORT ================= -->
       <section id="tabSettings" style="display:none;">
         <div class="topbar">
           <div>
-            <h1>Store Settings</h1>
-            <p>Database backup, export catalogue, and admin security.</p>
+            <h1>Export & Import</h1>
+            <p>Shopify-style CSV data exchange, JSON backups, and database reset.</p>
           </div>
         </div>
 
         <div class="content-panel">
           <div class="panel-header-line">
-            <h3>Data Management</h3>
+            <h3>CSV Product Catalog Exchange</h3>
           </div>
           <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">
-            Your products and theme are stored in your store's persistent storage. You can backup your catalogue or reset to defaults.
+            Export your entire catalogue as a spreadsheet CSV to edit in Microsoft Excel, Google Sheets, or Apple Numbers. You can import it back at any time to update titles, prices, stock, and descriptions in bulk.
           </p>
 
-          <div style="display:flex; gap:12px;">
-            <button class="btn-primary-action" onclick="exportDataJson()">Export Catalogue JSON</button>
-            <button class="btn-logout" style="padding:10px 16px; font-size:13px;" onclick="resetStoreDefaults()">Reset to Initial Defaults</button>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="btn-primary-action" onclick="exportProductsCSV()">
+              <span>↓ Export Products to CSV</span>
+            </button>
+            <button class="btn-secondary-action" onclick="triggerCsvFileInput()">
+              <span>↑ Import Products from CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="content-panel">
+          <div class="panel-header-line">
+            <h3>JSON Raw Database Backup</h3>
+          </div>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">
+            Create a complete programmatic backup of your local storage data or reset the catalogue back to the official Brand Guidelines default setup (with all items set to Rp 5.000).
+          </p>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button class="btn-secondary-action" onclick="exportDataJson()">Export JSON Backup</button>
+            <button class="btn-logout" style="padding:10px 16px; font-size:13px;" onclick="resetStoreDefaults()">Reset to Official Defaults (5K)</button>
           </div>
         </div>
       </section>
@@ -576,11 +927,11 @@
     </main>
   </div>
 
-  <!-- Add / Edit Product Modal -->
+  <!-- Add / Edit Product Modal (Shopify-like Detail Editor) -->
   <div class="modal-backdrop" id="productModal">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--line);">
-        <h3 id="modalProductTitle" style="font-family:var(--display); font-size:20px;">Add New Product</h3>
+        <h3 id="modalProductTitle" style="font-family:var(--display); font-size:20px;">Edit Product</h3>
         <button onclick="closeProductModal()" style="border:none; background:none; font-size:24px; cursor:pointer;">×</button>
       </div>
 
@@ -588,32 +939,42 @@
 
       <div class="form-grid">
         <div class="form-group full-width">
-          <label>Product Title</label>
-          <input type="text" id="formTitle" class="form-control" placeholder="e.g. Restless Mind Enamel Pin" required>
+          <label>Product Title *</label>
+          <input type="text" id="formTitle" class="form-control" placeholder="e.g. restless mind enamel pin" required>
         </div>
 
         <div class="form-group">
-          <label>Category</label>
+          <label>Category *</label>
           <select id="formCategory" class="form-control">
-            <option value="accessories">Accessories / Pins</option>
+            <option value="accessories">Accessories / Pins & Badges</option>
             <option value="totes">Totes</option>
             <option value="bags">Bags</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Price (IDR)</label>
-          <input type="number" id="formPrice" class="form-control" placeholder="e.g. 5000 or 55000" required>
+          <label>Collection / Volume</label>
+          <select id="formVolume" class="form-control">
+            <option value="vol. 01">Volume 01 — Too Soft for This World</option>
+            <option value="vol. 02">Volume 02 — Fragile Archives</option>
+            <option value="general">Archive Essentials</option>
+          </select>
         </div>
 
-        <div class="form-group full-width">
-          <label>Materials & Specifications</label>
-          <input type="text" id="formKind" class="form-control" placeholder="e.g. Hard Enamel • Black Nickel Finish">
+        <div class="form-group">
+          <label>Price (IDR) *</label>
+          <input type="number" id="formPrice" class="form-control" placeholder="5000" value="5000" required>
+          <small style="color:var(--muted); font-size:11px;">Default catalogue standard: 5000 (Rp 5.000)</small>
+        </div>
+
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" id="formStock" class="form-control" placeholder="50" value="50">
         </div>
 
         <div class="form-group">
           <label>Tag / Badge Label</label>
-          <input type="text" id="formTag" class="form-control" placeholder="e.g. Pin, New, or 5k Series">
+          <input type="text" id="formTag" class="form-control" placeholder="e.g. Pin, Badge, 5k Series">
         </div>
 
         <div class="form-group">
@@ -625,13 +986,23 @@
         </div>
 
         <div class="form-group full-width">
-          <label>Card Graphic Typography (1-3 short lines)</label>
-          <textarea id="formGraphic" class="form-control" placeholder="e.g. restless\nmind."></textarea>
+          <label>Materials & Specifications</label>
+          <input type="text" id="formKind" class="form-control" placeholder="e.g. Hard Enamel • Black Nickel Finish • 32mm">
+        </div>
+
+        <div class="form-group full-width">
+          <label>Card Graphic Typography (Short lines for visual card preview)</label>
+          <textarea id="formGraphic" class="form-control" style="min-height:60px;" placeholder="e.g. restless\nmind."></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Concept & Story Description</label>
+          <textarea id="formDescription" class="form-control" placeholder="Write a short concept or narrative description of this piece..."></textarea>
         </div>
       </div>
 
       <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid var(--line);">
-        <button class="btn-logout" onclick="closeProductModal()">Cancel</button>
+        <button class="btn-secondary-action" onclick="closeProductModal()">Cancel</button>
         <button class="btn-primary-action" onclick="saveProduct()">Save Product</button>
       </div>
     </div>
@@ -644,94 +1015,146 @@
   <script>
     const CORRECT_PIN = "1234";
 
-    // Default Products Seed
+    // Official Default Catalogue Seed (All Items Flat 5K)
     const defaultProducts = [
       {
-        id: "tote_ecru",
-        title: "Archive Canvas Tote Bag",
-        category: "totes",
-        kind: "16oz Raw Organic Cotton • Ecru Archive",
-        price: 135000,
-        formattedPrice: "Rp 135.000",
-        tag: "Tote 01",
-        graphic: "archive\ntote.",
-        status: "active"
-      },
-      {
-        id: "tote_black",
-        title: "Utility Black Canvas Tote",
-        category: "totes",
-        kind: "Washed Heavyweight Canvas • Webbing Bar",
-        price: 145000,
-        formattedPrice: "Rp 145.000",
-        tag: "Tote 02",
-        graphic: "utility\nblack.",
-        status: "active"
-      },
-      {
-        id: "bag_messenger",
-        title: "Restless Mind Messenger Bag",
-        category: "bags",
-        kind: "Tactical Crossbody • Cordura Nylon",
-        price: 185000,
-        formattedPrice: "Rp 185.000",
-        tag: "Bag 01",
-        graphic: "tactical\nmessenger.",
-        status: "active"
-      },
-      {
-        id: "bag_shoulder",
-        title: "Fragile Archives Mini Shoulder Bag",
-        category: "bags",
-        kind: "Everyday Mini Carrier • Rope Strap",
-        price: 115000,
-        formattedPrice: "Rp 115.000",
-        tag: "Bag 02",
-        graphic: "mini\nshoulder.",
-        status: "active"
-      },
-      {
         id: "pin_restless",
-        title: "Restless Mind Enamel Pin",
+        title: "restless mind enamel pin",
         category: "accessories",
-        kind: "Hard Enamel • Black Nickel Finish",
-        price: 55000,
-        formattedPrice: "Rp 55.000",
-        tag: "Pin",
+        volume: "vol. 01",
+        kind: "hard enamel • black nickel finish • 32mm",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 45,
+        tag: "pin",
         graphic: "restless\nmind.",
-        status: "active"
-      },
-      {
-        id: "sticker_pack",
-        title: "Silence Isn't Peace Sticker Pack",
-        category: "accessories",
-        kind: "5-Piece Screenprinted Matte Vinyl",
-        price: 32000,
-        formattedPrice: "Rp 32.000",
-        tag: "Pack",
-        graphic: "silence isn't\nalways peace.",
+        description: "a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating and dual rubber clutches.",
         status: "active"
       },
       {
         id: "badge_soft",
-        title: "Too Soft for This World Badge",
+        title: "too soft for this world badge",
         category: "accessories",
-        kind: "Die-Struck Metal • Antique Silver",
-        price: 45000,
-        formattedPrice: "Rp 45.000",
-        tag: "Badge",
+        volume: "vol. 01",
+        kind: "die-struck metal • antique silver • 38mm",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 60,
+        tag: "badge",
         graphic: "too soft\nfor this world",
+        description: "exploring vulnerability, sensitivity, and the courage to remain honest in an aggressive world.",
+        status: "active"
+      },
+      {
+        id: "sticker_pack",
+        title: "silence isn't peace sticker",
+        category: "accessories",
+        volume: "vol. 01",
+        kind: "screenprinted weatherproof matte vinyl",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 120,
+        tag: "sticker",
+        graphic: "silence isn't\nalways peace.",
+        description: "heavy-duty screenprinted outdoor matte vinyl sticker. uv protected, waterproof, and scratch resistant.",
         status: "active"
       },
       {
         id: "keychain_honesty",
-        title: "Emotional Honesty Zinc Keychain",
+        title: "emotional honesty tag",
         category: "accessories",
-        kind: "Solid Motel Tag • Gunmetal Plated",
-        price: 48000,
-        formattedPrice: "Rp 48.000",
-        tag: "Tag",
+        volume: "vol. 01",
+        kind: "solid metal motel tag • gunmetal plated",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 35,
+        tag: "tag",
         graphic: "emotional\nhonesty",
+        description: "classic hotel motel key tag silhouette rendered in solid zinc alloy with deep engraved lettering.",
+        status: "active"
+      },
+      {
+        id: "pin_fragile",
+        title: "fragile archives enamel pin",
+        category: "accessories",
+        volume: "vol. 02",
+        kind: "stamped iron • archival antique finish",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 40,
+        tag: "pin",
+        graphic: "fragile\narchives.",
+        description: "centered on identity, memory, and the things people carry internally without speaking out loud.",
+        status: "active"
+      },
+      {
+        id: "pin_unsaid",
+        title: "easier to wear than explain pin",
+        category: "accessories",
+        volume: "vol. 02",
+        kind: "raw metal stamped pin • archival card",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 55,
+        tag: "pin",
+        graphic: "easier to wear\nthan explain.",
+        description: "some things are simply easier to wear than to explain. high contrast relief typography.",
+        status: "active"
+      },
+      {
+        id: "badge_resistance",
+        title: "creative resistance button badge",
+        category: "accessories",
+        volume: "vol. 02",
+        kind: "matte laminated button • 44mm pinback",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 80,
+        tag: "badge",
+        graphic: "creative\nresistance",
+        description: "art and design can question social expectations and challenge familiar comfortable ideas.",
+        status: "active"
+      },
+      {
+        id: "tote_archive",
+        title: "archive canvas tote bag",
+        category: "totes",
+        volume: "vol. 01",
+        kind: "16oz raw organic cotton • ecru archive",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 25,
+        tag: "tote",
+        graphic: "archive\ntote.",
+        description: "heavyweight 16oz unbleached organic cotton canvas tote bag. reinforced box-x stitching on handles with internal pocket.",
+        status: "active"
+      },
+      {
+        id: "tote_black",
+        title: "utility black canvas tote",
+        category: "totes",
+        volume: "vol. 02",
+        kind: "washed heavyweight canvas • reinforced webbing",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 30,
+        tag: "tote",
+        graphic: "utility\nblack.",
+        description: "deep washed black cotton canvas with military-spec nylon webbing strap and front attachment bar for pins.",
+        status: "active"
+      },
+      {
+        id: "bag_tactical",
+        title: "restless tactical mini carrier",
+        category: "bags",
+        volume: "vol. 01",
+        kind: "water-resistant nylon • adjustable utility strap",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        stock: 20,
+        tag: "bag",
+        graphic: "tactical\ncarrier.",
+        description: "compact everyday crossbody carrier engineered for essentials, featuring cordura nylon and ykk zippers.",
         status: "active"
       }
     ];
@@ -748,79 +1171,116 @@
         }
       } else {
         products = defaultProducts;
-        localStorage.setItem('aq_products', JSON.stringify(products));
+        localStorage.setItem('aq_products', JSON.stringify(defaultProducts));
       }
     }
 
-    // PIN Authentication
-    function checkAuth() {
-      if (sessionStorage.getItem('aq_admin_auth') === 'true') {
-        document.getElementById('pinGate').style.display = 'none';
-        document.getElementById('adminDashboard').style.display = 'grid';
-        loadDashboard();
-      }
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
-    window.verifyPin = function() {
-      const pin = document.getElementById('pinInput').value;
-      if (pin === CORRECT_PIN) {
-        sessionStorage.setItem('aq_admin_auth', 'true');
+    function formatRupiah(num) {
+      return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+    }
+
+    // PIN Verification
+    function verifyPin() {
+      const val = document.getElementById('pinInput').value.trim();
+      if (val === CORRECT_PIN) {
+        sessionStorage.setItem('aq_admin_auth', '1');
         document.getElementById('pinGate').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'grid';
-        loadDashboard();
+        renderAllDashboard();
       } else {
         document.getElementById('pinError').style.display = 'block';
-        document.getElementById('pinInput').value = '';
       }
-    };
+    }
 
-    document.getElementById('pinInput').addEventListener('keypress', function(e) {
+    document.getElementById('pinInput').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') verifyPin();
     });
 
-    window.logoutAdmin = function() {
+    function logoutAdmin() {
       sessionStorage.removeItem('aq_admin_auth');
-      window.location.reload();
-    };
-
-    // Dashboard Functions
-    function loadDashboard() {
-      initStorage();
-      renderProductsTable();
-      loadThemeInputs();
+      location.reload();
     }
 
-    function renderProductsTable() {
+    // Tab Switching
+    function switchTab(tabId) {
+      const tabs = ['dashboard', 'products', 'theme', 'settings'];
+      tabs.forEach(t => {
+        const sec = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const btn = document.getElementById('tabBtn-' + t);
+        if (sec) sec.style.display = t === tabId ? 'block' : 'none';
+        if (btn) {
+          if (t === tabId) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+      if (tabId === 'dashboard') updateDashboardMetrics();
+      if (tabId === 'products') filterAndRenderProducts();
+    }
+
+    // Dashboard Metrics
+    function updateDashboardMetrics() {
+      const total = products.length;
+      const active = products.filter(p => p.status === 'active').length;
+      const totalWorth = products.reduce((sum, p) => sum + (Number(p.price || 5000) * (Number(p.stock) || 1)), 0);
+
+      document.getElementById('dashTotalProducts').innerText = total;
+      document.getElementById('dashActiveProducts').innerText = active;
+      document.getElementById('dashCatalogValue').innerText = formatRupiah(totalWorth);
+    }
+
+    // Render Product Table with Search & Filter
+    function filterAndRenderProducts() {
+      const q = (document.getElementById('productSearchInput').value || '').toLowerCase().trim();
+      const cat = document.getElementById('filterCategorySelect').value;
+      const stat = document.getElementById('filterStatusSelect').value;
+
+      const filtered = products.filter(p => {
+        const matchesQ = !q || 
+          p.title.toLowerCase().includes(q) || 
+          (p.tag && p.tag.toLowerCase().includes(q)) || 
+          (p.volume && p.volume.toLowerCase().includes(q));
+        const matchesCat = cat === 'all' || p.category === cat;
+        const matchesStat = stat === 'all' || p.status === stat;
+        return matchesQ && matchesCat && matchesStat;
+      });
+
       const tbody = document.getElementById('productTableBody');
       tbody.innerHTML = '';
 
-      document.getElementById('productCountHeader').innerText = `All Products (${products.length})`;
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--muted);">No matching products found.</td></tr>`;
+        return;
+      }
 
-      products.forEach((p, idx) => {
+      filtered.forEach(p => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
-            <div style="display:flex; align-items:center; gap:12px;">
-              <div style="width:36px; height:36px; background:#161616; border-radius:4px; display:flex; align-items:center; justify-content:center; color:white; font-size:8px; font-weight:700; text-align:center; padding:2px;">
-                ${p.tag || 'OBJ'}
-              </div>
+            <div class="product-cell">
+              <div class="product-thumb-preview">${escapeHtml(p.graphic || 'aq')}</div>
               <div>
-                <strong>${p.title}</strong>
-                <div style="color:var(--muted); font-size:11px;">${p.kind || ''}</div>
+                <div class="product-title-text">${escapeHtml(p.title)}</div>
+                <div class="product-sub-text">${escapeHtml(p.kind || '')}</div>
               </div>
             </div>
           </td>
-          <td><span class="tag-category">${p.category}</span></td>
-          <td><strong>Rp ${Number(p.price).toLocaleString('id-ID')}</strong></td>
-          <td>
-            <span class="status-badge ${p.status === 'active' ? 'active' : 'draft'}">
-              ${p.status === 'active' ? 'Active' : 'Draft'}
-            </span>
-          </td>
-          <td>
-            <div class="action-links">
-              <button class="action-link" onclick="editProduct('${p.id}')">Edit</button>
-              <button class="action-link delete" onclick="deleteProduct('${p.id}')">Delete</button>
+          <td><span class="tag-category">${escapeHtml(p.category || 'item')}</span></td>
+          <td><span class="tag-volume">${escapeHtml(p.volume || 'general')}</span></td>
+          <td><strong style="font-family:var(--mono);">${formatRupiah(p.price || 5000)}</strong></td>
+          <td><span style="font-family:var(--mono);">${p.stock !== undefined ? p.stock : 50}</span></td>
+          <td><span class="status-badge ${p.status === 'active' ? 'active' : 'draft'}">${p.status}</span></td>
+          <td style="text-align:right;">
+            <div class="action-links" style="justify-content:flex-end;">
+              <button class="action-btn-link" onclick="openProductModal('${p.id}')">Edit</button>
+              <button class="action-btn-link" onclick="duplicateProduct('${p.id}')">Copy</button>
+              <button class="action-btn-link delete" onclick="deleteProduct('${p.id}')">Delete</button>
             </div>
           </td>
         `;
@@ -828,171 +1288,333 @@
       });
     }
 
-    // Modal
-    const productModal = document.getElementById('productModal');
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
 
-    window.openProductModal = function() {
-      document.getElementById('modalProductTitle').innerText = 'Add New Product';
-      document.getElementById('editProductId').value = '';
-      document.getElementById('formTitle').value = '';
-      document.getElementById('formCategory').value = 'accessories';
-      document.getElementById('formPrice').value = '';
-      document.getElementById('formKind').value = '';
-      document.getElementById('formTag').value = '';
-      document.getElementById('formGraphic').value = '';
-      document.getElementById('formStatus').value = 'active';
+    // Modal Operations
+    function openProductModal(id = null) {
+      const modal = document.getElementById('productModal');
+      const titleEl = document.getElementById('modalProductTitle');
+      
+      if (id) {
+        const p = products.find(item => item.id === id);
+        if (!p) return;
+        titleEl.innerText = 'Edit Product';
+        document.getElementById('editProductId').value = p.id;
+        document.getElementById('formTitle').value = p.title || '';
+        document.getElementById('formCategory').value = p.category || 'accessories';
+        document.getElementById('formVolume').value = p.volume || 'vol. 01';
+        document.getElementById('formPrice').value = p.price || 5000;
+        document.getElementById('formStock').value = p.stock !== undefined ? p.stock : 50;
+        document.getElementById('formKind').value = p.kind || '';
+        document.getElementById('formTag').value = p.tag || '';
+        document.getElementById('formStatus').value = p.status || 'active';
+        document.getElementById('formGraphic').value = p.graphic || '';
+        document.getElementById('formDescription').value = p.description || '';
+      } else {
+        titleEl.innerText = 'Add New Product';
+        document.getElementById('editProductId').value = '';
+        document.getElementById('formTitle').value = '';
+        document.getElementById('formCategory').value = 'accessories';
+        document.getElementById('formVolume').value = 'vol. 01';
+        document.getElementById('formPrice').value = 5000;
+        document.getElementById('formStock').value = 50;
+        document.getElementById('formKind').value = '';
+        document.getElementById('formTag').value = 'pin';
+        document.getElementById('formStatus').value = 'active';
+        document.getElementById('formGraphic').value = '';
+        document.getElementById('formDescription').value = '';
+      }
 
-      productModal.classList.add('open');
-    };
+      modal.classList.add('open');
+    }
 
-    window.closeProductModal = function() {
-      productModal.classList.remove('open');
-    };
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('open');
+    }
 
-    window.editProduct = function(id) {
-      const p = products.find(x => x.id === id);
-      if (!p) return;
-
-      document.getElementById('modalProductTitle').innerText = 'Edit Product';
-      document.getElementById('editProductId').value = p.id;
-      document.getElementById('formTitle').value = p.title;
-      document.getElementById('formCategory').value = p.category;
-      document.getElementById('formPrice').value = p.price;
-      document.getElementById('formKind').value = p.kind || '';
-      document.getElementById('formTag').value = p.tag || '';
-      document.getElementById('formGraphic').value = p.graphic || '';
-      document.getElementById('formStatus').value = p.status || 'active';
-
-      productModal.classList.add('open');
-    };
-
-    window.saveProduct = function() {
+    function saveProduct() {
       const id = document.getElementById('editProductId').value;
       const title = document.getElementById('formTitle').value.trim();
       const category = document.getElementById('formCategory').value;
-      const price = Number(document.getElementById('formPrice').value) || 0;
+      const volume = document.getElementById('formVolume').value;
+      const price = Number(document.getElementById('formPrice').value) || 5000;
+      const stock = Number(document.getElementById('formStock').value) || 0;
       const kind = document.getElementById('formKind').value.trim();
       const tag = document.getElementById('formTag').value.trim();
-      const graphic = document.getElementById('formGraphic').value.trim();
       const status = document.getElementById('formStatus').value;
+      const graphic = document.getElementById('formGraphic').value.trim() || title;
+      const description = document.getElementById('formDescription').value.trim();
 
-      if (!title || price <= 0) {
-        alert('Please provide a valid product title and price.');
+      if (!title) {
+        alert('Product title is required.');
         return;
       }
 
       if (id) {
-        // Edit existing
-        const p = products.find(x => x.id === id);
-        if (p) {
-          p.title = title;
-          p.category = category;
-          p.price = price;
-          p.formattedPrice = `Rp ${price.toLocaleString('id-ID')}`;
-          p.kind = kind;
-          p.tag = tag;
-          p.graphic = graphic || title.toLowerCase();
-          p.status = status;
+        // Edit
+        const idx = products.findIndex(p => p.id === id);
+        if (idx !== -1) {
+          products[idx] = {
+            ...products[idx],
+            title, category, volume, price, formattedPrice: formatRupiah(price),
+            stock, kind, tag, status, graphic, description
+          };
         }
       } else {
-        // Create new
-        const newId = `prod_${Date.now()}`;
-        products.push({
+        // Create
+        const newId = 'aq_' + Date.now().toString(36);
+        products.unshift({
           id: newId,
-          title: title,
-          category: category,
-          price: price,
-          formattedPrice: `Rp ${price.toLocaleString('id-ID')}`,
-          kind: kind,
-          tag: tag || 'New',
-          graphic: graphic || title.toLowerCase(),
-          status: status
+          title, category, volume, price, formattedPrice: formatRupiah(price),
+          stock, kind, tag, status, graphic, description
         });
       }
 
-      localStorage.setItem('aq_products', JSON.stringify(products));
+      saveAndPersistProducts();
       closeProductModal();
-      renderProductsTable();
       showToast('Product saved successfully');
-    };
-
-    window.deleteProduct = function(id) {
-      if (confirm('Are you sure you want to delete this product?')) {
-        products = products.filter(x => x.id !== id);
-        localStorage.setItem('aq_products', JSON.stringify(products));
-        renderProductsTable();
-        showToast('Product removed');
-      }
-    };
-
-    // Tab Switching
-    window.switchTab = function(tabName) {
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-
-      document.getElementById('tabProducts').style.display = tabName === 'products' ? 'block' : 'none';
-      document.getElementById('tabTheme').style.display = tabName === 'theme' ? 'block' : 'none';
-      document.getElementById('tabSettings').style.display = tabName === 'settings' ? 'block' : 'none';
-    };
-
-    // Theme Customizer Logic
-    function loadThemeInputs() {
-      const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
-      if (theme.announcement) document.getElementById('themeAnnouncement').value = theme.announcement;
-      if (theme.headline) document.getElementById('themeHeadline').value = theme.headline;
-      if (theme.philosophy) document.getElementById('themePhilosophy').value = theme.philosophy;
-      if (theme.waNumber) document.getElementById('themeWaNumber').value = theme.waNumber;
-      if (theme.igHandle) document.getElementById('themeIgHandle').value = theme.igHandle;
-      if (theme.accentColor) document.getElementById('themeAccentColor').value = theme.accentColor;
     }
 
-    window.saveThemeSettings = function() {
+    function duplicateProduct(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+      const cloned = {
+        ...p,
+        id: 'aq_' + Date.now().toString(36),
+        title: p.title + ' (Copy)'
+      };
+      products.unshift(cloned);
+      saveAndPersistProducts();
+      showToast('Product duplicated');
+    }
+
+    function deleteProduct(id) {
+      if (!confirm('Are you sure you want to delete this product?')) return;
+      products = products.filter(p => p.id !== id);
+      saveAndPersistProducts();
+      showToast('Product deleted');
+    }
+
+    function bulkSetAllTo5K() {
+      if (!confirm('Apply Rp 5.000 flat price to all products?')) return;
+      products = products.map(p => ({
+        ...p,
+        price: 5000,
+        formattedPrice: 'Rp 5.000'
+      }));
+      saveAndPersistProducts();
+      showToast('All products set to Rp 5.000 flat');
+    }
+
+    function saveAndPersistProducts() {
+      localStorage.setItem('aq_products', JSON.stringify(products));
+      filterAndRenderProducts();
+      updateDashboardMetrics();
+    }
+
+    // ================= CSV EXPORT & IMPORT (Shopify-like) =================
+    function exportProductsCSV() {
+      const headers = ['id', 'title', 'category', 'volume', 'price', 'stock', 'kind', 'tag', 'status', 'graphic', 'description'];
+      
+      const csvRows = [];
+      csvRows.push(headers.join(','));
+
+      products.forEach(p => {
+        const row = [
+          csvSafe(p.id),
+          csvSafe(p.title),
+          csvSafe(p.category),
+          csvSafe(p.volume),
+          p.price || 5000,
+          p.stock !== undefined ? p.stock : 50,
+          csvSafe(p.kind),
+          csvSafe(p.tag),
+          csvSafe(p.status),
+          csvSafe((p.graphic || '').replace(/\n/g, '\\n')),
+          csvSafe(p.description)
+        ];
+        csvRows.push(row.join(','));
+      });
+
+      const csvString = csvRows.join('\r\n');
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `afterquiet_products_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Products exported to CSV');
+    }
+
+    function csvSafe(str) {
+      if (str === null || str === undefined) return '""';
+      const s = String(str).replace(/"/g, '""');
+      return `"${s}"`;
+    }
+
+    function triggerCsvFileInput() {
+      document.getElementById('csvFileInput').click();
+    }
+
+    function handleCsvFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        try {
+          const text = event.target.result;
+          const imported = parseCSV(text);
+          if (imported.length > 0) {
+            products = imported;
+            saveAndPersistProducts();
+            showToast(`Successfully imported ${imported.length} products from CSV!`);
+          } else {
+            alert('No valid products found in CSV file.');
+          }
+        } catch(err) {
+          alert('Error parsing CSV file: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    }
+
+    function parseCSV(text) {
+      const lines = text.split(/\r\n|\n/).filter(line => line.trim().length > 0);
+      if (lines.length < 2) return [];
+
+      const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+      const result = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const values = parseCSVLine(lines[i]);
+        if (values.length < 2) continue;
+
+        const rowObj = {};
+        headers.forEach((h, idx) => {
+          rowObj[h] = values[idx] !== undefined ? values[idx] : '';
+        });
+
+        const id = rowObj.id || ('aq_' + Date.now().toString(36) + '_' + i);
+        const title = rowObj.title || 'Untitled Product';
+        const price = Number(rowObj.price) || 5000;
+        const stock = Number(rowObj.stock) || 50;
+
+        result.push({
+          id,
+          title,
+          category: rowObj.category || 'accessories',
+          volume: rowObj.volume || 'vol. 01',
+          price,
+          formattedPrice: formatRupiah(price),
+          stock,
+          kind: rowObj.kind || '',
+          tag: rowObj.tag || 'item',
+          status: rowObj.status || 'active',
+          graphic: (rowObj.graphic || title).replace(/\\n/g, '\n'),
+          description: rowObj.description || ''
+        });
+      }
+
+      return result;
+    }
+
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          if (inQuotes && line[i + 1] === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ',' && !inQuotes) {
+          result.push(current);
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current);
+      return result;
+    }
+
+    // JSON Data Management
+    function exportDataJson() {
+      const data = {
+        products,
+        theme: JSON.parse(localStorage.getItem('aq_theme') || '{}'),
+        timestamp: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `afterquiet_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function resetStoreDefaults() {
+      if (!confirm('Reset all products to the official flat 5K Brand Guidelines default?')) return;
+      products = defaultProducts;
+      localStorage.setItem('aq_products', JSON.stringify(defaultProducts));
+      filterAndRenderProducts();
+      updateDashboardMetrics();
+      showToast('Store reset to defaults (5K)');
+    }
+
+    // Theme Settings
+    function loadThemeSettings() {
+      try {
+        const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
+        if (theme.announcement) document.getElementById('themeAnnouncement').value = theme.announcement;
+        if (theme.headline) document.getElementById('themeHeadline').value = theme.headline;
+        if (theme.philosophy) document.getElementById('themePhilosophy').value = theme.philosophy;
+        if (theme.waNumber) document.getElementById('themeWaNumber').value = theme.waNumber;
+        if (theme.igHandle) document.getElementById('themeIgHandle').value = theme.igHandle;
+        if (theme.accentColor) document.getElementById('themeAccentColor').value = theme.accentColor;
+        if (theme.currency) document.getElementById('themeCurrency').value = theme.currency;
+      } catch(e) {}
+    }
+
+    function saveThemeSettings() {
       const theme = {
         announcement: document.getElementById('themeAnnouncement').value.trim(),
         headline: document.getElementById('themeHeadline').value.trim(),
         philosophy: document.getElementById('themePhilosophy').value.trim(),
         waNumber: document.getElementById('themeWaNumber').value.trim(),
         igHandle: document.getElementById('themeIgHandle').value.trim(),
-        accentColor: document.getElementById('themeAccentColor').value
+        accentColor: document.getElementById('themeAccentColor').value.trim(),
+        currency: document.getElementById('themeCurrency').value.trim()
       };
-
       localStorage.setItem('aq_theme', JSON.stringify(theme));
-      showToast('Theme settings saved! Live storefront updated.');
-    };
-
-    // Data Export & Reset
-    window.exportDataJson = function() {
-      const data = {
-        products: products,
-        theme: JSON.parse(localStorage.getItem('aq_theme') || '{}')
-      };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `afterquiet-catalogue-${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-    };
-
-    window.resetStoreDefaults = function() {
-      if (confirm('Reset catalogue and theme back to default? Any custom added items will be replaced.')) {
-        localStorage.removeItem('aq_products');
-        localStorage.removeItem('aq_theme');
-        initStorage();
-        renderProductsTable();
-        loadThemeInputs();
-        showToast('Store reset to original defaults.');
-      }
-    };
-
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.innerText = msg;
-      t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 3000);
+      showToast('Theme & Store settings saved');
     }
 
-    checkAuth();
+    function renderAllDashboard() {
+      filterAndRenderProducts();
+      updateDashboardMetrics();
+      loadThemeSettings();
+    }
+
+    // Init
+    initStorage();
+    if (sessionStorage.getItem('aq_admin_auth') === '1') {
+      document.getElementById('pinGate').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'grid';
+      renderAllDashboard();
+    }
   </script>
 </body>
 </html>

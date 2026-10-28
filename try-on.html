@@ -3,30 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>afterquiet — Custom Bag & Pin Studio</title>
-  <meta name="description" content="Personalize your afterquiet bag or tote with pins, badges, and wearable statements.">
-  <meta name="theme-color" content="#161616">
+  <title>afterquiet — custom bag & pin studio</title>
+  <meta name="description" content="personalize your afterquiet bag or tote with pins, badges, and wearable statements. all items 5k.">
+  <meta name="theme-color" content="#171717">
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23161616'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F4F2ED' text-anchor='middle'>aq</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
 
-  <!-- Google Fonts: Space Grotesk & Inter -->
+  <!-- Google Fonts: Space Grotesk, Inter, and IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --ink: #161616;
-      --paper: #f4f2ed;
-      --paper-card: #ece8e1;
-      --paper-light: #faf9f6;
-      --red: #843b40;
-      --muted: #6e6b66;
-      --line: #d6d2c9;
-      --line-dark: #2a2a2a;
+      --ink: #171717;
+      --paper: #F1EFE9;
+      --paper-card: #FFFFFF;
+      --paper-light: #FAF9F6;
+      --paper-stage: #E6E2D8;
+      --red: #843B40;
+      --muted: #85827D;
+      --line: #E2DFD7;
+      --line-dark: #2A2927;
       --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --display: 'Space Grotesk', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,7 +51,7 @@
     .studio-header {
       background: var(--paper);
       border-bottom: 1px solid var(--line);
-      height: 76px;
+      height: 74px;
       padding: 0 5%;
       display: flex;
       justify-content: space-between;
@@ -58,11 +60,23 @@
       top: 0;
       z-index: 50;
     }
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo-area img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--ink);
+    }
     .brand-logo {
       font-family: var(--display);
       font-weight: 700;
-      font-size: 28px;
-      letter-spacing: -0.07em;
+      font-size: 26px;
+      letter-spacing: -0.06em;
     }
     .studio-tag {
       font-size: 11px;
@@ -70,6 +84,7 @@
       text-transform: uppercase;
       font-weight: 600;
       color: var(--red);
+      font-family: var(--mono);
     }
     .return-link {
       font-size: 13px;
@@ -83,7 +98,7 @@
     .studio-grid {
       display: grid;
       grid-template-columns: 380px 1fr 340px;
-      min-height: calc(100vh - 76px);
+      min-height: calc(100vh - 74px);
       border-bottom: 1px solid var(--line);
     }
 
@@ -91,27 +106,27 @@
     .catalog-panel {
       border-right: 1px solid var(--line);
       background: var(--paper-light);
-      padding: 32px 24px;
+      padding: 30px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       overflow-y: auto;
-      max-height: calc(100vh - 76px);
+      max-height: calc(100vh - 74px);
     }
     .panel-heading {
       font-family: var(--display);
       font-weight: 700;
-      font-size: 32px;
+      font-size: 30px;
       letter-spacing: -0.05em;
       line-height: 1.05;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .panel-heading i { font-weight: 400; font-style: italic; }
     .panel-intro {
       font-size: 13px;
       line-height: 1.6;
       color: var(--muted);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .step-label {
@@ -122,6 +137,7 @@
       color: var(--ink);
       display: block;
       margin-bottom: 10px;
+      font-family: var(--mono);
     }
 
     /* Bag Selector Cards */
@@ -157,9 +173,10 @@
     .bag-pick-btn span {
       font-size: 11px;
       color: var(--muted);
+      font-family: var(--mono);
     }
     .bag-pick-btn.active span {
-      color: #ccc;
+      color: #CCC;
     }
 
     /* Pin Catalogue Cards */
@@ -205,6 +222,7 @@
     .pin-details span {
       font-size: 11px;
       color: var(--red);
+      font-family: var(--mono);
       font-weight: 500;
     }
     .btn-add-pin {
@@ -225,7 +243,7 @@
 
     /* Center Stage Canvas */
     .stage-center {
-      background: #e6e3dc;
+      background: var(--paper-stage);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -246,132 +264,120 @@
     .bag-svg-artwork {
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 25px 35px rgba(0,0,0,0.18));
       pointer-events: none;
     }
-
-    /* Pin Placement Layer */
     .pin-drop-surface {
       position: absolute;
       inset: 0;
       z-index: 20;
     }
+    .stage-helper-pill {
+      position: absolute;
+      bottom: 24px;
+      background: rgba(23, 23, 23, 0.85);
+      backdrop-filter: blur(8px);
+      color: var(--paper);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-family: var(--mono);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Draggable Pins on Canvas */
     .draggable-pin {
       position: absolute;
       cursor: grab;
       touch-action: none;
       transform: translate(-50%, -50%);
-      transition: filter 0.15s;
-      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+      transition: transform 0.05s ease, filter 0.15s ease;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
-    .draggable-pin:active { cursor: grabbing; }
-    .draggable-pin.active-selected {
-      filter: drop-shadow(0 0 0 2px var(--red)) drop-shadow(0 10px 16px rgba(0,0,0,0.55));
+    .draggable-pin:active, .draggable-pin.active-selected {
+      cursor: grabbing;
+      transform: translate(-50%, -50%) scale(1.1);
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.45));
+      z-index: 99;
     }
     .remove-pin-btn {
       position: absolute;
-      top: -8px;
-      right: -8px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
+      top: -6px;
+      right: -6px;
+      width: 18px;
+      height: 18px;
       background: var(--red);
       color: white;
       border: 1.5px solid white;
-      font-size: 12px;
-      font-weight: 700;
+      border-radius: 50%;
       display: none;
       align-items: center;
       justify-content: center;
+      font-size: 10px;
+      line-height: 1;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    .draggable-pin:hover .remove-pin-btn,
-    .draggable-pin.active-selected .remove-pin-btn {
+    .draggable-pin:hover .remove-pin-btn {
       display: flex;
     }
 
-    .canvas-instruction {
-      position: absolute;
-      bottom: 16px;
-      left: 24px;
-      right: 24px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      pointer-events: none;
-    }
-
-    /* Right Order Breakdown Panel */
+    /* Right Drawer: Live Composition Summary & Order */
     .summary-panel {
       border-left: 1px solid var(--line);
-      background: var(--paper);
-      padding: 32px 24px;
+      background: var(--paper-light);
+      padding: 30px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow-y: auto;
-      max-height: calc(100vh - 76px);
+      max-height: calc(100vh - 74px);
     }
-    .summary-heading {
+    .summary-title {
       font-family: var(--display);
+      font-size: 20px;
       font-weight: 700;
-      font-size: 22px;
-      letter-spacing: -0.04em;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--ink);
-      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .summary-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-family: var(--mono);
     }
     .order-tally-list {
+      flex: 1;
+      overflow-y: auto;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      flex: 1;
     }
     .order-tally-item {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: baseline;
       font-size: 13px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--line);
-    }
-    .order-tally-item span:first-child {
-      color: var(--ink);
-      max-width: 180px;
-      line-height: 1.4;
     }
     .order-tally-item span:last-child {
+      font-family: var(--mono);
       font-weight: 600;
-    }
-
-    .summary-bottom {
-      border-top: 2px solid var(--ink);
-      padding-top: 20px;
-      margin-top: 24px;
     }
     .total-display-row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 16px;
-    }
-    .total-display-row span {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--muted);
+      padding: 16px 0 20px;
+      font-size: 15px;
     }
     .total-display-row strong {
-      font-family: var(--display);
-      font-size: 26px;
+      font-family: var(--mono);
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: -0.03em;
     }
-
     .btn-submit-order {
       background: var(--ink);
       color: var(--paper);
@@ -380,7 +386,6 @@
       min-height: 52px;
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.02em;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -393,229 +398,193 @@
       border-color: var(--red);
     }
     .btn-reset-canvas {
-      margin-top: 10px;
       background: none;
-      border: 1px solid var(--line);
-      width: 100%;
-      padding: 10px;
-      font-size: 12px;
+      border: none;
       color: var(--muted);
-      border-radius: 2px;
-      transition: all 0.15s;
-    }
-    .btn-reset-canvas:hover {
-      color: var(--red);
-      border-color: var(--red);
+      font-size: 12px;
+      text-decoration: underline;
+      margin-top: 12px;
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
     }
 
     @media (max-width: 1100px) {
       .studio-grid {
-        grid-template-columns: 340px 1fr;
-      }
-      .summary-panel {
-        grid-column: 1 / -1;
-        border-left: none;
-        border-top: 1px solid var(--line);
-        max-height: none;
-      }
-    }
-    @media (max-width: 768px) {
-      .studio-grid {
         grid-template-columns: 1fr;
       }
-      .catalog-panel {
-        border-right: none;
-        border-bottom: 1px solid var(--line);
+      .catalog-panel, .summary-panel {
         max-height: none;
-      }
-      .stage-center {
-        min-height: 480px;
-        padding: 24px 10px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Studio Top Bar -->
+  <!-- Top Studio Header -->
   <header class="studio-header">
-    <a href="/" class="brand-logo" aria-label="afterquiet home" style="display:inline-flex; align-items:center;">
-      <img src="/assets/profile.jpg" alt="afterquiet logo" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:1.5px solid var(--ink); display:block;">
-    </a>
-    <span class="studio-tag">Custom Bag & Pin Placement Studio</span>
-    <a href="/" class="return-link">← Return to Store</a>
+    <div class="brand-logo-area">
+      <img src="/assets/profile.jpg" alt="afterquiet logo">
+      <a href="/" class="brand-logo">afterquiet</a>
+      <span class="studio-tag">• bag & pin studio</span>
+    </div>
+
+    <a href="/" class="return-link">← return to storefront</a>
   </header>
 
-  <!-- 3-Column Studio Interface -->
+  <!-- 3-Column Studio Workspace -->
   <main class="studio-grid">
-
-    <!-- Column 1: Model & Pin Tray -->
-    <section class="catalog-panel">
+    
+    <!-- LEFT COLUMN: Product Catalog & Pin Selection -->
+    <aside class="catalog-panel">
       <div>
-        <h1 class="panel-heading">personalize<br><i>your bag.</i></h1>
+        <h1 class="panel-heading">custom bag<br><i>studio.</i></h1>
         <p class="panel-intro">
-          Select a bag silhouette, then choose pins and badges from our collection to place anywhere on the canvas to preview your custom look.
+          select a canvas bag base, then attach and drag pins onto the artboard to design your setup before ordering. all items flat 5k.
         </p>
 
-        <!-- Step 1: Base Bag -->
-        <span class="step-label">1. Choose Base Bag</span>
+        <!-- Base Bag Picker -->
+        <span class="step-label">1. choose base carrier</span>
         <div class="bag-picker-grid">
           <button class="bag-pick-btn active" onclick="setBaseBag('tote_ecru')">
-            <strong>Archive Tote</strong>
-            <span>Ecru 16oz • Rp 135k</span>
+            <strong>ecru tote</strong>
+            <span>Rp 5.000</span>
           </button>
           <button class="bag-pick-btn" onclick="setBaseBag('tote_black')">
-            <strong>Utility Tote</strong>
-            <span>Black Canvas • Rp 145k</span>
+            <strong>black tote</strong>
+            <span>Rp 5.000</span>
           </button>
           <button class="bag-pick-btn" onclick="setBaseBag('bag_messenger')">
-            <strong>Messenger Bag</strong>
-            <span>Cordura • Rp 185k</span>
+            <strong>tactical messenger</strong>
+            <span>Rp 5.000</span>
           </button>
           <button class="bag-pick-btn" onclick="setBaseBag('bag_mini')">
-            <strong>Mini Shoulder</strong>
-            <span>Pouch • Rp 115k</span>
+            <strong>mini shoulder</strong>
+            <span>Rp 5.000</span>
           </button>
         </div>
 
-        <!-- Step 2: Pins Tray -->
-        <span class="step-label">2. Select Pins & Badges</span>
+        <!-- Pin Catalogue Tray -->
+        <span class="step-label">2. add pins & badges (all 5k)</span>
         <div class="pin-tray-list">
-          
           <div class="pin-row">
-            <div class="pin-thumb" style="border: 2px solid #843b40;">
-              RESTLESS<br>MIND
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="pin-thumb">mind.</div>
+              <div class="pin-details">
+                <strong>restless mind pin</strong>
+                <span>Rp 5.000</span>
+              </div>
             </div>
-            <div class="pin-details">
-              <strong>Restless Mind Enamel Pin</strong>
-              <span>+ Rp 55.000</span>
-            </div>
-            <button class="btn-add-pin" onclick="attachPin('pin_restless')">+ Place</button>
+            <button class="btn-add-pin" onclick="attachPin('pin_restless')">+ attach</button>
           </div>
 
           <div class="pin-row">
-            <div class="pin-thumb" style="border-radius: 4px; background: #843b40;">
-              TOO<br>SOFT
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="pin-thumb" style="background:#843B40;">soft</div>
+              <div class="pin-details">
+                <strong>too soft badge</strong>
+                <span>Rp 5.000</span>
+              </div>
             </div>
-            <div class="pin-details">
-              <strong>Too Soft for This World Badge</strong>
-              <span>+ Rp 45.000</span>
-            </div>
-            <button class="btn-add-pin" onclick="attachPin('badge_soft')">+ Place</button>
+            <button class="btn-add-pin" onclick="attachPin('badge_soft')">+ attach</button>
           </div>
 
           <div class="pin-row">
-            <div class="pin-thumb" style="background: #222; border: 1px solid #eee;">
-              SILENCE<br>PEACE
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="pin-thumb" style="background:#262422;">peace</div>
+              <div class="pin-details">
+                <strong>silence patch</strong>
+                <span>Rp 5.000</span>
+              </div>
             </div>
-            <div class="pin-details">
-              <strong>Silence Isn't Peace Patch</strong>
-              <span>+ Rp 32.000</span>
-            </div>
-            <button class="btn-add-pin" onclick="attachPin('patch_silence')">+ Place</button>
+            <button class="btn-add-pin" onclick="attachPin('patch_silence')">+ attach</button>
           </div>
 
           <div class="pin-row">
-            <div class="pin-thumb" style="border-radius: 3px; background: #4a4744;">
-              HONESTY<br>TAG
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="pin-thumb" style="background:#4A4744;">tag</div>
+              <div class="pin-details">
+                <strong>emotional honesty tag</strong>
+                <span>Rp 5.000</span>
+              </div>
             </div>
-            <div class="pin-details">
-              <strong>Emotional Honesty Zinc Tag</strong>
-              <span>+ Rp 48.000</span>
-            </div>
-            <button class="btn-add-pin" onclick="attachPin('tag_honesty')">+ Place</button>
+            <button class="btn-add-pin" onclick="attachPin('tag_honesty')">+ attach</button>
           </div>
 
           <div class="pin-row">
-            <div class="pin-thumb" style="background: #f4f2ed; color: #161616; border: 2px solid #161616;">
-              AQ<br>LOGO
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div class="pin-thumb" style="background:#F1EFE9; color:#171717; border:1px solid #171717;">aq</div>
+              <div class="pin-details">
+                <strong>official monogram pin</strong>
+                <span>Rp 5.000</span>
+              </div>
             </div>
-            <div class="pin-details">
-              <strong>Official Monogram Pin</strong>
-              <span>+ Rp 40.000</span>
-            </div>
-            <button class="btn-add-pin" onclick="attachPin('pin_logo')">+ Place</button>
+            <button class="btn-add-pin" onclick="attachPin('pin_logo')">+ attach</button>
           </div>
-
         </div>
       </div>
-    </section>
+    </aside>
 
-    <!-- Column 2: Center Artboard -->
+    <!-- CENTER COLUMN: Interactive Artboard Stage -->
     <section class="stage-center">
-      <div class="bag-artboard" id="artboard">
+      <div class="bag-artboard">
         
-        <!-- Bag Artwork SVG Container -->
-        <div style="width:100%; height:100%; position:relative;">
-          
-          <!-- Ecru Canvas Tote SVG -->
-          <svg id="svgEcru" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none">
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#d5cfc4" stroke-width="32" stroke-linecap="round" fill="none"/>
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#f4f2ed" stroke-width="26" stroke-linecap="round" fill="none"/>
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#999" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
-            
-            <rect x="40" y="160" width="300" height="280" rx="6" fill="#f4f2ed" stroke="#161616" stroke-width="3"/>
-            <line x1="40" y1="195" x2="340" y2="195" stroke="#161616" stroke-width="2" stroke-dasharray="6 4"/>
-            
-            <rect x="85" y="235" width="210" height="150" fill="#161616" rx="3"/>
-            <text x="190" y="280" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="22" fill="#f4f2ed" text-anchor="middle" letter-spacing="-0.04em">AFTERQUIET</text>
-            <text x="190" y="310" font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="14" fill="#843b40" text-anchor="middle">wear what you can't say.</text>
-            <text x="190" y="348" font-family="'Inter', sans-serif" font-size="10" fill="#9e9a93" text-anchor="middle">ARCHIVE 16OZ CANVAS</text>
-          </svg>
+        <!-- SVG Bags -->
+        <!-- 1. Ecru Tote -->
+        <svg id="svgEcru" class="bag-svg-artwork" viewBox="0 0 460 540" fill="none">
+          <path d="M140 220 C140 10, 320 10, 320 220" stroke="#E2DFD7" stroke-width="26" stroke-linecap="round" fill="none"/>
+          <path d="M140 220 C140 10, 320 10, 320 220" stroke="#FAF8F5" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <rect x="50" y="180" width="360" height="340" rx="6" fill="#FAF8F5" stroke="#171717" stroke-width="4"/>
+          <!-- Stitching line -->
+          <rect x="62" y="192" width="336" height="316" rx="4" fill="none" stroke="#DCD8CE" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="230" y="320" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28" fill="#171717" text-anchor="middle" letter-spacing="-1">afterquiet</text>
+          <text x="230" y="350" font-family="'IBM Plex Mono', monospace" font-weight="500" font-size="12" fill="#843B40" text-anchor="middle" letter-spacing="2">ARCHIVE TOTE // 16OZ</text>
+        </svg>
 
-          <!-- Black Utility Tote SVG -->
-          <svg id="svgBlack" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none" style="display:none;">
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#0e0e0e" stroke-width="32" stroke-linecap="round" fill="none"/>
-            <path d="M110 200 C110 20, 270 20, 270 200" stroke="#1e1e1e" stroke-width="26" stroke-linecap="round" fill="none"/>
-            <rect x="40" y="160" width="300" height="280" rx="6" fill="#1b1b1b" stroke="#333" stroke-width="3"/>
-            <line x1="40" y1="195" x2="340" y2="195" stroke="#444" stroke-width="2" stroke-dasharray="6 4"/>
-            <!-- Webbing line -->
-            <rect x="40" y="215" width="300" height="36" fill="#121212" stroke="#2c2c2c" stroke-width="1.5"/>
-            <line x1="110" y1="215" x2="110" y2="251" stroke="#333" stroke-width="2"/>
-            <line x1="190" y1="215" x2="190" y2="251" stroke="#333" stroke-width="2"/>
-            <line x1="270" y1="215" x2="270" y2="251" stroke="#333" stroke-width="2"/>
-            <text x="190" y="325" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28" fill="#f4f2ed" text-anchor="middle" letter-spacing="-0.04em">afterquiet</text>
-            <text x="190" y="360" font-family="'Inter', sans-serif" font-size="11" fill="#843b40" text-anchor="middle">UTILITY HEAVYWEIGHT TOTE</text>
-          </svg>
+        <!-- 2. Black Tote -->
+        <svg id="svgBlack" class="bag-svg-artwork" viewBox="0 0 460 540" fill="none" style="display:none;">
+          <path d="M140 220 C140 10, 320 10, 320 220" stroke="#111" stroke-width="26" stroke-linecap="round" fill="none"/>
+          <path d="M140 220 C140 10, 320 10, 320 220" stroke="#252422" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <rect x="50" y="180" width="360" height="340" rx="6" fill="#1E1D1B" stroke="#000" stroke-width="4"/>
+          <rect x="62" y="192" width="336" height="316" rx="4" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="6 4"/>
+          <text x="230" y="320" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="28" fill="#F1EFE9" text-anchor="middle" letter-spacing="-1">afterquiet</text>
+          <text x="230" y="350" font-family="'IBM Plex Mono', monospace" font-weight="500" font-size="12" fill="#843B40" text-anchor="middle" letter-spacing="2">UTILITY BLACK // REINFORCED</text>
+        </svg>
 
-          <!-- Tactical Messenger SVG -->
-          <svg id="svgMessenger" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none" style="display:none;">
-            <path d="M20 70 L90 170 M290 170 L360 70" stroke="#121212" stroke-width="32" stroke-linecap="square"/>
-            <rect x="50" y="160" width="280" height="230" rx="10" fill="#1a1a1a" stroke="#383838" stroke-width="3"/>
-            <path d="M50 160 L330 160 L315 280 L65 280 Z" fill="#242424" stroke="#141414" stroke-width="2"/>
-            <rect x="105" y="260" width="24" height="60" fill="#111"/>
-            <rect x="102" y="285" width="30" height="14" fill="#843b40"/>
-            <rect x="250" y="260" width="24" height="60" fill="#111"/>
-            <rect x="247" y="285" width="30" height="14" fill="#843b40"/>
-            <text x="190" y="225" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#f4f2ed" text-anchor="middle">RESTLESS MESSENGER</text>
-            <text x="190" y="250" font-family="'Inter', sans-serif" font-size="10" fill="#85827d" text-anchor="middle">CORDURA SLING</text>
-          </svg>
+        <!-- 3. Messenger Bag -->
+        <svg id="svgMessenger" class="bag-svg-artwork" viewBox="0 0 460 540" fill="none" style="display:none;">
+          <path d="M40 140 C120 40, 340 40, 420 140" stroke="#111" stroke-width="32" stroke-linecap="round" fill="none"/>
+          <rect x="40" y="150" width="380" height="280" rx="8" fill="#1A1918" stroke="#000" stroke-width="4"/>
+          <path d="M40 150 L230 250 L420 150" stroke="#000" stroke-width="3" fill="#242220"/>
+          <text x="230" y="310" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="24" fill="#F1EFE9" text-anchor="middle">afterquiet</text>
+          <text x="230" y="335" font-family="'IBM Plex Mono', monospace" font-weight="500" font-size="11" fill="#843B40" text-anchor="middle">TACTICAL CROSSBODY</text>
+        </svg>
 
-          <!-- Mini Shoulder SVG -->
-          <svg id="svgMini" class="bag-svg-artwork" viewBox="0 0 380 460" fill="none" style="display:none;">
-            <path d="M120 180 C120 40, 260 40, 260 180" stroke="#843b40" stroke-width="10" fill="none"/>
-            <rect x="90" y="160" width="200" height="260" rx="8" fill="#f4f2ed" stroke="#161616" stroke-width="3"/>
-            <rect x="90" y="250" width="200" height="170" fill="#e2ded4" stroke="#161616" stroke-width="2"/>
-            <text x="190" y="215" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="18" fill="#161616" text-anchor="middle">afterquiet</text>
-            <text x="190" y="325" font-family="'Inter', sans-serif" font-size="11" fill="#843b40" text-anchor="middle">MINI ARCHIVE</text>
-          </svg>
+        <!-- 4. Mini Shoulder -->
+        <svg id="svgMini" class="bag-svg-artwork" viewBox="0 0 460 540" fill="none" style="display:none;">
+          <path d="M120 180 C120 40, 340 40, 340 180" stroke="#333" stroke-width="12" fill="none"/>
+          <rect x="90" y="170" width="280" height="320" rx="6" fill="#EDE9E1" stroke="#171717" stroke-width="4"/>
+          <text x="230" y="310" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="22" fill="#171717" text-anchor="middle">afterquiet</text>
+          <text x="230" y="335" font-family="'IBM Plex Mono', monospace" font-weight="500" font-size="10" fill="#843B40" text-anchor="middle">MINI CARRIER</text>
+        </svg>
 
-          <!-- Interactive Pins Layer -->
-          <div class="pin-drop-surface" id="pinDropSurface"></div>
-
+        <!-- Pin Drop Surface -->
+        <div class="pin-drop-surface" id="pinDropSurface">
+          <!-- Attached pins injected dynamically -->
         </div>
+
       </div>
 
-      <div class="canvas-instruction">
-        <span>Drag pins across the bag surface to position your design</span>
-        <span>Click (×) to remove pin</span>
+      <div class="stage-helper-pill">
+        <span>drag pins freely to arrange your composition</span>
       </div>
     </section>
 
-    <!-- Column 3: Order Breakdown -->
+    <!-- RIGHT COLUMN: Live Order Summary -->
     <section class="summary-panel">
       <div>
-        <h2 class="summary-heading">Custom Setup</h2>
+        <h2 class="summary-title">live arrangement</h2>
+        <p class="summary-subtitle">instant calculation & whatsapp routing</p>
 
         <div class="order-tally-list" id="orderTallyList">
           <!-- Dynamically populated -->
@@ -624,17 +593,17 @@
 
       <div class="summary-bottom">
         <div class="total-display-row">
-          <span>Estimated Total</span>
-          <strong id="totalSumDisplay">Rp 135.000</strong>
+          <span>total amount</span>
+          <strong id="totalSumDisplay">Rp 5.000</strong>
         </div>
 
         <button class="btn-submit-order" onclick="submitCustomOrder()">
-          <span>Order This Setup via WhatsApp</span>
+          <span>order this setup via whatsapp</span>
           <span>↗</span>
         </button>
 
         <button class="btn-reset-canvas" onclick="clearCanvasPins()">
-          Reset Pin Placement
+          reset pin placement
         </button>
       </div>
     </section>
@@ -642,84 +611,85 @@
   </main>
 
   <script>
+    // All items flat 5K
     const bagCatalogue = {
       tote_ecru: {
-        name: "Archive Canvas Tote Bag (Ecru)",
-        price: 135000,
-        formattedPrice: "Rp 135.000",
+        name: "archive canvas tote bag (ecru)",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         svgId: "svgEcru"
       },
       tote_black: {
-        name: "Utility Black Canvas Tote",
-        price: 145000,
-        formattedPrice: "Rp 145.000",
+        name: "utility black canvas tote",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         svgId: "svgBlack"
       },
       bag_messenger: {
-        name: "Restless Tactical Messenger",
-        price: 185000,
-        formattedPrice: "Rp 185.000",
+        name: "restless tactical messenger",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         svgId: "svgMessenger"
       },
       bag_mini: {
-        name: "Fragile Archives Mini Shoulder",
-        price: 115000,
-        formattedPrice: "Rp 115.000",
+        name: "fragile archives mini shoulder",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         svgId: "svgMini"
       }
     };
 
     const pinCatalogue = {
       pin_restless: {
-        name: "Restless Mind Enamel Pin",
-        price: 55000,
-        formattedPrice: "Rp 55.000",
+        name: "restless mind enamel pin",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         html: `
-          <div style="width:48px; height:48px; border-radius:50%; background:#161616; border:2.5px solid #843b40; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:7px; color:#f4f2ed; line-height:1;">RESTLESS</span>
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#843b40; line-height:1; margin-top:2px;">MIND</span>
+          <div style="width:48px; height:48px; border-radius:50%; background:#171717; border:2.5px solid #843B40; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:7px; color:#F1EFE9; line-height:1;">RESTLESS</span>
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#843B40; line-height:1; margin-top:2px;">MIND</span>
           </div>
         `
       },
       badge_soft: {
-        name: "Too Soft for This World Badge",
-        price: 45000,
-        formattedPrice: "Rp 45.000",
+        name: "too soft for this world badge",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         html: `
-          <div style="width:58px; height:38px; border-radius:3px; background:#843b40; border:2px solid #f4f2ed; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-            <span style="font-family:'Inter'; font-weight:600; font-size:6.5px; color:#f4f2ed; letter-spacing:0.04em;">TOO SOFT</span>
-            <span style="font-family:'Inter'; font-size:5.5px; color:#d89599;">VOL. 01</span>
+          <div style="width:58px; height:38px; border-radius:3px; background:#843B40; border:2px solid #F1EFE9; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Inter'; font-weight:600; font-size:6.5px; color:#F1EFE9; letter-spacing:0.04em;">TOO SOFT</span>
+            <span style="font-family:'IBM Plex Mono'; font-size:5.5px; color:#D89599;">VOL. 01</span>
           </div>
         `
       },
       patch_silence: {
-        name: "Silence Isn't Peace Patch",
-        price: 32000,
-        formattedPrice: "Rp 32.000",
+        name: "silence isn't peace patch",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         html: `
-          <div style="width:64px; height:32px; background:#1c1c1c; border:1.5px dashed #f4f2ed; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;">
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f4f2ed; line-height:1.1;">SILENCE ISN'T<br>ALWAYS PEACE.</span>
+          <div style="width:64px; height:32px; background:#1C1C1C; border:1.5px dashed #F1EFE9; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#F1EFE9; line-height:1.1;">SILENCE ISN'T<br>ALWAYS PEACE.</span>
           </div>
         `
       },
       tag_honesty: {
-        name: "Emotional Honesty Zinc Tag",
-        price: 48000,
-        formattedPrice: "Rp 48.000",
+        name: "emotional honesty zinc tag",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         html: `
-          <div style="width:40px; height:60px; background:#4a4744; border:2px solid #161616; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3px;">
-            <div style="width:6px; height:6px; border-radius:50%; background:#161616; margin-bottom:4px;"></div>
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#f4f2ed; line-height:1;">EMOTIONAL<br>HONESTY</span>
+          <div style="width:40px; height:60px; background:#4A4744; border:2px solid #171717; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3px;">
+            <div style="width:6px; height:6px; border-radius:50%; background:#171717; margin-bottom:4px;"></div>
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:6px; color:#F1EFE9; line-height:1;">EMOTIONAL<br>HONESTY</span>
           </div>
         `
       },
       pin_logo: {
-        name: "Official Monogram Pin",
-        price: 40000,
-        formattedPrice: "Rp 40.000",
+        name: "official monogram pin",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
         html: `
-          <div style="width:42px; height:42px; border-radius:50%; background:#f4f2ed; border:2.5px solid #161616; display:flex; align-items:center; justify-content:center; text-align:center;">
-            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:12px; color:#161616;">aq</span>
+          <div style="width:42px; height:42px; border-radius:50%; background:#F1EFE9; border:2.5px solid #171717; display:flex; align-items:center; justify-content:center; text-align:center;">
+            <span style="font-family:'Space Grotesk'; font-weight:700; font-size:12px; color:#171717;">aq</span>
           </div>
         `
       }
@@ -857,7 +827,7 @@
       if (attachedPins.length === 0) {
         itemsHtml += `
           <div style="color:var(--muted); font-size:12px; padding:18px 0; font-style:italic;">
-            No pins attached yet. Select pins from the left to place them on your bag.
+            no pins attached yet. select pins from the left to place them on your canvas.
           </div>
         `;
       } else {
@@ -892,7 +862,7 @@
 
       const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
       const waTarget = theme.waNumber ? theme.waNumber.replace(/[^0-9]/g, '') : '';
-      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom arrangement dari Studio:%0A%0A*BASE BAG:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*ATTACHED PINS & BADGES (${attachedPins.length} pcs):*%0A${pinLines}%0A%0A*TOTAL:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan & alamat pengiriman. Terima kasih.`;
+      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom arrangement dari Studio:%0A%0A*BASE CARRIER:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*ATTACHED PINS & BADGES (${attachedPins.length} pcs):*%0A${pinLines}%0A%0A*TOTAL:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stok & pengirimannya. Terima kasih!`;
       
       window.open(`https://wa.me/${waTarget}?text=${msg}`, '_blank');
     };
