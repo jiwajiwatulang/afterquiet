@@ -1363,7 +1363,8 @@
                 <tr>
                   <th>Timestamp</th>
                   <th>SKU</th>
-                  <th>Change</th>
+                  <th>Stock Movement</th>
+                  <th>Change Delta</th>
                   <th>Reason / Reference</th>
                 </tr>
               </thead>
@@ -1943,10 +1944,25 @@
       <div style="padding:24px;">
         <input type="hidden" id="stockAdjProdId">
         <strong id="stockAdjTitle" style="display:block; font-size:14px; margin-bottom:12px;">Product Title</strong>
+
+        <div style="background:#F6F6F7; border:1px solid var(--border-subtle); border-radius:4px; padding:12px; margin-bottom:16px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+            <span style="color:var(--text-sub);">Current Physical:</span>
+            <strong id="stockAdjPrevCount" style="font-family:var(--mono);">0</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+            <span style="color:var(--text-sub);">Delta Adjustment:</span>
+            <strong id="stockAdjDeltaDisplay" style="font-family:var(--mono); color:#85827D;">0</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; border-top:1px dashed #DDD; padding-top:6px;">
+            <span>Projected New Stock:</span>
+            <strong id="stockAdjProjectedCount" style="font-family:var(--mono); color:#1A5928;">0</strong>
+          </div>
+        </div>
         
         <div class="form-group-item" style="margin-bottom:16px;">
           <label>Quantity Delta (+ to restock, - to deduct)</label>
-          <input type="number" id="stockAdjDelta" class="form-control-input" placeholder="+20 or -5" required>
+          <input type="number" id="stockAdjDelta" class="form-control-input" placeholder="+20 or -5" oninput="updateStockModalProjected()" required>
         </div>
 
         <div class="form-group-item" style="margin-bottom:20px;">
@@ -3275,25 +3291,52 @@
       const logs = AfterquietStore.getInventoryLogs();
       const logsBody = document.getElementById('inventoryLogsBody');
       logsBody.innerHTML = '';
-      logs.slice(0, 10).forEach(l => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td style="font-family:var(--mono); font-size:11px;">${AfterquietStore.formatDate(l.timestamp)}</td>
-          <td style="font-family:var(--mono);">${l.sku}</td>
-          <td><strong style="font-family:var(--mono); color:${l.delta >= 0 ? '#1A5928' : '#8E1F1A'};">${l.delta >= 0 ? '+' : ''}${l.delta}</strong></td>
-          <td>${escapeHtml(l.reason)}</td>
-        `;
-        logsBody.appendChild(tr);
-      });
+      if (!logs || logs.length === 0) {
+        logsBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:24px; color:var(--text-muted);">No stock adjustments logged yet.</td></tr>';
+      } else {
+        logs.slice(0, 15).forEach(l => {
+          const tr = document.createElement('tr');
+          const hasMovement = l.previousStock !== undefined && l.newStock !== undefined;
+          tr.innerHTML = `
+            <td style="font-family:var(--mono); font-size:11px;">${AfterquietStore.formatDate(l.timestamp)}</td>
+            <td style="font-family:var(--mono); font-weight:600;">${escapeHtml(l.sku || '-')}</td>
+            <td style="font-family:var(--mono); font-size:12px;">
+              ${hasMovement ? `<span style="color:var(--text-sub);">${l.previousStock}</span> <span style="color:var(--text-muted);">→</span> <strong style="color:var(--text-main);">${l.newStock}</strong>` : '<span style="color:var(--text-muted);">-</span>'}
+            </td>
+            <td><strong style="font-family:var(--mono); color:${l.delta >= 0 ? '#1A5928' : '#8E1F1A'};">${l.delta >= 0 ? '+' : ''}${l.delta}</strong></td>
+            <td style="font-size:12px;">${escapeHtml(l.reason || 'Manual Adjustment')}</td>
+          `;
+          logsBody.appendChild(tr);
+        });
+      }
     }
 
     function openStockModal(prodId) {
       const p = AfterquietStore.getProductById(prodId);
       if (!p) return;
       document.getElementById('stockAdjProdId').value = prodId;
-      document.getElementById('stockAdjTitle').innerText = `${p.title} (${p.sku}) — Physical On Hand: ${p.stock} units`;
+      document.getElementById('stockAdjTitle').innerText = `${p.title} (${p.sku || 'No SKU'})`;
+      const current = Number(p.stock !== undefined ? p.stock : 0);
+      document.getElementById('stockAdjPrevCount').innerText = `${current} units`;
       document.getElementById('stockAdjDelta').value = '';
+      document.getElementById('stockAdjDeltaDisplay').innerText = '+0';
+      document.getElementById('stockAdjProjectedCount').innerText = `${current} units`;
       document.getElementById('stockModal').classList.add('open');
+      setTimeout(() => {
+        const inp = document.getElementById('stockAdjDelta');
+        if (inp) inp.focus();
+      }, 60);
+    }
+
+    function updateStockModalProjected() {
+      const id = document.getElementById('stockAdjProdId').value;
+      const p = AfterquietStore.getProductById(id);
+      if (!p) return;
+      const current = Number(p.stock !== undefined ? p.stock : 0);
+      const delta = Number(document.getElementById('stockAdjDelta').value || 0);
+      const projected = Math.max(0, current + delta);
+      document.getElementById('stockAdjDeltaDisplay').innerText = (delta >= 0 ? '+' : '') + delta;
+      document.getElementById('stockAdjProjectedCount').innerText = `${projected} units`;
     }
 
     function closeStockModal() {
@@ -3305,14 +3348,15 @@
       const delta = Number(document.getElementById('stockAdjDelta').value);
       const reason = document.getElementById('stockAdjReason').value;
 
-      if (!delta) {
+      if (!delta && delta !== 0) {
         alert('Please enter a valid stock delta (e.g. +10 or -5).');
         return;
       }
 
       AfterquietStore.adjustStock(id, delta, reason);
       closeStockModal();
-      showToast('Inventory adjusted successfully');
+      showToast('Inventory adjusted successfully with full audit trail');
+      renderProductsTable();
       renderInventoryTable();
       renderOverview();
     }

@@ -278,6 +278,9 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(0,0,0,0.04);
     }
+    .collection-product-card:hover .card-thumb img {
+      transform: scale(1.05);
+    }
     .card-thumb {
       aspect-ratio: 1;
       background: #171717;
@@ -685,10 +688,15 @@
           window.location.href = `/product?id=${p.id}`;
         };
 
+        const isSmallAccessory = p.category === 'accessories' || ['pin', 'badge', 'tag', 'sticker'].includes(p.tag);
+        const imgStyle = isSmallAccessory
+          ? 'max-width:82%; max-height:82%; width:76%; height:76%; object-fit:contain; transition:transform 0.3s ease; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.45));'
+          : 'max-width:80%; max-height:80%; width:auto; height:auto; object-fit:contain; transition:transform 0.3s ease; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));';
+
         card.innerHTML = `
           <div>
             <div class="card-thumb" style="position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:18px;">
-              ${p.image ? `<img src="${p.image}" alt="${p.title}" style="max-width:88%; max-height:88%; width:auto; height:auto; object-fit:contain; transition:transform 0.3s ease; filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));">` : `
+              ${p.image ? `<img src="${p.image}" alt="${p.title}" style="${imgStyle}">` : `
                 <span class="card-spec-tag">${p.tag || 'item'}</span>
                 <span class="card-vol-tag">${p.volume || 'vol. 01'}</span>
                 <span class="card-graphic-text">${p.graphic || p.title}</span>

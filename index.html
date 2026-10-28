@@ -550,6 +550,9 @@
     .product-card:hover .product-thumbnail {
       background: #222;
     }
+    .product-card:hover .product-thumbnail img {
+      transform: scale(1.05);
+    }
     .thumb-spec {
       position: absolute;
       top: 14px;
@@ -1301,10 +1304,15 @@
         const availableStock = p.availableStock !== undefined ? p.availableStock : Math.max(0, Number(p.stock || 0) - Number(p.reserved || 0));
         const isSoldOut = availableStock <= 0;
 
+        const isSmallAccessory = p.category === 'accessories' || ['pin', 'badge', 'tag', 'sticker'].includes(p.tag);
+        const imgStyle = isSmallAccessory
+          ? 'max-width:82%; max-height:82%; width:76%; height:76%; object-fit:contain; transition:transform 0.3s ease; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.45));'
+          : 'max-width:80%; max-height:80%; width:auto; height:auto; object-fit:contain; transition:transform 0.3s ease; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));';
+
         card.innerHTML = `
           <div>
             <div class="product-thumbnail" style="position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:18px;">
-              ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.title)}" style="max-width:88%; max-height:88%; width:auto; height:auto; object-fit:contain; transition:transform 0.3s ease; filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));">` : `
+              ${p.image ? `<img src="${p.image}" alt="${escapeHtml(p.title)}" style="${imgStyle}">` : `
                 <span class="thumb-spec">${p.tag || 'item'}</span>
                 <span class="thumb-vol">${p.volume || 'vol. 01'}</span>
                 <span class="thumb-graphic">${p.graphic || p.title}</span>

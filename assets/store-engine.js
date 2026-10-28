@@ -824,24 +824,29 @@
       const item = list.find(p => p.id === idOrSku || p.sku === idOrSku);
       if (!item) return false;
 
-      item.stock = Math.max(0, Number(item.stock || 0) + Number(delta));
+      const previousStock = Number(item.stock || 0);
+      const newStock = Math.max(0, previousStock + Number(delta));
+      item.stock = newStock;
       item.updatedAt = new Date().toISOString();
-      this.logInventoryAdjustment(item.sku || item.id, delta, reason);
+      this.logInventoryAdjustment(item.sku || item.id, delta, reason, previousStock, newStock);
       setJson(STORAGE_KEYS.PRODUCTS, list);
       CloudSync.push(STORAGE_KEYS.PRODUCTS, list);
       return item;
     },
 
-    logInventoryAdjustment(sku, delta, reason) {
+    logInventoryAdjustment(sku, delta, reason, previousStock = null, newStock = null) {
       const logs = getJson(STORAGE_KEYS.INVENTORY_LOGS, []);
       logs.unshift({
         timestamp: new Date().toISOString(),
         sku,
+        previousStock: previousStock !== null ? Number(previousStock) : undefined,
         delta: Number(delta),
+        newStock: newStock !== null ? Number(newStock) : undefined,
         reason
       });
       if (logs.length > 200) logs.pop();
       setJson(STORAGE_KEYS.INVENTORY_LOGS, logs);
+      CloudSync.push(STORAGE_KEYS.INVENTORY_LOGS, logs);
     },
 
     getInventoryLogs() {
@@ -1452,11 +1457,12 @@
       });
 
       if (totals.discountDeduction > 0) {
-        text += `\n*SUBTOTAL:* ${formatRupiah(totals.subtotal)}\n`;
+        text += `\n*SUBTOTAL PRODUK:* ${formatRupiah(totals.subtotal)}\n`;
         text += `*DISCOUNT:* -${formatRupiah(totals.discountDeduction)} (${totals.appliedDiscount.code})\n`;
       }
-      text += `\n*TOTAL PEMBAYARAN:* ${formatRupiah(totals.total)}\n\n`;
-      text += `Mohon info rincian rekening transfer bank/QRIS untuk menyelesaikan pesanan ini. Terima kasih!`;
+      text += `\n*ESTIMATED TOTAL (EXCL. SHIPPING):* ${formatRupiah(totals.total)}\n`;
+      text += `*SHIPPING:* Confirmed via WhatsApp\n\n`;
+      text += `Mohon info ongkos kirim dan rincian rekening transfer bank/QRIS untuk menyelesaikan pesanan ini. Terima kasih!`;
 
       return `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
     },
@@ -1735,18 +1741,22 @@
         // Footer with totals and Proceed to Express Checkout button
         footContainer.innerHTML = `
           <div style="border-top:1px solid #171717; padding-top:16px;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; color:#85827D; margin-bottom:6px;">
-              <span>subtotal (${totals.count} items)</span>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#85827D; margin-bottom:5px;">
+              <span>subtotal produk (${totals.count} items)</span>
               <span style="font-family:'IBM Plex Mono',monospace;">${formatRupiah(totals.subtotal)}</span>
             </div>
             ${totals.discountDeduction > 0 ? `
-              <div style="display:flex; justify-content:space-between; font-size:13px; color:#843B40; margin-bottom:6px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px; color:#843B40; margin-bottom:5px;">
                 <span>discount (${totals.appliedDiscount ? totals.appliedDiscount.code : ''})</span>
                 <span style="font-family:'IBM Plex Mono',monospace;">-${formatRupiah(totals.discountDeduction)}</span>
               </div>
             ` : ''}
-            <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:15px; font-weight:700; color:#171717; margin-bottom:18px;">
-              <span>total</span>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#85827D; margin-bottom:10px;">
+              <span>shipping</span>
+              <span style="font-family:'IBM Plex Mono',monospace; color:#171717;">confirmed via whatsapp</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:13px; font-weight:700; color:#171717; margin-bottom:18px; border-top:1px dashed #C9C6BE; padding-top:8px;">
+              <span>estimated total (excl. shipping):</span>
               <span style="font-family:'IBM Plex Mono',monospace; font-size:22px;">${formatRupiah(totals.total)}</span>
             </div>
             <button onclick="AfterquietStore.toggleCheckoutView(true)" style="width:100%; background:#171717; color:#F1EFE9; border:none; padding:15px; font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:lowercase; border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:background 0.15s;">
@@ -1804,7 +1814,7 @@
         footContainer.innerHTML = `
           <div style="border-top:1px solid #171717; padding-top:16px;">
             <div style="display:flex; justify-content:space-between; font-size:12px; color:#85827D; margin-bottom:5px;">
-              <span>subtotal (${totals.count} items)</span>
+              <span>subtotal produk (${totals.count} items)</span>
               <span style="font-family:'IBM Plex Mono',monospace;">${formatRupiah(totals.subtotal)}</span>
             </div>
             ${totals.discountDeduction > 0 ? `
@@ -1814,11 +1824,11 @@
               </div>
             ` : ''}
             <div style="display:flex; justify-content:space-between; font-size:12px; color:#85827D; margin-bottom:10px;">
-              <span>shipping cost</span>
-              <span style="font-family:'IBM Plex Mono',monospace; color:#171717;">confirmed on whatsapp</span>
+              <span>shipping</span>
+              <span style="font-family:'IBM Plex Mono',monospace; color:#171717;">confirmed via whatsapp</span>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:14px; font-weight:700; color:#171717; margin-bottom:14px; border-top:1px dashed #C9C6BE; padding-top:8px;">
-              <span>total items:</span>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:13px; font-weight:700; color:#171717; margin-bottom:14px; border-top:1px dashed #C9C6BE; padding-top:8px;">
+              <span>estimated total (excl. shipping):</span>
               <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:#171717;">${formatRupiah(totals.total)}</span>
             </div>
             <button onclick="AfterquietStore.submitStoreCheckout()" style="width:100%; background:#171717; color:#F1EFE9; border:none; padding:16px; font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:lowercase; border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:background 0.15s;">
