@@ -1358,10 +1358,39 @@
     },
     syncCartBadge() {
       const totals = this.getCartTotals();
-      document.querySelectorAll('#navCartCount, .nav-cart-count, #cartCount').forEach(el => {
-        el.innerText = totals.count;
-        el.style.display = totals.count > 0 ? 'inline-block' : 'none';
+      const count = totals.count || 0;
+
+      // 1. Update all explicit bag counter spans (e.g. <span id="bagCounter">0</span>)
+      document.querySelectorAll('#bagCounter, .bag-counter, .bagCounter, [data-bag-counter]').forEach(el => {
+        el.textContent = count;
+        el.style.display = 'inline-block';
+        el.style.transition = 'transform 0.18s ease';
+        el.style.transform = 'scale(1.25)';
+        setTimeout(() => {
+          el.style.transform = 'scale(1)';
+        }, 180);
       });
+
+      // 2. Update any nav cart badge chips
+      document.querySelectorAll('#navCartCount, .nav-cart-count, #cartCount, .cart-count').forEach(el => {
+        el.textContent = count;
+        el.style.display = count > 0 ? 'inline-block' : 'none';
+      });
+
+      // 3. Update any cart buttons directly if they contain a span or text like "bag (X)"
+      document.querySelectorAll('#openBagBtn, .btn-cart, .open-bag-btn').forEach(btn => {
+        const span = btn.querySelector('#bagCounter, .bag-counter, span');
+        if (span) {
+          span.textContent = count;
+        } else if (btn.innerHTML.includes('bag (')) {
+          btn.innerHTML = `bag (<span id="bagCounter">${count}</span>)`;
+        }
+      });
+
+      // 4. Dispatch event for other listeners
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('aq_cart_badge_updated', { detail: { count, totals } }));
+      }
     },
 
     // CSV IMPORT / EXPORT (POLARIS COMPATIBLE)

@@ -711,7 +711,7 @@
               ${p.compareAtPrice && p.compareAtPrice > p.price ? `<span style="text-decoration:line-through; font-size:12px; color:var(--muted); margin-right:6px; font-weight:normal;">${AfterquietStore.formatRupiah(p.compareAtPrice)}</span>` : ''}
               <span>${AfterquietStore.formatRupiah(p.price || 5000)}</span>
             </div>
-            <button class="btn-quick-add" ${isSoldOut ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : `onclick="event.stopPropagation(); AfterquietStore.addToCart('${p.id}'); AfterquietStore.showToast('added to bag');"`}>
+            <button class="btn-quick-add" ${isSoldOut ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : `onclick="event.stopPropagation(); AfterquietStore.addToCart('${p.id}');"`}>
               ${isSoldOut ? 'sold out' : '+ add'}
             </button>
           </div>
