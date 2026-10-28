@@ -467,20 +467,40 @@
 
         const targetUrl = this.buildTargetUrl(cfg, key);
 
-        await fetch(targetUrl, {
+        const headers = { 'Content-Type': 'application/json' };
+        if (typeof sessionStorage !== 'undefined') {
+          const token = sessionStorage.getItem('aq_admin_session_token');
+          if (token && Engine.isAdminAuthenticated()) {
+            headers['x-admin-token'] = token;
+          }
+        }
+
+        const res = await fetch(targetUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify(data)
         });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          if (res.status === 409 && errData.rejected) {
+            console.warn('Order rejected by server due to stock depletion:', errData.error);
+            window.dispatchEvent(new CustomEvent('aq_order_rejected', { detail: errData }));
+            return { success: false, rejected: true, error: errData.error };
+          }
+          throw new Error(`Sync failed with HTTP ${res.status}: ${errData.error || res.statusText}`);
+        }
 
         this.status = 'connected';
         this.lastSyncTime = new Date().toISOString();
         window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'connected', lastSync: this.lastSyncTime } }));
+        return await res.json().catch(() => ({ success: true }));
       } catch (err) {
-        console.warn('Cloud sync push deferred to offline queue:', err);
+        console.warn('Cloud sync push deferred to offline queue:', err.message);
         this.status = 'offline';
         this.queueOfflinePush(key, data);
         window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'offline', error: err.message } }));
+        return null;
       }
     },
 
@@ -490,8 +510,15 @@
 
       try {
         const targetUrl = this.buildTargetUrl(cfg, key);
+        const headers = { 'Content-Type': 'application/json' };
+        if (typeof sessionStorage !== 'undefined') {
+          const token = sessionStorage.getItem('aq_admin_session_token');
+          if (token && Engine.isAdminAuthenticated()) {
+            headers['x-admin-token'] = token;
+          }
+        }
 
-        const res = await fetch(targetUrl);
+        const res = await fetch(targetUrl, { headers });
         if (!res.ok) return null;
         const remoteData = await res.json();
         if (remoteData === null || remoteData === undefined) return null;
@@ -871,13 +898,17 @@
       });
       setJson(STORAGE_KEYS.PRODUCTS, products);
 
-      // 3. Initialize order in awaiting payment state
+      // 3. Initialize order with idempotency & offline guard
       const orders = this.getOrders();
       const orderId = 'AQ-' + Math.floor(1000 + Math.random() * 9000);
       const reservationExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24-hour hold
+      const isOffline = (typeof navigator !== 'undefined' && !navigator.onLine);
+      const idempotencyKey = 'idem_' + orderId + '_' + Date.now();
 
       const newOrder = {
         id: orderId,
+        idempotencyKey,
+        isOfflinePending: isOffline,
         customer,
         items,
         subtotal,
@@ -885,7 +916,7 @@
         total,
         paymentStatus: 'unpaid',
         fulfillmentStatus: 'unfulfilled',
-        lifecycleStatus: 'awaiting_payment',
+        lifecycleStatus: isOffline ? 'offline_pending_confirmation' : 'awaiting_payment',
         reservedExpiresAt: reservationExpiry,
         courier,
         trackingNumber: '',
@@ -893,14 +924,18 @@
         createdAt: new Date().toISOString()
       };
 
-      this.logInventoryAdjustment('HOLD', 0, `Stock reservation: ${items.map(i => `${i.title} (${i.qty}x)`).join(', ')} held for ${orderId} (awaiting payment)`);
+      this.logInventoryAdjustment('HOLD', 0, `Stock reservation: ${items.map(i => `${i.title} (${i.qty}x)`).join(', ')} held for ${orderId} (${isOffline ? 'offline pending' : 'awaiting payment'})`);
 
       orders.unshift(newOrder);
       setJson(STORAGE_KEYS.ORDERS, orders);
 
-      // Push to Centralized Cloud
-      CloudSync.push(STORAGE_KEYS.ORDERS, orders);
-      CloudSync.push(STORAGE_KEYS.PRODUCTS, products);
+      // Push to Centralized Cloud: Admin syncs full state, public buyer posts discrete order
+      if (this.isAdminAuthenticated()) {
+        CloudSync.push(STORAGE_KEYS.ORDERS, orders);
+        CloudSync.push(STORAGE_KEYS.PRODUCTS, products);
+      } else {
+        CloudSync.push(STORAGE_KEYS.ORDERS, { action: 'create_order', order: newOrder, idempotencyKey });
+      }
 
       return newOrder;
     },
@@ -1398,7 +1433,12 @@
       const cleanWa = (settings.waNumber || '6285708500546').replace(/[^0-9]/g, '');
       let text = `Halo afterquiet,\nSaya ingin melakukan pemesanan resmi:\n\n`;
       text += `*ORDER REF:* ${formalOrder.id}\n`;
-      text += `*STATUS:* Menunggu Pembayaran (Reservasi 24 Jam)\n`;
+      if (formalOrder.isOfflinePending) {
+        text += `*STATUS:* Menunggu Konfirmasi Stok (Dibuat Saat Offline)\n`;
+        text += `*CATATAN KHUSUS:* Pesanan dibuat saat perangkat offline. Ketersediaan stok akan diverifikasi secara otomatis oleh sistem afterquiet.\n`;
+      } else {
+        text += `*STATUS:* Menunggu Pembayaran (Reservasi 24 Jam)\n`;
+      }
       text += `*NAMA:* ${customerData.name}\n`;
       text += `*NO. WHATSAPP:* ${customerData.phone}\n`;
       text += `*ALAMAT:* ${customerData.address}, ${customerData.city}\n`;

@@ -1191,6 +1191,7 @@
               <select id="orderPaymentFilter" class="filter-select-box" onchange="renderOrdersTable()">
                 <option value="all">All Payments</option>
                 <option value="unpaid">Awaiting Payment (Reserved)</option>
+                <option value="offline_pending">Offline Pending Confirmation</option>
                 <option value="paid">Paid</option>
                 <option value="expired">Expired</option>
                 <option value="refunded">Refunded / Cancelled</option>
@@ -2358,7 +2359,8 @@
       const filtered = orders.filter(o => {
         const matchesQ = !q || o.id.toLowerCase().includes(q) || (o.customer.name && o.customer.name.toLowerCase().includes(q)) || (o.customer.phone && o.customer.phone.includes(q));
         const matchesF = fFilter === 'all' || o.fulfillmentStatus === fFilter;
-        const matchesP = pFilter === 'all' || o.paymentStatus === pFilter;
+        const matchesP = pFilter === 'all' || 
+          (pFilter === 'offline_pending' ? (o.isOfflinePending || o.lifecycleStatus === 'offline_pending_confirmation') : o.paymentStatus === pFilter);
         return matchesQ && matchesF && matchesP;
       });
 
@@ -2373,6 +2375,15 @@
       filtered.forEach(o => {
         const itemsSummary = o.items.map(i => `${i.title} (${i.qty}x)`).join(', ');
         const tr = document.createElement('tr');
+
+        let badgeHtml = '';
+        if (o.isOfflinePending || o.lifecycleStatus === 'offline_pending_confirmation') {
+          badgeHtml = `<span class="status-badge" style="background:#FFF3CD; color:#856404; border:1px solid #FFEEBA;">Offline Pending</span>`;
+        } else if (o.lifecycleStatus === 'out_of_stock_rejected') {
+          badgeHtml = `<span class="status-badge status-expired" style="background:#FEE2E2; color:#991B1B;">Stock Depleted</span>`;
+        } else {
+          badgeHtml = `<span class="status-badge status-${o.paymentStatus}">${o.paymentStatus === 'unpaid' ? 'Awaiting Payment' : o.paymentStatus}</span>`;
+        }
 
         let actionsHtml = '';
         if (o.paymentStatus === 'unpaid') {
@@ -2402,7 +2413,7 @@
           <td class="full-card-cell">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <strong style="font-size:14px;">${o.id}</strong>
-              <span class="status-badge status-${o.paymentStatus}">${o.paymentStatus === 'unpaid' ? 'Awaiting Payment' : o.paymentStatus}</span>
+              ${badgeHtml}
             </div>
             <div style="font-size:11px; color:var(--text-sub); font-family:var(--mono); margin-top:2px;">${AfterquietStore.formatDate(o.createdAt)}</div>
           </td>
