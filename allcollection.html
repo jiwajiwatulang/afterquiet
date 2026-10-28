@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>all catalogue — afterquiet</title>
+  <meta name="description" content="explore the complete afterquiet catalogue. independent accessories, pins, canvas totes and graphic bags. all items flat 5k.">
+  <meta name="theme-color" content="#171717">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
+
+  <!-- Google Fonts: Space Grotesk, Inter, and IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #171717;
+      --paper: #F1EFE9;
+      --paper-card: #FFFFFF;
+      --paper-subtle: #FAF9F6;
+      --paper-dark: #E6E2D8;
+      --red: #843B40;
+      --muted: #85827D;
+      --line: #E2DFD7;
+      --line-dark: #2A2927;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; color: inherit; }
+
+    /* Announcement Bar */
+    .announcement-bar {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 10px 5%;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      font-family: var(--mono);
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .announcement-bar span:first-child {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
+    }
+
+    /* Sticky Nav Header */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(241, 239, 233, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      height: 78px;
+    }
+    .brand-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: opacity 0.15s;
+    }
+    .brand-logo-wrap:hover { opacity: 0.8; }
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--ink);
+      display: block;
+    }
+    .brand-wordmark {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(24px, 2.5vw, 30px);
+      letter-spacing: -0.06em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active-link { color: var(--ink); font-weight: 600; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-customizer-shortcut {
+      background: none;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-customizer-shortcut:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn-cart {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-cart:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    /* Collection Header */
+    .collection-header-section {
+      padding: 60px 5% 36px;
+      border-bottom: 1px solid var(--line);
+    }
+    .collection-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .collection-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(40px, 6vw, 72px);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .collection-desc {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* Filter & Controls Bar (Shopify Collections Toolbar) */
+    .collection-toolbar {
+      padding: 24px 5%;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-pills-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filter-pills-row::-webkit-scrollbar { display: none; }
+    .filter-pill-btn {
+      background: none;
+      border: 1px solid var(--line);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .filter-pill-btn:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+    .filter-pill-btn.active {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .count-indicator {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Product Grid */
+    .catalogue-grid-section {
+      padding: 50px 5% 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px 24px;
+    }
+    .collection-product-card {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .collection-product-card:hover {
+      border-color: var(--ink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+    }
+    .card-thumb {
+      aspect-ratio: 1;
+      background: #171717;
+      color: var(--paper);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .card-spec-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: #999;
+      text-transform: uppercase;
+    }
+    .card-vol-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: #D89599;
+    }
+    .card-graphic-text {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(20px, 2vw, 24px);
+      letter-spacing: -0.04em;
+      text-align: center;
+      line-height: 1.1;
+      white-space: pre-line;
+      color: #F1EFE9;
+    }
+    .card-view-hint {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #888;
+    }
+
+    .card-title {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .card-kind {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .card-price {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .btn-quick-add {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 7px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+    .btn-quick-add:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    /* Cart Slide-Over */
+    .cart-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      display: none;
+    }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      background: var(--paper);
+      border-left: 1px solid var(--ink);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 30px;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-backdrop.open { display: block; }
+    .cart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--ink);
+    }
+    .cart-head h3 {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .cart-close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      line-height: 1;
+      padding: 4px;
+      cursor: pointer;
+    }
+    .cart-items-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 0;
+    }
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .cart-item-info strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .cart-item-info span {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .cart-foot {
+      border-top: 1px solid var(--ink);
+      padding-top: 20px;
+    }
+    .subtotal-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+      font-size: 15px;
+    }
+    .subtotal-line strong {
+      font-family: var(--mono);
+      font-size: 22px;
+    }
+    .btn-checkout-wa {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      width: 100%;
+      min-height: 52px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.15s;
+      border-radius: 2px;
+    }
+    .btn-checkout-wa:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      padding: 70px 5% 36px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 60px;
+      margin-bottom: 50px;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 30px;
+      letter-spacing: -0.06em;
+    }
+    .footer-nav-groups {
+      display: flex;
+      gap: 70px;
+    }
+    .footer-nav-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .footer-nav-col strong {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+    }
+    .footer-nav-col a {
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-nav-col a:hover { color: var(--ink); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--mono);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .footer-top { flex-direction: column; gap: 36px; }
+      .footer-nav-groups { flex-wrap: wrap; gap: 32px; }
+      .collection-toolbar { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 540px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar with Official WhatsApp Support -->
+  <aside class="announcement-bar">
+    <span>
+      <span class="dot-pulse"></span>
+      all items flat 5k • independent accessories & visual culture
+    </span>
+    <span>cs support & orders: +62 857-0850-0546</span>
+  </aside>
+
+  <!-- Sticky Nav Header -->
+  <header class="site-nav">
+    <a href="/" class="brand-logo-wrap" aria-label="afterquiet home">
+      <img src="/assets/profile.jpg" alt="afterquiet logo" class="brand-logo-img">
+      <span class="brand-wordmark">afterquiet</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/allcollection" class="active-link">all catalogue</a>
+      <a href="/try-on">customizer studio</a>
+      <a href="/#collections">visual archive</a>
+      <a href="/#about">philosophy</a>
+      <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram ↗</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="/try-on" class="btn-customizer-shortcut">
+        <span>customizer studio</span>
+        <span>↗</span>
+      </a>
+      <button class="btn-cart" id="openBagBtn">
+        bag (<span id="bagCounter">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <!-- Collection Header -->
+  <section class="collection-header-section">
+    <span class="collection-tag">archive catalogue</span>
+    <h1 class="collection-title">all objects.</h1>
+    <p class="collection-desc">
+      explore all pieces from our independent archive. each object translates feelings, identity, and quiet resistance. standard flat 5k series.
+    </p>
+  </section>
+
+  <!-- Collections Filter Toolbar -->
+  <section class="collection-toolbar">
+    <div class="filter-pills-row">
+      <button class="filter-pill-btn active" onclick="applyFilter('all')">all pieces</button>
+      <button class="filter-pill-btn" onclick="applyFilter('accessories')">pins & badges</button>
+      <button class="filter-pill-btn" onclick="applyFilter('totes')">canvas totes</button>
+      <button class="filter-pill-btn" onclick="applyFilter('bags')">bags & carriers</button>
+      <button class="filter-pill-btn" onclick="applyFilter('vol. 01')">volume 01: too soft</button>
+      <button class="filter-pill-btn" onclick="applyFilter('vol. 02')">volume 02: fragile archives</button>
+    </div>
+
+    <div class="count-indicator" id="itemsCountDisplay">
+      showing 10 pieces
+    </div>
+  </section>
+
+  <!-- Products Grid Section -->
+  <main class="catalogue-grid-section">
+    <div class="products-grid" id="allProductsGrid">
+      <!-- Injected dynamically -->
+    </div>
+  </main>
+
+  <!-- Slide-Over Shopping Bag Drawer -->
+  <div class="cart-backdrop" id="cartBackdrop" onclick="closeBagDrawer()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div>
+      <div class="cart-head">
+        <h3>shopping bag</h3>
+        <button class="cart-close-btn" onclick="closeBagDrawer()">×</button>
+      </div>
+      <div class="cart-items-body" id="cartItemsContainer">
+        <p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">
+          your bag is currently empty.
+        </p>
+      </div>
+    </div>
+
+    <div class="cart-foot">
+      <div class="subtotal-line">
+        <span>subtotal</span>
+        <strong id="cartSubtotalValue">Rp 0</strong>
+      </div>
+      <button class="btn-checkout-wa" onclick="checkoutCartWA()">
+        <span>complete order via whatsapp</span>
+        <span>↗</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Clean Fashion Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">afterquiet</div>
+
+      <div class="footer-nav-groups">
+        <div class="footer-nav-col">
+          <strong>collection</strong>
+          <a href="/allcollection">all catalogue</a>
+          <a href="/try-on">customizer studio</a>
+          <a href="/#collections">visual archive</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>brand</strong>
+          <a href="/#about">philosophy</a>
+          <a href="/#about">care & quality</a>
+          <a href="/#about">shipping details</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>connect</strong>
+          <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram</a>
+          <a href="https://wa.me/6285708500546" target="_blank" rel="noopener">cs support: +62 857-0850-0546</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 afterquiet. independent accessories & visual culture.</span>
+      <span>wear what you can't always say.</span>
+      <a href="#top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- Controller Script -->
+  <script>
+    const OFFICIAL_WA = "6285708500546";
+
+    const defaultCatalog = [
+      {
+        id: "pin_restless",
+        title: "restless mind enamel pin",
+        category: "accessories",
+        volume: "vol. 01",
+        kind: "hard enamel • black nickel finish • 32mm",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "pin",
+        graphic: "restless\nmind.",
+        status: "active"
+      },
+      {
+        id: "badge_soft",
+        title: "too soft for this world badge",
+        category: "accessories",
+        volume: "vol. 01",
+        kind: "die-struck metal • antique silver • 38mm",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "badge",
+        graphic: "too soft\nfor this world",
+        status: "active"
+      },
+      {
+        id: "sticker_pack",
+        title: "silence isn't peace sticker",
+        category: "accessories",
+        volume: "vol. 01",
+        kind: "screenprinted weatherproof matte vinyl",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "sticker",
+        graphic: "silence isn't\nalways peace.",
+        status: "active"
+      },
+      {
+        id: "keychain_honesty",
+        title: "emotional honesty tag",
+        category: "accessories",
+        volume: "vol. 01",
+        kind: "solid metal motel tag • gunmetal plated",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "tag",
+        graphic: "emotional\nhonesty",
+        status: "active"
+      },
+      {
+        id: "pin_fragile",
+        title: "fragile archives enamel pin",
+        category: "accessories",
+        volume: "vol. 02",
+        kind: "stamped iron • archival antique finish",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "pin",
+        graphic: "fragile\narchives.",
+        status: "active"
+      },
+      {
+        id: "pin_unsaid",
+        title: "easier to wear than explain pin",
+        category: "accessories",
+        volume: "vol. 02",
+        kind: "raw metal stamped pin • archival card",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "pin",
+        graphic: "easier to wear\nthan explain.",
+        status: "active"
+      },
+      {
+        id: "badge_resistance",
+        title: "creative resistance button badge",
+        category: "accessories",
+        volume: "vol. 02",
+        kind: "matte laminated button • 44mm pinback",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "badge",
+        graphic: "creative\nresistance",
+        status: "active"
+      },
+      {
+        id: "tote_archive",
+        title: "archive canvas tote bag",
+        category: "totes",
+        volume: "vol. 01",
+        kind: "16oz raw organic cotton • ecru archive",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "tote",
+        graphic: "archive\ntote.",
+        status: "active"
+      },
+      {
+        id: "tote_black",
+        title: "utility black canvas tote",
+        category: "totes",
+        volume: "vol. 02",
+        kind: "washed heavyweight canvas • reinforced webbing",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "tote",
+        graphic: "utility\nblack.",
+        status: "active"
+      },
+      {
+        id: "bag_tactical",
+        title: "restless tactical mini carrier",
+        category: "bags",
+        volume: "vol. 01",
+        kind: "water-resistant nylon • adjustable utility strap",
+        price: 5000,
+        formattedPrice: "Rp 5.000",
+        tag: "bag",
+        graphic: "tactical\ncarrier.",
+        status: "active"
+      }
+    ];
+
+    let products = defaultCatalog;
+    try {
+      const stored = localStorage.getItem('aq_products');
+      if (stored) {
+        products = JSON.parse(stored).filter(p => p.status !== 'draft');
+      }
+    } catch(e) {}
+
+    let currentFilter = 'all';
+    let cart = [];
+
+    function formatRupiah(num) {
+      return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('allProductsGrid');
+      grid.innerHTML = '';
+
+      const filtered = currentFilter === 'all'
+        ? products
+        : products.filter(p => p.category === currentFilter || p.volume === currentFilter);
+
+      document.getElementById('itemsCountDisplay').innerText = `showing ${filtered.length} piece${filtered.length === 1 ? '' : 's'}`;
+
+      filtered.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'collection-product-card';
+        card.onclick = () => {
+          window.location.href = `/product?id=${p.id}`;
+        };
+
+        card.innerHTML = `
+          <div>
+            <div class="card-thumb">
+              <span class="card-spec-tag">${p.tag || 'item'}</span>
+              <span class="card-vol-tag">${p.volume || 'vol. 01'}</span>
+              <span class="card-graphic-text">${p.graphic || p.title}</span>
+              <span class="card-view-hint">view product ↗</span>
+            </div>
+            <h3 class="card-title">${p.title}</h3>
+            <p class="card-kind">${p.kind || ''}</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-price">${formatRupiah(p.price || 5000)}</span>
+            <button class="btn-quick-add" onclick="event.stopPropagation(); quickAdd('${p.id}')">
+              + add
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function applyFilter(key) {
+      currentFilter = key;
+      document.querySelectorAll('.filter-pill-btn').forEach(btn => btn.classList.remove('active'));
+      if (event && event.currentTarget) event.currentTarget.classList.add('active');
+      renderProducts();
+    }
+
+    function quickAdd(id) {
+      const item = products.find(p => p.id === id);
+      if (item) {
+        cart.push(item);
+        updateCartUI();
+        openBagDrawer();
+      }
+    }
+
+    // Cart Operations
+    const cartBackdrop = document.getElementById('cartBackdrop');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const bagCounter = document.getElementById('bagCounter');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const cartSubtotalValue = document.getElementById('cartSubtotalValue');
+    document.getElementById('openBagBtn').addEventListener('click', openBagDrawer);
+
+    function openBagDrawer() {
+      cartBackdrop.classList.add('open');
+      cartDrawer.classList.add('open');
+    }
+
+    function closeBagDrawer() {
+      cartBackdrop.classList.remove('open');
+      cartDrawer.classList.remove('open');
+    }
+
+    function updateCartUI() {
+      bagCounter.innerText = cart.length;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">
+            your bag is currently empty.
+          </p>
+        `;
+        cartSubtotalValue.innerText = 'Rp 0';
+        return;
+      }
+
+      const counts = {};
+      cart.forEach(item => {
+        counts[item.id] = counts[item.id] || { ...item, count: 0 };
+        counts[item.id].count += 1;
+      });
+
+      let subtotal = 0;
+      cartItemsContainer.innerHTML = '';
+
+      Object.values(counts).forEach(grouped => {
+        const line = (grouped.price || 5000) * grouped.count;
+        subtotal += line;
+
+        const row = document.createElement('div');
+        row.className = 'cart-item-row';
+        row.innerHTML = `
+          <div class="cart-item-info">
+            <strong>${grouped.title}</strong>
+            <span>${grouped.count} × ${formatRupiah(grouped.price || 5000)} = ${formatRupiah(line)}</span>
+          </div>
+          <button onclick="removeItem('${grouped.id}')" style="background:none; border:none; color:var(--red); font-size:12px; cursor:pointer;">
+            remove
+          </button>
+        `;
+        cartItemsContainer.appendChild(row);
+      });
+
+      cartSubtotalValue.innerText = formatRupiah(subtotal);
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(p => p.id !== id);
+      updateCartUI();
+    }
+
+    function checkoutCartWA() {
+      if (cart.length === 0) return;
+
+      const counts = {};
+      cart.forEach(item => {
+        counts[item.title] = counts[item.title] || { count: 0, price: item.price || 5000 };
+        counts[item.title].count += 1;
+      });
+
+      let subtotal = 0;
+      let text = `Halo afterquiet, saya ingin memesan produk berikut:%0A%0A`;
+      Object.keys(counts).forEach(title => {
+        const g = counts[title];
+        const line = g.price * g.count;
+        subtotal += line;
+        text += `• ${title} (${g.count}x) — ${formatRupiah(line)}%0A`;
+      });
+
+      text += `%0ATotal: ${formatRupiah(subtotal)}%0A`;
+      text += `Mohon info ketersediaan stok & pengirimannya ya. Terima kasih!`;
+
+      window.open(`https://wa.me/${OFFICIAL_WA}?text=${text}`, '_blank');
+    }
+
+    renderProducts();
+    updateCartUI();
+  </script>
+</body>
+</html>

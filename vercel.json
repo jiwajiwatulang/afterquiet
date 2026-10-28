@@ -2,6 +2,9 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/try-on", "destination": "/try-on.html" },
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/allcollection", "destination": "/allcollection.html" },
+    { "source": "/collections", "destination": "/allcollection.html" },
+    { "source": "/product", "destination": "/product.html" }
   ]
 }

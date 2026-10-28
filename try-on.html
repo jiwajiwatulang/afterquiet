@@ -429,7 +429,10 @@
       <span class="studio-tag">• bag & pin studio</span>
     </div>
 
-    <a href="/" class="return-link">← return to storefront</a>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="/allcollection" class="return-link">all catalogue</a>
+      <a href="/" class="return-link">← return to home</a>
+    </div>
   </header>
 
   <!-- 3-Column Studio Workspace -->
@@ -861,7 +864,7 @@
       }
 
       const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
-      const waTarget = theme.waNumber ? theme.waNumber.replace(/[^0-9]/g, '') : '';
+      const waTarget = theme.waNumber ? theme.waNumber.replace(/[^0-9]/g, '') : '6285708500546';
       const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom arrangement dari Studio:%0A%0A*BASE CARRIER:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*ATTACHED PINS & BADGES (${attachedPins.length} pcs):*%0A${pinLines}%0A%0A*TOTAL:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stok & pengirimannya. Terima kasih!`;
       
       window.open(`https://wa.me/${waTarget}?text=${msg}`, '_blank');

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>afterquiet — independent accessories & visual culture</title>
-  <meta name="description" content="afterquiet is an independent accessories brand exploring identity, emotions, and personal expression through wearable objects. all items 5k.">
+  <meta name="description" content="afterquiet is an independent accessories brand exploring identity, emotions, and personal expression through wearable objects. all items flat 5k.">
   <meta name="theme-color" content="#171717">
 
   <!-- Favicon -->
@@ -575,7 +575,7 @@
       margin-bottom: 24px;
     }
 
-    /* Brand Values Grid (Professional & Clean without gimmicky 01-) */
+    /* Brand Values Grid */
     .brand-values-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -599,6 +599,62 @@
     }
     .value-card p {
       font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Care & Quality Section */
+    .care-section {
+      padding: 90px 5%;
+      border-bottom: 1px solid var(--line);
+      background: #FAF8F5;
+    }
+    .care-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 36px;
+    }
+    .care-card {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 28px;
+      border-radius: 4px;
+    }
+    .care-card h4 {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .care-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Shipping & Support Section */
+    .shipping-section {
+      padding: 90px 5%;
+      border-bottom: 1px solid var(--line);
+    }
+    .shipping-content-box {
+      max-width: 900px;
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .shipping-box h4 {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .shipping-box p {
+      font-size: 14px;
       color: var(--muted);
       line-height: 1.6;
     }
@@ -709,198 +765,6 @@
       border-color: var(--red);
     }
 
-    /* ================= SHOPIFY-STYLE PRODUCT DETAIL MODAL ================= */
-    .product-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(23, 23, 23, 0.7);
-      backdrop-filter: blur(4px);
-      z-index: 150;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .product-modal-backdrop.open { display: flex; }
-    .product-modal-card {
-      background: var(--paper);
-      border: 1px solid var(--ink);
-      border-radius: 4px;
-      max-width: 860px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      position: relative;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-    }
-    .product-modal-close {
-      position: absolute;
-      top: 16px;
-      right: 18px;
-      background: none;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      z-index: 10;
-      color: var(--ink);
-      line-height: 1;
-    }
-    .modal-media-col {
-      background: #171717;
-      color: var(--paper);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 36px 30px;
-      position: relative;
-    }
-    .modal-media-top {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      font-family: var(--mono);
-      letter-spacing: 0.1em;
-      color: #999;
-      text-transform: uppercase;
-    }
-    .modal-media-graphic {
-      font-family: var(--display);
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      white-space: pre-line;
-      text-align: center;
-      margin: 60px 0;
-      color: #F1EFE9;
-    }
-    .modal-media-foot {
-      font-size: 10px;
-      font-family: var(--mono);
-      color: #888;
-      text-align: center;
-      letter-spacing: 0.05em;
-    }
-    .modal-info-col {
-      padding: 40px 36px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: var(--paper);
-    }
-    .modal-product-vol {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .modal-product-title {
-      font-family: var(--display);
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .modal-price-line {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .modal-price {
-      font-family: var(--mono);
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .modal-stock-badge {
-      font-family: var(--mono);
-      font-size: 11px;
-      background: #E3F2E4;
-      color: #236829;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 500;
-    }
-    .modal-product-desc {
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-    .modal-spec-list {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 14px 0;
-      margin-bottom: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 12px;
-      font-family: var(--mono);
-      color: #555;
-    }
-    .modal-qty-actions {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .qty-picker {
-      display: flex;
-      align-items: center;
-      border: 1px solid var(--ink);
-      background: white;
-    }
-    .qty-btn {
-      width: 38px;
-      height: 48px;
-      background: none;
-      border: none;
-      font-size: 18px;
-      font-weight: 600;
-    }
-    .qty-val {
-      width: 36px;
-      text-align: center;
-      font-family: var(--mono);
-      font-weight: 600;
-    }
-    .btn-modal-add {
-      flex: 1;
-      background: var(--ink);
-      color: var(--paper);
-      border: 1px solid var(--ink);
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.02em;
-      transition: background 0.15s;
-    }
-    .btn-modal-add:hover {
-      background: var(--red);
-      border-color: var(--red);
-    }
-    .btn-modal-studio {
-      background: none;
-      border: 1px solid var(--line);
-      color: var(--ink);
-      width: 100%;
-      padding: 11px;
-      font-size: 12px;
-      font-weight: 500;
-      text-align: center;
-      transition: all 0.15s;
-      display: block;
-    }
-    .btn-modal-studio:hover {
-      border-color: var(--ink);
-    }
-
     /* Footer */
     footer {
       background: var(--paper);
@@ -960,7 +824,8 @@
       .product-grid { grid-template-columns: repeat(2, 1fr); }
       .studio-feature-content { grid-template-columns: 1fr; }
       .brand-values-grid { grid-template-columns: 1fr; }
-      .product-modal-card { grid-template-columns: 1fr; }
+      .care-grid { grid-template-columns: 1fr; }
+      .shipping-content-box { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -979,13 +844,13 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
+  <!-- Top Announcement Bar with Official WhatsApp Support -->
   <aside class="announcement-bar">
     <span>
       <span class="dot-pulse"></span>
-      all items 5k • independent accessories & visual culture
+      all items flat 5k • independent accessories & visual culture
     </span>
-    <span>free placement studio • order by DM or whatsapp</span>
+    <span>cs support & order: +62 857-0850-0546</span>
   </aside>
 
   <!-- Sticky Navigation Header -->
@@ -996,16 +861,16 @@
     </a>
 
     <nav class="nav-links">
-      <a href="#shop" class="active-link">catalogue</a>
+      <a href="/allcollection" class="active-link">all catalogue</a>
       <a href="/try-on">customizer studio</a>
-      <a href="#collections">archive</a>
+      <a href="#collections">visual archive</a>
       <a href="#about">philosophy</a>
-      <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">@afterquiet_____ ↗</a>
+      <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram ↗</a>
     </nav>
 
     <div class="header-actions">
       <a href="/try-on" class="btn-customizer-shortcut">
-        <span>personalize a bag</span>
+        <span>customizer studio</span>
         <span>↗</span>
       </a>
       <button class="btn-cart" id="openBagBtn">
@@ -1019,11 +884,13 @@
 
   <!-- Mobile Dropdown Navigation -->
   <div id="mobileDropdown" style="display:none; background:var(--paper); border-bottom:1px solid var(--ink); padding:20px 5%; font-size:14px; line-height:2.4; font-weight:500;">
-    <a href="#shop" style="display:block;">catalogue (all 5k)</a>
+    <a href="/allcollection" style="display:block;">all catalogue (all 5k)</a>
     <a href="/try-on" style="display:block; color:var(--red);">customizer studio ↗</a>
-    <a href="#collections" style="display:block;">archive</a>
+    <a href="#collections" style="display:block;">visual archive</a>
     <a href="#about" style="display:block;">philosophy</a>
-    <a href="/admin" style="display:block; color:var(--muted); font-size:12px;">store admin ↗</a>
+    <a href="#care" style="display:block;">care & quality</a>
+    <a href="#shipping" style="display:block;">shipping & cs support</a>
+    <a href="https://wa.me/6285708500546" target="_blank" rel="noopener" style="display:block; color:var(--red);">whatsapp cs: +62 857-0850-0546</a>
   </div>
 
   <main>
@@ -1044,8 +911,8 @@
           independent accessories for personal expression, restless thoughts, and everything in between. all curated items standard flat 5k.
         </p>
 
-        <a href="#shop" class="btn-primary">
-          <span>explore the collection</span>
+        <a href="/allcollection" class="btn-primary">
+          <span>explore all catalogue</span>
           <span>↗</span>
         </a>
 
@@ -1071,13 +938,13 @@
       </div>
     </section>
 
-    <!-- Curated Catalogue Section (Shopify-style Front) -->
+    <!-- Curated Catalogue Section (Links to Product Pages) -->
     <section class="shop-section" id="shop">
       <div class="section-header">
         <span class="section-tag">curated catalogue • all items 5k</span>
         <div class="section-title-wrap">
           <h2>made to mean<br><i>something.</i></h2>
-          <a href="/try-on" class="link-arrow">open customizer studio ↗</a>
+          <a href="/allcollection" class="link-arrow">view full collection (10 pieces) ↗</a>
         </div>
       </div>
 
@@ -1129,7 +996,7 @@
       </div>
     </section>
 
-    <!-- Brand Philosophy Section (Direct & Professional without gimmicky numbers) -->
+    <!-- Brand Philosophy Section -->
     <section class="manifesto-section" id="about">
       <span class="section-tag">brand philosophy</span>
       <div class="manifesto-grid">
@@ -1164,6 +1031,57 @@
         </div>
       </div>
     </section>
+
+    <!-- Care & Quality Section -->
+    <section class="care-section" id="care">
+      <span class="section-tag">care & quality guide</span>
+      <h2 style="font-family:var(--display); font-size:clamp(32px, 4vw, 48px); font-weight:700; letter-spacing:-0.04em;">
+        built to carry your thoughts.
+      </h2>
+      <div class="care-grid">
+        <div class="care-card">
+          <h4>enamel pins & metal badges</h4>
+          <p>
+            wipe surface with a dry, soft microfiber cloth. avoid abrasive solvents or chemical polishes. our pins feature dual rubber clutches to keep pieces tightly secured to heavy canvas.
+          </p>
+        </div>
+        <div class="care-card">
+          <h4>16oz raw canvas tote bags</h4>
+          <p>
+            spot clean or cold gentle hand wash inside-out with neutral detergent. hang dry naturally in the shade to maintain the raw organic texture and crisp handle shape.
+          </p>
+        </div>
+        <div class="care-card">
+          <h4>weatherproof vinyl stickers</h4>
+          <p>
+            screenprinted with UV-cured outdoor ink on thick matte vinyl. clean the surface with rubbing alcohol before applying for maximum adhesion on laptops, water bottles, or gear.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shipping & CS Support Section -->
+    <section class="shipping-section" id="shipping">
+      <span class="section-tag">shipping & customer support</span>
+      <h2 style="font-family:var(--display); font-size:clamp(32px, 4vw, 48px); font-weight:700; letter-spacing:-0.04em;">
+        thoughtfully packaged & dispatched.
+      </h2>
+      <div class="shipping-content-box">
+        <div class="shipping-box">
+          <h4>packaging & delivery</h4>
+          <p>
+            all items are mounted on individual archival backing cards and sealed in protective mailers. dispatched via trusted courier services (J&T, SiCepat, JNE, Instant) within 24 hours of order confirmation.
+          </p>
+        </div>
+        <div class="shipping-box">
+          <h4>official customer service</h4>
+          <p>
+            have questions about order tracking, custom placements, or bulk orders? our team is ready to assist via direct WhatsApp at <strong style="color:var(--ink);">+62 857-0850-0546</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Clean Fashion Store Footer -->
@@ -1174,21 +1092,20 @@
       <div class="footer-nav-groups">
         <div class="footer-nav-col">
           <strong>collection</strong>
-          <a href="#shop">catalogue (all 5k)</a>
+          <a href="/allcollection">all catalogue</a>
           <a href="/try-on">customizer studio</a>
           <a href="#collections">visual archive</a>
         </div>
         <div class="footer-nav-col">
           <strong>brand</strong>
           <a href="#about">philosophy</a>
-          <a href="#about">care & quality</a>
-          <a href="#about">shipping details</a>
+          <a href="#care">care & quality</a>
+          <a href="#shipping">shipping details</a>
         </div>
         <div class="footer-nav-col">
           <strong>connect</strong>
-          <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram (@afterquiet_____)</a>
-          <a href="#" onclick="openBagDrawer(); return false;">shopping bag</a>
-          <a href="/admin" style="font-family:var(--mono); color:#888; font-size:11px;">store admin ↗</a>
+          <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram</a>
+          <a href="https://wa.me/6285708500546" target="_blank" rel="noopener">cs support: +62 857-0850-0546</a>
         </div>
       </div>
     </div>
@@ -1199,63 +1116,6 @@
       <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background:none; border:none; text-decoration:underline;">back to top ↑</button>
     </div>
   </footer>
-
-  <!-- ================= SHOPIFY-STYLE PRODUCT DETAIL MODAL ================= -->
-  <div class="product-modal-backdrop" id="productModalBackdrop">
-    <div class="product-modal-card">
-      <button class="product-modal-close" onclick="closeProductDetailModal()">×</button>
-      
-      <!-- Media Box -->
-      <div class="modal-media-col">
-        <div class="modal-media-top">
-          <span id="modalVolTag">volume 01</span>
-          <span id="modalCategoryTag">pin</span>
-        </div>
-        <div class="modal-media-graphic" id="modalGraphicText">restless<br>mind.</div>
-        <div class="modal-media-foot">afterquiet archive // flat 5k series</div>
-      </div>
-
-      <!-- Info Box -->
-      <div class="modal-info-col">
-        <div>
-          <span class="modal-product-vol" id="modalVolHeader">volume 01 — too soft for this world</span>
-          <h2 class="modal-product-title" id="modalTitle">restless mind enamel pin</h2>
-          
-          <div class="modal-price-line">
-            <span class="modal-price" id="modalPrice">Rp 5.000</span>
-            <span class="modal-stock-badge">all item 5k • ready to ship</span>
-          </div>
-
-          <p class="modal-product-desc" id="modalDesc">
-            a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating.
-          </p>
-
-          <div class="modal-spec-list">
-            <div><strong>specifications:</strong> <span id="modalSpecs">hard enamel • black nickel finish • 32mm</span></div>
-            <div><strong>collection:</strong> <span id="modalCollectionText">autumn 2026 archive</span></div>
-            <div><strong>authenticity:</strong> stamped with official afterquiet insignia</div>
-          </div>
-        </div>
-
-        <div>
-          <div class="modal-qty-actions">
-            <div class="qty-picker">
-              <button class="qty-btn" onclick="adjustModalQty(-1)">-</button>
-              <span class="qty-val" id="modalQtyVal">1</span>
-              <button class="qty-btn" onclick="adjustModalQty(1)">+</button>
-            </div>
-            <button class="btn-modal-add" id="modalAddBtn" onclick="addModalItemToCart()">
-              add to bag — Rp 5.000
-            </button>
-          </div>
-
-          <a href="/try-on" class="btn-modal-studio">
-            style on tote in customizer studio ↗
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Slide-Over Shopping Bag Drawer -->
   <div class="cart-backdrop" id="cartBackdrop" onclick="closeBagDrawer()"></div>
@@ -1286,7 +1146,8 @@
 
   <!-- Storefront Script Logic -->
   <script>
-    // Official Default Catalog (All Items Flat 5K)
+    const OFFICIAL_WA = "6285708500546";
+
     const defaultCatalog = [
       {
         id: "pin_restless",
@@ -1420,46 +1281,16 @@
       }
     ];
 
-    let products = [];
+    let products = defaultCatalog;
     try {
       const stored = localStorage.getItem('aq_products');
       if (stored) {
         products = JSON.parse(stored).filter(p => p.status !== 'draft');
-      } else {
-        products = defaultCatalog;
-        localStorage.setItem('aq_products', JSON.stringify(defaultCatalog));
       }
-    } catch(e) {
-      products = defaultCatalog;
-    }
-
-    // Apply Live Theme Customizations
-    function applyLiveTheme() {
-      try {
-        const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
-        if (theme.announcement) {
-          const ann = document.querySelector('.announcement-bar span:first-child');
-          if (ann) ann.innerHTML = `<span class="dot-pulse"></span> ${theme.announcement}`;
-        }
-        if (theme.headline) {
-          const h1 = document.querySelector('.hero-heading');
-          if (h1) h1.innerHTML = theme.headline + '<span class="accent-period">.</span>';
-        }
-        if (theme.philosophy) {
-          const phil = document.querySelector('.hero-philosophy');
-          if (phil) phil.innerText = theme.philosophy;
-        }
-        if (theme.accentColor) {
-          document.documentElement.style.setProperty('--red', theme.accentColor);
-        }
-      } catch(e) {}
-    }
-    applyLiveTheme();
+    } catch(e) {}
 
     let cart = [];
     let currentFilter = 'all';
-    let currentActiveProduct = null;
-    let modalQuantity = 1;
 
     const productGrid = document.getElementById('productGrid');
     const cartBackdrop = document.getElementById('cartBackdrop');
@@ -1470,7 +1301,6 @@
     const bagCounter = document.getElementById('bagCounter');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileDropdown = document.getElementById('mobileDropdown');
-    const productModalBackdrop = document.getElementById('productModalBackdrop');
 
     mobileMenuBtn.addEventListener('click', () => {
       mobileDropdown.style.display = mobileDropdown.style.display === 'none' ? 'block' : 'none';
@@ -1492,7 +1322,7 @@
       return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
     }
 
-    // Render Grid
+    // Render Grid with direct links to /product?id=...
     function renderGrid() {
       productGrid.innerHTML = '';
       const items = currentFilter === 'all' 
@@ -1502,15 +1332,19 @@
       items.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
+        card.onclick = () => {
+          window.location.href = `/product?id=${p.id}`;
+        };
+
         card.innerHTML = `
           <div>
-            <div class="product-thumbnail" onclick="openProductDetailModal('${p.id}')">
+            <div class="product-thumbnail">
               <span class="thumb-spec">${p.tag || 'item'}</span>
               <span class="thumb-vol">${p.volume || 'vol. 01'}</span>
               <span class="thumb-graphic">${p.graphic || p.title}</span>
               <span class="thumb-type">view piece ↗</span>
             </div>
-            <h3 class="product-title" onclick="openProductDetailModal('${p.id}')">${p.title}</h3>
+            <h3 class="product-title">${p.title}</h3>
             <p class="product-subtitle">${p.kind || ''}</p>
           </div>
           <div class="product-footer">
@@ -1531,51 +1365,6 @@
       renderGrid();
     };
 
-    // ================= PRODUCT DETAIL MODAL =================
-    window.openProductDetailModal = function(id) {
-      const p = products.find(item => item.id === id);
-      if (!p) return;
-
-      currentActiveProduct = p;
-      modalQuantity = 1;
-
-      document.getElementById('modalVolTag').innerText = p.volume || 'volume 01';
-      document.getElementById('modalCategoryTag').innerText = p.tag || p.category || 'item';
-      document.getElementById('modalGraphicText').innerText = p.graphic || p.title;
-      document.getElementById('modalVolHeader').innerText = (p.volume || 'volume 01') + (p.volume === 'vol. 02' ? ' — fragile archives' : ' — too soft for this world');
-      document.getElementById('modalTitle').innerText = p.title;
-      document.getElementById('modalPrice').innerText = formatRupiah(p.price || 5000);
-      document.getElementById('modalDesc').innerText = p.description || 'a meaningful piece exploring identity, emotions, and personal expression.';
-      document.getElementById('modalSpecs').innerText = p.kind || 'standard specification';
-      document.getElementById('modalQtyVal').innerText = '1';
-      document.getElementById('modalAddBtn').innerText = `add to bag — ${formatRupiah((p.price || 5000) * modalQuantity)}`;
-
-      productModalBackdrop.classList.add('open');
-    };
-
-    window.closeProductDetailModal = function() {
-      productModalBackdrop.classList.remove('open');
-      currentActiveProduct = null;
-    };
-
-    window.adjustModalQty = function(delta) {
-      modalQuantity = Math.max(1, modalQuantity + delta);
-      document.getElementById('modalQtyVal').innerText = modalQuantity;
-      if (currentActiveProduct) {
-        document.getElementById('modalAddBtn').innerText = `add to bag — ${formatRupiah((currentActiveProduct.price || 5000) * modalQuantity)}`;
-      }
-    };
-
-    window.addModalItemToCart = function() {
-      if (!currentActiveProduct) return;
-      for (let i = 0; i < modalQuantity; i++) {
-        cart.push(currentActiveProduct);
-      }
-      updateCartUI();
-      closeProductDetailModal();
-      openBagDrawer();
-    };
-
     // Cart Operations
     window.addToCart = function(productId) {
       const p = products.find(item => item.id === productId);
@@ -1583,11 +1372,6 @@
       cart.push(p);
       updateCartUI();
       openBagDrawer();
-    };
-
-    window.removeFromCart = function(idx) {
-      cart.splice(idx, 1);
-      updateCartUI();
     };
 
     function updateCartUI() {
@@ -1603,7 +1387,6 @@
         return;
       }
 
-      // Group items
       const counts = {};
       cart.forEach(item => {
         counts[item.id] = counts[item.id] || { ...item, count: 0 };
@@ -1645,9 +1428,6 @@
         return;
       }
 
-      const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
-      const waNumber = theme.waNumber || '628123456789';
-
       const counts = {};
       cart.forEach(item => {
         counts[item.title] = counts[item.title] || { count: 0, price: item.price || 5000 };
@@ -1666,13 +1446,8 @@
       text += `%0ATotal: ${formatRupiah(subtotal)}%0A`;
       text += `Mohon info ketersediaan stok & pengirimannya ya. Terima kasih!`;
 
-      window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+      window.open(`https://wa.me/${OFFICIAL_WA}?text=${text}`, '_blank');
     };
-
-    // Close modal on backdrop click
-    productModalBackdrop.addEventListener('click', (e) => {
-      if (e.target === productModalBackdrop) closeProductDetailModal();
-    });
 
     renderGrid();
     updateCartUI();
