@@ -270,8 +270,9 @@
     }
     .product-price-box {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 16px;
+      flex-wrap: wrap;
     }
     .product-price-val {
       font-family: var(--mono);
@@ -279,14 +280,40 @@
       font-weight: 700;
       color: var(--ink);
     }
-    .product-badge-flat {
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: var(--mono);
       font-size: 11px;
-      background: #E3F2E4;
-      color: #236829;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #1A5928;
+      background: #F1EFE9;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+    }
+    .stock-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #1A5928;
+      display: inline-block;
+    }
+    .product-meta-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 18px 0 6px;
+    }
+    .spec-pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      background: #EAE7DF;
+      padding: 5px 12px;
+      border-radius: 2px;
+      letter-spacing: 0.02em;
     }
 
     .product-concept-story {
@@ -786,7 +813,14 @@
 
         <div class="product-price-box">
           <span class="product-price-val" id="productPrice">Rp 5.000</span>
-          <span class="product-badge-flat">flat 5k • ready to ship</span>
+          <span class="stock-badge"><span class="stock-dot"></span>in stock</span>
+        </div>
+
+        <!-- Tactile Material & Finish Chips -->
+        <div class="product-meta-chips" id="productMetaChips">
+          <span class="spec-pill">hard enamel</span>
+          <span class="spec-pill">black nickel finish</span>
+          <span class="spec-pill">32mm</span>
         </div>
 
         <p class="product-concept-story" id="productDescription">
@@ -987,6 +1021,17 @@
       document.getElementById('productDescription').innerText = currentProduct.description || 'a meaningful piece exploring identity, emotions, and personal expression.';
       document.getElementById('specMaterial').innerText = currentProduct.kind || 'standard archival quality';
       document.getElementById('specCollection').innerText = currentProduct.volume === 'vol. 02' ? 'volume 02 — fragile archives' : 'volume 01 — too soft for this world';
+
+      // Tactile specification chips
+      const chipsBox = document.getElementById('productMetaChips');
+      if (chipsBox) {
+        if (currentProduct.kind) {
+          const parts = currentProduct.kind.split('•').map(s => s.trim()).filter(Boolean);
+          chipsBox.innerHTML = parts.map(p => `<span class="spec-pill">${escapeHtml(p)}</span>`).join('');
+        } else {
+          chipsBox.innerHTML = '<span class="spec-pill">archival object</span><span class="spec-pill">flat 5k</span>';
+        }
+      }
 
       // Stock status badge
       const stockBadge = document.querySelector('.stock-badge');
