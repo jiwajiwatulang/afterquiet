@@ -544,6 +544,7 @@
           price: product.price || 5000,
           kind: product.kind || '',
           graphic: product.graphic || product.title,
+          image: product.image || '',
           qty: safeQty
         });
       }
@@ -615,7 +616,7 @@
     // CSV IMPORT & EXPORT
     exportProductsCSV() {
       const list = this.getProducts(true);
-      const headers = ['id', 'sku', 'title', 'category', 'volume', 'price', 'stock', 'kind', 'tag', 'status', 'description'];
+      const headers = ['id', 'sku', 'title', 'handle', 'category', 'volume', 'price', 'compareAtPrice', 'stock', 'image', 'kind', 'tag', 'status', 'seoTitle', 'seoDescription', 'description'];
       const rows = [headers.join(',')];
 
       list.forEach(p => {
@@ -623,13 +624,18 @@
           `"${p.id || ''}"`,
           `"${p.sku || ''}"`,
           `"${(p.title || '').replace(/"/g, '""')}"`,
+          `"${p.handle || ''}"`,
           `"${p.category || 'accessories'}"`,
           `"${p.volume || 'vol. 01'}"`,
           p.price || 5000,
+          p.compareAtPrice || '',
           p.stock !== undefined ? p.stock : 50,
+          `"${(p.image || '').replace(/"/g, '""')}"`,
           `"${(p.kind || '').replace(/"/g, '""')}"`,
           `"${p.tag || 'item'}"`,
           `"${p.status || 'active'}"`,
+          `"${(p.seoTitle || '').replace(/"/g, '""')}"`,
+          `"${(p.seoDescription || '').replace(/"/g, '""')}"`,
           `"${(p.description || '').replace(/"/g, '""').replace(/\n/g, ' ')}"`
         ];
         rows.push(row.join(','));
@@ -852,8 +858,8 @@
           const lineTotal = item.price * item.qty;
           itemsHtml += `
             <div style="display:flex; gap:14px; padding:14px; background:#FFFFFF; border:1px solid #E2DFD7; border-radius:3px; align-items:center;">
-              <div style="width:48px; height:48px; background:#171717; color:#F1EFE9; display:flex; align-items:center; justify-content:center; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:9px; padding:4px; line-height:1.1; border-radius:2px; flex-shrink:0;">
-                ${(item.graphic || item.title).slice(0, 16)}
+              <div style="width:48px; height:48px; background:#171717; color:#F1EFE9; display:flex; align-items:center; justify-content:center; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:9px; padding:2px; line-height:1.1; border-radius:2px; flex-shrink:0; overflow:hidden;">
+                ${item.image ? `<img src="${item.image}" alt="" style="width:100%; height:100%; object-fit:cover;">` : (item.graphic || item.title).slice(0, 16)}
               </div>
               <div style="flex:1; min-width:0;">
                 <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:#171717; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.title}</div>

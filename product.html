@@ -711,15 +711,16 @@
     <div class="product-shell">
       
       <!-- Left: Media Preview Stage -->
-      <div class="product-media-stage">
-        <div class="stage-top-meta">
+      <div class="product-media-stage" style="position:relative; overflow:hidden;">
+        <div class="stage-top-meta" style="z-index:3;">
           <span id="stageVolText">volume 01</span>
           <span id="stageCategoryText">accessory</span>
         </div>
         <div class="stage-graphic-display" id="stageGraphic">
           restless<br>mind.
         </div>
-        <div class="stage-bottom-meta">
+        <img id="stageProductImg" src="" alt="" style="display:none; max-width:85%; max-height:85%; object-fit:contain; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.5)); z-index:2;">
+        <div class="stage-bottom-meta" style="z-index:3;">
           <span>afterquiet archival object</span>
           <span>flat 5k standard</span>
         </div>
@@ -880,14 +881,43 @@
       const isSoldOut = Number(currentProduct.stock !== undefined ? currentProduct.stock : 50) <= 0;
       const stockCount = Number(currentProduct.stock !== undefined ? currentProduct.stock : 50);
 
-      document.title = `${currentProduct.title} — afterquiet`;
+      // Dynamic SEO Title & Meta
+      document.title = currentProduct.seoTitle ? currentProduct.seoTitle : `${currentProduct.title} — afterquiet`;
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc && currentProduct.seoDescription) {
+        metaDesc.setAttribute('content', currentProduct.seoDescription);
+      }
+
       document.getElementById('crumbCurrent').innerText = currentProduct.title;
       document.getElementById('stageVolText').innerText = currentProduct.volume || 'volume 01';
       document.getElementById('stageCategoryText').innerText = currentProduct.tag || currentProduct.category || 'item';
-      document.getElementById('stageGraphic').innerText = currentProduct.graphic || currentProduct.title;
+
+      // Stage Media (Photo vs Typography)
+      const stageImg = document.getElementById('stageProductImg');
+      const stageG = document.getElementById('stageGraphic');
+      if (currentProduct.image && stageImg) {
+        stageImg.src = currentProduct.image;
+        stageImg.style.display = 'block';
+        if (stageG) stageG.style.display = 'none';
+      } else {
+        if (stageImg) stageImg.style.display = 'none';
+        if (stageG) {
+          stageG.style.display = 'block';
+          stageG.innerText = currentProduct.graphic || currentProduct.title;
+        }
+      }
+
       document.getElementById('productVol').innerText = (currentProduct.volume || 'volume 01') + (currentProduct.volume === 'vol. 02' ? ' — fragile archives' : ' — too soft for this world');
       document.getElementById('productTitle').innerText = currentProduct.title;
-      document.getElementById('productPrice').innerText = AfterquietStore.formatRupiah(currentProduct.price || 5000);
+
+      // Price with compare-at price
+      const priceEl = document.getElementById('productPrice');
+      if (currentProduct.compareAtPrice && currentProduct.compareAtPrice > currentProduct.price) {
+        priceEl.innerHTML = `<span style="text-decoration:line-through; font-size:18px; color:var(--muted); margin-right:10px; font-weight:normal;">${AfterquietStore.formatRupiah(currentProduct.compareAtPrice)}</span><span>${AfterquietStore.formatRupiah(currentProduct.price || 5000)}</span>`;
+      } else {
+        priceEl.innerText = AfterquietStore.formatRupiah(currentProduct.price || 5000);
+      }
+
       document.getElementById('productDescription').innerText = currentProduct.description || 'a meaningful piece exploring identity, emotions, and personal expression.';
       document.getElementById('specMaterial').innerText = currentProduct.kind || 'standard archival quality';
       document.getElementById('specCollection').innerText = currentProduct.volume === 'vol. 02' ? 'volume 02 — fragile archives' : 'volume 01 — too soft for this world';
@@ -967,7 +997,9 @@
         item.href = `/product?id=${p.id}`;
         item.className = 'related-card';
         item.innerHTML = `
-          <div class="related-thumb">${p.graphic || p.title}</div>
+          <div class="related-thumb" style="overflow:hidden; display:flex; align-items:center; justify-content:center;">
+            ${p.image ? `<img src="${p.image}" alt="${p.title}" style="width:100%; height:100%; object-fit:cover;">` : (p.graphic || p.title)}
+          </div>
           <div class="related-title">${p.title}</div>
           <div class="related-price">${AfterquietStore.formatRupiah(p.price || 5000)}</div>
         `;

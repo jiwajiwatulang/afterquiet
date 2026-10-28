@@ -493,6 +493,138 @@
       border-color: var(--text-main);
     }
 
+    /* Modals & Shopify-Grade Product Editor */
+    .shopify-modal-window {
+      background: #F6F6F7;
+      border-radius: 12px;
+      max-width: 1100px;
+      width: 96%;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .shopify-modal-header {
+      padding: 16px 24px;
+      background: white;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn-back-link {
+      background: none;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+    .btn-back-link:hover { color: var(--text-main); }
+    .shopify-editor-body {
+      padding: 24px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(300px, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .shopify-editor-body { grid-template-columns: 1fr; }
+    }
+    .shopify-card {
+      background: white;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .shopify-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .shopify-dropzone {
+      border: 1.5px dashed var(--border-strong);
+      border-radius: 8px;
+      padding: 24px 20px;
+      text-align: center;
+      background: #FAFAFA;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .shopify-dropzone:hover {
+      background: #F1F1F2;
+      border-color: var(--text-main);
+    }
+    .shopify-media-preview-box {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #171717;
+      min-height: 200px;
+      max-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .shopify-media-preview-box img {
+      max-width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .media-overlay-actions {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    .google-preview-card {
+      background: white;
+      border: 1px solid #DFE1E5;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: arial, sans-serif;
+      margin-top: 10px;
+      margin-bottom: 16px;
+    }
+    .google-serp-url {
+      font-size: 12px;
+      color: #202124;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .google-serp-title {
+      color: #1a0dab;
+      font-size: 18px;
+      margin: 4px 0;
+      font-weight: 400;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+    .google-serp-snippet {
+      color: #4d5156;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     /* Modals */
     .admin-modal-overlay {
       position: fixed;
@@ -991,73 +1123,289 @@
     </main>
   </div>
 
-  <!-- ================= MODAL: PRODUCT DETAIL EDITOR ================= -->
+  <!-- ================= SHOPIFY-GRADE PRODUCT DETAIL EDITOR ================= -->
   <div class="admin-modal-overlay" id="productModal">
-    <div class="admin-modal-window">
-      <div class="modal-head-line">
-        <h3 id="modalProductHeadTitle">Edit Product</h3>
-        <button class="modal-close-btn" onclick="closeProductModal()">×</button>
-      </div>
-      <input type="hidden" id="modalProductId" value="">
-      
-      <div class="form-two-col">
-        <div class="form-group-item full-span">
-          <label>Product Title *</label>
-          <input type="text" id="prodTitle" class="form-control-input" placeholder="e.g. restless mind enamel pin" required>
+    <div class="shopify-modal-window">
+      <!-- Shopify Top Header Bar -->
+      <div class="shopify-modal-header">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <button type="button" class="btn-back-link" onclick="closeProductModal()">← Back to Products</button>
+          <div style="height:20px; width:1px; background:var(--border-subtle);"></div>
+          <h2 id="modalProductHeadTitle" style="font-family:var(--display); font-size:18px; font-weight:700; letter-spacing:-0.02em;">Add Product</h2>
+          <span id="modalProductStatusPill" class="status-badge status-active">Active</span>
         </div>
-        <div class="form-group-item">
-          <label>SKU (Stock Keeping Unit)</label>
-          <input type="text" id="prodSku" class="form-control-input" placeholder="e.g. AQ-PIN-01">
-        </div>
-        <div class="form-group-item">
-          <label>Category</label>
-          <select id="prodCategory" class="form-control-input">
-            <option value="accessories">Pins & Badges</option>
-            <option value="totes">Totes</option>
-            <option value="bags">Bags</option>
-          </select>
-        </div>
-        <div class="form-group-item">
-          <label>Release / Volume</label>
-          <select id="prodVolume" class="form-control-input">
-            <option value="vol. 01">Volume 01 — Too Soft for This World</option>
-            <option value="vol. 02">Volume 02 — Fragile Archives</option>
-            <option value="general">Archive Essentials</option>
-          </select>
-        </div>
-        <div class="form-group-item">
-          <label>Price (IDR) *</label>
-          <input type="number" id="prodPrice" class="form-control-input" value="5000" required>
-        </div>
-        <div class="form-group-item">
-          <label>Inventory Stock</label>
-          <input type="number" id="prodStock" class="form-control-input" value="50" required>
-        </div>
-        <div class="form-group-item">
-          <label>Status</label>
-          <select id="prodStatus" class="form-control-input">
-            <option value="active">Active (Visible)</option>
-            <option value="draft">Draft (Hidden)</option>
-          </select>
-        </div>
-        <div class="form-group-item full-span">
-          <label>Materials & Specifications</label>
-          <input type="text" id="prodKind" class="form-control-input" placeholder="e.g. hard enamel • black nickel finish • 32mm">
-        </div>
-        <div class="form-group-item full-span">
-          <label>Display Typography (Short lines for card display)</label>
-          <textarea id="prodGraphic" class="form-control-input" style="min-height:60px;"></textarea>
-        </div>
-        <div class="form-group-item full-span">
-          <label>Concept Story / Description</label>
-          <textarea id="prodDesc" class="form-control-input" style="min-height:80px;"></textarea>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" id="btnPreviewStore" class="btn-action-secondary" onclick="previewCurrentProductStore()">View on Store ↗</button>
+          <button type="button" class="btn-action-secondary" onclick="closeProductModal()">Cancel</button>
+          <button type="button" class="btn-action-primary" onclick="saveProductRecord()">Save</button>
         </div>
       </div>
 
-      <div class="modal-footer-line">
-        <button class="btn-action-secondary" onclick="closeProductModal()">Cancel</button>
-        <button class="btn-action-primary" onclick="saveProductRecord()">Save Product</button>
+      <!-- Hidden ID & Image Storage -->
+      <input type="hidden" id="modalProductId" value="">
+      <input type="hidden" id="modalProductImageData" value="">
+
+      <!-- Shopify 2-Column Responsive Editor -->
+      <div class="shopify-editor-body">
+        
+        <!-- LEFT / MAIN CONTENT (2/3 width) -->
+        <div class="shopify-main-col">
+          
+          <!-- 1. Title & Description Card -->
+          <div class="shopify-card">
+            <div class="form-group-item" style="margin-bottom:16px;">
+              <label>Title *</label>
+              <input type="text" id="prodTitle" class="form-control-input" placeholder="e.g. restless mind enamel pin" required oninput="handleTitleChange(this.value)">
+            </div>
+            <div class="form-group-item">
+              <label>Description / Story</label>
+              <textarea id="prodDesc" class="form-control-input" style="min-height:110px; font-size:13px; line-height:1.6;" placeholder="Describe the materials, concept, inspiration, and tactile details..." oninput="handleDescChange(this.value)"></textarea>
+            </div>
+          </div>
+
+          <!-- 2. Media (Image Manager) Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">
+              <span>Media (Gambar Produk)</span>
+              <span style="font-size:11px; font-weight:normal; color:var(--text-sub);">Photos, graphics, and visual mockups</span>
+            </div>
+
+            <!-- Upload Controls & Dropzone -->
+            <div class="shopify-media-actions-row">
+              <div class="shopify-dropzone" onclick="document.getElementById('prodImageFileInput').click()">
+                <input type="file" id="prodImageFileInput" accept="image/*" style="display:none;" onchange="handleProductImageFile(event)">
+                <div style="font-size:24px; margin-bottom:6px;">📷</div>
+                <div style="font-size:13px; font-weight:600; color:var(--text-main);">Click to browse image or drag file here</div>
+                <div style="font-size:11px; color:var(--text-sub); margin-top:2px;">PNG, JPG, WebP supported • automatically optimized for online store</div>
+              </div>
+
+              <!-- Or URL Input -->
+              <div style="margin-top:12px; display:flex; gap:8px;">
+                <input type="url" id="prodImageUrlInput" class="form-control-input" placeholder="Or paste direct image URL (e.g. https://... or /assets/...)" style="flex:1;">
+                <button type="button" class="btn-action-secondary" onclick="applyProductImageUrl()">Add from URL</button>
+              </div>
+            </div>
+
+            <!-- Live Media Preview -->
+            <div id="mediaPreviewArea" style="margin-top:16px; display:none;">
+              <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-sub); margin-bottom:8px;">Current Product Photo</div>
+              <div class="shopify-media-preview-box">
+                <img id="mediaPreviewImg" src="" alt="Product preview">
+                <div class="media-overlay-actions">
+                  <button type="button" class="btn-action-secondary" style="font-size:11px; background:white;" onclick="document.getElementById('prodImageFileInput').click()">Change Photo</button>
+                  <button type="button" class="btn-action-secondary" style="font-size:11px; background:white; color:var(--accent-brand);" onclick="removeProductImage()">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Pricing Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">Pricing</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div class="form-group-item">
+                <label>Price (IDR) *</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-family:var(--mono); font-size:12px; color:var(--text-sub);">Rp</span>
+                  <input type="number" id="prodPrice" class="form-control-input" style="padding-left:36px; font-family:var(--mono); font-weight:600;" value="5000" required oninput="calculateProfitMargin()">
+                </div>
+              </div>
+              <div class="form-group-item">
+                <label>Compare-at price (IDR)</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-family:var(--mono); font-size:12px; color:var(--text-sub);">Rp</span>
+                  <input type="number" id="prodCompareAtPrice" class="form-control-input" style="padding-left:36px; font-family:var(--mono);" placeholder="e.g. 15000" oninput="calculateProfitMargin()">
+                </div>
+                <span style="font-size:11px; color:var(--text-sub);">To show a strikethrough discount price, enter the higher original price here.</span>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; padding-top:14px; border-top:1px solid #F1F1F2;">
+              <div class="form-group-item">
+                <label>Cost per item (IDR)</label>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-family:var(--mono); font-size:12px; color:var(--text-sub);">Rp</span>
+                  <input type="number" id="prodCostPerItem" class="form-control-input" style="padding-left:36px; font-family:var(--mono);" placeholder="e.g. 2000" oninput="calculateProfitMargin()">
+                </div>
+                <span style="font-size:11px; color:var(--text-sub);">Internal only. Customers won't see this.</span>
+              </div>
+              <div class="form-group-item">
+                <label>Calculated Profit & Margin</label>
+                <div id="prodMarginDisplay" style="padding:9px 12px; background:#FAFAFA; border:1px solid var(--border-subtle); border-radius:6px; font-size:12px; font-family:var(--mono); color:var(--text-sub);">
+                  —
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Inventory Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">Inventory</div>
+            <div style="margin-bottom:14px;">
+              <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; cursor:pointer;">
+                <input type="checkbox" id="prodTrackQuantity" checked>
+                <span>Track quantity</span>
+              </label>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+              <div class="form-group-item">
+                <label>SKU (Stock Keeping Unit)</label>
+                <input type="text" id="prodSku" class="form-control-input" placeholder="e.g. AQ-PIN-01" style="font-family:var(--mono);">
+              </div>
+              <div class="form-group-item">
+                <label>Barcode (ISBN, UPC, GTIN)</label>
+                <input type="text" id="prodBarcode" class="form-control-input" placeholder="e.g. 89910029" style="font-family:var(--mono);">
+              </div>
+              <div class="form-group-item">
+                <label>Available Quantity *</label>
+                <input type="number" id="prodStock" class="form-control-input" value="50" style="font-family:var(--mono); font-weight:600;" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Shipping Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">Shipping</div>
+            <div style="margin-bottom:14px;">
+              <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; cursor:pointer;">
+                <input type="checkbox" id="prodIsPhysical" checked>
+                <span>This is a physical product</span>
+              </label>
+            </div>
+            <div class="form-group-item" style="max-width:240px;">
+              <label>Weight (kg)</label>
+              <input type="number" step="0.01" id="prodWeight" class="form-control-input" value="0.05" style="font-family:var(--mono);">
+            </div>
+          </div>
+
+          <!-- 6. Search Engine Listing Preview (SEO) Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">
+              <span>Search engine listing preview (SEO)</span>
+              <span style="font-size:11px; font-weight:normal; color:var(--text-sub);">Google Search preview</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;">Customize page title, meta description, and URL handle for search engine indexing and social media links.</p>
+
+            <!-- Google Live SERP Snippet Preview -->
+            <div class="google-preview-card">
+              <div class="google-serp-url">
+                https://afterquiet.vercel.app › product › <span id="googlePreviewHandle">restless-mind-pin</span>
+              </div>
+              <div class="google-serp-title" id="googlePreviewTitle">
+                restless mind enamel pin — afterquiet
+              </div>
+              <div class="google-serp-snippet" id="googlePreviewSnippet">
+                a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating. all items flat 5k.
+              </div>
+            </div>
+
+            <!-- SEO Form Fields -->
+            <div style="display:flex; flex-direction:column; gap:14px; margin-top:16px;">
+              <div class="form-group-item">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Page Title</label>
+                  <span id="seoTitleCount" style="font-size:11px; color:var(--text-muted); font-family:var(--mono);">0 of 70 characters used</span>
+                </div>
+                <input type="text" id="prodSeoTitle" class="form-control-input" placeholder="e.g. restless mind enamel pin — afterquiet" maxlength="70" oninput="updateSeoPreview()">
+              </div>
+              <div class="form-group-item">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Meta Description</label>
+                  <span id="seoDescCount" style="font-size:11px; color:var(--text-muted); font-family:var(--mono);">0 of 320 characters used</span>
+                </div>
+                <textarea id="prodSeoDesc" class="form-control-input" style="min-height:70px; font-size:12px; line-height:1.5;" placeholder="Enter a concise summary of the product for search engines..." maxlength="320" oninput="updateSeoPreview()"></textarea>
+              </div>
+              <div class="form-group-item">
+                <label>URL Handle / Slug</label>
+                <div style="display:flex; align-items:center;">
+                  <span style="background:#F1F1F2; border:1px solid var(--border-subtle); border-right:none; padding:9px 12px; font-size:12px; color:var(--text-sub); border-radius:6px 0 0 6px; font-family:var(--mono);">/product?id=</span>
+                  <input type="text" id="prodHandle" class="form-control-input" style="border-radius:0 6px 6px 0; font-family:var(--mono);" placeholder="e.g. restless-mind-pin" oninput="updateSeoPreview()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT SIDEBAR (1/3 width) -->
+        <div class="shopify-sidebar-col">
+          
+          <!-- 1. Product Status Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">Status</div>
+            <select id="prodStatus" class="form-control-input" style="font-weight:600;" onchange="handleStatusChange(this.value)">
+              <option value="active">Active</option>
+              <option value="draft">Draft</option>
+            </select>
+            <p style="font-size:11px; color:var(--text-sub); margin-top:8px;">
+              Active products are live across storefront. Draft products are hidden from customers.
+            </p>
+          </div>
+
+          <!-- 2. Publishing / Channels Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">Publishing</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
+                <input type="checkbox" id="chanOnlineStore" checked>
+                <span>Online Store (/allcollection)</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
+                <input type="checkbox" id="chanStudio" checked>
+                <span>Customizer Studio (/try-on)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 3. Product Organization Card -->
+          <div class="shopify-card">
+            <div class="shopify-card-title">Product Organization</div>
+            
+            <div class="form-group-item" style="margin-bottom:14px;">
+              <label>Category</label>
+              <select id="prodCategory" class="form-control-input">
+                <option value="accessories">Pins & Badges</option>
+                <option value="totes">Totes</option>
+                <option value="bags">Bags</option>
+                <option value="prints">Prints & Visual</option>
+              </select>
+            </div>
+
+            <div class="form-group-item" style="margin-bottom:14px;">
+              <label>Product Type</label>
+              <input type="text" id="prodType" class="form-control-input" placeholder="e.g. Hard Enamel Pin, Raw Canvas Tote">
+            </div>
+
+            <div class="form-group-item" style="margin-bottom:14px;">
+              <label>Collection / Volume</label>
+              <select id="prodVolume" class="form-control-input">
+                <option value="vol. 01">Volume 01 — Too Soft for This World</option>
+                <option value="vol. 02">Volume 02 — Fragile Archives</option>
+                <option value="general">Archive Essentials</option>
+              </select>
+            </div>
+
+            <div class="form-group-item" style="margin-bottom:14px;">
+              <label>Tags (comma separated)</label>
+              <input type="text" id="prodTags" class="form-control-input" placeholder="e.g. pin, metal, vol01, accessory">
+            </div>
+
+            <div class="form-group-item" style="margin-bottom:14px;">
+              <label>Materials & Specifications</label>
+              <input type="text" id="prodKind" class="form-control-input" placeholder="e.g. hard enamel • black nickel finish • 32mm">
+            </div>
+
+            <div class="form-group-item">
+              <label>Display Typography / Monogram</label>
+              <textarea id="prodGraphic" class="form-control-input" style="min-height:55px;" placeholder="Fallback typographical layout for badge cards"></textarea>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
+
     </div>
   </div>
 
@@ -1357,7 +1705,7 @@
       renderOverview();
     }
 
-    // ================= 3. PRODUCTS =================
+    // ================= 3. PRODUCTS (SHOPIFY-GRADE CONTROLLER) =================
     function renderProductsTable() {
       const q = (document.getElementById('productSearchField').value || '').toLowerCase().trim();
       const cat = document.getElementById('productCatFilter').value;
@@ -1374,17 +1722,33 @@
       const tbody = document.getElementById('productsTableBody');
       tbody.innerHTML = '';
 
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--text-muted);">No products found.</td></tr>';
+        return;
+      }
+
       filtered.forEach(p => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
-            <strong>${escapeHtml(p.title)}</strong>
-            <div style="font-size:11px; color:var(--text-sub);">${escapeHtml(p.kind || '')}</div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:44px; height:44px; border-radius:4px; border:1px solid var(--border-subtle); background:#171717; color:#F1EFE9; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
+                ${p.image ? `<img src="${p.image}" alt="" style="width:100%; height:100%; object-fit:cover;">` : `<span style="font-family:var(--mono); font-size:9px; text-align:center; padding:2px;">${(p.graphic || p.title).slice(0, 10)}</span>`}
+              </div>
+              <div style="min-width:0;">
+                <strong style="display:block; font-size:13px; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;">${escapeHtml(p.title)}</strong>
+                <div style="font-size:11px; color:var(--text-sub);">${escapeHtml(p.kind || '')}</div>
+                ${p.handle ? `<div style="font-size:10px; font-family:var(--mono); color:var(--text-muted);">/product?id=${p.handle}</div>` : ''}
+              </div>
+            </div>
           </td>
           <td style="font-family:var(--mono); font-size:12px;">${p.sku || '-'}</td>
           <td><span style="font-family:var(--mono); font-size:11px; background:#EEE; padding:2px 6px; border-radius:3px;">${p.volume || 'general'}</span></td>
-          <td><strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(p.price || 5000)}</strong></td>
-          <td><span style="font-family:var(--mono);">${p.stock !== undefined ? p.stock : 50}</span></td>
+          <td>
+            <strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(p.price || 5000)}</strong>
+            ${p.compareAtPrice && p.compareAtPrice > p.price ? `<div style="font-size:10px; text-decoration:line-through; color:var(--text-muted); font-family:var(--mono);">${AfterquietStore.formatRupiah(p.compareAtPrice)}</div>` : ''}
+          </td>
+          <td><span style="font-family:var(--mono); font-weight:600; color:${Number(p.stock || 0) < 10 ? 'var(--accent-brand)' : 'inherit'};">${p.stock !== undefined ? p.stock : 50} in stock</span></td>
           <td><span class="status-badge status-${p.status}">${p.status}</span></td>
           <td style="text-align:right;">
             <div style="display:flex; gap:8px; justify-content:flex-end;">
@@ -1397,37 +1761,206 @@
       });
     }
 
+    // Media & Image Handling
+    function handleProductImageFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const maxDim = 800;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            } else {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const optimizedData = canvas.toDataURL('image/jpeg', 0.82);
+          setProductActiveImage(optimizedData);
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+      e.target.value = '';
+    }
+
+    function applyProductImageUrl() {
+      const url = document.getElementById('prodImageUrlInput').value.trim();
+      if (!url) {
+        alert('Please enter a valid image URL');
+        return;
+      }
+      setProductActiveImage(url);
+      document.getElementById('prodImageUrlInput').value = '';
+    }
+
+    function setProductActiveImage(src) {
+      document.getElementById('modalProductImageData').value = src || '';
+      const previewArea = document.getElementById('mediaPreviewArea');
+      const previewImg = document.getElementById('mediaPreviewImg');
+      if (src) {
+        previewImg.src = src;
+        previewArea.style.display = 'block';
+      } else {
+        previewImg.src = '';
+        previewArea.style.display = 'none';
+      }
+    }
+
+    function removeProductImage() {
+      setProductActiveImage('');
+    }
+
+    // Title & SEO Auto-generation
+    function handleTitleChange(val) {
+      document.getElementById('modalProductHeadTitle').innerText = val || 'Add Product';
+      const handleInput = document.getElementById('prodHandle');
+      if (!handleInput.dataset.manualEdited) {
+        const slug = slugify(val);
+        handleInput.value = slug;
+      }
+      updateSeoPreview();
+    }
+
+    function handleDescChange(val) {
+      updateSeoPreview();
+    }
+
+    function handleStatusChange(val) {
+      const pill = document.getElementById('modalProductStatusPill');
+      pill.className = 'status-badge status-' + val;
+      pill.innerText = val.charAt(0).toUpperCase() + val.slice(1);
+    }
+
+    function slugify(text) {
+      return (text || '')
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/[\s\W-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    function updateSeoPreview() {
+      const title = document.getElementById('prodTitle').value.trim() || 'Untitled Product';
+      const desc = document.getElementById('prodDesc').value.trim() || 'No description provided.';
+      const customSeoTitle = document.getElementById('prodSeoTitle').value.trim();
+      const customSeoDesc = document.getElementById('prodSeoDesc').value.trim();
+      const handle = document.getElementById('prodHandle').value.trim() || slugify(title);
+
+      const finalTitle = customSeoTitle || (title + ' — afterquiet');
+      const finalDesc = customSeoDesc || (desc.slice(0, 155) + (desc.length > 155 ? '...' : ''));
+
+      document.getElementById('googlePreviewTitle').innerText = finalTitle;
+      document.getElementById('googlePreviewSnippet').innerText = finalDesc;
+      document.getElementById('googlePreviewHandle').innerText = handle;
+
+      document.getElementById('seoTitleCount').innerText = `${document.getElementById('prodSeoTitle').value.length} of 70 characters used`;
+      document.getElementById('seoDescCount').innerText = `${document.getElementById('prodSeoDesc').value.length} of 320 characters used`;
+    }
+
+    function calculateProfitMargin() {
+      const price = Number(document.getElementById('prodPrice').value) || 0;
+      const cost = Number(document.getElementById('prodCostPerItem').value) || 0;
+      const display = document.getElementById('prodMarginDisplay');
+
+      if (!cost || !price) {
+        display.innerText = '—';
+        return;
+      }
+
+      const profit = price - cost;
+      const margin = Math.round((profit / price) * 100);
+      display.innerHTML = `<span style="color:${profit >= 0 ? '#1A5928' : '#8E1F1A'}; font-weight:600;">Profit: ${AfterquietStore.formatRupiah(profit)} (${margin}% margin)</span>`;
+    }
+
+    function previewCurrentProductStore() {
+      const id = document.getElementById('modalProductId').value;
+      if (!id) {
+        alert('Please save the product first before previewing.');
+        return;
+      }
+      window.open(`/product?id=${id}`, '_blank');
+    }
+
     function openNewProductModal() {
       document.getElementById('modalProductHeadTitle').innerText = 'Add Product';
       document.getElementById('modalProductId').value = '';
       document.getElementById('prodTitle').value = '';
-      document.getElementById('prodSku').value = '';
+      document.getElementById('prodDesc').value = '';
+      document.getElementById('prodSku').value = 'AQ-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('prodBarcode').value = '';
       document.getElementById('prodCategory').value = 'accessories';
+      document.getElementById('prodType').value = 'Enamel Pin';
       document.getElementById('prodVolume').value = 'vol. 01';
       document.getElementById('prodPrice').value = '5000';
+      document.getElementById('prodCompareAtPrice').value = '';
+      document.getElementById('prodCostPerItem').value = '';
       document.getElementById('prodStock').value = '50';
+      document.getElementById('prodWeight').value = '0.05';
       document.getElementById('prodStatus').value = 'active';
+      document.getElementById('prodTags').value = '';
       document.getElementById('prodKind').value = '';
       document.getElementById('prodGraphic').value = '';
-      document.getElementById('prodDesc').value = '';
+      document.getElementById('prodSeoTitle').value = '';
+      document.getElementById('prodSeoDesc').value = '';
+      document.getElementById('prodHandle').value = '';
+      document.getElementById('prodHandle').dataset.manualEdited = '';
+      document.getElementById('btnPreviewStore').style.display = 'none';
+
+      setProductActiveImage('');
+      handleStatusChange('active');
+      calculateProfitMargin();
+      updateSeoPreview();
+
       document.getElementById('productModal').classList.add('open');
     }
 
     function openEditProductModal(id) {
       const p = AfterquietStore.getProductById(id);
       if (!p) return;
-      document.getElementById('modalProductHeadTitle').innerText = 'Edit Product';
+
+      document.getElementById('modalProductHeadTitle').innerText = p.title || 'Edit Product';
       document.getElementById('modalProductId').value = p.id;
       document.getElementById('prodTitle').value = p.title || '';
+      document.getElementById('prodDesc').value = p.description || '';
       document.getElementById('prodSku').value = p.sku || '';
+      document.getElementById('prodBarcode').value = p.barcode || '';
       document.getElementById('prodCategory').value = p.category || 'accessories';
+      document.getElementById('prodType').value = p.type || p.kind || '';
       document.getElementById('prodVolume').value = p.volume || 'vol. 01';
       document.getElementById('prodPrice').value = p.price || 5000;
+      document.getElementById('prodCompareAtPrice').value = p.compareAtPrice || '';
+      document.getElementById('prodCostPerItem').value = p.costPerItem || '';
       document.getElementById('prodStock').value = p.stock !== undefined ? p.stock : 50;
+      document.getElementById('prodWeight').value = p.weight || '0.05';
       document.getElementById('prodStatus').value = p.status || 'active';
+      document.getElementById('prodTags').value = Array.isArray(p.tags) ? p.tags.join(', ') : (p.tags || '');
       document.getElementById('prodKind').value = p.kind || '';
       document.getElementById('prodGraphic').value = p.graphic || '';
-      document.getElementById('prodDesc').value = p.description || '';
+      document.getElementById('prodSeoTitle').value = p.seoTitle || '';
+      document.getElementById('prodSeoDesc').value = p.seoDescription || '';
+      document.getElementById('prodHandle').value = p.handle || p.id;
+      document.getElementById('prodHandle').dataset.manualEdited = 'true';
+      document.getElementById('btnPreviewStore').style.display = 'inline-flex';
+
+      setProductActiveImage(p.image || '');
+      handleStatusChange(p.status || 'active');
+      calculateProfitMargin();
+      updateSeoPreview();
+
       document.getElementById('productModal').classList.add('open');
     }
 
@@ -1439,23 +1972,53 @@
       const id = document.getElementById('modalProductId').value;
       const title = document.getElementById('prodTitle').value.trim();
       const sku = document.getElementById('prodSku').value.trim();
+      const barcode = document.getElementById('prodBarcode').value.trim();
       const category = document.getElementById('prodCategory').value;
+      const type = document.getElementById('prodType').value.trim();
       const volume = document.getElementById('prodVolume').value;
       const price = Number(document.getElementById('prodPrice').value) || 5000;
+      const compareAtPrice = Number(document.getElementById('prodCompareAtPrice').value) || null;
+      const costPerItem = Number(document.getElementById('prodCostPerItem').value) || null;
       const stock = Number(document.getElementById('prodStock').value) || 0;
+      const weight = Number(document.getElementById('prodWeight').value) || 0.05;
       const status = document.getElementById('prodStatus').value;
       const kind = document.getElementById('prodKind').value.trim();
       const graphic = document.getElementById('prodGraphic').value.trim() || title;
       const description = document.getElementById('prodDesc').value.trim();
+      const image = document.getElementById('modalProductImageData').value.trim();
+      const tags = document.getElementById('prodTags').value.split(',').map(t => t.trim()).filter(Boolean);
+      const seoTitle = document.getElementById('prodSeoTitle').value.trim();
+      const seoDescription = document.getElementById('prodSeoDesc').value.trim();
+      const handle = document.getElementById('prodHandle').value.trim() || slugify(title);
 
       if (!title) {
         alert('Product title is required.');
+        document.getElementById('prodTitle').focus();
         return;
       }
 
       AfterquietStore.saveProduct({
         id: id || undefined,
-        title, sku, category, volume, price, stock, status, kind, graphic, description
+        title,
+        handle,
+        sku,
+        barcode,
+        category,
+        type,
+        volume,
+        price,
+        compareAtPrice,
+        costPerItem,
+        stock,
+        weight,
+        status,
+        kind,
+        graphic,
+        description,
+        image,
+        tags,
+        seoTitle,
+        seoDescription
       });
 
       closeProductModal();
