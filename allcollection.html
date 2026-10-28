@@ -672,14 +672,28 @@
         gap: 12px;
         padding: 0 16px 16px;
       }
+      .filter-pills-row,
       .filter-pills-wrap {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-        gap: 8px;
-        padding-bottom: 4px;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        white-space: nowrap !important;
+        gap: 8px !important;
+        padding-bottom: 6px !important;
+        width: 100% !important;
       }
-      .filter-pill-btn { padding: 6px 12px; font-size: 11px; }
+      .filter-pills-row::-webkit-scrollbar,
+      .filter-pills-wrap::-webkit-scrollbar {
+        display: none !important;
+      }
+      .filter-pill-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+      }
 
       .products-grid {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -689,6 +703,10 @@
       .collection-product-card {
         padding: 10px !important;
         border-radius: 3px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        height: 100% !important;
       }
       .card-thumb {
         aspect-ratio: 1 !important;
@@ -709,11 +727,13 @@
         overflow: hidden !important;
         text-overflow: ellipsis !important;
       }
+      .card-foot,
       .card-footer {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
         gap: 4px !important;
+        margin-top: auto !important;
       }
       .card-price {
         font-size: 12px !important;
@@ -903,7 +923,7 @@
       const container = document.getElementById('collectionFilterPills');
       if (!container) return;
       const collections = (AfterquietStore.getCollections ? AfterquietStore.getCollections() : [])
-        .filter(c => !c.status || c.status === 'published');
+        .filter(c => (!c.status || c.status === 'published') && !c.title.toLowerCase().includes('all catalogue'));
 
       let html = `<button class="filter-pill-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="applyFilter('all', this)">all pieces</button>`;
       collections.forEach(col => {

@@ -1496,13 +1496,13 @@
       return `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
     },
 
-    // TOAST NOTIFICATION
+    // TOAST NOTIFICATION (Top banner style, leaves bottom action zone free)
     showToast(msg) {
       let toast = document.getElementById('aqGlobalToast');
       if (!toast) {
         toast = document.createElement('div');
         toast.id = 'aqGlobalToast';
-        toast.style.cssText = 'position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#171717; color:#F1EFE9; padding:12px 24px; border-radius:4px; font-size:12px; font-family:"Inter",sans-serif; font-weight:500; z-index:99999; box-shadow:0 8px 24px rgba(0,0,0,0.3); pointer-events:none; opacity:0; transition:opacity 0.25s, transform 0.25s; text-align:center; max-width:90vw;';
+        toast.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-20px); background:#171717; color:#F1EFE9; padding:10px 20px; border-radius:999px; font-size:12px; font-family:"Inter",sans-serif; font-weight:600; letter-spacing:0.02em; z-index:99999; box-shadow:0 8px 24px rgba(0,0,0,0.3); pointer-events:none; opacity:0; transition:opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); text-align:center; max-width:90vw; display:inline-flex; align-items:center; gap:8px; border:1px solid #333;';
         document.body.appendChild(toast);
       }
       toast.innerText = msg;
@@ -1511,8 +1511,8 @@
       clearTimeout(window.__aqToastTimer);
       window.__aqToastTimer = setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(10px)';
-      }, 3000);
+        toast.style.transform = 'translateX(-50%) translateY(-20px)';
+      }, 2500);
     },
 
     // ================= SECURE AUTH & SESSION MANAGEMENT =================

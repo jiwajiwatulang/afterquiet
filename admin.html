@@ -56,17 +56,19 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
-      padding: 20px;
+      padding: 16px;
+      box-sizing: border-box;
     }
     .pin-box {
       background: white;
       border: 1px solid var(--border-subtle);
-      padding: 44px 36px;
-      max-width: 380px;
+      padding: 36px 20px;
+      max-width: min(360px, calc(100vw - 32px));
       width: 100%;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       border-radius: 8px;
+      box-sizing: border-box;
     }
     .pin-logo {
       width: 48px;
@@ -896,11 +898,14 @@
         width: 280px;
         z-index: 999;
         transform: translateX(-100%);
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+        box-shadow: none;
+        visibility: hidden;
       }
       .admin-sidebar.mobile-open {
         transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        visibility: visible;
       }
       .admin-main {
         padding: 16px 14px 60px;
