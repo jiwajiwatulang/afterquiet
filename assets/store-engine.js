@@ -1803,8 +1803,22 @@
 
         footContainer.innerHTML = `
           <div style="border-top:1px solid #171717; padding-top:16px;">
-            <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:14px; font-weight:700; color:#171717; margin-bottom:14px;">
-              <span>total payable (${totals.count} items):</span>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#85827D; margin-bottom:5px;">
+              <span>subtotal (${totals.count} items)</span>
+              <span style="font-family:'IBM Plex Mono',monospace;">${formatRupiah(totals.subtotal)}</span>
+            </div>
+            ${totals.discountDeduction > 0 ? `
+              <div style="display:flex; justify-content:space-between; font-size:12px; color:#843B40; margin-bottom:5px;">
+                <span>discount (${totals.appliedDiscount ? totals.appliedDiscount.code : ''})</span>
+                <span style="font-family:'IBM Plex Mono',monospace;">-${formatRupiah(totals.discountDeduction)}</span>
+              </div>
+            ` : ''}
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#85827D; margin-bottom:10px;">
+              <span>shipping cost</span>
+              <span style="font-family:'IBM Plex Mono',monospace; color:#171717;">confirmed on whatsapp</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:14px; font-weight:700; color:#171717; margin-bottom:14px; border-top:1px dashed #C9C6BE; padding-top:8px;">
+              <span>total items:</span>
               <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:#171717;">${formatRupiah(totals.total)}</span>
             </div>
             <button onclick="AfterquietStore.submitStoreCheckout()" style="width:100%; background:#171717; color:#F1EFE9; border:none; padding:16px; font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:lowercase; border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:background 0.15s;">
