@@ -352,35 +352,8 @@
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
-        gap: 28px;
-        padding: 36px 5% 44px;
-      }
-    }
-    @media (max-width: 600px) {
-      .hero {
-        padding: 24px 5% 32px;
-        gap: 22px;
-      }
-      .hero-heading {
-        font-size: clamp(34px, 8.5vw, 46px);
-        margin-bottom: 14px;
-        line-height: 1.02;
-      }
-      .hero-philosophy {
-        font-size: 14px;
-        line-height: 1.5;
-        margin-bottom: 20px;
-      }
-      .hero-artifact-card {
-        padding: 20px;
-        aspect-ratio: auto;
-        min-height: 200px;
-      }
-      .hero-artifact-center {
-        padding: 16px 8px;
-      }
-      .hero-artifact-graphic {
-        font-size: 30px;
+        gap: 20px;
+        padding: 32px 5% 36px;
       }
     }
 
@@ -958,6 +931,105 @@
       gap: 12px;
     }
 
+    /* Mobile Navigation Sheet Drawer */
+    .mobile-nav-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99995;
+      display: none;
+    }
+    .mobile-nav-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .mobile-nav-sheet {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 84%;
+      max-width: 320px;
+      background: #FAF9F6;
+      border-right: 1.5px solid #171717;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 20px 32px;
+      box-sizing: border-box;
+      transform: translateX(-100%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 10px 0 30px rgba(0,0,0,0.2);
+    }
+    .mobile-nav-overlay.open .mobile-nav-backdrop {
+      opacity: 1;
+    }
+    .mobile-nav-overlay.open .mobile-nav-sheet {
+      transform: translateX(0);
+    }
+    .mobile-nav-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #171717;
+    }
+    .mobile-nav-close {
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: #171717;
+      padding: 4px;
+    }
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .mobile-nav-links a {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #171717;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+    .mobile-nav-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      background: #171717;
+      color: #F1EFE9;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-weight: 500;
+    }
+    .mobile-nav-foot {
+      border-top: 1px solid #E5E3DC;
+      padding-top: 18px;
+    }
+    .mobile-nav-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-decoration: none;
+      color: #171717;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
     @media (max-width: 1024px) {
       .product-grid { grid-template-columns: repeat(2, 1fr); }
       .studio-feature-content { grid-template-columns: 1fr; }
@@ -965,20 +1037,236 @@
       .care-grid { grid-template-columns: 1fr; }
       .shipping-content-box { grid-template-columns: 1fr; }
     }
+
+    /* True Mobile-First Architecture (≤ 768px) */
     @media (max-width: 768px) {
+      .announcement-bar {
+        font-size: 10px;
+        padding: 6px 14px;
+        letter-spacing: 0.04em;
+      }
+      .site-nav {
+        height: 54px;
+        padding: 0 16px;
+      }
+      .brand-logo-img {
+        width: 32px;
+        height: 32px;
+      }
       .nav-links { display: none; }
-      .mobile-menu-trigger { display: block; }
-      .hero-footer { grid-template-columns: 1fr; gap: 24px; }
-      .hero-caption { text-align: left; }
-      .manifesto-grid { grid-template-columns: 1fr; gap: 30px; }
-      .footer-top { flex-direction: column; gap: 40px; }
-      .footer-nav-groups { flex-wrap: wrap; gap: 32px; }
-    }
-    @media (max-width: 540px) {
-      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .product-thumbnail { height: 160px; }
-      .product-card { padding: 10px; }
-      .site-nav { height: 70px; }
+      .btn-customizer-shortcut { display: none; }
+      .mobile-menu-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-cart {
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+
+      /* Mobile Hero: Dedicated Editorial Composition */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 16px 22px;
+        gap: 14px;
+        border-bottom: 1px solid var(--ink);
+      }
+      .hero-content {
+        padding: 0;
+      }
+      .hero-meta {
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .hero-heading {
+        font-size: clamp(28px, 8.2vw, 36px);
+        line-height: 1.04;
+        letter-spacing: -0.04em;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+      .hero-philosophy {
+        font-size: 13px;
+        line-height: 1.45;
+        color: #555;
+        margin-bottom: 14px;
+      }
+      .hero-cta-group {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+      }
+      .btn-primary {
+        flex: 1;
+        height: 46px;
+        padding: 0 16px;
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border-radius: 2px;
+      }
+      .btn-secondary-link {
+        height: 46px;
+        padding: 0 14px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 2px;
+      }
+
+      /* Mobile Artifact Drop Card (Compact Hero Feature) */
+      .hero-artifact-card {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 10px 12px !important;
+        min-height: auto !important;
+        background: #171717 !important;
+        border-radius: 4px !important;
+        color: #F1EFE9 !important;
+        gap: 12px !important;
+        margin-top: 4px !important;
+        text-decoration: none !important;
+      }
+      .hero-artifact-meta { display: none !important; }
+      .hero-artifact-center {
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+      }
+      .hero-artifact-graphic {
+        font-size: 12px !important;
+        line-height: 1.1 !important;
+        width: 44px !important;
+        height: 44px !important;
+        background: #252525 !important;
+        border-radius: 3px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        font-family: var(--display) !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+        color: #F1EFE9 !important;
+      }
+      .hero-artifact-tag { display: none !important; }
+      .hero-artifact-foot {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+        border-top: none !important;
+        padding-top: 0 !important;
+      }
+      .hero-artifact-title {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        color: #F1EFE9 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .hero-artifact-sub {
+        font-size: 11px !important;
+        color: #A8A39A !important;
+      }
+      .hero-artifact-price {
+        font-size: 13px !important;
+        font-family: var(--mono) !important;
+        color: #F1EFE9 !important;
+        white-space: nowrap !important;
+        margin-left: 8px !important;
+      }
+
+      /* Mobile Filter Toolbar */
+      .collection-filter-bar {
+        padding: 12px 16px 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        gap: 8px;
+      }
+      .filter-pill {
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+
+      /* Mobile 2-Column Product Grid */
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        padding: 8px 12px 36px !important;
+      }
+      .product-card {
+        padding: 10px !important;
+        border-radius: 3px !important;
+      }
+      .product-thumbnail {
+        aspect-ratio: 1 !important;
+        height: auto !important;
+        padding: 12px !important;
+        margin-bottom: 8px !important;
+      }
+      .product-title {
+        font-size: 12px !important;
+        line-height: 1.25 !important;
+        min-height: 28px !important;
+        margin-bottom: 2px !important;
+      }
+      .product-subtitle {
+        font-size: 10px !important;
+        margin-bottom: 6px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .product-footer {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 4px !important;
+      }
+      .product-price {
+        font-size: 12px !important;
+        font-family: var(--mono) !important;
+        font-weight: 600 !important;
+      }
+      .btn-buy-card {
+        padding: 5px 8px !important;
+        font-size: 10px !important;
+        height: 28px !important;
+        font-weight: 600 !important;
+        white-space: nowrap !important;
+      }
+
+      /* Mobile Content Sections */
+      .manifesto-section { padding: 40px 16px; }
+      .manifesto-quote { font-size: 22px; line-height: 1.25; }
+      .manifesto-grid { grid-template-columns: 1fr; gap: 24px; }
+      .editorial-section { padding: 40px 16px; }
+      .editorial-quote { font-size: 20px; }
+      .footer-top { flex-direction: column; gap: 32px; padding: 40px 16px; }
+      .footer-nav-groups { flex-wrap: wrap; gap: 24px; }
+      .footer-bottom { padding: 20px 16px; }
     }
   </style>
 </head>
@@ -1021,15 +1309,47 @@
     </div>
   </header>
 
-  <!-- Mobile Dropdown Navigation -->
-  <div id="mobileDropdown" style="display:none; background:var(--paper); border-bottom:1px solid var(--ink); padding:20px 5%; font-size:14px; line-height:2.4; font-weight:500;">
-    <a href="/allcollection" style="display:block;">all catalogue (all 5k)</a>
-    <a href="/try-on" style="display:block; color:var(--red);">customizer studio ↗</a>
-    <a href="/visual-archive" style="display:block;">visual archive</a>
-    <a href="/philosophy" style="display:block;">philosophy</a>
-    <a href="/care" style="display:block;">care & quality</a>
-    <a href="/shipping" style="display:block;">shipping details</a>
-    <a href="https://wa.me/6285708500546" target="_blank" rel="noopener" style="display:block; color:var(--red);">contact me ↗</a>
+  <!-- Mobile Navigation Drawer Overlay -->
+  <div id="mobileNavOverlay" class="mobile-nav-overlay">
+    <div class="mobile-nav-backdrop" onclick="toggleMobileNav(false)"></div>
+    <div class="mobile-nav-sheet">
+      <div class="mobile-nav-head">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <img src="/assets/profile.jpg" alt="logo" style="width:28px; height:28px; border-radius:50%; border:1px solid #171717;">
+          <span style="font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:-0.03em;">afterquiet</span>
+        </div>
+        <button class="mobile-nav-close" onclick="toggleMobileNav(false)" aria-label="Close menu">✕</button>
+      </div>
+      <nav class="mobile-nav-links">
+        <a href="/allcollection" onclick="toggleMobileNav(false)">
+          <span>all catalogue</span>
+          <span class="mobile-nav-tag">flat 5k</span>
+        </a>
+        <a href="/try-on" onclick="toggleMobileNav(false)" style="color:var(--red);">
+          <span>customizer studio</span>
+          <span>↗</span>
+        </a>
+        <a href="/visual-archive" onclick="toggleMobileNav(false)">
+          <span>visual archive</span>
+          <span style="font-family:var(--mono); font-size:10px; color:var(--muted); text-transform:uppercase;">editorial</span>
+        </a>
+        <a href="/philosophy" onclick="toggleMobileNav(false)">
+          <span>philosophy</span>
+        </a>
+        <a href="/care" onclick="toggleMobileNav(false)">
+          <span>care & quality</span>
+        </a>
+        <a href="/shipping" onclick="toggleMobileNav(false)">
+          <span>shipping details</span>
+        </a>
+      </nav>
+      <div class="mobile-nav-foot">
+        <a href="https://wa.me/6285708500546" target="_blank" rel="noopener" class="mobile-nav-contact">
+          <span style="color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:0.04em;">direct studio support</span>
+          <span style="font-family:var(--mono); font-size:13px; font-weight:700;">+62 857-0850-0546 ↗</span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <main>
@@ -1273,11 +1593,28 @@
     let currentFilter = 'all';
     const productGrid = document.getElementById('productGrid');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileDropdown = document.getElementById('mobileDropdown');
+    const mobileNavOverlay = document.getElementById('mobileNavOverlay');
 
-    if (mobileMenuBtn && mobileDropdown) {
+    function toggleMobileNav(open) {
+      if (!mobileNavOverlay) return;
+      if (open) {
+        mobileNavOverlay.style.display = 'block';
+        requestAnimationFrame(() => {
+          mobileNavOverlay.classList.add('open');
+        });
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileNavOverlay.classList.remove('open');
+        setTimeout(() => {
+          mobileNavOverlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 260);
+      }
+    }
+
+    if (mobileMenuBtn) {
       mobileMenuBtn.addEventListener('click', () => {
-        mobileDropdown.style.display = mobileDropdown.style.display === 'none' ? 'block' : 'none';
+        toggleMobileNav(true);
       });
     }
 

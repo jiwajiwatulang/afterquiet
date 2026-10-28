@@ -1882,10 +1882,15 @@
         const style = document.createElement('style');
         style.id = 'aqCartMobileStyles';
         style.textContent = `
-          @media (max-width: 480px) {
+          @media (max-width: 600px) {
             #aqCartPanel {
+              width: 100vw !important;
               max-width: 100vw !important;
-              padding: 20px 16px 28px !important;
+              left: 0 !important;
+              right: 0 !important;
+              border-left: none !important;
+              padding: 18px 16px max(18px, env(safe-area-inset-bottom, 18px)) !important;
+              box-shadow: none !important;
             }
             #aqCustName, #aqCustPhone, #aqCustAddress, #aqCustCity, #aqCourierSelect, #aqOrderNotes, #aqDiscountInput {
               font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */

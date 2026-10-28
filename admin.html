@@ -812,10 +812,10 @@
     .sidebar-backdrop.active { display: block; }
 
     
-    /* Mobile Card View for Commerce Tables */
+    /* Mobile Dense Compact List for Commerce Tables */
     @media (max-width: 768px) {
       .commerce-table thead { display: none !important; }
-      .commerce-table, .commerce-table tbody, .commerce-table tr, .commerce-table td {
+      .commerce-table, .commerce-table tbody, .commerce-table tr {
         display: block !important;
         width: 100% !important;
         box-sizing: border-box !important;
@@ -823,43 +823,50 @@
       .commerce-table tr {
         background: white !important;
         border: 1px solid var(--border-card) !important;
-        border-radius: 8px !important;
-        margin-bottom: 14px !important;
-        padding: 16px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-      }
-      .commerce-table td {
-        padding: 8px 0 !important;
-        border-bottom: 1px dashed #F1F1F2 !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        text-align: right !important;
-      }
-      .commerce-table td:last-child {
-        border-bottom: none !important;
-        padding-top: 12px !important;
-        justify-content: flex-end !important;
-      }
-      .commerce-table td[data-label]::before {
-        content: attr(data-label);
-        font-family: var(--mono);
-        font-size: 11px;
-        color: var(--text-sub);
-        text-transform: uppercase;
-        text-align: left;
-        font-weight: 600;
-        margin-right: 12px;
-        flex-shrink: 0;
+        border-radius: 6px !important;
+        margin-bottom: 8px !important;
+        padding: 10px 12px !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
       }
       .commerce-table td.full-card-cell {
         display: block !important;
-        text-align: left !important;
-        border-bottom: 1px solid var(--border-subtle) !important;
-        padding-bottom: 10px !important;
-        margin-bottom: 8px !important;
+        border-bottom: none !important;
+        padding: 0 0 6px !important;
+        margin: 0 !important;
       }
       .commerce-table td.full-card-cell::before {
+        display: none !important;
+      }
+      .commerce-table td:not(.full-card-cell):not([data-label="Actions"]) {
+        display: inline-flex !important;
+        width: auto !important;
+        padding: 2px 10px 2px 0 !important;
+        border-bottom: none !important;
+        font-size: 11px !important;
+        color: var(--text-sub) !important;
+      }
+      .commerce-table td[data-label]::before {
+        content: attr(data-label) ": ";
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 500;
+        margin-right: 4px;
+      }
+      .commerce-table td[data-label="Price"] strong,
+      .commerce-table td[data-label="Inventory"] strong {
+        color: var(--text-main);
+      }
+      .commerce-table td[data-label="Actions"] {
+        display: flex !important;
+        justify-content: flex-end !important;
+        padding: 8px 0 2px !important;
+        border-top: 1px dashed var(--border-subtle) !important;
+        margin-top: 6px !important;
+        width: 100% !important;
+      }
+      .commerce-table td[data-label="Actions"]::before {
         display: none !important;
       }
     }
