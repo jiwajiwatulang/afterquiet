@@ -15,6 +15,9 @@
     DISCOUNTS: 'aq_discounts',
     SETTINGS: 'aq_settings',
     CART: 'aq_cart',
+    COLLECTIONS: 'aq_collections',
+    CATEGORIES: 'aq_categories',
+    PRODUCT_TYPES: 'aq_product_types',
     CLOUD_META: 'aq_cloud_sync_meta'
   };
 
@@ -174,6 +177,67 @@
   const DEFAULT_DISCOUNTS = [
     { code: 'QUIET10', type: 'percentage', value: 10, minSpend: 10000, active: true },
     { code: 'FIRST5K', type: 'fixed', value: 5000, minSpend: 25000, active: true }
+  ];
+
+  const DEFAULT_COLLECTIONS = [
+    {
+      id: "col_vol01",
+      title: "vol. 01 — too soft for this world",
+      slug: "vol-01",
+      volumeTag: "vol. 01",
+      description: "exploring vulnerability, sensitivity, and emotional honesty in an aggressive world.",
+      createdAt: "2026-10-20T08:00:00Z"
+    },
+    {
+      id: "col_vol02",
+      title: "vol. 02 — fragile archives",
+      slug: "vol-02",
+      volumeTag: "vol. 02",
+      description: "centered on identity, memory, and the unspoken thoughts people carry internally.",
+      createdAt: "2026-10-22T08:00:00Z"
+    },
+    {
+      id: "col_pins",
+      title: "Pins & Badges",
+      slug: "pins-badges",
+      volumeTag: "accessories",
+      description: "hard enamel die-cast metal pins, antique die-struck badges, and quiet resistance buttons.",
+      createdAt: "2026-10-23T08:00:00Z"
+    },
+    {
+      id: "col_totes",
+      title: "Canvas Totes",
+      slug: "canvas-totes",
+      volumeTag: "totes",
+      description: "heavyweight 16oz organic cotton canvas tote bags with reinforced stitching.",
+      createdAt: "2026-10-24T08:00:00Z"
+    },
+    {
+      id: "col_all",
+      title: "All Catalogue (Flat 5K)",
+      slug: "all-catalogue",
+      volumeTag: "all",
+      description: "complete independent objects archive. every piece flat Rp 5.000.",
+      createdAt: "2026-10-24T08:00:00Z"
+    }
+  ];
+
+  const DEFAULT_CATEGORIES = [
+    { id: "cat_pins_badges", name: "Pins & Badges", slug: "accessories", description: "Enamel pins, metal badges, and wearable objects" },
+    { id: "cat_stickers_tags", name: "Stickers & Tags", slug: "stickers", description: "Weatherproof vinyl stickers and motel tags" },
+    { id: "cat_totes_bags", name: "Totes & Bags", slug: "totes", description: "Canvas bags and everyday carriers" },
+    { id: "cat_apparel", name: "Apparel & Wear", slug: "apparel", description: "Future wearable culture and graphic garments" }
+  ];
+
+  const DEFAULT_PRODUCT_TYPES = [
+    "hard enamel • black nickel finish • 32mm",
+    "die-struck metal • antique silver • 38mm",
+    "screenprinted weatherproof matte vinyl",
+    "solid metal motel tag • gunmetal plated",
+    "stamped iron • archival antique finish",
+    "raw metal stamped pin • archival card",
+    "matte laminated button • 44mm pinback",
+    "16oz raw organic cotton • ecru archive"
   ];
 
   const DEFAULT_CUSTOMERS = [
@@ -453,6 +517,8 @@
         await Promise.all([
           this.pull(STORAGE_KEYS.ORDERS),
           this.pull(STORAGE_KEYS.PRODUCTS),
+          this.pull(STORAGE_KEYS.COLLECTIONS),
+          this.pull(STORAGE_KEYS.CATEGORIES),
           this.pull(STORAGE_KEYS.SETTINGS)
         ]);
         this.status = 'connected';
@@ -511,6 +577,15 @@
     }
     if (!localStorage.getItem(STORAGE_KEYS.CART)) {
       setJson(STORAGE_KEYS.CART, []);
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.COLLECTIONS)) {
+      setJson(STORAGE_KEYS.COLLECTIONS, DEFAULT_COLLECTIONS);
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.CATEGORIES)) {
+      setJson(STORAGE_KEYS.CATEGORIES, DEFAULT_CATEGORIES);
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.PRODUCT_TYPES)) {
+      setJson(STORAGE_KEYS.PRODUCT_TYPES, DEFAULT_PRODUCT_TYPES);
     }
     if (!localStorage.getItem(STORAGE_KEYS.INVENTORY_LOGS)) {
       setJson(STORAGE_KEYS.INVENTORY_LOGS, [
@@ -910,6 +985,88 @@
         });
       }
       setJson(STORAGE_KEYS.CUSTOMERS, customers);
+    },
+
+    // ================= COLLECTIONS (SHOPIFY-GRADE ARCHITECTURE) =================
+    getCollections() {
+      return getJson(STORAGE_KEYS.COLLECTIONS, DEFAULT_COLLECTIONS);
+    },
+    getCollectionById(id) {
+      const list = this.getCollections();
+      return list.find(c => c.id === id || c.slug === id) || null;
+    },
+    saveCollection(colData) {
+      const list = this.getCollections();
+      if (colData.id) {
+        const idx = list.findIndex(c => c.id === colData.id);
+        if (idx !== -1) {
+          list[idx] = { ...list[idx], ...colData, updatedAt: new Date().toISOString() };
+        } else {
+          list.unshift({ ...colData, createdAt: new Date().toISOString() });
+        }
+      } else {
+        const newId = 'col_' + Date.now().toString(36);
+        const slug = colData.slug || (colData.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        list.push({
+          ...colData,
+          id: newId,
+          slug,
+          createdAt: new Date().toISOString()
+        });
+      }
+      setJson(STORAGE_KEYS.COLLECTIONS, list);
+      CloudSync.push(STORAGE_KEYS.COLLECTIONS, list);
+      return list;
+    },
+    deleteCollection(id) {
+      const list = this.getCollections().filter(c => c.id !== id);
+      setJson(STORAGE_KEYS.COLLECTIONS, list);
+      CloudSync.push(STORAGE_KEYS.COLLECTIONS, list);
+      return list;
+    },
+
+    // ================= CATEGORIES MANAGEMENT =================
+    getCategories() {
+      return getJson(STORAGE_KEYS.CATEGORIES, DEFAULT_CATEGORIES);
+    },
+    saveCategory(catData) {
+      const list = this.getCategories();
+      if (catData.id) {
+        const idx = list.findIndex(c => c.id === catData.id);
+        if (idx !== -1) {
+          list[idx] = { ...list[idx], ...catData };
+        } else {
+          list.push(catData);
+        }
+      } else {
+        const newId = 'cat_' + Date.now().toString(36);
+        const slug = catData.slug || (catData.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        list.push({ ...catData, id: newId, slug });
+      }
+      setJson(STORAGE_KEYS.CATEGORIES, list);
+      CloudSync.push(STORAGE_KEYS.CATEGORIES, list);
+      return list;
+    },
+    deleteCategory(id) {
+      const list = this.getCategories().filter(c => c.id !== id);
+      setJson(STORAGE_KEYS.CATEGORIES, list);
+      CloudSync.push(STORAGE_KEYS.CATEGORIES, list);
+      return list;
+    },
+
+    // ================= PRODUCT TYPES & SPECS =================
+    getProductTypes() {
+      return getJson(STORAGE_KEYS.PRODUCT_TYPES, DEFAULT_PRODUCT_TYPES);
+    },
+    saveProductType(typeStr) {
+      if (!typeStr || !typeStr.trim()) return;
+      const clean = typeStr.trim();
+      const list = this.getProductTypes();
+      if (!list.includes(clean)) {
+        list.unshift(clean);
+        setJson(STORAGE_KEYS.PRODUCT_TYPES, list);
+      }
+      return list;
     },
 
     // DISCOUNTS

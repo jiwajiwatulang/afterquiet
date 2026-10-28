@@ -580,13 +580,12 @@
 
   <!-- Collections Filter Toolbar -->
   <section class="collection-toolbar">
-    <div class="filter-pills-row">
-      <button class="filter-pill-btn active" onclick="applyFilter('all')">all pieces</button>
-      <button class="filter-pill-btn" onclick="applyFilter('accessories')">pins & badges</button>
-      <button class="filter-pill-btn" onclick="applyFilter('totes')">canvas totes</button>
-      <button class="filter-pill-btn" onclick="applyFilter('bags')">bags & carriers</button>
-      <button class="filter-pill-btn" onclick="applyFilter('vol. 01')">volume 01: too soft</button>
-      <button class="filter-pill-btn" onclick="applyFilter('vol. 02')">volume 02: fragile archives</button>
+    <div class="filter-pills-row" id="collectionFilterPills">
+      <button class="filter-pill-btn active" onclick="applyFilter('all', this)">all pieces</button>
+      <button class="filter-pill-btn" onclick="applyFilter('accessories', this)">pins & badges</button>
+      <button class="filter-pill-btn" onclick="applyFilter('totes', this)">canvas totes</button>
+      <button class="filter-pill-btn" onclick="applyFilter('vol. 01', this)">volume 01: too soft</button>
+      <button class="filter-pill-btn" onclick="applyFilter('vol. 02', this)">volume 02: fragile archives</button>
     </div>
 
     <div class="count-indicator" id="itemsCountDisplay">
@@ -640,6 +639,20 @@
   <script>
     let currentFilter = 'all';
 
+    function renderFilterPills() {
+      const container = document.getElementById('collectionFilterPills');
+      if (!container) return;
+      const collections = AfterquietStore.getCollections ? AfterquietStore.getCollections() : [];
+      if (collections.length > 0) {
+        let html = `<button class="filter-pill-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="applyFilter('all', this)">all pieces</button>`;
+        collections.forEach(col => {
+          const tag = col.volumeTag || col.slug;
+          html += `<button class="filter-pill-btn ${currentFilter === tag ? 'active' : ''}" onclick="applyFilter('${tag}', this)">${col.title}</button>`;
+        });
+        container.innerHTML = html;
+      }
+    }
+
     function renderProducts() {
       const grid = document.getElementById('allProductsGrid');
       if (!grid) return;
@@ -648,7 +661,7 @@
       const products = AfterquietStore.getProducts(false);
       const filtered = currentFilter === 'all'
         ? products
-        : products.filter(p => p.category === currentFilter || p.volume === currentFilter);
+        : products.filter(p => p.category === currentFilter || p.volume === currentFilter || (p.tag && p.tag.toLowerCase() === currentFilter.toLowerCase()));
 
       document.getElementById('itemsCountDisplay').innerText = `showing ${filtered.length} piece${filtered.length === 1 ? '' : 's'}`;
 
@@ -688,10 +701,15 @@
       });
     }
 
-    function applyFilter(key) {
+    function applyFilter(key, btn) {
       currentFilter = key;
-      document.querySelectorAll('.filter-pill-btn').forEach(btn => btn.classList.remove('active'));
-      if (window.event && window.event.currentTarget) window.event.currentTarget.classList.add('active');
+      document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const found = Array.from(document.querySelectorAll('.filter-pill-btn')).find(b => b.innerText.toLowerCase().includes(key.toLowerCase()));
+        if (found) found.classList.add('active');
+      }
       renderProducts();
     }
 
@@ -699,6 +717,7 @@
       renderProducts();
     });
 
+    renderFilterPills();
     renderProducts();
   </script>
 </body>

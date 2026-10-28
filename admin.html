@@ -731,6 +731,25 @@
       line-height: 1.4;
     }
 
+    
+    .spec-chip {
+      background: #F3F4F6;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      font-size: 11px;
+      padding: 3px 8px;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--mono);
+      display: inline-block;
+    }
+    .spec-chip:hover {
+      background: var(--text-main);
+      color: white;
+      border-color: var(--text-main);
+    }
+
     /* Toast */
     .admin-toast {
       position: fixed;
@@ -788,6 +807,9 @@
           </button>
           <button class="nav-tab-btn" id="btnTabProducts" onclick="switchSection('products')">
             <span>📦</span> Products
+          </button>
+          <button class="nav-tab-btn" id="btnTabCollections" onclick="switchSection('collections')">
+            <span>📁</span> Collections
           </button>
           <button class="nav-tab-btn" id="btnTabInventory" onclick="switchSection('inventory')">
             <span>🏷️</span> Inventory
@@ -1003,6 +1025,43 @@
                 </tr>
               </thead>
               <tbody id="productsTableBody">
+                <!-- Injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION: COLLECTIONS (SHOPIFY-GRADE) ================= -->
+      <section id="secCollections" style="display:none;">
+        <div class="page-header-row">
+          <div>
+            <h1>Collections</h1>
+            <p>Curate thematic drops, volume series, and category groupings across the store.</p>
+          </div>
+          <div class="header-action-group">
+            <button class="btn-action-primary" onclick="openNewCollectionModal()">+ Create Collection</button>
+          </div>
+        </div>
+
+        <div class="admin-card-panel">
+          <div class="panel-toolbar">
+            <input type="text" id="collectionSearchField" class="search-input-field" placeholder="Search collections by title or handle..." oninput="renderCollectionsTable()">
+            <span style="font-size:12px; font-family:var(--mono); color:var(--text-sub);">Directly powers storefront drops & product assignment</span>
+          </div>
+
+          <div class="table-responsive-box">
+            <table class="commerce-table">
+              <thead>
+                <tr>
+                  <th style="width:34%;">Collection Title</th>
+                  <th>URL Handle</th>
+                  <th>Volume / Tag</th>
+                  <th>Products in Drop</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="collectionsTableBody">
                 <!-- Injected dynamically -->
               </tbody>
             </table>
@@ -1479,38 +1538,75 @@
             <p style="font-size:11px; color:var(--text-sub); margin-top:8px;">This product will be available across active sales channels.</p>
           </div>
 
-          <!-- Organization Card -->
+          <!-- Organization Card (Shopify-Grade) -->
           <div class="shopify-card">
-            <div class="shopify-card-title">Product Organization</div>
+            <div class="shopify-card-title">
+              <span>Product Organization</span>
+              <span style="font-size:11px; font-weight:normal; color:var(--text-sub);">Categorization & Drops</span>
+            </div>
+
+            <!-- 1. Category with Quick Add -->
             <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Category</label>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Category *</label>
+                <button type="button" onclick="openNewCategoryModal()" style="background:none; border:none; font-size:11px; color:var(--accent-brand); font-weight:600; cursor:pointer;">+ Add Category</button>
+              </div>
               <select id="prodCategory" class="form-control-input">
-                <option value="accessories">accessories (Pins, Badges, Tags)</option>
-                <option value="totes">totes (Bags, Canvas)</option>
-                <option value="bags">bags & carriers</option>
-                <option value="apparel">apparel & future wear</option>
+                <!-- Populated dynamically -->
               </select>
             </div>
 
+            <!-- 2. Product Type / Object Type with Suggestions & Chips -->
             <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Product Type / Tag</label>
-              <input type="text" id="prodTag" class="form-control-input" placeholder="e.g. pin, badge, sticker, tote">
+              <label>Product Type</label>
+              <input type="text" id="prodTag" class="form-control-input" list="prodTypeSuggestions" placeholder="e.g. Pins & Badges, Enamel Pin, Sticker, Tote">
+              <datalist id="prodTypeSuggestions">
+                <option value="Pins & Badges">
+                <option value="Enamel Pin">
+                <option value="Metal Badge">
+                <option value="Weatherproof Sticker">
+                <option value="Motel Tag">
+                <option value="Canvas Tote">
+                <option value="Apparel & Wear">
+              </datalist>
+              <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
+                <button type="button" class="spec-chip" onclick="setProductTypeChip('Pins & Badges')">+ Pins & Badges</button>
+                <button type="button" class="spec-chip" onclick="setProductTypeChip('Enamel Pin')">+ Enamel Pin</button>
+                <button type="button" class="spec-chip" onclick="setProductTypeChip('Metal Badge')">+ Metal Badge</button>
+                <button type="button" class="spec-chip" onclick="setProductTypeChip('Weatherproof Sticker')">+ Sticker</button>
+                <button type="button" class="spec-chip" onclick="setProductTypeChip('Canvas Tote')">+ Tote</button>
+              </div>
             </div>
 
+            <!-- 3. Collection / Volume with Quick Create -->
             <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Collection Volume</label>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <label>Collection / Volume *</label>
+                <button type="button" onclick="openNewCollectionModal(true)" style="background:none; border:none; font-size:11px; color:var(--accent-brand); font-weight:600; cursor:pointer;">+ Create Collection</button>
+              </div>
               <select id="prodVolume" class="form-control-input">
-                <option value="vol. 01">vol. 01 — too soft for this world</option>
-                <option value="vol. 02">vol. 02 — fragile archives</option>
-                <option value="vol. 03">vol. 03 — future quiet</option>
+                <!-- Populated dynamically -->
               </select>
+              <span style="font-size:11px; color:var(--text-sub); margin-top:2px;">Curates product into release volumes and catalogue filter drops.</span>
             </div>
 
+            <!-- 4. Material & Specifications with Smart Chips -->
             <div class="form-group-item" style="margin-bottom:14px;">
               <label>Material & Specifications</label>
-              <input type="text" id="prodKind" class="form-control-input" placeholder="e.g. hard enamel • black nickel • 32mm">
+              <input type="text" id="prodKind" class="form-control-input" list="materialSpecSuggestions" placeholder="e.g. hard enamel • black nickel finish • 32mm">
+              <datalist id="materialSpecSuggestions">
+                <!-- Populated dynamically -->
+              </datalist>
+              <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
+                <button type="button" class="spec-chip" onclick="setSpecChip('hard enamel • black nickel finish • 32mm')">hard enamel • 32mm</button>
+                <button type="button" class="spec-chip" onclick="setSpecChip('die-struck metal • antique silver • 38mm')">die-struck silver • 38mm</button>
+                <button type="button" class="spec-chip" onclick="setSpecChip('screenprinted weatherproof matte vinyl')">weatherproof vinyl</button>
+                <button type="button" class="spec-chip" onclick="setSpecChip('solid metal motel tag • gunmetal plated')">metal motel tag</button>
+                <button type="button" class="spec-chip" onclick="setSpecChip('16oz raw organic cotton • ecru archive')">16oz raw canvas</button>
+              </div>
             </div>
 
+            <!-- 5. Card Graphic Typography -->
             <div class="form-group-item">
               <label>Card Graphic Typography</label>
               <textarea id="prodGraphic" class="form-control-input" style="min-height:55px;" placeholder="Fallback typographical layout for badge cards"></textarea>
@@ -1637,6 +1733,71 @@
         <div style="display:flex; justify-content:flex-end; gap:10px;">
           <button class="btn-action-secondary" onclick="closeChangePinModal()">Cancel</button>
           <button class="btn-action-primary" onclick="submitChangePin()">Update PIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- ================= MODAL: CREATE / EDIT COLLECTION ================= -->
+  <div class="admin-modal-overlay" id="collectionModal">
+    <div class="admin-modal-window" style="max-width:540px;">
+      <div class="modal-head-line">
+        <h3 id="collectionModalTitle">Create Collection</h3>
+        <button class="modal-close-btn" onclick="closeCollectionModal()">×</button>
+      </div>
+      <div style="padding:24px;">
+        <input type="hidden" id="colModalId" value="">
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Collection Title *</label>
+          <input type="text" id="colTitleInput" class="form-control-input" placeholder="e.g. Pins & Badges or vol. 03 — future quiet" required oninput="handleColTitleInput(this.value)">
+        </div>
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>URL Handle / Slug *</label>
+          <div style="display:flex; align-items:center;">
+            <span style="background:#FAFAFA; border:1px solid var(--border-subtle); border-right:none; padding:10px 12px; font-size:12px; color:var(--text-sub); border-radius:6px 0 0 6px; font-family:var(--mono);">/allcollection?col=</span>
+            <input type="text" id="colSlugInput" class="form-control-input" style="border-radius:0 6px 6px 0; font-family:var(--mono);" placeholder="pins-badges">
+          </div>
+        </div>
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Volume / Filter Tag *</label>
+          <input type="text" id="colVolumeTagInput" class="form-control-input" placeholder="e.g. vol. 03 or accessories or all" style="font-family:var(--mono);">
+          <span style="font-size:11px; color:var(--text-sub);">Used to match products assigned to this collection on the storefront.</span>
+        </div>
+        <div class="form-group-item" style="margin-bottom:20px;">
+          <label>Description / Curatorial Story</label>
+          <textarea id="colDescInput" class="form-control-input" style="min-height:80px; font-size:13px; line-height:1.6;" placeholder="Describe the concept, themes, and narrative of this collection drop..."></textarea>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" class="btn-action-secondary" onclick="closeCollectionModal()">Cancel</button>
+          <button type="button" class="btn-action-primary" onclick="saveCollectionRecord()">Save Collection</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CREATE CATEGORY ================= -->
+  <div class="admin-modal-overlay" id="categoryModal">
+    <div class="admin-modal-window" style="max-width:440px;">
+      <div class="modal-head-line">
+        <h3>Add Category</h3>
+        <button class="modal-close-btn" onclick="closeCategoryModal()">×</button>
+      </div>
+      <div style="padding:24px;">
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Category Name *</label>
+          <input type="text" id="catNameInput" class="form-control-input" placeholder="e.g. Pins & Badges" required oninput="handleCatNameInput(this.value)">
+        </div>
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Category Key / Slug</label>
+          <input type="text" id="catSlugInput" class="form-control-input" placeholder="e.g. accessories or pins-badges" style="font-family:var(--mono);">
+        </div>
+        <div class="form-group-item" style="margin-bottom:20px;">
+          <label>Description (Optional)</label>
+          <input type="text" id="catDescInput" class="form-control-input" placeholder="Brief note on items under this category">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" class="btn-action-secondary" onclick="closeCategoryModal()">Cancel</button>
+          <button type="button" class="btn-action-primary" onclick="saveCategoryRecord()">Save Category</button>
         </div>
       </div>
     </div>
@@ -1793,7 +1954,7 @@
 
     // Section Switching
     function switchSection(secId) {
-      const sections = ['overview', 'orders', 'products', 'inventory', 'customers', 'discounts', 'settings'];
+      const sections = ['overview', 'orders', 'products', 'collections', 'inventory', 'customers', 'discounts', 'settings'];
       sections.forEach(s => {
         const secEl = document.getElementById('sec' + s.charAt(0).toUpperCase() + s.slice(1));
         const btnEl = document.getElementById('btnTab' + s.charAt(0).toUpperCase() + s.slice(1));
@@ -1808,6 +1969,7 @@
       if (secId === 'overview') renderOverview();
       if (secId === 'orders') renderOrdersTable();
       if (secId === 'products') renderProductsTable();
+      if (secId === 'collections') renderCollectionsTable();
       if (secId === 'inventory') renderInventoryTable();
       if (secId === 'customers') renderCustomersTable();
       if (secId === 'discounts') renderDiscountsTable();
@@ -2057,6 +2219,201 @@
     }
 
     // ================= 3. PRODUCTS (SHOPIFY-GRADE CONTROLLER) =================
+    
+    // ================= COLLECTIONS & CATEGORIES CONTROLLER (SHOPIFY-GRADE) =================
+    let isEditingFromProductModal = false;
+
+    function populateCategoryOptions(selectedVal = null) {
+      const select = document.getElementById('prodCategory');
+      if (!select) return;
+      const categories = AfterquietStore.getCategories();
+      select.innerHTML = '';
+      categories.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.slug || c.name.toLowerCase();
+        opt.innerText = `${c.name} (${c.slug})`;
+        if (selectedVal && (opt.value === selectedVal || c.name === selectedVal)) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    }
+
+    function populateCollectionOptions(selectedVal = null) {
+      const select = document.getElementById('prodVolume');
+      if (!select) return;
+      const collections = AfterquietStore.getCollections();
+      select.innerHTML = '';
+      collections.forEach(col => {
+        const opt = document.createElement('option');
+        opt.value = col.volumeTag || col.title;
+        opt.innerText = `${col.title} [${col.volumeTag || col.slug}]`;
+        if (selectedVal && (opt.value === selectedVal || col.title === selectedVal)) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    }
+
+    function populateMaterialDatalist() {
+      const datalist = document.getElementById('materialSpecSuggestions');
+      if (!datalist) return;
+      const types = AfterquietStore.getProductTypes();
+      datalist.innerHTML = '';
+      types.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        datalist.appendChild(opt);
+      });
+    }
+
+    function setProductTypeChip(val) {
+      document.getElementById('prodTag').value = val;
+    }
+
+    function setSpecChip(val) {
+      document.getElementById('prodKind').value = val;
+      AfterquietStore.saveProductType(val);
+    }
+
+    // Collections Table Management
+    function renderCollectionsTable() {
+      const q = (document.getElementById('collectionSearchField').value || '').toLowerCase().trim();
+      const collections = AfterquietStore.getCollections();
+      const products = AfterquietStore.getProducts(true);
+      const tbody = document.getElementById('collectionsTableBody');
+      tbody.innerHTML = '';
+
+      const filtered = collections.filter(c => !q || c.title.toLowerCase().includes(q) || (c.slug && c.slug.toLowerCase().includes(q)));
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:32px; color:var(--text-muted);">No collections found. Click "+ Create Collection" to add one.</td></tr>';
+        return;
+      }
+
+      filtered.forEach(c => {
+        const tag = c.volumeTag || c.slug;
+        const matchingCount = products.filter(p => p.volume === tag || p.category === tag || p.volume === c.title).length;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <strong style="display:block; font-size:14px; color:var(--text-main);">${escapeHtml(c.title)}</strong>
+            <div style="font-size:12px; color:var(--text-sub); margin-top:2px;">${escapeHtml(c.description || 'Curated independent release')}</div>
+          </td>
+          <td style="font-family:var(--mono); font-size:12px;">/allcollection?col=${c.slug}</td>
+          <td><span style="font-family:var(--mono); font-size:11px; background:#EEE; padding:2px 8px; border-radius:3px;">${c.volumeTag || c.slug}</span></td>
+          <td><strong style="font-family:var(--mono);">${matchingCount} pieces</strong></td>
+          <td style="text-align:right;">
+            <div style="display:flex; gap:8px; justify-content:flex-end;">
+              <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openEditCollectionModal('${c.id}')">Edit</button>
+              <a href="/allcollection" target="_blank" class="btn-action-secondary" style="font-size:11px; padding:4px 8px;">View Store ↗</a>
+              <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px; color:var(--accent-brand);" onclick="deleteCollectionRecord('${c.id}')">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openNewCollectionModal(fromProductModal = false) {
+      isEditingFromProductModal = fromProductModal;
+      document.getElementById('colModalId').value = '';
+      document.getElementById('collectionModalTitle').innerText = 'Create Collection';
+      document.getElementById('colTitleInput').value = '';
+      document.getElementById('colSlugInput').value = '';
+      document.getElementById('colVolumeTagInput').value = '';
+      document.getElementById('colDescInput').value = '';
+      document.getElementById('collectionModal').classList.add('open');
+    }
+
+    function openEditCollectionModal(id) {
+      isEditingFromProductModal = false;
+      const c = AfterquietStore.getCollectionById(id);
+      if (!c) return;
+      document.getElementById('colModalId').value = c.id;
+      document.getElementById('collectionModalTitle').innerText = `Edit Collection: ${c.title}`;
+      document.getElementById('colTitleInput').value = c.title;
+      document.getElementById('colSlugInput').value = c.slug || '';
+      document.getElementById('colVolumeTagInput').value = c.volumeTag || '';
+      document.getElementById('colDescInput').value = c.description || '';
+      document.getElementById('collectionModal').classList.add('open');
+    }
+
+    function closeCollectionModal() {
+      document.getElementById('collectionModal').classList.remove('open');
+    }
+
+    function handleColTitleInput(val) {
+      const slugInput = document.getElementById('colSlugInput');
+      const tagInput = document.getElementById('colVolumeTagInput');
+      const slug = slugify(val);
+      slugInput.value = slug;
+      if (!tagInput.value || tagInput.dataset.auto) {
+        tagInput.value = val.toLowerCase().startsWith('vol') ? val.split('—')[0].trim().toLowerCase() : slug;
+        tagInput.dataset.auto = 'true';
+      }
+    }
+
+    function saveCollectionRecord() {
+      const title = document.getElementById('colTitleInput').value.trim();
+      if (!title) {
+        alert('Please enter a collection title.');
+        document.getElementById('colTitleInput').focus();
+        return;
+      }
+      const id = document.getElementById('colModalId').value;
+      const slug = document.getElementById('colSlugInput').value.trim() || slugify(title);
+      const volumeTag = document.getElementById('colVolumeTagInput').value.trim() || slug;
+      const desc = document.getElementById('colDescInput').value.trim();
+
+      const colObj = { id: id || undefined, title, slug, volumeTag, description: desc };
+      AfterquietStore.saveCollection(colObj);
+      closeCollectionModal();
+      showToast(`Collection "${title}" saved`);
+
+      populateCollectionOptions(volumeTag);
+      renderCollectionsTable();
+    }
+
+    function deleteCollectionRecord(id) {
+      if (!confirm('Are you sure you want to delete this collection?')) return;
+      AfterquietStore.deleteCollection(id);
+      showToast('Collection deleted');
+      renderCollectionsTable();
+      populateCollectionOptions();
+    }
+
+    // Category Quick Modal
+    function openNewCategoryModal() {
+      document.getElementById('catNameInput').value = '';
+      document.getElementById('catSlugInput').value = '';
+      document.getElementById('catDescInput').value = '';
+      document.getElementById('categoryModal').classList.add('open');
+    }
+
+    function closeCategoryModal() {
+      document.getElementById('categoryModal').classList.remove('open');
+    }
+
+    function handleCatNameInput(val) {
+      document.getElementById('catSlugInput').value = slugify(val);
+    }
+
+    function saveCategoryRecord() {
+      const name = document.getElementById('catNameInput').value.trim();
+      if (!name) {
+        alert('Please enter a category name.');
+        return;
+      }
+      const slug = document.getElementById('catSlugInput').value.trim() || slugify(name);
+      const desc = document.getElementById('catDescInput').value.trim();
+
+      AfterquietStore.saveCategory({ name, slug, description: desc });
+      closeCategoryModal();
+      showToast(`Category "${name}" added`);
+      populateCategoryOptions(slug);
+    }
+
     function renderProductsTable() {
       const q = (document.getElementById('productSearchField').value || '').toLowerCase().trim();
       const cat = document.getElementById('productCatFilter').value;
@@ -2275,6 +2632,9 @@
       calculateProfitMargin();
       updateSeoPreview();
       handleStatusChange('active');
+      populateCategoryOptions('accessories');
+      populateCollectionOptions('vol. 01');
+      populateMaterialDatalist();
       document.getElementById('btnPreviewStore').style.display = 'none';
       document.getElementById('productModal').classList.add('open');
     }
@@ -2305,6 +2665,9 @@
       document.getElementById('prodHandle').value = p.handle || p.id;
       document.getElementById('prodHandle').dataset.manualEdited = 'true';
 
+      populateCategoryOptions(p.category);
+      populateCollectionOptions(p.volume);
+      populateMaterialDatalist();
       setProductActiveImage(p.image || '');
       calculateProfitMargin();
       updateSeoPreview();
