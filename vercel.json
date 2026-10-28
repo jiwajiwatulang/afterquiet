@@ -5,6 +5,10 @@
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/allcollection", "destination": "/allcollection.html" },
     { "source": "/collections", "destination": "/allcollection.html" },
+    { "source": "/visual-archive", "destination": "/visual-archive.html" },
+    { "source": "/philosophy", "destination": "/philosophy.html" },
+    { "source": "/care", "destination": "/care.html" },
+    { "source": "/shipping", "destination": "/shipping.html" },
     { "source": "/product", "destination": "/product.html" }
   ]
 }

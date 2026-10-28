@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>shipping details & support — afterquiet</title>
+  <meta name="description" content="shipping details, fulfillment process, packaging standards, and direct customer support for afterquiet.">
+  <meta name="theme-color" content="#171717">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #171717;
+      --paper: #F1EFE9;
+      --paper-card: #FFFFFF;
+      --paper-subtle: #FAF9F6;
+      --paper-dark: #E6E2D8;
+      --red: #843B40;
+      --muted: #85827D;
+      --line: #E2DFD7;
+      --line-dark: #2A2927;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; color: inherit; }
+
+    /* Announcement Bar */
+    .announcement-bar {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 10px 5%;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      font-family: var(--mono);
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .announcement-bar span:first-child {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
+    }
+    .announcement-link {
+      color: var(--paper);
+      text-decoration: underline;
+    }
+    .announcement-link:hover { color: #D89599; }
+
+    /* Site Header - ONLY LOGO (No text) */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(241, 239, 233, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      height: 78px;
+    }
+    .brand-logo-link {
+      display: inline-flex;
+      align-items: center;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .brand-logo-link:hover {
+      opacity: 0.85;
+      transform: scale(1.04);
+    }
+    .brand-logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--ink);
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active-link { color: var(--ink); font-weight: 600; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-customizer-shortcut {
+      background: none;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-customizer-shortcut:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* Shipping Page Container */
+    .shipping-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 70px 5% 120px;
+      width: 100%;
+    }
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .shipping-hero-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(44px, 6.5vw, 84px);
+      letter-spacing: -0.05em;
+      line-height: 0.98;
+      margin-bottom: 30px;
+    }
+    .shipping-hero-title span { color: var(--red); }
+    .shipping-lead {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 60px;
+    }
+
+    /* Cards Grid */
+    .shipping-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+    .shipping-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 36px 30px;
+    }
+    .shipping-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+    .shipping-card-header h3 {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .shipping-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+    .shipping-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Support Callout Box */
+    .support-full-banner {
+      background: #171717;
+      color: var(--paper);
+      border-radius: 4px;
+      padding: 50px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    .support-info h3 {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .support-info p {
+      font-size: 14px;
+      color: #BBB;
+      line-height: 1.6;
+      max-width: 540px;
+    }
+    .support-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .btn-contact-primary {
+      background: var(--paper);
+      color: var(--ink);
+      padding: 14px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-contact-primary:hover {
+      background: #E8E5DD;
+    }
+    .support-phone-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      padding: 80px 5% 40px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.06em;
+    }
+    .footer-nav-groups {
+      display: flex;
+      gap: 70px;
+    }
+    .footer-nav-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .footer-nav-col strong {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+    }
+    .footer-nav-col a {
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-nav-col a:hover { color: var(--ink); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--mono);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .shipping-grid { grid-template-columns: 1fr; }
+      .support-full-banner { flex-direction: column; align-items: flex-start; }
+      .footer-top { flex-direction: column; gap: 40px; }
+      .footer-nav-groups { flex-wrap: wrap; gap: 32px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar with "contact me" Link -->
+  <aside class="announcement-bar">
+    <span>
+      <span class="dot-pulse"></span>
+      all items flat 5k • independent accessories & visual culture
+    </span>
+    <a href="https://wa.me/6285708500546" target="_blank" rel="noopener" class="announcement-link">contact me</a>
+  </aside>
+
+  <!-- Navigation Header: ONLY Logo Image (No Text) -->
+  <header class="site-nav">
+    <a href="/" class="brand-logo-link" aria-label="afterquiet home">
+      <img src="/assets/profile.jpg" alt="afterquiet logo" class="brand-logo-img">
+    </a>
+
+    <nav class="nav-links">
+      <a href="/allcollection">all catalogue</a>
+      <a href="/try-on">customizer studio</a>
+      <a href="/visual-archive">visual archive</a>
+      <a href="/philosophy">philosophy</a>
+      <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram ↗</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="/try-on" class="btn-customizer-shortcut">
+        <span>customizer studio</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Shipping Content -->
+  <main class="shipping-container">
+    
+    <span class="section-tag">fulfillment & customer service</span>
+    <h1 class="shipping-hero-title">
+      shipping details<span>.</span>
+    </h1>
+
+    <p class="shipping-lead">
+      every afterquiet piece is mounted, packed, and dispatched with consideration. here is our transparent shipping process, delivery timelines, and direct support.
+    </p>
+
+    <!-- 4 Shipping Cards -->
+    <div class="shipping-grid">
+      
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <h3>archival protective packaging</h3>
+          <span class="shipping-badge">standard</span>
+        </div>
+        <p>
+          every enamel pin and badge is mounted on its corresponding heavy cardstock backing and sealed inside a protective mailer sleeve. orders of multiple pieces are packed securely to prevent impact, bending, or scratching during courier transit.
+        </p>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <h3>24-hour studio dispatch</h3>
+          <span class="shipping-badge">processing</span>
+        </div>
+        <p>
+          orders confirmed via WhatsApp before 15:00 WIB are prepared and handed to couriers on the same day. custom bag studio compositions are reviewed, packed, and dispatched within 24 hours of payment verification.
+        </p>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <h3>courier network & timelines</h3>
+          <span class="shipping-badge">delivery</span>
+        </div>
+        <p>
+          we partner with reliable nationwide couriers including J&T Express, SiCepat, and JNE. Instant courier options (GoSend & Grab) are available upon request for same-day delivery in selected local areas.
+        </p>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <h3>estimated arrival times</h3>
+          <span class="shipping-badge">timelines</span>
+        </div>
+        <p>
+          Jabodetabek & Java destinations typically arrive within 1–3 business days. Deliveries across outer islands take approximately 2–4 business days depending on the selected shipping tier.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Direct Support Callout -->
+    <div class="support-full-banner">
+      <div class="support-info">
+        <h3>have questions or tracking issues?</h3>
+        <p>
+          reach out directly. we handle customer inquiries, order updates, and custom pin placement guidance personally with no automated bots.
+        </p>
+      </div>
+
+      <div class="support-actions">
+        <a href="https://wa.me/6285708500546" target="_blank" rel="noopener" class="btn-contact-primary">
+          <span>contact me via whatsapp</span>
+          <span>↗</span>
+        </a>
+        <span class="support-phone-tag">+62 857-0850-0546</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Clean Fashion Store Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">afterquiet</div>
+
+      <div class="footer-nav-groups">
+        <div class="footer-nav-col">
+          <strong>collection</strong>
+          <a href="/allcollection">all catalogue</a>
+          <a href="/try-on">customizer studio</a>
+          <a href="/visual-archive">visual archive</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>brand</strong>
+          <a href="/philosophy">philosophy</a>
+          <a href="/care">care & quality</a>
+          <a href="/shipping">shipping details</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>connect</strong>
+          <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram</a>
+          <a href="https://wa.me/6285708500546" target="_blank" rel="noopener">contact me</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 afterquiet. independent accessories & visual culture.</span>
+      <span>wear what you can't always say.</span>
+      <a href="#top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">back to top ↑</a>
+    </div>
+  </footer>
+
+</body>
+</html>

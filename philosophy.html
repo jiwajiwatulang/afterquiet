@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>brand philosophy — afterquiet</title>
+  <meta name="description" content="afterquiet brand philosophy. wear what you can't always say. independent accessories & visual culture.">
+  <meta name="theme-color" content="#171717">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #171717;
+      --paper: #F1EFE9;
+      --paper-card: #FFFFFF;
+      --paper-subtle: #FAF9F6;
+      --paper-dark: #E6E2D8;
+      --red: #843B40;
+      --muted: #85827D;
+      --line: #E2DFD7;
+      --line-dark: #2A2927;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; color: inherit; }
+
+    /* Announcement Bar */
+    .announcement-bar {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 10px 5%;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      font-family: var(--mono);
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .announcement-bar span:first-child {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
+    }
+    .announcement-link {
+      color: var(--paper);
+      text-decoration: underline;
+    }
+    .announcement-link:hover { color: #D89599; }
+
+    /* Site Header - ONLY LOGO (No text) */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(241, 239, 233, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      height: 78px;
+    }
+    .brand-logo-link {
+      display: inline-flex;
+      align-items: center;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .brand-logo-link:hover {
+      opacity: 0.85;
+      transform: scale(1.04);
+    }
+    .brand-logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--ink);
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active-link { color: var(--ink); font-weight: 600; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-customizer-shortcut {
+      background: none;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-customizer-shortcut:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* Philosophy Main Container */
+    .philosophy-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 70px 5% 120px;
+      width: 100%;
+    }
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .philosophy-hero-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(44px, 6.5vw, 84px);
+      letter-spacing: -0.05em;
+      line-height: 0.98;
+      margin-bottom: 36px;
+    }
+    .philosophy-hero-title span { color: var(--red); }
+    .philosophy-lead {
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.5;
+      color: var(--ink);
+      font-weight: 400;
+      max-width: 820px;
+      margin-bottom: 60px;
+    }
+
+    /* Manifesto Quote Box */
+    .manifesto-callout {
+      background: #171717;
+      color: var(--paper);
+      padding: 50px 44px;
+      border-radius: 4px;
+      margin-bottom: 70px;
+      border: 1px solid #2B2927;
+    }
+    .callout-quote {
+      font-family: var(--display);
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-bottom: 24px;
+    }
+    .callout-quote i { font-style: italic; color: #D89599; font-weight: 400; }
+    .callout-body {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #BBB;
+      max-width: 720px;
+    }
+
+    /* Core Pillars Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 70px;
+    }
+    .pillar-card {
+      background: white;
+      border: 1px solid var(--line);
+      padding: 36px 30px;
+      border-radius: 4px;
+      transition: border-color 0.15s;
+    }
+    .pillar-card:hover { border-color: var(--ink); }
+    .pillar-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .pillar-title {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .pillar-code {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .pillar-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Personality Comparison Table */
+    .character-box {
+      border: 1px solid var(--line);
+      background: var(--paper-subtle);
+      border-radius: 4px;
+      padding: 40px;
+      margin-bottom: 70px;
+    }
+    .character-box h3 {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .character-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .character-col h4 {
+      font-size: 12px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+      color: var(--red);
+    }
+    .character-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.5;
+    }
+    .character-list li {
+      display: flex;
+      gap: 10px;
+    }
+    .character-list li span:first-child {
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    /* Bottom Action */
+    .cta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      padding-top: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .cta-text {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .btn-explore {
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      padding: 14px 28px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: background 0.15s;
+    }
+    .btn-explore:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      padding: 80px 5% 40px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.06em;
+    }
+    .footer-nav-groups {
+      display: flex;
+      gap: 70px;
+    }
+    .footer-nav-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .footer-nav-col strong {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+    }
+    .footer-nav-col a {
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-nav-col a:hover { color: var(--ink); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--mono);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+      .character-split { grid-template-columns: 1fr; gap: 24px; }
+      .footer-top { flex-direction: column; gap: 40px; }
+      .footer-nav-groups { flex-wrap: wrap; gap: 32px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar with "contact me" Link -->
+  <aside class="announcement-bar">
+    <span>
+      <span class="dot-pulse"></span>
+      all items flat 5k • independent accessories & visual culture
+    </span>
+    <a href="https://wa.me/6285708500546" target="_blank" rel="noopener" class="announcement-link">contact me</a>
+  </aside>
+
+  <!-- Navigation Header: ONLY Logo Image (No Text) -->
+  <header class="site-nav">
+    <a href="/" class="brand-logo-link" aria-label="afterquiet home">
+      <img src="/assets/profile.jpg" alt="afterquiet logo" class="brand-logo-img">
+    </a>
+
+    <nav class="nav-links">
+      <a href="/allcollection">all catalogue</a>
+      <a href="/try-on">customizer studio</a>
+      <a href="/visual-archive">visual archive</a>
+      <a href="/philosophy" class="active-link">philosophy</a>
+      <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram ↗</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="/try-on" class="btn-customizer-shortcut">
+        <span>customizer studio</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Philosophy Content -->
+  <main class="philosophy-container">
+    
+    <span class="section-tag">brand philosophy & manifesto</span>
+    <h1 class="philosophy-hero-title">
+      wear what you<br>can't always say<span>.</span>
+    </h1>
+
+    <p class="philosophy-lead">
+      afterquiet is an independent accessories brand exploring identity, emotions, and personal expression through wearable objects and visual culture.
+    </p>
+
+    <!-- Manifesto Callout -->
+    <div class="manifesto-callout">
+      <div class="callout-quote">
+        an object can be more than an accessory. it can be a reminder, a personal statement, a memory, or a <i>quiet form of resistance.</i>
+      </div>
+      <p class="callout-body">
+        afterquiet exists for people who don't always have the right words, but still have something meaningful to say. we embrace imperfection, individuality, emotional honesty, and the freedom to express yourself without needing everyone's approval.
+      </p>
+    </div>
+
+    <!-- 5 Core Brand Pillars -->
+    <h2 style="font-family:var(--display); font-size:32px; font-weight:700; letter-spacing:-0.03em; margin-bottom:28px;">
+      the five core pillars.
+    </h2>
+
+    <div class="pillars-grid">
+      
+      <div class="pillar-card">
+        <div class="pillar-header">
+          <h3 class="pillar-title">individuality</h3>
+          <span class="pillar-code">pillar // 01</span>
+        </div>
+        <p class="pillar-desc">
+          expression should feel personal, never dictated by algorithms, temporary aesthetics, or corporate expectations.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-header">
+          <h3 class="pillar-title">emotional honesty</h3>
+          <span class="pillar-code">pillar // 02</span>
+        </div>
+        <p class="pillar-desc">
+          feelings, contradictions, uncertainty, and restless minds are all natural and quiet parts of being human.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-header">
+          <h3 class="pillar-title">independence</h3>
+          <span class="pillar-code">pillar // 03</span>
+        </div>
+        <p class="pillar-desc">
+          afterquiet maintains its own perspective instead of following every popular micro-trend or mass production cycle.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-header">
+          <h3 class="pillar-title">creative resistance</h3>
+          <span class="pillar-code">pillar // 04</span>
+        </div>
+        <p class="pillar-desc">
+          art and graphic design can question social expectations, challenge familiar ideas, and communicate uncomfortable truths.
+        </p>
+      </div>
+
+      <div class="pillar-card" style="grid-column:1 / -1;">
+        <div class="pillar-header">
+          <h3 class="pillar-title">accessibility (flat 5k standard)</h3>
+          <span class="pillar-code">pillar // 05</span>
+        </div>
+        <p class="pillar-desc">
+          self-expression should be approachable through tangible pieces that people can incorporate into their everyday lives. every curated piece in our catalogue is accessible at a flat 5K standard.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- What afterquiet is / is not -->
+    <div class="character-box">
+      <h3>brand character.</h3>
+      <div class="character-split">
+        <div class="character-col">
+          <h4>afterquiet is:</h4>
+          <ul class="character-list">
+            <li><span>•</span> introspective — thoughtful without needing to explain everything.</li>
+            <li><span>•</span> rebellious — willing to question expectations and established molds.</li>
+            <li><span>•</span> imperfect — raw, human, and comfortable with tactile irregularity.</li>
+            <li><span>•</span> expressive — emotional, but never restricted to sadness.</li>
+            <li><span>•</span> accessible — expressive without making the audience feel excluded.</li>
+          </ul>
+        </div>
+        <div class="character-col">
+          <h4>what afterquiet is not:</h4>
+          <ul class="character-list">
+            <li><span>✕</span> overly cute or excessively decorative.</li>
+            <li><span>✕</span> corporate, formal, or sterile.</li>
+            <li><span>✕</span> generic motivational merchandise.</li>
+            <li><span>✕</span> artificially mysterious just for the aesthetic.</li>
+            <li><span>✕</span> dependent on temporary hype to define its identity.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Action -->
+    <div class="cta-row">
+      <div class="cta-text">explore the wearable statements</div>
+      <a href="/allcollection" class="btn-explore">view all catalogue (flat 5k) ↗</a>
+    </div>
+
+  </main>
+
+  <!-- Clean Fashion Store Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">afterquiet</div>
+
+      <div class="footer-nav-groups">
+        <div class="footer-nav-col">
+          <strong>collection</strong>
+          <a href="/allcollection">all catalogue</a>
+          <a href="/try-on">customizer studio</a>
+          <a href="/visual-archive">visual archive</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>brand</strong>
+          <a href="/philosophy">philosophy</a>
+          <a href="/care">care & quality</a>
+          <a href="/shipping">shipping details</a>
+        </div>
+        <div class="footer-nav-col">
+          <strong>connect</strong>
+          <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">instagram</a>
+          <a href="https://wa.me/6285708500546" target="_blank" rel="noopener">contact me</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 afterquiet. independent accessories & visual culture.</span>
+      <span>wear what you can't always say.</span>
+      <a href="#top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">back to top ↑</a>
+    </div>
+  </footer>
+
+</body>
+</html>
