@@ -15,6 +15,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Unified Commerce Engine -->
+  <script src="/assets/store-engine.js"></script>
+
   <style>
     :root {
       --ink: #171717;
@@ -360,6 +363,9 @@
         <span>customizer studio</span>
         <span>↗</span>
       </a>
+      <button class="btn-cart open-bag-btn" id="openBagBtn" style="background:var(--ink); color:var(--paper); border:none; padding:9px 18px; border-radius:999px; font-size:12px; font-weight:600; cursor:pointer;">
+        bag (<span id="bagCounter">0</span>)
+      </button>
     </div>
   </header>
 

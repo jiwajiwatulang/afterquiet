@@ -15,6 +15,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Unified Commerce Engine -->
+  <script src="/assets/store-engine.js"></script>
+
   <style>
     :root {
       --ink: #171717;
@@ -683,33 +686,6 @@
 
   </main>
 
-  <!-- Slide-Over Shopping Bag Drawer -->
-  <div class="cart-backdrop" id="cartBackdrop" onclick="closeBagDrawer()"></div>
-  <aside class="cart-drawer" id="cartDrawer">
-    <div>
-      <div class="cart-head">
-        <h3>shopping bag</h3>
-        <button class="cart-close-btn" onclick="closeBagDrawer()">×</button>
-      </div>
-      <div class="cart-items-body" id="cartItemsContainer">
-        <p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">
-          your bag is currently empty.
-        </p>
-      </div>
-    </div>
-
-    <div class="cart-foot">
-      <div class="subtotal-line">
-        <span>subtotal</span>
-        <strong id="cartSubtotalValue">Rp 0</strong>
-      </div>
-      <button class="btn-checkout-wa" onclick="checkoutCartWA()">
-        <span>complete order via whatsapp</span>
-        <span>↗</span>
-      </button>
-    </div>
-  </aside>
-
   <!-- Clean Fashion Store Footer -->
   <footer>
     <div class="footer-top">
@@ -742,31 +718,5 @@
       <a href="#top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">back to top ↑</a>
     </div>
   </footer>
-
-  <script>
-    const OFFICIAL_WA = "6285708500546";
-    let cart = [];
-
-    const cartBackdrop = document.getElementById('cartBackdrop');
-    const cartDrawer = document.getElementById('cartDrawer');
-    const bagCounter = document.getElementById('bagCounter');
-    const cartItemsContainer = document.getElementById('cartItemsContainer');
-    const cartSubtotalValue = document.getElementById('cartSubtotalValue');
-    document.getElementById('openBagBtn').addEventListener('click', openBagDrawer);
-
-    function openBagDrawer() {
-      cartBackdrop.classList.add('open');
-      cartDrawer.classList.add('open');
-    }
-
-    function closeBagDrawer() {
-      cartBackdrop.classList.remove('open');
-      cartDrawer.classList.remove('open');
-    }
-
-    function checkoutCartWA() {
-      window.open(`https://wa.me/${OFFICIAL_WA}?text=Halo afterquiet, saya ingin memesan dari visual archive.`, '_blank');
-    }
-  </script>
 </body>
 </html>

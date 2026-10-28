@@ -15,6 +15,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Unified Commerce Engine -->
+  <script src="/assets/store-engine.js"></script>
+
   <style>
     :root {
       --ink: #171717;
@@ -852,23 +855,33 @@
 
     window.submitCustomOrder = function() {
       const bag = bagCatalogue[activeBag];
-      let total = bag.price;
+      if (!bag) return;
 
-      let pinLines = "";
-      if (attachedPins.length > 0) {
-        pinLines = attachedPins.map(p => {
-          total += p.price;
-          return `  - ${p.name} (Rp ${p.price.toLocaleString('id-ID')})`;
-        }).join('%0A');
-      } else {
-        pinLines = "  (No extra pins)";
+      // Map base carrier to product ID
+      const baseProductId = activeBag === 'tote_ecru' ? 'tote_archive' : (activeBag === 'tote_black' ? 'tote_black' : 'bag_tactical');
+
+      // Add base bag to cart
+      AfterquietStore.addToCart(baseProductId, 1);
+
+      // Add each attached pin to cart
+      attachedPins.forEach(p => {
+        let pinProductId = 'pin_restless';
+        if (p.key === 'badge_soft') pinProductId = 'badge_soft';
+        if (p.key === 'patch_silence') pinProductId = 'sticker_pack';
+        if (p.key === 'tag_honesty') pinProductId = 'keychain_honesty';
+        if (p.key === 'pin_logo') pinProductId = 'pin_fragile';
+
+        AfterquietStore.addToCart(pinProductId, 1);
+      });
+
+      // Open universal shopping bag drawer with express checkout
+      AfterquietStore.openBag();
+      AfterquietStore.toggleCheckoutView(true);
+
+      const notesField = document.getElementById('aqOrderNotes');
+      if (notesField) {
+        notesField.value = `Custom Studio arrangement on ${bag.name} with ${attachedPins.length} attached pin(s)`;
       }
-
-      const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
-      const waTarget = theme.waNumber ? theme.waNumber.replace(/[^0-9]/g, '') : '6285708500546';
-      const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom arrangement dari Studio:%0A%0A*BASE CARRIER:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*ATTACHED PINS & BADGES (${attachedPins.length} pcs):*%0A${pinLines}%0A%0A*TOTAL:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon info ketersediaan stok & pengirimannya. Terima kasih!`;
-      
-      window.open(`https://wa.me/${waTarget}?text=${msg}`, '_blank');
     };
 
     window.addEventListener('DOMContentLoaded', () => {

@@ -15,6 +15,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Unified Commerce Engine -->
+  <script src="/assets/store-engine.js"></script>
+
   <style>
     :root {
       --ink: #171717;
@@ -827,32 +830,7 @@
 
   </main>
 
-  <!-- Slide-Over Shopping Bag Drawer -->
-  <div class="cart-backdrop" id="cartBackdrop" onclick="closeBagDrawer()"></div>
-  <aside class="cart-drawer" id="cartDrawer">
-    <div>
-      <div class="cart-head">
-        <h3>shopping bag</h3>
-        <button class="cart-close-btn" onclick="closeBagDrawer()">×</button>
-      </div>
-      <div class="cart-items-body" id="cartItemsContainer">
-        <p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">
-          your bag is currently empty.
-        </p>
-      </div>
-    </div>
 
-    <div class="cart-foot">
-      <div class="subtotal-line">
-        <span>subtotal</span>
-        <strong id="cartSubtotalValue">Rp 0</strong>
-      </div>
-      <button class="btn-checkout-wa" onclick="checkoutCartWA()">
-        <span>complete order via whatsapp</span>
-        <span>↗</span>
-      </button>
-    </div>
-  </aside>
 
   <!-- Clean Fashion Footer -->
   <footer>
@@ -889,163 +867,18 @@
 
   <!-- Product Page Controller -->
   <script>
-    const OFFICIAL_WA = "6285708500546";
-
-    const defaultCatalog = [
-      {
-        id: "pin_restless",
-        title: "restless mind enamel pin",
-        category: "accessories",
-        volume: "vol. 01",
-        kind: "hard enamel • black nickel finish • 32mm",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "pin",
-        graphic: "restless\nmind.",
-        description: "a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating and dual rubber clutches.",
-        status: "active"
-      },
-      {
-        id: "badge_soft",
-        title: "too soft for this world badge",
-        category: "accessories",
-        volume: "vol. 01",
-        kind: "die-struck metal • antique silver • 38mm",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "badge",
-        graphic: "too soft\nfor this world",
-        description: "exploring vulnerability, sensitivity, and the courage to remain emotionally honest in an aggressive world.",
-        status: "active"
-      },
-      {
-        id: "sticker_pack",
-        title: "silence isn't peace sticker",
-        category: "accessories",
-        volume: "vol. 01",
-        kind: "screenprinted weatherproof matte vinyl",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "sticker",
-        graphic: "silence isn't\nalways peace.",
-        description: "heavy-duty screenprinted outdoor matte vinyl sticker. uv protected, waterproof, and scratch resistant.",
-        status: "active"
-      },
-      {
-        id: "keychain_honesty",
-        title: "emotional honesty tag",
-        category: "accessories",
-        volume: "vol. 01",
-        kind: "solid metal motel tag • gunmetal plated",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "tag",
-        graphic: "emotional\nhonesty",
-        description: "classic hotel motel key tag silhouette rendered in solid zinc alloy with deep engraved lettering.",
-        status: "active"
-      },
-      {
-        id: "pin_fragile",
-        title: "fragile archives enamel pin",
-        category: "accessories",
-        volume: "vol. 02",
-        kind: "stamped iron • archival antique finish",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "pin",
-        graphic: "fragile\narchives.",
-        description: "centered on identity, memory, and the things people carry internally without speaking out loud.",
-        status: "active"
-      },
-      {
-        id: "pin_unsaid",
-        title: "easier to wear than explain pin",
-        category: "accessories",
-        volume: "vol. 02",
-        kind: "raw metal stamped pin • archival card",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "pin",
-        graphic: "easier to wear\nthan explain.",
-        description: "some things are simply easier to wear than to explain. high contrast relief typography.",
-        status: "active"
-      },
-      {
-        id: "badge_resistance",
-        title: "creative resistance button badge",
-        category: "accessories",
-        volume: "vol. 02",
-        kind: "matte laminated button • 44mm pinback",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "badge",
-        graphic: "creative\nresistance",
-        description: "art and design can question social expectations and challenge familiar comfortable ideas.",
-        status: "active"
-      },
-      {
-        id: "tote_archive",
-        title: "archive canvas tote bag",
-        category: "totes",
-        volume: "vol. 01",
-        kind: "16oz raw organic cotton • ecru archive",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "tote",
-        graphic: "archive\ntote.",
-        description: "heavyweight 16oz unbleached organic cotton canvas tote bag. reinforced box-x stitching on handles.",
-        status: "active"
-      },
-      {
-        id: "tote_black",
-        title: "utility black canvas tote",
-        category: "totes",
-        volume: "vol. 02",
-        kind: "washed heavyweight canvas • reinforced webbing",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "tote",
-        graphic: "utility\nblack.",
-        description: "deep washed black cotton canvas with military-spec nylon webbing strap and front attachment bar for pins.",
-        status: "active"
-      },
-      {
-        id: "bag_tactical",
-        title: "restless tactical mini carrier",
-        category: "bags",
-        volume: "vol. 01",
-        kind: "water-resistant nylon • adjustable utility strap",
-        price: 5000,
-        formattedPrice: "Rp 5.000",
-        tag: "bag",
-        graphic: "tactical\ncarrier.",
-        description: "compact everyday crossbody carrier engineered for essentials, featuring cordura nylon and ykk zippers.",
-        status: "active"
-      }
-    ];
-
-    let products = defaultCatalog;
-    try {
-      const stored = localStorage.getItem('aq_products');
-      if (stored) {
-        products = JSON.parse(stored).filter(p => p.status !== 'draft');
-      }
-    } catch(e) {}
-
-    // Find current product from URL param ?id=
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id') || 'pin_restless';
-    let currentProduct = products.find(p => p.id === productId) || products[0];
-
+    let currentProduct = null;
     let quantity = 1;
-    let cart = [];
 
-    function formatRupiah(num) {
-      return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
-    }
+    function initProductPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id') || 'pin_restless';
+      currentProduct = AfterquietStore.getProductById(productId) || AfterquietStore.getProducts(false)[0];
 
-    function initPage() {
       if (!currentProduct) return;
+
+      const isSoldOut = Number(currentProduct.stock !== undefined ? currentProduct.stock : 50) <= 0;
+      const stockCount = Number(currentProduct.stock !== undefined ? currentProduct.stock : 50);
 
       document.title = `${currentProduct.title} — afterquiet`;
       document.getElementById('crumbCurrent').innerText = currentProduct.title;
@@ -1054,49 +887,79 @@
       document.getElementById('stageGraphic').innerText = currentProduct.graphic || currentProduct.title;
       document.getElementById('productVol').innerText = (currentProduct.volume || 'volume 01') + (currentProduct.volume === 'vol. 02' ? ' — fragile archives' : ' — too soft for this world');
       document.getElementById('productTitle').innerText = currentProduct.title;
-      document.getElementById('productPrice').innerText = formatRupiah(currentProduct.price || 5000);
+      document.getElementById('productPrice').innerText = AfterquietStore.formatRupiah(currentProduct.price || 5000);
       document.getElementById('productDescription').innerText = currentProduct.description || 'a meaningful piece exploring identity, emotions, and personal expression.';
       document.getElementById('specMaterial').innerText = currentProduct.kind || 'standard archival quality';
       document.getElementById('specCollection').innerText = currentProduct.volume === 'vol. 02' ? 'volume 02 — fragile archives' : 'volume 01 — too soft for this world';
 
-      updateButtonPrice();
+      // Stock status badge
+      const stockBadge = document.querySelector('.stock-badge');
+      if (stockBadge) {
+        if (isSoldOut) {
+          stockBadge.innerHTML = '<span class="stock-dot" style="background:#843B40;"></span>sold out';
+          stockBadge.style.color = '#843B40';
+        } else {
+          stockBadge.innerHTML = `<span class="stock-dot"></span>in stock (${stockCount} remaining)`;
+          stockBadge.style.color = '#1A5928';
+        }
+      }
+
+      const btnAddToCart = document.getElementById('btnAddToCart');
+      if (btnAddToCart) {
+        if (isSoldOut) {
+          btnAddToCart.disabled = true;
+          btnAddToCart.innerText = 'currently sold out';
+          btnAddToCart.style.opacity = '0.4';
+          btnAddToCart.style.cursor = 'not-allowed';
+        } else {
+          btnAddToCart.disabled = false;
+          btnAddToCart.style.opacity = '1';
+          btnAddToCart.style.cursor = 'pointer';
+          updateButtonPrice();
+        }
+      }
+
       renderRelated();
-      updateCartUI();
     }
 
     function adjustQty(delta) {
-      quantity = Math.max(1, quantity + delta);
+      if (!currentProduct) return;
+      const maxStock = Number(currentProduct.stock !== undefined ? currentProduct.stock : 999);
+      quantity = Math.max(1, Math.min(quantity + delta, maxStock));
       document.getElementById('qtyDisplay').innerText = quantity;
       updateButtonPrice();
     }
 
     function updateButtonPrice() {
+      if (!currentProduct) return;
       const total = (currentProduct.price || 5000) * quantity;
-      document.getElementById('btnAddToCart').innerText = `add to bag — ${formatRupiah(total)}`;
+      const btn = document.getElementById('btnAddToCart');
+      if (btn) btn.innerText = `add to bag — ${AfterquietStore.formatRupiah(total)}`;
     }
 
     function addProductToBag() {
-      for (let i = 0; i < quantity; i++) {
-        cart.push(currentProduct);
-      }
-      updateCartUI();
-      openBagDrawer();
+      if (!currentProduct) return;
+      AfterquietStore.addToCart(currentProduct.id, quantity);
+      AfterquietStore.openBag();
     }
 
     function orderDirectWhatsApp() {
-      const total = (currentProduct.price || 5000) * quantity;
-      const text = `Halo afterquiet, saya ingin memesan produk berikut:%0A%0A• ${currentProduct.title} (${quantity}x) — ${formatRupiah(total)}%0A%0AMohon konfirmasi ketersediaan & alamat pengiriman. Terima kasih!`;
-      window.open(`https://wa.me/${OFFICIAL_WA}?text=${text}`, '_blank');
+      if (!currentProduct) return;
+      AfterquietStore.addToCart(currentProduct.id, quantity);
+      AfterquietStore.openBag();
+      AfterquietStore.toggleCheckoutView(true);
     }
 
     function toggleAccordion(el) {
       const parent = el.closest('.accordion-item');
-      parent.classList.toggle('active');
+      if (parent) parent.classList.toggle('active');
     }
 
     function renderRelated() {
+      const products = AfterquietStore.getProducts(false);
       const related = products.filter(p => p.id !== currentProduct.id).slice(0, 4);
       const container = document.getElementById('relatedGrid');
+      if (!container) return;
       container.innerHTML = '';
 
       related.forEach(p => {
@@ -1106,103 +969,17 @@
         item.innerHTML = `
           <div class="related-thumb">${p.graphic || p.title}</div>
           <div class="related-title">${p.title}</div>
-          <div class="related-price">${formatRupiah(p.price || 5000)}</div>
+          <div class="related-price">${AfterquietStore.formatRupiah(p.price || 5000)}</div>
         `;
         container.appendChild(item);
       });
     }
 
-    // Cart Drawer Logic
-    const cartBackdrop = document.getElementById('cartBackdrop');
-    const cartDrawer = document.getElementById('cartDrawer');
-    const bagCounter = document.getElementById('bagCounter');
-    const cartItemsContainer = document.getElementById('cartItemsContainer');
-    const cartSubtotalValue = document.getElementById('cartSubtotalValue');
-    document.getElementById('openBagBtn').addEventListener('click', openBagDrawer);
+    window.addEventListener('aq_store_updated', () => {
+      initProductPage();
+    });
 
-    function openBagDrawer() {
-      cartBackdrop.classList.add('open');
-      cartDrawer.classList.add('open');
-    }
-
-    function closeBagDrawer() {
-      cartBackdrop.classList.remove('open');
-      cartDrawer.classList.remove('open');
-    }
-
-    function updateCartUI() {
-      bagCounter.innerText = cart.length;
-
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `
-          <p style="color:var(--muted); font-size:14px; padding:40px 0; text-align:center;">
-            your bag is currently empty.
-          </p>
-        `;
-        cartSubtotalValue.innerText = 'Rp 0';
-        return;
-      }
-
-      const counts = {};
-      cart.forEach(item => {
-        counts[item.id] = counts[item.id] || { ...item, count: 0 };
-        counts[item.id].count += 1;
-      });
-
-      let subtotal = 0;
-      cartItemsContainer.innerHTML = '';
-
-      Object.values(counts).forEach(grouped => {
-        const line = (grouped.price || 5000) * grouped.count;
-        subtotal += line;
-
-        const row = document.createElement('div');
-        row.className = 'cart-item-row';
-        row.innerHTML = `
-          <div class="cart-item-info">
-            <strong>${grouped.title}</strong>
-            <span>${grouped.count} × ${formatRupiah(grouped.price || 5000)} = ${formatRupiah(line)}</span>
-          </div>
-          <button onclick="removeItem('${grouped.id}')" style="background:none; border:none; color:var(--red); font-size:12px; cursor:pointer;">
-            remove
-          </button>
-        `;
-        cartItemsContainer.appendChild(row);
-      });
-
-      cartSubtotalValue.innerText = formatRupiah(subtotal);
-    }
-
-    function removeItem(id) {
-      cart = cart.filter(p => p.id !== id);
-      updateCartUI();
-    }
-
-    function checkoutCartWA() {
-      if (cart.length === 0) return;
-
-      const counts = {};
-      cart.forEach(item => {
-        counts[item.title] = counts[item.title] || { count: 0, price: item.price || 5000 };
-        counts[item.title].count += 1;
-      });
-
-      let subtotal = 0;
-      let text = `Halo afterquiet, saya ingin memesan produk berikut:%0A%0A`;
-      Object.keys(counts).forEach(title => {
-        const g = counts[title];
-        const line = g.price * g.count;
-        subtotal += line;
-        text += `• ${title} (${g.count}x) — ${formatRupiah(line)}%0A`;
-      });
-
-      text += `%0ATotal: ${formatRupiah(subtotal)}%0A`;
-      text += `Mohon info ketersediaan stok & pengirimannya ya. Terima kasih!`;
-
-      window.open(`https://wa.me/${OFFICIAL_WA}?text=${text}`, '_blank');
-    }
-
-    initPage();
+    initProductPage();
   </script>
 </body>
 </html>
