@@ -1892,6 +1892,9 @@
               padding: 18px 16px max(18px, env(safe-area-inset-bottom, 18px)) !important;
               box-shadow: none !important;
             }
+            #aqCartBodyContainer {
+              padding-bottom: 120px !important; /* Clearance for sticky checkout and virtual keyboards */
+            }
             #aqCustName, #aqCustPhone, #aqCustAddress, #aqCustCity, #aqCourierSelect, #aqOrderNotes, #aqDiscountInput {
               font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
             }

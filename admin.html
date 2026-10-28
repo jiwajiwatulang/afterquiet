@@ -861,6 +861,7 @@
       .commerce-table td[data-label="Actions"] {
         display: flex !important;
         justify-content: flex-end !important;
+        gap: 8px !important;
         padding: 8px 0 2px !important;
         border-top: 1px dashed var(--border-subtle) !important;
         margin-top: 6px !important;
@@ -868,6 +869,16 @@
       }
       .commerce-table td[data-label="Actions"]::before {
         display: none !important;
+      }
+      .commerce-table td[data-label="Actions"] .btn-action-secondary {
+        min-height: 38px !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        border-radius: 4px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
     }
 

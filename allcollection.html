@@ -721,11 +721,24 @@
         font-weight: 600 !important;
       }
       .btn-quick-add {
-        padding: 5px 8px !important;
-        font-size: 10px !important;
-        height: 28px !important;
-        font-weight: 600 !important;
+        position: relative !important;
+        min-height: 36px !important;
+        padding: 8px 14px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        border-radius: 2px !important;
         white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .btn-quick-add::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        bottom: -6px;
+        left: -8px;
+        right: -8px;
       }
 
       .footer-top { flex-direction: column; gap: 32px; padding: 40px 16px; }

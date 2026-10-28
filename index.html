@@ -1152,12 +1152,13 @@
         gap: 10px !important;
       }
       .hero-artifact-graphic {
-        font-size: 12px !important;
+        font-size: 13px !important;
         line-height: 1.1 !important;
-        width: 44px !important;
-        height: 44px !important;
-        background: #252525 !important;
-        border-radius: 3px !important;
+        width: 52px !important;
+        height: 52px !important;
+        background: #222222 !important;
+        border: 1px solid #383838 !important;
+        border-radius: 4px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -1166,6 +1167,7 @@
         font-weight: 700 !important;
         text-align: center !important;
         color: #F1EFE9 !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.35) !important;
       }
       .hero-artifact-tag { display: none !important; }
       .hero-artifact-foot {
@@ -1251,11 +1253,24 @@
         font-weight: 600 !important;
       }
       .btn-buy-card {
-        padding: 5px 8px !important;
-        font-size: 10px !important;
-        height: 28px !important;
-        font-weight: 600 !important;
+        position: relative !important;
+        min-height: 36px !important;
+        padding: 8px 12px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        border-radius: 2px !important;
         white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .btn-buy-card::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        bottom: -6px;
+        left: -8px;
+        right: -8px;
       }
 
       /* Mobile Content Sections */
