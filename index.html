@@ -897,6 +897,7 @@
           <strong>Connect</strong>
           <a href="https://www.instagram.com/afterquiet_____/" target="_blank" rel="noopener">Instagram (@afterquiet_____)</a>
           <a href="#">Order via WhatsApp</a>
+          <a href="/admin" style="opacity:0.6; font-size:11px;">Store Admin ↗</a>
         </div>
       </div>
     </div>
@@ -937,7 +938,7 @@
 
   <!-- Store Logic -->
   <script>
-    const products = [
+    const defaultCatalog = [
       {
         id: "tote_ecru",
         title: "Archive Canvas Tote Bag",
@@ -946,7 +947,8 @@
         price: 135000,
         formattedPrice: "Rp 135.000",
         tag: "Tote 01",
-        graphic: "archive\ntote."
+        graphic: "archive\ntote.",
+        status: "active"
       },
       {
         id: "tote_black",
@@ -956,7 +958,8 @@
         price: 145000,
         formattedPrice: "Rp 145.000",
         tag: "Tote 02",
-        graphic: "utility\nblack."
+        graphic: "utility\nblack.",
+        status: "active"
       },
       {
         id: "bag_messenger",
@@ -966,7 +969,8 @@
         price: 185000,
         formattedPrice: "Rp 185.000",
         tag: "Bag 01",
-        graphic: "tactical\nmessenger."
+        graphic: "tactical\nmessenger.",
+        status: "active"
       },
       {
         id: "bag_shoulder",
@@ -976,7 +980,8 @@
         price: 115000,
         formattedPrice: "Rp 115.000",
         tag: "Bag 02",
-        graphic: "mini\nshoulder."
+        graphic: "mini\nshoulder.",
+        status: "active"
       },
       {
         id: "pin_restless",
@@ -986,7 +991,8 @@
         price: 55000,
         formattedPrice: "Rp 55.000",
         tag: "Pin",
-        graphic: "restless\nmind."
+        graphic: "restless\nmind.",
+        status: "active"
       },
       {
         id: "sticker_pack",
@@ -996,7 +1002,8 @@
         price: 32000,
         formattedPrice: "Rp 32.000",
         tag: "Pack",
-        graphic: "silence isn't\nalways peace."
+        graphic: "silence isn't\nalways peace.",
+        status: "active"
       },
       {
         id: "badge_soft",
@@ -1006,7 +1013,8 @@
         price: 45000,
         formattedPrice: "Rp 45.000",
         tag: "Badge",
-        graphic: "too soft\nfor this world"
+        graphic: "too soft\nfor this world",
+        status: "active"
       },
       {
         id: "keychain_honesty",
@@ -1016,9 +1024,46 @@
         price: 48000,
         formattedPrice: "Rp 48.000",
         tag: "Tag",
-        graphic: "emotional\nhonesty"
+        graphic: "emotional\nhonesty",
+        status: "active"
       }
     ];
+
+    let products = [];
+    try {
+      const stored = localStorage.getItem('aq_products');
+      if (stored) {
+        products = JSON.parse(stored).filter(p => p.status !== 'draft');
+      } else {
+        products = defaultCatalog;
+        localStorage.setItem('aq_products', JSON.stringify(defaultCatalog));
+      }
+    } catch(e) {
+      products = defaultCatalog;
+    }
+
+    // Apply Live Theme Customizer
+    function applyLiveTheme() {
+      try {
+        const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
+        if (theme.announcement) {
+          const ann = document.querySelector('.announcement-bar span:last-child');
+          if (ann) ann.innerText = theme.announcement;
+        }
+        if (theme.headline) {
+          const h1 = document.querySelector('.hero-heading');
+          if (h1) h1.innerHTML = theme.headline + '<span class="accent-period">.</span>';
+        }
+        if (theme.philosophy) {
+          const phil = document.querySelector('.hero-philosophy');
+          if (phil) phil.innerText = theme.philosophy;
+        }
+        if (theme.accentColor) {
+          document.documentElement.style.setProperty('--red', theme.accentColor);
+        }
+      } catch(e) {}
+    }
+    applyLiveTheme();
 
     let cart = [];
     let currentFilter = 'all';
@@ -1159,10 +1204,12 @@
 
     window.checkoutOrderWA = function() {
       if (cart.length === 0) return;
+      const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
+      const waTarget = theme.waNumber ? theme.waNumber.replace(/[^0-9]/g, '') : '';
       const lines = cart.map(i => `• ${i.title} (x${i.qty}) - Rp ${(i.price * i.qty).toLocaleString('id-ID')}`).join('%0A');
       const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
       const msg = `Halo afterquiet,%0A%0ASaya ingin memesan item berikut:%0A${lines}%0A%0ATotal: Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan & alamat pengiriman. Terima kasih.`;
-      window.open(`https://wa.me/?text=${msg}`, '_blank');
+      window.open(`https://wa.me/${waTarget}?text=${msg}`, '_blank');
     };
 
     renderGrid();

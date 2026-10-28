@@ -890,9 +890,11 @@
         pinLines = "  (No extra pins)";
       }
 
+      const theme = JSON.parse(localStorage.getItem('aq_theme') || '{}');
+      const waTarget = theme.waNumber ? theme.waNumber.replace(/[^0-9]/g, '') : '';
       const msg = `Halo afterquiet,%0A%0ASaya ingin memesan custom arrangement dari Studio:%0A%0A*BASE BAG:*%0A• ${bag.name} - ${bag.formattedPrice}%0A%0A*ATTACHED PINS & BADGES (${attachedPins.length} pcs):*%0A${pinLines}%0A%0A*TOTAL:* Rp ${total.toLocaleString('id-ID')}%0A%0AMohon konfirmasi ketersediaan & alamat pengiriman. Terima kasih.`;
       
-      window.open(`https://wa.me/?text=${msg}`, '_blank');
+      window.open(`https://wa.me/${waTarget}?text=${msg}`, '_blank');
     };
 
     window.addEventListener('DOMContentLoaded', () => {
