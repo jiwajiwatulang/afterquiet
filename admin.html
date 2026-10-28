@@ -811,6 +811,59 @@
     }
     .sidebar-backdrop.active { display: block; }
 
+    
+    /* Mobile Card View for Commerce Tables */
+    @media (max-width: 768px) {
+      .commerce-table thead { display: none !important; }
+      .commerce-table, .commerce-table tbody, .commerce-table tr, .commerce-table td {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .commerce-table tr {
+        background: white !important;
+        border: 1px solid var(--border-card) !important;
+        border-radius: 8px !important;
+        margin-bottom: 14px !important;
+        padding: 16px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+      }
+      .commerce-table td {
+        padding: 8px 0 !important;
+        border-bottom: 1px dashed #F1F1F2 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        text-align: right !important;
+      }
+      .commerce-table td:last-child {
+        border-bottom: none !important;
+        padding-top: 12px !important;
+        justify-content: flex-end !important;
+      }
+      .commerce-table td[data-label]::before {
+        content: attr(data-label);
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        text-align: left;
+        font-weight: 600;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+      .commerce-table td.full-card-cell {
+        display: block !important;
+        text-align: left !important;
+        border-bottom: 1px solid var(--border-subtle) !important;
+        padding-bottom: 10px !important;
+        margin-bottom: 8px !important;
+      }
+      .commerce-table td.full-card-cell::before {
+        display: none !important;
+      }
+    }
+
     /* RESPONSIVE MEDIA QUERIES FOR ADMIN */
     @media (max-width: 960px) {
       .mobile-admin-header { display: flex; }
@@ -1475,6 +1528,16 @@
           </div>
         </div>
 
+                <!-- Default PIN Security Recommendation Card -->
+        <div id="defaultPinWarningNotice" style="display:none; background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#92400E; font-size:13px; display:block;">⚠️ Security Notice: Default PIN (1234) Detected</strong>
+              <span style="font-size:12px; color:#B45309;">Your store is currently using factory credentials. Set a custom PIN to protect products, orders, and financial data.</span>
+            </div>
+            <button type="button" class="btn-action-primary" style="font-size:11px; background:#92400E; border-color:#92400E;" onclick="openChangePinModal()">Set Custom PIN Now</button>
+          </div>
+        </div>
         <!-- 3. Security & Admin Access Control -->
         <div class="admin-card-panel">
           <div class="card-panel-header">
@@ -1940,25 +2003,64 @@
       </div>
       <div style="padding:24px;">
         <input type="hidden" id="colModalId" value="">
-        <div class="form-group-item" style="margin-bottom:14px;">
-          <label>Collection Title *</label>
-          <input type="text" id="colTitleInput" class="form-control-input" placeholder="e.g. Pins & Badges or vol. 03 — future quiet" required oninput="handleColTitleInput(this.value)">
-        </div>
-        <div class="form-group-item" style="margin-bottom:14px;">
-          <label>URL Handle / Slug *</label>
-          <div style="display:flex; align-items:center;">
-            <span style="background:#FAFAFA; border:1px solid var(--border-subtle); border-right:none; padding:10px 12px; font-size:12px; color:var(--text-sub); border-radius:6px 0 0 6px; font-family:var(--mono);">/allcollection?col=</span>
-            <input type="text" id="colSlugInput" class="form-control-input" style="border-radius:0 6px 6px 0; font-family:var(--mono);" placeholder="pins-badges">
+        <input type="hidden" id="colModalImageData" value="">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div class="form-group-item">
+            <label>Collection Title *</label>
+            <input type="text" id="colTitleInput" class="form-control-input" placeholder="e.g. Pins & Badges or vol. 03 — future quiet" required oninput="handleColTitleInput(this.value)">
+          </div>
+          <div class="form-group-item">
+            <label>Publication Status</label>
+            <select id="colStatusInput" class="form-control-input">
+              <option value="published">Published (Visible on store)</option>
+              <option value="draft">Draft (Hidden from store)</option>
+            </select>
           </div>
         </div>
-        <div class="form-group-item" style="margin-bottom:14px;">
-          <label>Volume / Filter Tag *</label>
-          <input type="text" id="colVolumeTagInput" class="form-control-input" placeholder="e.g. vol. 03 or accessories or all" style="font-family:var(--mono);">
-          <span style="font-size:11px; color:var(--text-sub);">Used to match products assigned to this collection on the storefront.</span>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div class="form-group-item">
+            <label>URL Handle / Slug *</label>
+            <div style="display:flex; align-items:center;">
+              <span style="background:#FAFAFA; border:1px solid var(--border-subtle); border-right:none; padding:10px 10px; font-size:11px; color:var(--text-sub); border-radius:6px 0 0 6px; font-family:var(--mono);">?col=</span>
+              <input type="text" id="colSlugInput" class="form-control-input" style="border-radius:0 6px 6px 0; font-family:var(--mono);" placeholder="pins-badges">
+            </div>
+          </div>
+          <div class="form-group-item">
+            <label>Volume / Filter Tag *</label>
+            <input type="text" id="colVolumeTagInput" class="form-control-input" placeholder="e.g. vol. 03 or accessories" style="font-family:var(--mono);">
+          </div>
         </div>
+
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Default Product Sort Order</label>
+          <select id="colSortOrderInput" class="form-control-input">
+            <option value="manual">Manual / Curated Release</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="newest">Newest Arrivals First</option>
+          </select>
+        </div>
+
+        <!-- Cover Image Uploader for Collection -->
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Collection Cover Image (Optional Banner)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="file" id="colImageFileInput" accept="image/*" style="display:none;" onchange="handleCollectionImageFile(event)">
+            <button type="button" class="btn-action-secondary" style="font-size:11px;" onclick="document.getElementById('colImageFileInput').click()">Upload Banner Photo</button>
+            <input type="url" id="colImageUrlInput" class="form-control-input" placeholder="Or paste image URL" style="flex:1;">
+            <button type="button" class="btn-action-secondary" style="font-size:11px;" onclick="applyColImageUrl()">Set URL</button>
+          </div>
+          <div id="colImagePreviewBox" style="margin-top:10px; display:none; position:relative; width:100%; height:120px; border-radius:6px; overflow:hidden; border:1px solid var(--border-subtle); background:#171717;">
+            <img id="colImagePreviewImg" src="" alt="Collection banner" style="width:100%; height:100%; object-fit:cover;">
+            <button type="button" onclick="removeColImage()" style="position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.7); color:white; border:none; padding:3px 8px; font-size:10px; border-radius:3px; cursor:pointer;">Remove</button>
+          </div>
+        </div>
+
         <div class="form-group-item" style="margin-bottom:20px;">
-          <label>Description / Curatorial Story</label>
-          <textarea id="colDescInput" class="form-control-input" style="min-height:80px; font-size:13px; line-height:1.6;" placeholder="Describe the concept, themes, and narrative of this collection drop..."></textarea>
+          <label>Curatorial Story / Narrative</label>
+          <textarea id="colDescInput" class="form-control-input" style="min-height:75px; font-size:13px; line-height:1.6;" placeholder="Describe the concept, themes, and narrative of this collection drop..."></textarea>
         </div>
         <div style="display:flex; justify-content:flex-end; gap:10px;">
           <button type="button" class="btn-action-secondary" onclick="closeCollectionModal()">Cancel</button>
@@ -2296,17 +2398,21 @@
         }
 
         tr.innerHTML = `
-          <td><strong>${o.id}</strong></td>
-          <td style="font-family:var(--mono); font-size:11px;">${AfterquietStore.formatDate(o.createdAt)}</td>
-          <td>
+          <td class="full-card-cell">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="font-size:14px;">${o.id}</strong>
+              <span class="status-badge status-${o.paymentStatus}">${o.paymentStatus === 'unpaid' ? 'Awaiting Payment' : o.paymentStatus}</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-sub); font-family:var(--mono); margin-top:2px;">${AfterquietStore.formatDate(o.createdAt)}</div>
+          </td>
+          <td data-label="Customer">
             <strong>${escapeHtml(o.customer.name)}</strong>
             <div style="font-size:11px; color:var(--text-sub); font-family:var(--mono);">${escapeHtml(o.customer.phone || '')}</div>
           </td>
-          <td style="font-size:12px; color:var(--text-sub); max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(itemsSummary)}</td>
-          <td><strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(o.total)}</strong></td>
-          <td><span class="status-badge status-${o.paymentStatus}">${o.paymentStatus === 'unpaid' ? 'Awaiting Payment' : o.paymentStatus}</span></td>
-          <td><span class="status-badge status-${o.fulfillmentStatus}">${o.fulfillmentStatus}</span></td>
-          <td style="text-align:right;">${actionsHtml}</td>
+          <td data-label="Items" style="font-size:12px; color:var(--text-sub); max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(itemsSummary)}</td>
+          <td data-label="Total"><strong style="font-family:var(--mono); font-size:14px;">${AfterquietStore.formatRupiah(o.total)}</strong></td>
+          <td data-label="Fulfillment"><span class="status-badge status-${o.fulfillmentStatus}">${o.fulfillmentStatus}</span></td>
+          <td data-label="Actions" style="text-align:right;">${actionsHtml}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -2440,6 +2546,21 @@
     // ================= COLLECTIONS & CATEGORIES CONTROLLER (SHOPIFY-GRADE) =================
     let isEditingFromProductModal = false;
 
+    let isProductFormDirty = false;
+
+    function markProductFormDirty() {
+      isProductFormDirty = true;
+    }
+
+    function checkUniqueSku(sku, currentProdId) {
+      if (!sku) return true;
+      const products = AfterquietStore.getProducts(true);
+      const cleanSku = sku.trim().toLowerCase();
+      const duplicate = products.find(p => p.sku && p.sku.trim().toLowerCase() === cleanSku && p.id !== currentProdId);
+      return !duplicate;
+    }
+
+
     function populateCategoryOptions(selectedVal = null) {
       const select = document.getElementById('prodCategory');
       if (!select) return;
@@ -2513,23 +2634,73 @@
         const matchingCount = products.filter(p => p.volume === tag || p.category === tag || p.volume === c.title).length;
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>
-            <strong style="display:block; font-size:14px; color:var(--text-main);">${escapeHtml(c.title)}</strong>
-            <div style="font-size:12px; color:var(--text-sub); margin-top:2px;">${escapeHtml(c.description || 'Curated independent release')}</div>
+          <td class="full-card-cell">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:44px; height:44px; border-radius:4px; border:1px solid var(--border-subtle); background:#171717; color:#F1EFE9; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
+                ${c.image ? `<img src="${c.image}" alt="" style="width:100%; height:100%; object-fit:cover;">` : `<span style="font-family:var(--mono); font-size:9px;">COLL</span>`}
+              </div>
+              <div style="min-width:0;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <strong style="font-size:14px; color:var(--text-main);">${escapeHtml(c.title)}</strong>
+                  <span class="status-badge status-${c.status || 'published'}">${c.status || 'published'}</span>
+                </div>
+                <div style="font-size:12px; color:var(--text-sub); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:320px;">${escapeHtml(c.description || 'Curated release')}</div>
+              </div>
+            </div>
           </td>
-          <td style="font-family:var(--mono); font-size:12px;">/allcollection?col=${c.slug}</td>
-          <td><span style="font-family:var(--mono); font-size:11px; background:#EEE; padding:2px 8px; border-radius:3px;">${c.volumeTag || c.slug}</span></td>
-          <td><strong style="font-family:var(--mono);">${matchingCount} pieces</strong></td>
-          <td style="text-align:right;">
-            <div style="display:flex; gap:8px; justify-content:flex-end;">
+          <td data-label="Handle" style="font-family:var(--mono); font-size:12px;">/allcollection?col=${c.slug}</td>
+          <td data-label="Filter Tag"><span style="font-family:var(--mono); font-size:11px; background:#EEE; padding:2px 8px; border-radius:3px;">${c.volumeTag || c.slug}</span></td>
+          <td data-label="Products"><strong style="font-family:var(--mono);">${matchingCount} pieces</strong></td>
+          <td data-label="Actions" style="text-align:right;">
+            <div style="display:flex; gap:6px; justify-content:flex-end;">
               <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openEditCollectionModal('${c.id}')">Edit</button>
-              <a href="/allcollection" target="_blank" class="btn-action-secondary" style="font-size:11px; padding:4px 8px;">View Store ↗</a>
+              <a href="/allcollection?col=${c.slug}" target="_blank" class="btn-action-secondary" style="font-size:11px; padding:4px 8px;">View Store ↗</a>
               <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px; color:var(--accent-brand);" onclick="deleteCollectionRecord('${c.id}')">Delete</button>
             </div>
           </td>
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    
+    function handleCollectionImageFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        alert('Please choose a valid image file.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        setColActiveImage(evt.target.result);
+      };
+      reader.readAsDataURL(file);
+      e.target.value = '';
+    }
+
+    function applyColImageUrl() {
+      const url = document.getElementById('colImageUrlInput').value.trim();
+      if (!url) return;
+      setColActiveImage(url);
+      document.getElementById('colImageUrlInput').value = '';
+    }
+
+    function setColActiveImage(src) {
+      document.getElementById('colModalImageData').value = src || '';
+      const box = document.getElementById('colImagePreviewBox');
+      const img = document.getElementById('colImagePreviewImg');
+      if (src) {
+        img.src = src;
+        box.style.display = 'block';
+      } else {
+        img.src = '';
+        box.style.display = 'none';
+      }
+    }
+
+    function removeColImage() {
+      setColActiveImage('');
     }
 
     function openNewCollectionModal(fromProductModal = false) {
@@ -2540,6 +2711,9 @@
       document.getElementById('colSlugInput').value = '';
       document.getElementById('colVolumeTagInput').value = '';
       document.getElementById('colDescInput').value = '';
+      document.getElementById('colStatusInput').value = 'published';
+      document.getElementById('colSortOrderInput').value = 'manual';
+      setColActiveImage('');
       document.getElementById('collectionModal').classList.add('open');
     }
 
@@ -2553,6 +2727,9 @@
       document.getElementById('colSlugInput').value = c.slug || '';
       document.getElementById('colVolumeTagInput').value = c.volumeTag || '';
       document.getElementById('colDescInput').value = c.description || '';
+      document.getElementById('colStatusInput').value = c.status || 'published';
+      document.getElementById('colSortOrderInput').value = c.sortOrder || 'manual';
+      setColActiveImage(c.image || '');
       document.getElementById('collectionModal').classList.add('open');
     }
 
@@ -2583,7 +2760,10 @@
       const volumeTag = document.getElementById('colVolumeTagInput').value.trim() || slug;
       const desc = document.getElementById('colDescInput').value.trim();
 
-      const colObj = { id: id || undefined, title, slug, volumeTag, description: desc };
+      const status = document.getElementById('colStatusInput').value;
+      const sortOrder = document.getElementById('colSortOrderInput').value;
+      const image = document.getElementById('colModalImageData').value;
+      const colObj = { id: id || undefined, title, slug, volumeTag, description: desc, status, sortOrder, image };
       AfterquietStore.saveCollection(colObj);
       closeCollectionModal();
       showToast(`Collection "${title}" saved`);
@@ -2658,31 +2838,32 @@
         const reserved = Number(p.reserved || 0);
 
         tr.innerHTML = `
-          <td>
+          <td class="full-card-cell">
             <div style="display:flex; align-items:center; gap:12px;">
               <div style="width:44px; height:44px; border-radius:4px; border:1px solid var(--border-subtle); background:#171717; color:#F1EFE9; display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;">
                 ${p.image ? `<img src="${p.image}" alt="" style="width:100%; height:100%; object-fit:cover;">` : `<span style="font-family:var(--mono); font-size:9px; text-align:center; padding:2px;">${(p.graphic || p.title).slice(0, 10)}</span>`}
               </div>
-              <div style="min-width:0;">
-                <strong style="display:block; font-size:13px; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;">${escapeHtml(p.title)}</strong>
+              <div style="min-width:0; flex:1;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="font-size:13px; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px;">${escapeHtml(p.title)}</strong>
+                  <span class="status-badge status-${p.status}">${p.status}</span>
+                </div>
                 <div style="font-size:11px; color:var(--text-sub);">${escapeHtml(p.kind || '')}</div>
-                ${p.handle ? `<div style="font-size:10px; font-family:var(--mono); color:var(--text-muted);">/product?id=${p.handle}</div>` : ''}
               </div>
             </div>
           </td>
-          <td style="font-family:var(--mono); font-size:12px;">${p.sku || '-'}</td>
-          <td><span style="font-family:var(--mono); font-size:11px; background:#EEE; padding:2px 6px; border-radius:3px;">${p.volume || 'general'}</span></td>
-          <td>
+          <td data-label="SKU" style="font-family:var(--mono); font-size:12px;">${p.sku || '-'}</td>
+          <td data-label="Volume"><span style="font-family:var(--mono); font-size:11px; background:#EEE; padding:2px 6px; border-radius:3px;">${p.volume || 'general'}</span></td>
+          <td data-label="Price">
             <strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(p.price || 5000)}</strong>
-            ${p.compareAtPrice && p.compareAtPrice > p.price ? `<div style="font-size:10px; text-decoration:line-through; color:var(--text-muted); font-family:var(--mono);">${AfterquietStore.formatRupiah(p.compareAtPrice)}</div>` : ''}
+            ${p.compareAtPrice && p.compareAtPrice > p.price ? `<span style="font-size:10px; text-decoration:line-through; color:var(--text-muted); font-family:var(--mono); margin-left:6px;">${AfterquietStore.formatRupiah(p.compareAtPrice)}</span>` : ''}
           </td>
-          <td>
+          <td data-label="Inventory">
             <strong style="font-family:var(--mono); color:${available <= 0 ? 'var(--accent-brand)' : 'inherit'};">${available} for sale</strong>
-            ${reserved > 0 ? `<div style="font-size:10px; font-family:var(--mono); color:var(--text-muted);">(${reserved} reserved hold)</div>` : ''}
+            ${reserved > 0 ? `<span style="font-size:10px; font-family:var(--mono); color:var(--text-muted); margin-left:6px;">(${reserved} hold)</span>` : ''}
           </td>
-          <td><span class="status-badge status-${p.status}">${p.status}</span></td>
-          <td style="text-align:right;">
-            <div style="display:flex; gap:8px; justify-content:flex-end;">
+          <td data-label="Actions" style="text-align:right;">
+            <div style="display:flex; gap:6px; justify-content:flex-end;">
               <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openEditProductModal('${p.id}')">Edit</button>
               <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px; color:var(--accent-brand);" onclick="deleteProductRecord('${p.id}')">Delete</button>
             </div>
@@ -2692,34 +2873,58 @@
       });
     }
 
-    // Media & Image Handling
+        // Media & Image Handling (with Error Handling & Validation)
     function handleProductImageFile(e) {
       const file = e.target.files[0];
       if (!file) return;
 
+      if (!file.type.startsWith('image/')) {
+        alert('Invalid file format. Please upload a valid image file (JPG, PNG, WebP).');
+        e.target.value = '';
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        alert('Image file is too large (maximum 10MB). Please choose a smaller photo.');
+        e.target.value = '';
+        return;
+      }
+
       const reader = new FileReader();
+      reader.onerror = function() {
+        alert('Failed to read image file. Please try another file.');
+      };
       reader.onload = function(evt) {
         const img = new Image();
+        img.onerror = function() {
+          alert('Could not decode image file. File may be damaged.');
+        };
         img.onload = function() {
-          const maxDim = 800;
-          let w = img.width;
-          let h = img.height;
-          if (w > maxDim || h > maxDim) {
-            if (w > h) {
-              h = Math.round((h * maxDim) / w);
-              w = maxDim;
-            } else {
-              w = Math.round((w * maxDim) / h);
-              h = maxDim;
+          try {
+            const maxDim = 800;
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
             }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            const optimizedData = canvas.toDataURL('image/jpeg', 0.82);
+            setProductActiveImage(optimizedData);
+            markProductFormDirty();
+            showToast('Product photo uploaded & optimized');
+          } catch (err) {
+            alert('Failed to optimize image: ' + err.message);
           }
-          const canvas = document.createElement('canvas');
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-          const optimizedData = canvas.toDataURL('image/jpeg', 0.82);
-          setProductActiveImage(optimizedData);
         };
         img.src = evt.target.result;
       };
@@ -2900,6 +3105,10 @@
     }
 
     function closeProductModal() {
+      if (isProductFormDirty) {
+        if (!confirm('You have unsaved product changes. Are you sure you want to discard them?')) return;
+      }
+      isProductFormDirty = false;
       document.getElementById('productModal').classList.remove('open');
     }
 
@@ -2916,7 +3125,14 @@
         return;
       }
 
-      const id = document.getElementById('modalProductId').value;
+            const id = document.getElementById('modalProductId').value;
+      const sku = document.getElementById('prodSku').value.trim();
+
+      if (sku && !checkUniqueSku(sku, id)) {
+        alert(`SKU "${sku}" is already in use by another product. SKU must be unique across all products.`);
+        document.getElementById('prodSku').focus();
+        return;
+      }
       const handle = document.getElementById('prodHandle').value.trim() || slugify(title);
 
       const productData = {
@@ -2943,6 +3159,7 @@
       };
 
       AfterquietStore.saveProduct(productData);
+      isProductFormDirty = false;
       closeProductModal();
       showToast('Product saved successfully');
       renderProductsTable();
@@ -3131,6 +3348,14 @@
       document.getElementById('setCloudAuthSecret').value = cfg.authSecret || '';
       document.getElementById('setCloudPollInterval').value = Math.round((cfg.pollIntervalMs || 25000) / 1000);
       document.getElementById('setSessionTimeout').value = String(s.sessionTimeoutMinutes || 30);
+
+      // Check default PIN security
+      const secNotice = document.getElementById('defaultPinWarningNotice');
+      if (secNotice) {
+        const isDefault = s.adminPinHash === 'd82c3598202da92e4c62402f115ac8da0d32cb8aec3b3959cd1e025a89913ad6';
+        secNotice.style.display = isDefault ? 'block' : 'none';
+      }
+
     }
 
     function saveStoreSettingsForm() {

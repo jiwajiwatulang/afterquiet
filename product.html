@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>product detail — afterquiet</title>
   <meta name="description" content="afterquiet independent accessories & visual culture. all items flat 5k.">
   <meta name="theme-color" content="#171717">
@@ -669,11 +669,17 @@
       background: #171717;
       color: #F1EFE9;
       padding: 12px 18px;
+      padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
       z-index: 99;
       box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-sticky-bar.visible {
+      transform: translateY(0);
     }
     .btn-mobile-sticky-add {
       background: #F1EFE9;
@@ -1011,6 +1017,32 @@
 
       renderRelated();
     }
+
+    // Intersection Observer to show sticky bar ONLY when main add-to-bag button is not visible
+    function initStickyBuyBarObserver() {
+      const mainBtn = document.getElementById('btnAddToCart');
+      const stickyBar = document.getElementById('mobileStickyBar');
+      if (!mainBtn || !stickyBar) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            stickyBar.classList.remove('visible');
+          } else {
+            stickyBar.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(mainBtn);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initStickyBuyBarObserver);
+    } else {
+      initStickyBuyBarObserver();
+    }
+
 
     function adjustQty(delta) {
       if (!currentProduct) return;

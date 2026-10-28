@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>all catalogue â€” afterquiet</title>
   <meta name="description" content="explore the complete afterquiet catalogue. independent accessories, pins, canvas totes and graphic bags. all items flat 5k.">
   <meta name="theme-color" content="#171717">
@@ -650,18 +650,18 @@
   <script>
     let currentFilter = 'all';
 
-    function renderFilterPills() {
+        function renderFilterPills() {
       const container = document.getElementById('collectionFilterPills');
       if (!container) return;
-      const collections = AfterquietStore.getCollections ? AfterquietStore.getCollections() : [];
-      if (collections.length > 0) {
-        let html = `<button class="filter-pill-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="applyFilter('all', this)">all pieces</button>`;
-        collections.forEach(col => {
-          const tag = col.volumeTag || col.slug;
-          html += `<button class="filter-pill-btn ${currentFilter === tag ? 'active' : ''}" onclick="applyFilter('${tag}', this)">${col.title}</button>`;
-        });
-        container.innerHTML = html;
-      }
+      const collections = (AfterquietStore.getCollections ? AfterquietStore.getCollections() : [])
+        .filter(c => !c.status || c.status === 'published');
+
+      let html = `<button class="filter-pill-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="applyFilter('all', this)">all pieces</button>`;
+      collections.forEach(col => {
+        const tag = col.volumeTag || col.slug;
+        html += `<button class="filter-pill-btn ${currentFilter === tag ? 'active' : ''}" onclick="applyFilter('${tag}', this)">${col.title}</button>`;
+      });
+      container.innerHTML = html;
     }
 
     function renderProducts() {

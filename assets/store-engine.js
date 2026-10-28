@@ -186,6 +186,9 @@
       slug: "vol-01",
       volumeTag: "vol. 01",
       description: "exploring vulnerability, sensitivity, and emotional honesty in an aggressive world.",
+      image: "",
+      status: "published",
+      sortOrder: "manual",
       createdAt: "2026-10-20T08:00:00Z"
     },
     {
@@ -194,6 +197,9 @@
       slug: "vol-02",
       volumeTag: "vol. 02",
       description: "centered on identity, memory, and the unspoken thoughts people carry internally.",
+      image: "",
+      status: "published",
+      sortOrder: "manual",
       createdAt: "2026-10-22T08:00:00Z"
     },
     {
@@ -202,6 +208,9 @@
       slug: "pins-badges",
       volumeTag: "accessories",
       description: "hard enamel die-cast metal pins, antique die-struck badges, and quiet resistance buttons.",
+      image: "",
+      status: "published",
+      sortOrder: "manual",
       createdAt: "2026-10-23T08:00:00Z"
     },
     {
@@ -210,6 +219,9 @@
       slug: "canvas-totes",
       volumeTag: "totes",
       description: "heavyweight 16oz organic cotton canvas tote bags with reinforced stitching.",
+      image: "",
+      status: "published",
+      sortOrder: "manual",
       createdAt: "2026-10-24T08:00:00Z"
     },
     {
@@ -218,6 +230,9 @@
       slug: "all-catalogue",
       volumeTag: "all",
       description: "complete independent objects archive. every piece flat Rp 5.000.",
+      image: "",
+      status: "published",
+      sortOrder: "manual",
       createdAt: "2026-10-24T08:00:00Z"
     }
   ];
@@ -997,20 +1012,43 @@
     },
     saveCollection(colData) {
       const list = this.getCollections();
+      let baseSlug = (colData.slug || colData.title || 'collection')
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-|-$/g, '') || 'collection';
+      
+      let finalSlug = baseSlug;
+      let counter = 1;
+      while (list.some(c => c.slug === finalSlug && c.id !== colData.id)) {
+        finalSlug = `${baseSlug}-${counter++}`;
+      }
+
+      const cleanObj = {
+        title: colData.title,
+        slug: finalSlug,
+        volumeTag: colData.volumeTag || finalSlug,
+        description: colData.description || '',
+        image: colData.image || '',
+        status: colData.status || 'published',
+        sortOrder: colData.sortOrder || 'manual'
+      };
+
       if (colData.id) {
         const idx = list.findIndex(c => c.id === colData.id);
         if (idx !== -1) {
-          list[idx] = { ...list[idx], ...colData, updatedAt: new Date().toISOString() };
+          list[idx] = { ...list[idx], ...cleanObj, id: colData.id, updatedAt: new Date().toISOString() };
         } else {
-          list.unshift({ ...colData, createdAt: new Date().toISOString() });
+          list.unshift({ ...cleanObj, id: colData.id, createdAt: new Date().toISOString() });
         }
       } else {
         const newId = 'col_' + Date.now().toString(36);
-        const slug = colData.slug || (colData.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
         list.push({
-          ...colData,
+          ...cleanObj,
           id: newId,
-          slug,
           createdAt: new Date().toISOString()
         });
       }
