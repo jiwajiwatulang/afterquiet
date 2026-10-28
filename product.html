@@ -658,6 +658,51 @@
       .related-grid { grid-template-columns: 1fr; }
       .action-row { flex-direction: column; }
     }
+  
+    /* Mobile Sticky Buy Bar */
+    .mobile-sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #171717;
+      color: #F1EFE9;
+      padding: 12px 18px;
+      z-index: 99;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .btn-mobile-sticky-add {
+      background: #F1EFE9;
+      color: #171717;
+      border: none;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 2px;
+      cursor: pointer;
+      text-transform: lowercase;
+      white-space: nowrap;
+    }
+    .btn-mobile-sticky-add:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      .product-shell {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 24px 16px 90px;
+      }
+      .mobile-sticky-bar {
+        display: flex;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -910,6 +955,20 @@
 
       document.getElementById('productVol').innerText = (currentProduct.volume || 'volume 01') + (currentProduct.volume === 'vol. 02' ? ' — fragile archives' : ' — too soft for this world');
       document.getElementById('productTitle').innerText = currentProduct.title;
+      const mobTitle = document.getElementById('mobileStickyTitle');
+      if (mobTitle) mobTitle.innerText = currentProduct.title;
+      const mobPrice = document.getElementById('mobileStickyPrice');
+      if (mobPrice) mobPrice.innerText = AfterquietStore.formatRupiah(currentProduct.price || 5000);
+      const mobBtn = document.getElementById('btnMobileStickyAdd');
+      if (mobBtn) {
+        if (isSoldOut) {
+          mobBtn.disabled = true;
+          mobBtn.innerText = 'sold out';
+        } else {
+          mobBtn.disabled = false;
+          mobBtn.innerText = 'add to bag →';
+        }
+      }
 
       // Price with compare-at price
       const priceEl = document.getElementById('productPrice');
@@ -1014,5 +1073,14 @@
 
     initProductPage();
   </script>
+  <!-- Mobile Sticky Conversion Bar -->
+  <aside class="mobile-sticky-bar" id="mobileStickyBar">
+    <div style="min-width:0;">
+      <div style="font-family:var(--display); font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" id="mobileStickyTitle">product title</div>
+      <div style="font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:2px;" id="mobileStickyPrice">Rp 5.000</div>
+    </div>
+    <button type="button" class="btn-mobile-sticky-add" onclick="addProductToBag()" id="btnMobileStickyAdd">add to bag →</button>
+  </aside>
+
 </body>
 </html>

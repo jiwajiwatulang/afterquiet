@@ -1654,6 +1654,25 @@
       if (document.getElementById('aqCartOverlay')) return;
       if (window.location.pathname.includes('admin')) return;
 
+      
+      // Inject responsive styling for mobile drawer & form inputs
+      if (!document.getElementById('aqCartMobileStyles')) {
+        const style = document.createElement('style');
+        style.id = 'aqCartMobileStyles';
+        style.textContent = `
+          @media (max-width: 480px) {
+            #aqCartPanel {
+              max-width: 100vw !important;
+              padding: 20px 16px 28px !important;
+            }
+            #aqCustName, #aqCustPhone, #aqCustAddress, #aqCustCity, #aqCourierSelect, #aqOrderNotes, #aqDiscountInput {
+              font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+            }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
       const overlay = document.createElement('div');
       overlay.id = 'aqCartOverlay';
       overlay.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); z-index:99990; display:none; opacity:0; transition:opacity 0.25s ease;';

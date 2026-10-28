@@ -840,7 +840,9 @@
       .footer-nav-groups { flex-wrap: wrap; gap: 32px; }
     }
     @media (max-width: 540px) {
-      .product-grid { grid-template-columns: 1fr; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .product-thumbnail { height: 160px; }
+      .product-card { padding: 10px; }
       .site-nav { height: 70px; }
     }
   </style>

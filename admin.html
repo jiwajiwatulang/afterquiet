@@ -765,6 +765,183 @@
       z-index: 9999;
       display: none;
     }
+  
+    /* Mobile Header & Sidebar Drawer */
+    .mobile-admin-header {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #111111;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      border-bottom: 1px solid #222;
+    }
+    .mobile-nav-toggle-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      line-height: 1;
+      padding: 6px;
+      cursor: pointer;
+    }
+    .mobile-brand-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .mobile-brand-title img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 998;
+      display: none;
+      backdrop-filter: blur(2px);
+    }
+    .sidebar-backdrop.active { display: block; }
+
+    /* RESPONSIVE MEDIA QUERIES FOR ADMIN */
+    @media (max-width: 960px) {
+      .mobile-admin-header { display: flex; }
+      .admin-shell {
+        grid-template-columns: 1fr;
+      }
+      .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+      }
+      .admin-sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      .admin-main {
+        padding: 16px 14px 60px;
+      }
+      .admin-topbar {
+        display: none;
+      }
+      .metric-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .metric-summary-card {
+        padding: 14px;
+      }
+      .metric-big-number {
+        font-size: 20px;
+      }
+      .page-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .header-action-group {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .header-action-group button, .header-action-group a {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+      }
+      .panel-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 14px 16px;
+      }
+      .search-input-field {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .panel-toolbar > div {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+      }
+      .filter-select-box {
+        flex: 1;
+      }
+      .form-two-col {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+      .form-group-item.full-span {
+        grid-column: span 1;
+      }
+      
+      /* Shopify Product Editor on Mobile */
+      .shopify-modal-window {
+        max-width: 100vw;
+        max-height: 100vh;
+        height: 100vh;
+        border-radius: 0;
+      }
+      .shopify-editor-body {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 16px;
+      }
+      .shopify-modal-header {
+        padding: 12px 16px;
+      }
+      .shopify-modal-header h2 {
+        font-size: 15px;
+      }
+      .btn-back-link {
+        font-size: 12px;
+      }
+      
+      /* Generic modals on mobile */
+      .admin-modal-window {
+        max-width: 95vw;
+        max-height: 92vh;
+        border-radius: 8px;
+        margin: 10px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .metric-summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .metric-summary-card {
+        padding: 12px 10px;
+      }
+      .metric-label-line {
+        font-size: 10px;
+      }
+      .metric-big-number {
+        font-size: 16px;
+      }
+      .metric-subtext {
+        font-size: 9px;
+      }
+      .commerce-table th, .commerce-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -784,6 +961,22 @@
   </div>
 
   <!-- ================= MAIN OPERATING SYSTEM SHELL ================= -->
+    <!-- Mobile Sticky Header -->
+  <div class="mobile-admin-header" id="mobileAdminHeader">
+    <button type="button" class="mobile-nav-toggle-btn" onclick="toggleMobileSidebar(true)" aria-label="Toggle navigation">☰</button>
+    <div class="mobile-brand-title">
+      <img src="/assets/profile.jpg" alt="logo">
+      <span id="mobileHeaderViewTitle">Overview</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="cloud-status-dot" id="mobileCloudDot" style="width:8px; height:8px;"></span>
+      <a href="/" target="_blank" style="font-size:11px; color:#CCC; border:1px solid #333; padding:3px 8px; border-radius:4px; font-family:var(--mono);">Store ↗</a>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileSidebar(false)"></div>
+
   <div class="admin-shell" id="adminDashboard" style="display:none;">
     
     <!-- Sidebar -->
@@ -1917,6 +2110,7 @@
 
       if (!cfg || !cfg.enabled || !cfg.endpoint) {
         dot.className = 'cloud-status-dot offline';
+      const mobDot = document.getElementById('mobileCloudDot'); if (mobDot) mobDot.className = 'cloud-status-dot offline';
         label.innerText = 'Local Storage (Active)';
         return;
       }
@@ -1924,9 +2118,11 @@
       const status = AfterquietStore.CloudSync.status;
       if (status === 'syncing') {
         dot.className = 'cloud-status-dot syncing';
+      const mobDot = document.getElementById('mobileCloudDot'); if (mobDot) mobDot.className = 'cloud-status-dot syncing';
         label.innerText = 'Syncing...';
       } else if (status === 'connected') {
         dot.className = 'cloud-status-dot';
+      const mobDot = document.getElementById('mobileCloudDot'); if (mobDot) mobDot.className = 'cloud-status-dot';
         label.innerText = 'Cloud Synced';
       } else {
         dot.className = 'cloud-status-dot offline';
@@ -1953,7 +2149,26 @@
     }
 
     // Section Switching
+    
+    function toggleMobileSidebar(open = null) {
+      const sidebar = document.querySelector('.admin-sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (open === null) {
+        open = !sidebar.classList.contains('mobile-open');
+      }
+      if (open) {
+        sidebar.classList.add('mobile-open');
+        backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        sidebar.classList.remove('mobile-open');
+        backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
     function switchSection(secId) {
+      toggleMobileSidebar(false);
       const sections = ['overview', 'orders', 'products', 'collections', 'inventory', 'customers', 'discounts', 'settings'];
       sections.forEach(s => {
         const secEl = document.getElementById('sec' + s.charAt(0).toUpperCase() + s.slice(1));
@@ -1962,6 +2177,8 @@
         if (btnEl) btnEl.classList.toggle('active', s === secId);
       });
       document.getElementById('topbarCurrentView').innerText = secId.charAt(0).toUpperCase() + secId.slice(1);
+      const mobTitle = document.getElementById('mobileHeaderViewTitle');
+      if (mobTitle) mobTitle.innerText = secId.charAt(0).toUpperCase() + secId.slice(1);
       renderActiveSection(secId);
     }
 
