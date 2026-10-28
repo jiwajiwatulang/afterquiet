@@ -1142,7 +1142,8 @@
           window.location.href = `/product?id=${p.id}`;
         };
 
-        const isSoldOut = Number(p.stock !== undefined ? p.stock : 50) <= 0;
+        const availableStock = p.availableStock !== undefined ? p.availableStock : Math.max(0, Number(p.stock || 0) - Number(p.reserved || 0));
+        const isSoldOut = availableStock <= 0;
 
         card.innerHTML = `
           <div>

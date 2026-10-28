@@ -3,58 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>afterquiet — Commerce Operating System</title>
-  <meta name="theme-color" content="#171717">
-
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23171717'/><text x='50%' y='68%' font-size='52' font-family='sans-serif' font-weight='700' fill='%23F1EFE9' text-anchor='middle'>aq</text></svg>">
-
-  <!-- Fonts: Inter, Space Grotesk, IBM Plex Mono -->
+  <title>Admin Operations — afterquiet</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Core Store Engine -->
-  <script src="/assets/store-engine.js"></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --bg-base: #F6F6F7;
-      --bg-surface: #FFFFFF;
-      --bg-subtle: #F1F1F2;
-      --border-subtle: #E1E3E5;
-      --border-strong: #C9CCCF;
-      --text-main: #202223;
-      --text-sub: #6D7175;
+      --bg-card: #FFFFFF;
+      --sidebar-width: 250px;
+      --text-main: #171717;
+      --text-sub: #616161;
       --text-muted: #8C9196;
+      --border-subtle: #E1E3E5;
+      --border-card: #E5E7EB;
       --accent-brand: #843B40;
-      --accent-dark: #171717;
-      --status-success-bg: #E3F1DF;
-      --status-success-text: #1A5928;
-      --status-warning-bg: #FCF1CD;
-      --status-warning-text: #6A4B00;
-      --status-critical-bg: #FEECEB;
+      --status-active-bg: #E3F1DF;
+      --status-active-text: #1A5928;
+      --status-critical-bg: #FBEAE5;
       --status-critical-text: #8E1F1A;
-      --sidebar-width: 240px;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --display: 'Space Grotesk', sans-serif;
+      --status-warning-bg: #FCF1CD;
+      --status-warning-text: #704700;
       --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --display: 'Space Grotesk', sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      background: var(--bg-base);
+      background-color: var(--bg-base);
       color: var(--text-main);
       font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.5;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; }
 
     /* Security PIN Gate */
-    .pin-gate-overlay {
+    .pin-overlay {
       position: fixed;
       inset: 0;
       background: #171717;
@@ -123,6 +117,7 @@
       transition: background 0.15s;
     }
     .btn-pin-submit:hover { background: var(--accent-brand); }
+    .btn-pin-submit:disabled { background: #A0A0A0; cursor: not-allowed; }
     .pin-error {
       color: var(--accent-brand);
       font-size: 12px;
@@ -138,7 +133,7 @@
       min-height: 100vh;
     }
 
-    /* Sidebar Navigation (Enterprise Neutral Clean UI) */
+    /* Sidebar Navigation */
     .admin-sidebar {
       background: #111111;
       color: #E3E3E3;
@@ -254,10 +249,93 @@
 
     /* Admin Main Workspace */
     .admin-main {
-      padding: 32px 40px;
-      max-width: 1280px;
+      padding: 24px 36px 60px;
+      max-width: 1320px;
       width: 100%;
     }
+
+    /* Topbar Header */
+    .admin-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .admin-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .store-badge-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      background: #171717;
+      color: #F1EFE9;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .topbar-divider { color: var(--border-subtle); }
+    #topbarCurrentView { font-weight: 600; color: var(--text-main); font-size: 13px; }
+
+    .admin-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cloud-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-family: var(--mono);
+      background: white;
+      border: 1px solid var(--border-subtle);
+      padding: 4px 10px;
+      border-radius: 999px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .cloud-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      display: inline-block;
+    }
+    .cloud-status-dot.syncing { background: #F59E0B; animation: pulseDot 1s infinite alternate; }
+    .cloud-status-dot.offline { background: #9CA3AF; }
+    @keyframes pulseDot { from { opacity: 0.4; } to { opacity: 1; } }
+
+    .btn-cloud-sync {
+      background: none;
+      border: none;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--text-sub);
+      line-height: 1;
+      padding: 0 2px;
+      transition: transform 0.2s;
+    }
+    .btn-cloud-sync:hover { transform: rotate(180deg); color: var(--text-main); }
+
+    .btn-topbar-lock {
+      background: white;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-topbar-lock:hover { color: var(--accent-brand); border-color: var(--accent-brand); }
+
     .page-header-row {
       display: flex;
       justify-content: space-between;
@@ -304,7 +382,7 @@
       background: white;
       color: var(--text-main);
       border: 1px solid var(--border-subtle);
-      padding: 9px 15px;
+      padding: 9px 16px;
       font-size: 13px;
       font-weight: 500;
       border-radius: 6px;
@@ -314,11 +392,11 @@
       gap: 6px;
     }
     .btn-action-secondary:hover {
-      border-color: var(--border-strong);
-      background: #FAFAFA;
+      background: #F9FAFB;
+      border-color: #D1D5DB;
     }
 
-    /* Metric Cards Grid */
+    /* Metric Cards */
     .metric-summary-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -326,42 +404,40 @@
       margin-bottom: 24px;
     }
     .metric-summary-card {
-      background: white;
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
       border-radius: 8px;
       padding: 20px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     .metric-label-line {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-sub);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .metric-big-number {
-      font-family: var(--mono);
-      font-size: 24px;
+      font-family: var(--display);
+      font-size: 26px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: var(--text-main);
     }
     .metric-subtext {
       font-size: 11px;
       color: var(--text-muted);
       margin-top: 4px;
+      font-family: var(--mono);
     }
 
-    /* Content Panels */
+    /* Admin Card Panel & Tables */
     .admin-card-panel {
-      background: white;
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
       border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       margin-bottom: 24px;
       overflow: hidden;
     }
@@ -373,37 +449,34 @@
       align-items: center;
     }
     .card-panel-header h3 {
-      font-family: var(--display);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      font-family: var(--display);
     }
-
-    /* Filter & Search Toolbar */
     .panel-toolbar {
-      padding: 14px 20px;
+      padding: 14px 24px;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 14px;
-      background: #FCFCFD;
-      flex-wrap: wrap;
+      background: #FAFAFA;
     }
     .search-input-field {
-      padding: 8px 12px;
+      padding: 8px 14px;
       border: 1px solid var(--border-subtle);
       border-radius: 6px;
       font-size: 13px;
-      min-width: 260px;
       font-family: inherit;
+      width: 320px;
+      background: white;
     }
     .search-input-field:focus {
       outline: none;
       border-color: var(--text-main);
     }
     .filter-select-box {
-      padding: 8px 10px;
+      padding: 8px 12px;
       border: 1px solid var(--border-subtle);
       border-radius: 6px;
       font-size: 12px;
@@ -411,227 +484,61 @@
       font-family: inherit;
     }
 
-    /* Tables */
-    .table-responsive-box {
-      overflow-x: auto;
-    }
+    .table-responsive-box { overflow-x: auto; }
     .commerce-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 13px;
     }
     .commerce-table th {
-      padding: 12px 18px;
+      background: #F9FAFB;
+      padding: 12px 20px;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-sub);
-      background: #FAFAFB;
       border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--mono);
     }
     .commerce-table td {
-      padding: 14px 18px;
-      border-bottom: 1px solid #F1F2F3;
+      padding: 14px 20px;
+      border-bottom: 1px solid #F1F1F2;
       vertical-align: middle;
+      font-size: 13px;
     }
-    .commerce-table tr:hover td {
-      background: #FAFAFB;
-    }
+    .commerce-table tr:hover td { background: #FAFAFA; }
 
-    /* Status Pills */
+    /* Badges */
     .status-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
+      display: inline-block;
+      padding: 3px 8px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 600;
       text-transform: capitalize;
+      font-family: var(--mono);
     }
-    .status-paid, .status-fulfilled, .status-in_stock, .status-active {
-      background: var(--status-success-bg);
-      color: var(--status-success-text);
-    }
-    .status-unpaid, .status-unfulfilled, .status-low_stock, .status-draft {
-      background: var(--status-warning-bg);
-      color: var(--status-warning-text);
-    }
-    .status-refunded, .status-cancelled, .status-out_of_stock {
-      background: var(--status-critical-bg);
-      color: var(--status-critical-text);
-    }
+    .status-paid { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
+    .status-unpaid { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+    .status-expired { background: #F3F4F6; color: #6B7280; border: 1px solid #E5E7EB; }
+    .status-refunded { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+    .status-fulfilled { background: #DBEAFE; color: #1E40AF; border: 1px solid #BFDBFE; }
+    .status-unfulfilled { background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+    .status-cancelled { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+    .status-active { background: var(--status-active-bg); color: var(--status-active-text); }
+    .status-draft { background: #E5E7EB; color: #4B5563; }
+    .status-in_stock { background: #D1FAE5; color: #065F46; }
+    .status-low_stock { background: #FEF3C7; color: #92400E; }
+    .status-out_of_stock { background: #FEE2E2; color: #991B1B; }
 
-    /* Form Grids */
-    .form-two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      padding: 24px;
-    }
-    .form-group-item {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .form-group-item.full-span { grid-column: 1 / -1; }
-    .form-group-item label {
-      font-size: 12px;
-      font-weight: 600;
-      color: #333;
-    }
-    .form-control-input {
-      padding: 9px 12px;
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      font-size: 13px;
-      font-family: inherit;
-    }
-    .form-control-input:focus {
-      outline: none;
-      border-color: var(--text-main);
-    }
-
-    /* Modals & Shopify-Grade Product Editor */
-    .shopify-modal-window {
-      background: #F6F6F7;
-      border-radius: 12px;
-      max-width: 1100px;
-      width: 96%;
-      max-height: 94vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-      overflow: hidden;
-    }
-    .shopify-modal-header {
-      padding: 16px 24px;
-      background: white;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .btn-back-link {
-      background: none;
-      border: none;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-sub);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.15s;
-    }
-    .btn-back-link:hover { color: var(--text-main); }
-    .shopify-editor-body {
-      padding: 24px;
-      overflow-y: auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.8fr) minmax(300px, 1fr);
-      gap: 20px;
-    }
-    @media (max-width: 900px) {
-      .shopify-editor-body { grid-template-columns: 1fr; }
-    }
-    .shopify-card {
-      background: white;
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-    }
-    .shopify-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      color: var(--text-main);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .shopify-dropzone {
-      border: 1.5px dashed var(--border-strong);
-      border-radius: 8px;
-      padding: 24px 20px;
-      text-align: center;
-      background: #FAFAFA;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .shopify-dropzone:hover {
-      background: #F1F1F2;
-      border-color: var(--text-main);
-    }
-    .shopify-media-preview-box {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--border-subtle);
-      background: #171717;
-      min-height: 200px;
-      max-height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
-    .shopify-media-preview-box img {
-      max-width: 100%;
-      max-height: 250px;
-      object-fit: contain;
-      border-radius: 4px;
-    }
-    .media-overlay-actions {
-      position: absolute;
-      bottom: 12px;
-      right: 12px;
-      display: flex;
-      gap: 8px;
-    }
-    .google-preview-card {
-      background: white;
-      border: 1px solid #DFE1E5;
-      border-radius: 8px;
-      padding: 16px;
-      font-family: arial, sans-serif;
-      margin-top: 10px;
-      margin-bottom: 16px;
-    }
-    .google-serp-url {
-      font-size: 12px;
-      color: #202124;
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .google-serp-title {
-      color: #1a0dab;
-      font-size: 18px;
-      margin: 4px 0;
-      font-weight: 400;
-      line-height: 1.3;
-      cursor: pointer;
-    }
-    .google-serp-snippet {
-      color: #4d5156;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Modals */
+    /* Modals Generic */
     .admin-modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.5);
       backdrop-filter: blur(2px);
-      z-index: 500;
+      z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
@@ -648,76 +555,216 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
     .modal-head-line {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
     }
     .modal-head-line h3 {
+      font-size: 16px;
       font-family: var(--display);
-      font-size: 18px;
       font-weight: 700;
     }
     .modal-close-btn {
       background: none;
       border: none;
-      font-size: 24px;
-      cursor: pointer;
+      font-size: 22px;
       color: var(--text-sub);
-    }
-    .modal-footer-line {
-      padding: 16px 24px;
-      border-top: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      background: #FAFAFB;
+      line-height: 1;
     }
 
-    /* Toast Notification */
+    /* Forms */
+    .form-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 24px;
+    }
+    .form-group-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group-item.full-span { grid-column: span 2; }
+    .form-group-item label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+    .form-control-input {
+      padding: 10px 12px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      background: white;
+    }
+    .form-control-input:focus {
+      outline: none;
+      border-color: var(--text-main);
+    }
+
+    /* Shopify Product Editor */
+    .shopify-modal-window {
+      background: #F6F6F7;
+      border-radius: 8px;
+      max-width: 1060px;
+      width: 100%;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+      overflow: hidden;
+    }
+    .shopify-modal-header {
+      background: white;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .btn-back-link {
+      background: none;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-back-link:hover { color: var(--text-main); }
+    .shopify-editor-body {
+      padding: 24px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    .shopify-main-col, .shopify-side-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .shopify-card {
+      background: white;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .shopify-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .shopify-dropzone {
+      border: 2px dashed #C9C6BE;
+      border-radius: 6px;
+      padding: 24px;
+      text-align: center;
+      background: #FAFAFA;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .shopify-dropzone:hover {
+      border-color: var(--text-main);
+      background: #F4F4F4;
+    }
+    .shopify-media-preview-box {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #171717;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shopify-media-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .media-overlay-actions {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+    }
+    .google-serp-preview {
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 14px;
+      background: #FFFFFF;
+      margin-top: 10px;
+      font-family: arial, sans-serif;
+    }
+    .serp-url-line {
+      font-size: 11px;
+      color: #202124;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .serp-title-line {
+      font-size: 17px;
+      color: #1a0dab;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+    .serp-snippet-line {
+      font-size: 13px;
+      color: #4d5156;
+      line-height: 1.4;
+    }
+
+    /* Toast */
     .admin-toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: var(--text-main);
+      background: #171717;
       color: white;
       padding: 12px 20px;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 9999;
       display: none;
-      z-index: 1000;
-    }
-
-    @media (max-width: 1024px) {
-      .metric-summary-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 860px) {
-      .admin-shell { grid-template-columns: 1fr; }
-      .admin-sidebar { display: none; }
-      .admin-main { padding: 20px 16px; }
-      .form-two-col { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Administrator PIN Verification Gate -->
-  <div class="pin-gate-overlay" id="pinGate">
+  <!-- ================= SECURITY PIN GATE ================= -->
+  <div class="pin-overlay" id="pinGate">
     <div class="pin-box">
-      <img src="/assets/profile.jpg" alt="afterquiet" class="pin-logo">
+      <img src="/assets/profile.jpg" alt="afterquiet logo" class="pin-logo">
       <h2>afterquiet</h2>
-      <p>commerce operating system • enter PIN</p>
+      <p>Independent Commerce Operating Engine</p>
       
-      <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus>
-      <button class="btn-pin-submit" onclick="verifyPin()">Unlock Operating System</button>
-      <div class="pin-error" id="pinError">Incorrect PIN. Please try again.</div>
+      <input type="password" id="pinInput" class="pin-input" maxlength="8" placeholder="••••" autofocus autocomplete="off">
+      <button class="btn-pin-submit" id="btnPinSubmit" onclick="verifyPin()">Unlock Console</button>
+      <div class="pin-error" id="pinError">Access Denied: Incorrect PIN</div>
+      <div id="pinLockoutMsg" style="font-size:11px; font-family:var(--mono); color:var(--accent-brand); margin-top:8px; display:none;"></div>
     </div>
   </div>
 
-  <!-- Main Operating System Shell -->
+  <!-- ================= MAIN OPERATING SYSTEM SHELL ================= -->
   <div class="admin-shell" id="adminDashboard" style="display:none;">
     
     <!-- Sidebar -->
@@ -773,6 +820,23 @@
     <!-- Main Working Area -->
     <main class="admin-main">
       
+      <!-- Topbar Header with Cloud Sync and Session Monitor -->
+      <header class="admin-topbar">
+        <div class="admin-topbar-left">
+          <span class="store-badge-tag">afterquiet os</span>
+          <span class="topbar-divider">/</span>
+          <span id="topbarCurrentView">Overview</span>
+        </div>
+        <div class="admin-topbar-right">
+          <div class="cloud-status-pill" id="cloudStatusContainer">
+            <span class="cloud-status-dot" id="cloudStatusDot"></span>
+            <span id="cloudStatusLabel">Local Storage (Active)</span>
+            <button type="button" class="btn-cloud-sync" onclick="manualTriggerCloudSync()" title="Synchronize remote data now">↻</button>
+          </div>
+          <button type="button" class="btn-topbar-lock" onclick="lockAdminSession()">Lock Session</button>
+        </div>
+      </header>
+
       <!-- ================= SECTION 1: OVERVIEW ================= -->
       <section id="secOverview">
         <div class="page-header-row">
@@ -795,7 +859,8 @@
           <div class="metric-summary-card">
             <div class="metric-label-line">Total Revenue <span>💰</span></div>
             <div class="metric-big-number" id="dashTotalRevenue">Rp 0</div>
-            <div class="metric-subtext" id="dashPaidCount">from paid customer orders</div>
+            <div class="metric-subtext" id="dashPaidCount">from 0 paid orders</div>
+            <div style="font-size:11px; font-family:var(--mono); color:var(--text-sub); margin-top:4px;" id="dashPendingRevenue">Rp 0 awaiting payment</div>
           </div>
           <div class="metric-summary-card">
             <div class="metric-label-line">Total Orders <span>📦</span></div>
@@ -805,12 +870,13 @@
           <div class="metric-summary-card">
             <div class="metric-label-line">Average Order Value <span>📈</span></div>
             <div class="metric-big-number" id="dashAOV">Rp 0</div>
-            <div class="metric-subtext">per customer transaction</div>
+            <div class="metric-subtext">per paid customer transaction</div>
           </div>
           <div class="metric-summary-card">
             <div class="metric-label-line">Active Inventory <span>🏷️</span></div>
-            <div class="metric-big-number" id="dashTotalUnits">0</div>
-            <div class="metric-subtext" id="dashLowStockWarn">0 units low stock</div>
+            <div class="metric-big-number" id="dashAvailableUnits">0</div>
+            <div class="metric-subtext" id="dashInventoryBreakdown">0 physical • 0 reserved</div>
+            <div style="font-size:10px; font-family:var(--mono); color:var(--accent-brand); margin-top:4px;" id="dashLowStockWarn">0 low stock alerts</div>
           </div>
         </div>
 
@@ -846,7 +912,7 @@
         <div class="page-header-row">
           <div>
             <h1>Orders</h1>
-            <p>Order processing, fulfillment tracking, and customer transaction lifecycle.</p>
+            <p>Order processing, payment verification, and 24h stock reservation lifecycle.</p>
           </div>
         </div>
 
@@ -854,17 +920,18 @@
           <div class="panel-toolbar">
             <input type="text" id="orderSearchField" class="search-input-field" placeholder="Search by Order ID, customer, phone..." oninput="renderOrdersTable()">
             <div style="display:flex; gap:10px;">
+              <select id="orderPaymentFilter" class="filter-select-box" onchange="renderOrdersTable()">
+                <option value="all">All Payments</option>
+                <option value="unpaid">Awaiting Payment (Reserved)</option>
+                <option value="paid">Paid</option>
+                <option value="expired">Expired</option>
+                <option value="refunded">Refunded / Cancelled</option>
+              </select>
               <select id="orderFulfillmentFilter" class="filter-select-box" onchange="renderOrdersTable()">
                 <option value="all">All Fulfillment</option>
                 <option value="unfulfilled">Unfulfilled Only</option>
                 <option value="fulfilled">Fulfilled</option>
                 <option value="cancelled">Cancelled</option>
-              </select>
-              <select id="orderPaymentFilter" class="filter-select-box" onchange="renderOrdersTable()">
-                <option value="all">All Payments</option>
-                <option value="paid">Paid</option>
-                <option value="unpaid">Unpaid</option>
-                <option value="refunded">Refunded</option>
               </select>
             </div>
           </div>
@@ -926,11 +993,11 @@
             <table class="commerce-table">
               <thead>
                 <tr>
-                  <th style="width:38%;">Product</th>
+                  <th style="width:36%;">Product</th>
                   <th>SKU</th>
                   <th>Volume / Release</th>
                   <th>Price</th>
-                  <th>Stock</th>
+                  <th>Available Stock</th>
                   <th>Status</th>
                   <th style="text-align:right;">Actions</th>
                 </tr>
@@ -948,14 +1015,14 @@
         <div class="page-header-row">
           <div>
             <h1>Inventory</h1>
-            <p>Stock level monitoring, automatic allocation tracking, and restocking audit logs.</p>
+            <p>Physical inventory on-hand, 24h reserved holds, and restock audit log.</p>
           </div>
         </div>
 
         <div class="admin-card-panel">
           <div class="panel-toolbar">
-            <span style="font-size:13px; font-weight:600;">Stock Levels by SKU</span>
-            <span style="font-size:12px; color:var(--text-sub); font-family:var(--mono);">Inventory auto-deducted on checkout</span>
+            <span style="font-size:13px; font-weight:600;">Stock Levels & Allocation</span>
+            <span style="font-size:12px; color:var(--text-sub); font-family:var(--mono);">Available = Physical On Hand - Reserved Holds</span>
           </div>
 
           <div class="table-responsive-box">
@@ -964,8 +1031,10 @@
                 <tr>
                   <th>Product Title</th>
                   <th>SKU</th>
-                  <th>Current Stock</th>
-                  <th>Inventory Status</th>
+                  <th>Physical On Hand</th>
+                  <th>Reserved Hold</th>
+                  <th>Available for Sale</th>
+                  <th>Status</th>
                   <th style="text-align:right;">Adjust Stock</th>
                 </tr>
               </thead>
@@ -1005,13 +1074,13 @@
         <div class="page-header-row">
           <div>
             <h1>Customers</h1>
-            <p>Customer profiles, purchase frequency, and direct contact details.</p>
+            <p>Customer profiles, purchase frequency, and verified lifetime value.</p>
           </div>
         </div>
 
         <div class="admin-card-panel">
           <div class="panel-toolbar">
-            <input type="text" id="customerSearchField" class="search-input-field" placeholder="Search by customer name or phone..." oninput="renderCustomersTable()">
+            <input type="text" id="customerSearchField" class="search-input-field" placeholder="Search by name or phone..." oninput="renderCustomersTable()">
           </div>
 
           <div class="table-responsive-box">
@@ -1019,11 +1088,11 @@
               <thead>
                 <tr>
                   <th>Customer Name</th>
-                  <th>Phone Number</th>
-                  <th>City / Region</th>
-                  <th>Orders Count</th>
-                  <th>Total Spend</th>
-                  <th>Last Order</th>
+                  <th>WhatsApp Phone</th>
+                  <th>Destination City</th>
+                  <th>Orders</th>
+                  <th>Total Spent (Paid)</th>
+                  <th>Last Transaction</th>
                 </tr>
               </thead>
               <tbody id="customersTableBody">
@@ -1038,10 +1107,10 @@
       <section id="secDiscounts" style="display:none;">
         <div class="page-header-row">
           <div>
-            <h1>Discounts</h1>
-            <p>Manage promotional coupon codes, percentage deductions, and minimum spend rules.</p>
+            <h1>Discounts & Coupons</h1>
+            <p>Promotional codes, volume thresholds, and cart deductions.</p>
           </div>
-          <button class="btn-action-primary" onclick="openNewDiscountModal()">+ Add Discount Code</button>
+          <button class="btn-action-primary" onclick="openNewDiscountModal()">+ Create Code</button>
         </div>
 
         <div class="admin-card-panel">
@@ -1049,9 +1118,9 @@
             <table class="commerce-table">
               <thead>
                 <tr>
-                  <th>Code</th>
+                  <th>Discount Code</th>
                   <th>Type & Value</th>
-                  <th>Minimum Spend</th>
+                  <th>Min Spend</th>
                   <th>Status</th>
                   <th style="text-align:right;">Actions</th>
                 </tr>
@@ -1069,11 +1138,12 @@
         <div class="page-header-row">
           <div>
             <h1>Settings</h1>
-            <p>Store profile, WhatsApp fulfillment routing, and CSV data exchange.</p>
+            <p>Store profile, centralized cloud synchronization, and security parameters.</p>
           </div>
           <button class="btn-action-primary" onclick="saveStoreSettingsForm()">Save Changes</button>
         </div>
 
+        <!-- 1. Store Profile -->
         <div class="admin-card-panel">
           <div class="card-panel-header">
             <h3>Store Profile & Communications</h3>
@@ -1102,7 +1172,81 @@
           </div>
         </div>
 
-        <!-- CSV Data Import/Export Panel -->
+        <!-- 2. Centralized Cloud Database & Multi-Device Sync -->
+        <div class="admin-card-panel">
+          <div class="card-panel-header">
+            <div>
+              <h3>Centralized Cloud Database & Multi-Device Sync</h3>
+              <p style="font-size:12px; color:var(--text-sub); margin-top:2px;">Ensures orders placed on customer phones arrive directly in your laptop Admin dashboard in real time.</p>
+            </div>
+            <span class="status-badge status-active" id="cloudSettingsBadge">Configurable</span>
+          </div>
+          <div style="padding:24px;">
+            <div class="form-two-col" style="padding:0; margin-bottom:20px;">
+              <div class="form-group-item">
+                <label>Cloud Database Provider</label>
+                <select id="setCloudProvider" class="form-control-input">
+                  <option value="firebase">Firebase Realtime Database (Recommended - Instant REST)</option>
+                  <option value="rest">Serverless REST Relay (/api/sync or Supabase)</option>
+                  <option value="local">Local Storage Only (Single Device)</option>
+                </select>
+              </div>
+              <div class="form-group-item">
+                <label>Enable Realtime Cloud Synchronization</label>
+                <select id="setCloudEnabled" class="form-control-input">
+                  <option value="true">Active (Sync Across All Devices)</option>
+                  <option value="false">Disabled (Local Only)</option>
+                </select>
+              </div>
+              <div class="form-group-item full-span">
+                <label>Cloud Database URL / REST Endpoint</label>
+                <input type="url" id="setCloudEndpoint" class="form-control-input" placeholder="e.g. https://your-project.firebaseio.com or /api/sync" style="font-family:var(--mono);">
+                <span style="font-size:11px; color:var(--text-sub);">For Firebase: paste your Realtime Database URL (free tier, zero installation).</span>
+              </div>
+              <div class="form-group-item">
+                <label>Database Secret / Auth Token (Optional)</label>
+                <input type="password" id="setCloudAuthSecret" class="form-control-input" placeholder="Leave empty if public rules are enabled" style="font-family:var(--mono);">
+              </div>
+              <div class="form-group-item">
+                <label>Polling Refresh Interval (Seconds)</label>
+                <input type="number" id="setCloudPollInterval" class="form-control-input" value="25" min="10" max="120" style="font-family:var(--mono);">
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; padding-top:16px; border-top:1px solid var(--border-subtle);">
+              <button type="button" class="btn-action-primary" onclick="testCloudConnectionUI()">Test Connection</button>
+              <button type="button" class="btn-action-secondary" onclick="forcePushCloudData()">Push Local Data to Cloud</button>
+              <button type="button" class="btn-action-secondary" onclick="forcePullCloudData()">Pull Cloud Data to Local</button>
+            </div>
+
+            <div id="cloudTestResult" style="margin-top:14px; font-family:var(--mono); font-size:12px; display:none; padding:10px 14px; border-radius:6px;"></div>
+          </div>
+        </div>
+
+        <!-- 3. Security & Admin Access Control -->
+        <div class="admin-card-panel">
+          <div class="card-panel-header">
+            <h3>Security & Admin Authentication</h3>
+          </div>
+          <div style="padding:24px;">
+            <p style="font-size:13px; color:var(--text-sub); margin-bottom:16px;">
+              Admin access is secured using salted cryptographic SHA-256 hashing with rate limiting and automated inactivity session termination.
+            </p>
+            <div style="display:flex; gap:12px; align-items:center;">
+              <button type="button" class="btn-action-secondary" onclick="openChangePinModal()">Change Admin PIN</button>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label style="font-size:12px; font-weight:600; color:var(--text-sub);">Session Timeout:</label>
+                <select id="setSessionTimeout" class="form-control-input" style="padding:6px 10px; font-size:12px;">
+                  <option value="15">15 Minutes</option>
+                  <option value="30" selected>30 Minutes</option>
+                  <option value="60">60 Minutes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. CSV Catalogue Data Exchange Panel -->
         <div class="admin-card-panel">
           <div class="card-panel-header">
             <h3>CSV Catalogue Data Exchange</h3>
@@ -1166,7 +1310,7 @@
           <!-- 2. Media (Image Manager) Card -->
           <div class="shopify-card">
             <div class="shopify-card-title">
-              <span>Media (Gambar Produk)</span>
+              <span>Media (Product Photo)</span>
               <span style="font-size:11px; font-weight:normal; color:var(--text-sub);">Photos, graphics, and visual mockups</span>
             </div>
 
@@ -1254,10 +1398,10 @@
               </div>
               <div class="form-group-item">
                 <label>Barcode (ISBN, UPC, GTIN)</label>
-                <input type="text" id="prodBarcode" class="form-control-input" placeholder="e.g. 89910029" style="font-family:var(--mono);">
+                <input type="text" id="prodBarcode" class="form-control-input" placeholder="e.g. 89912389" style="font-family:var(--mono);">
               </div>
               <div class="form-group-item">
-                <label>Available Quantity *</label>
+                <label>Physical Stock Quantity *</label>
                 <input type="number" id="prodStock" class="form-control-input" value="50" style="font-family:var(--mono); font-weight:600;" required>
               </div>
             </div>
@@ -1272,131 +1416,103 @@
                 <span>This is a physical product</span>
               </label>
             </div>
-            <div class="form-group-item" style="max-width:240px;">
+            <div class="form-group-item" style="max-width:200px;">
               <label>Weight (kg)</label>
-              <input type="number" step="0.01" id="prodWeight" class="form-control-input" value="0.05" style="font-family:var(--mono);">
+              <input type="number" id="prodWeight" class="form-control-input" value="0.05" step="0.01" style="font-family:var(--mono);">
             </div>
           </div>
 
-          <!-- 6. Search Engine Listing Preview (SEO) Card -->
+          <!-- 6. Search Engine Listing (SEO) Card -->
           <div class="shopify-card">
             <div class="shopify-card-title">
-              <span>Search engine listing preview (SEO)</span>
-              <span style="font-size:11px; font-weight:normal; color:var(--text-sub);">Google Search preview</span>
-            </div>
-            <p style="font-size:12px; color:var(--text-sub); margin-bottom:12px;">Customize page title, meta description, and URL handle for search engine indexing and social media links.</p>
-
-            <!-- Google Live SERP Snippet Preview -->
-            <div class="google-preview-card">
-              <div class="google-serp-url">
-                https://afterquiet.vercel.app › product › <span id="googlePreviewHandle">restless-mind-pin</span>
-              </div>
-              <div class="google-serp-title" id="googlePreviewTitle">
-                restless mind enamel pin — afterquiet
-              </div>
-              <div class="google-serp-snippet" id="googlePreviewSnippet">
-                a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating. all items flat 5k.
-              </div>
+              <span>Search Engine Listing (SEO)</span>
+              <span style="font-size:11px; font-weight:normal; color:var(--text-sub);">Google & WhatsApp share preview</span>
             </div>
 
-            <!-- SEO Form Fields -->
-            <div style="display:flex; flex-direction:column; gap:14px; margin-top:16px;">
-              <div class="form-group-item">
-                <div style="display:flex; justify-content:space-between;">
-                  <label>Page Title</label>
-                  <span id="seoTitleCount" style="font-size:11px; color:var(--text-muted); font-family:var(--mono);">0 of 70 characters used</span>
-                </div>
-                <input type="text" id="prodSeoTitle" class="form-control-input" placeholder="e.g. restless mind enamel pin — afterquiet" maxlength="70" oninput="updateSeoPreview()">
+            <!-- SERP Snippet Preview -->
+            <div class="google-serp-preview">
+              <div class="serp-url-line">
+                <span>https://afterquiet.vercel.app › product › </span>
+                <span id="serpPreviewSlug" style="font-weight:600;">restless-mind-enamel-pin</span>
               </div>
-              <div class="form-group-item">
-                <div style="display:flex; justify-content:space-between;">
-                  <label>Meta Description</label>
-                  <span id="seoDescCount" style="font-size:11px; color:var(--text-muted); font-family:var(--mono);">0 of 320 characters used</span>
-                </div>
-                <textarea id="prodSeoDesc" class="form-control-input" style="min-height:70px; font-size:12px; line-height:1.5;" placeholder="Enter a concise summary of the product for search engines..." maxlength="320" oninput="updateSeoPreview()"></textarea>
+              <div class="serp-title-line" id="serpPreviewTitle">restless mind enamel pin — afterquiet</div>
+              <div class="serp-snippet-line" id="serpPreviewDesc">a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating.</div>
+            </div>
+
+            <div style="margin-top:16px;" class="form-group-item">
+              <div style="display:flex; justify-content:space-between;">
+                <label>Page Title</label>
+                <span id="seoTitleCharCount" style="font-size:11px; font-family:var(--mono); color:var(--text-muted);">0 / 70</span>
               </div>
-              <div class="form-group-item">
-                <label>URL Handle / Slug</label>
-                <div style="display:flex; align-items:center;">
-                  <span style="background:#F1F1F2; border:1px solid var(--border-subtle); border-right:none; padding:9px 12px; font-size:12px; color:var(--text-sub); border-radius:6px 0 0 6px; font-family:var(--mono);">/product?id=</span>
-                  <input type="text" id="prodHandle" class="form-control-input" style="border-radius:0 6px 6px 0; font-family:var(--mono);" placeholder="e.g. restless-mind-pin" oninput="updateSeoPreview()">
-                </div>
+              <input type="text" id="prodSeoTitle" class="form-control-input" placeholder="e.g. restless mind enamel pin — afterquiet" maxlength="70" oninput="updateSeoPreview()">
+            </div>
+
+            <div style="margin-top:12px;" class="form-group-item">
+              <div style="display:flex; justify-content:space-between;">
+                <label>Meta Description</label>
+                <span id="seoDescCharCount" style="font-size:11px; font-family:var(--mono); color:var(--text-muted);">0 / 320</span>
+              </div>
+              <textarea id="prodSeoDesc" class="form-control-input" style="min-height:70px; font-size:12px;" placeholder="Summary of the product that appears in search engines..." maxlength="320" oninput="updateSeoPreview()"></textarea>
+            </div>
+
+            <div style="margin-top:12px;" class="form-group-item">
+              <label>URL Handle / Slug</label>
+              <div style="display:flex; align-items:center;">
+                <span style="background:#FAFAFA; border:1px solid var(--border-subtle); border-right:none; padding:10px 12px; font-size:12px; color:var(--text-sub); border-radius:6px 0 0 6px; font-family:var(--mono);">/product?id=</span>
+                <input type="text" id="prodHandle" class="form-control-input" style="border-radius:0 6px 6px 0; font-family:var(--mono);" placeholder="restless-mind-enamel-pin" oninput="updateSeoPreview(true)">
               </div>
             </div>
           </div>
 
         </div>
 
-        <!-- RIGHT SIDEBAR (1/3 width) -->
-        <div class="shopify-sidebar-col">
+        <!-- RIGHT / SIDEBAR METADATA (1/3 width) -->
+        <div class="shopify-side-col">
           
-          <!-- 1. Product Status Card -->
+          <!-- Status Card -->
           <div class="shopify-card">
             <div class="shopify-card-title">Status</div>
-            <select id="prodStatus" class="form-control-input" style="font-weight:600;" onchange="handleStatusChange(this.value)">
-              <option value="active">Active</option>
-              <option value="draft">Draft</option>
+            <select id="prodStatus" class="form-control-input" onchange="handleStatusChange(this.value)">
+              <option value="active">Active (Visible on store)</option>
+              <option value="draft">Draft (Hidden from store)</option>
             </select>
-            <p style="font-size:11px; color:var(--text-sub); margin-top:8px;">
-              Active products are live across storefront. Draft products are hidden from customers.
-            </p>
+            <p style="font-size:11px; color:var(--text-sub); margin-top:8px;">This product will be available across active sales channels.</p>
           </div>
 
-          <!-- 2. Publishing / Channels Card -->
-          <div class="shopify-card">
-            <div class="shopify-card-title">Publishing</div>
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
-                <input type="checkbox" id="chanOnlineStore" checked>
-                <span>Online Store (/allcollection)</span>
-              </label>
-              <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
-                <input type="checkbox" id="chanStudio" checked>
-                <span>Customizer Studio (/try-on)</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- 3. Product Organization Card -->
+          <!-- Organization Card -->
           <div class="shopify-card">
             <div class="shopify-card-title">Product Organization</div>
-            
             <div class="form-group-item" style="margin-bottom:14px;">
               <label>Category</label>
               <select id="prodCategory" class="form-control-input">
-                <option value="accessories">Pins & Badges</option>
-                <option value="totes">Totes</option>
-                <option value="bags">Bags</option>
-                <option value="prints">Prints & Visual</option>
+                <option value="accessories">accessories (Pins, Badges, Tags)</option>
+                <option value="totes">totes (Bags, Canvas)</option>
+                <option value="bags">bags & carriers</option>
+                <option value="apparel">apparel & future wear</option>
               </select>
             </div>
 
             <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Product Type</label>
-              <input type="text" id="prodType" class="form-control-input" placeholder="e.g. Hard Enamel Pin, Raw Canvas Tote">
+              <label>Product Type / Tag</label>
+              <input type="text" id="prodTag" class="form-control-input" placeholder="e.g. pin, badge, sticker, tote">
             </div>
 
             <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Collection / Volume</label>
+              <label>Collection Volume</label>
               <select id="prodVolume" class="form-control-input">
-                <option value="vol. 01">Volume 01 — Too Soft for This World</option>
-                <option value="vol. 02">Volume 02 — Fragile Archives</option>
-                <option value="general">Archive Essentials</option>
+                <option value="vol. 01">vol. 01 — too soft for this world</option>
+                <option value="vol. 02">vol. 02 — fragile archives</option>
+                <option value="vol. 03">vol. 03 — future quiet</option>
               </select>
             </div>
 
             <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Tags (comma separated)</label>
-              <input type="text" id="prodTags" class="form-control-input" placeholder="e.g. pin, metal, vol01, accessory">
-            </div>
-
-            <div class="form-group-item" style="margin-bottom:14px;">
-              <label>Materials & Specifications</label>
-              <input type="text" id="prodKind" class="form-control-input" placeholder="e.g. hard enamel • black nickel finish • 32mm">
+              <label>Material & Specifications</label>
+              <input type="text" id="prodKind" class="form-control-input" placeholder="e.g. hard enamel • black nickel • 32mm">
             </div>
 
             <div class="form-group-item">
-              <label>Display Typography / Monogram</label>
+              <label>Card Graphic Typography</label>
               <textarea id="prodGraphic" class="form-control-input" style="min-height:55px;" placeholder="Fallback typographical layout for badge cards"></textarea>
             </div>
 
@@ -1418,6 +1534,11 @@
       </div>
       
       <div style="padding:24px;">
+        <!-- Status Alert Box -->
+        <div id="orderModalStatusNotice" style="margin-bottom:18px; padding:12px 16px; border-radius:6px; font-size:12px; font-family:var(--mono);">
+          <!-- Dynamic status text -->
+        </div>
+
         <div style="display:flex; justify-content:space-between; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--border-subtle);">
           <div>
             <strong id="orderModalCustName" style="font-size:16px;">Rian Pratama</strong>
@@ -1447,15 +1568,13 @@
             <input type="text" id="orderModalCourierInput" class="form-control-input" placeholder="e.g. J&T Express">
           </div>
           <div>
-            <label style="font-size:11px; font-weight:600; display:block; margin-bottom:4px;">Tracking Number</label>
+            <label style="font-size:11px; font-weight:600; display:block; margin-bottom:4px;">Tracking Number (Resi)</label>
             <input type="text" id="orderModalTrackingInput" class="form-control-input" placeholder="e.g. JT19283921">
           </div>
         </div>
 
-        <div style="display:flex; gap:10px;">
-          <button class="btn-action-primary" style="flex:1;" onclick="markOrderFulfilled()">Mark as Fulfilled</button>
-          <button class="btn-action-secondary" onclick="markOrderPaid()">Mark as Paid</button>
-          <button class="btn-action-secondary" style="color:var(--status-critical-text);" onclick="cancelActiveOrder()">Cancel & Restock</button>
+        <div style="display:flex; gap:10px;" id="orderModalActionsContainer">
+          <!-- Dynamic Action Buttons -->
         </div>
       </div>
     </div>
@@ -1465,7 +1584,7 @@
   <div class="admin-modal-overlay" id="stockModal">
     <div class="admin-modal-window" style="max-width:440px;">
       <div class="modal-head-line">
-        <h3>Adjust Stock</h3>
+        <h3>Adjust Physical Stock</h3>
         <button class="modal-close-btn" onclick="closeStockModal()">×</button>
       </div>
       <div style="padding:24px;">
@@ -1495,24 +1614,105 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: CHANGE ADMIN PIN ================= -->
+  <div class="admin-modal-overlay" id="changePinModal">
+    <div class="admin-modal-window" style="max-width:420px;">
+      <div class="modal-head-line">
+        <h3>Change Admin PIN</h3>
+        <button class="modal-close-btn" onclick="closeChangePinModal()">×</button>
+      </div>
+      <div style="padding:24px;">
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>Current PIN *</label>
+          <input type="password" id="curAdminPinInput" class="form-control-input" placeholder="••••" maxlength="8">
+        </div>
+        <div class="form-group-item" style="margin-bottom:14px;">
+          <label>New PIN (min 4 digits) *</label>
+          <input type="password" id="newAdminPinInput" class="form-control-input" placeholder="••••" maxlength="8">
+        </div>
+        <div class="form-group-item" style="margin-bottom:20px;">
+          <label>Confirm New PIN *</label>
+          <input type="password" id="confirmAdminPinInput" class="form-control-input" placeholder="••••" maxlength="8">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button class="btn-action-secondary" onclick="closeChangePinModal()">Cancel</button>
+          <button class="btn-action-primary" onclick="submitChangePin()">Update PIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="admin-toast" id="toastMessage">Changes Saved</div>
 
   <!-- Application Controller -->
+  <script src="/assets/store-engine.js"></script>
   <script>
     let activeOrderId = null;
+    let lockoutTimerInterval = null;
 
-    function verifyPin() {
+    // PIN Authentication Controller
+    async function verifyPin() {
       const val = document.getElementById('pinInput').value.trim();
-      const settings = AfterquietStore.getSettings();
-      if (val === (settings.adminPin || '1234')) {
-        sessionStorage.setItem('aq_admin_auth', '1');
+      const errEl = document.getElementById('pinError');
+      const lockMsg = document.getElementById('pinLockoutMsg');
+      const btn = document.getElementById('btnPinSubmit');
+
+      errEl.style.display = 'none';
+      lockMsg.style.display = 'none';
+
+      if (!val) {
+        errEl.innerText = 'Please enter PIN';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = 'Verifying...';
+
+      const res = await AfterquietStore.verifyAdminPin(val);
+      btn.disabled = false;
+      btn.innerText = 'Unlock Console';
+
+      if (res.success) {
         document.getElementById('pinGate').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'grid';
+        startInactivityTracker();
         renderActiveSection('overview');
+        syncCloudPill();
       } else {
-        document.getElementById('pinError').style.display = 'block';
+        errEl.innerText = res.message;
+        errEl.style.display = 'block';
+        if (res.locked) {
+          startLockoutCountdown(res.remainingSec);
+        }
       }
+    }
+
+    function startLockoutCountdown(seconds) {
+      clearInterval(lockoutTimerInterval);
+      const btn = document.getElementById('btnPinSubmit');
+      const input = document.getElementById('pinInput');
+      const msg = document.getElementById('pinLockoutMsg');
+
+      btn.disabled = true;
+      input.disabled = true;
+      msg.style.display = 'block';
+
+      let rem = seconds;
+      msg.innerText = `Locked: Try again in ${rem}s`;
+
+      lockoutTimerInterval = setInterval(() => {
+        rem--;
+        if (rem <= 0) {
+          clearInterval(lockoutTimerInterval);
+          btn.disabled = false;
+          input.disabled = false;
+          msg.style.display = 'none';
+        } else {
+          msg.innerText = `Locked: Try again in ${rem}s`;
+        }
+      }, 1000);
     }
 
     document.getElementById('pinInput').addEventListener('keydown', (e) => {
@@ -1520,8 +1720,24 @@
     });
 
     function lockAdminSession() {
-      sessionStorage.removeItem('aq_admin_auth');
-      location.reload();
+      AfterquietStore.lockAdminSession();
+    }
+
+    // Inactivity Session Tracker
+    function startInactivityTracker() {
+      const resetTimer = () => {
+        AfterquietStore.refreshAdminSession();
+      };
+      window.addEventListener('mousemove', resetTimer, { passive: true });
+      window.addEventListener('keydown', resetTimer, { passive: true });
+      window.addEventListener('click', resetTimer, { passive: true });
+
+      // Check session status every minute
+      setInterval(() => {
+        if (!AfterquietStore.isAdminAuthenticated()) {
+          lockAdminSession();
+        }
+      }, 60000);
     }
 
     function showToast(msg) {
@@ -1529,6 +1745,50 @@
       el.innerText = msg;
       el.style.display = 'block';
       setTimeout(() => { el.style.display = 'none'; }, 2500);
+    }
+
+    // Cloud Status Pill Controller
+    function syncCloudPill() {
+      const dot = document.getElementById('cloudStatusDot');
+      const label = document.getElementById('cloudStatusLabel');
+      const settings = AfterquietStore.getSettings();
+      const cfg = settings.cloudDb;
+
+      if (!cfg || !cfg.enabled || !cfg.endpoint) {
+        dot.className = 'cloud-status-dot offline';
+        label.innerText = 'Local Storage (Active)';
+        return;
+      }
+
+      const status = AfterquietStore.CloudSync.status;
+      if (status === 'syncing') {
+        dot.className = 'cloud-status-dot syncing';
+        label.innerText = 'Syncing...';
+      } else if (status === 'connected') {
+        dot.className = 'cloud-status-dot';
+        label.innerText = 'Cloud Synced';
+      } else {
+        dot.className = 'cloud-status-dot offline';
+        label.innerText = 'Cloud Offline';
+      }
+    }
+
+    window.addEventListener('aq_cloud_status', (e) => {
+      syncCloudPill();
+    });
+
+    window.addEventListener('aq_store_updated', () => {
+      const activeSec = document.querySelector('.nav-tab-btn.active');
+      const secId = activeSec ? activeSec.id.replace('btnTab', '').toLowerCase() : 'overview';
+      renderActiveSection(secId);
+    });
+
+    async function manualTriggerCloudSync() {
+      showToast('Synchronizing with cloud...');
+      await AfterquietStore.CloudSync.syncAll();
+      showToast('Cloud synchronization complete');
+      syncCloudPill();
+      renderActiveSection('overview');
     }
 
     // Section Switching
@@ -1540,6 +1800,7 @@
         if (secEl) secEl.style.display = s === secId ? 'block' : 'none';
         if (btnEl) btnEl.classList.toggle('active', s === secId);
       });
+      document.getElementById('topbarCurrentView').innerText = secId.charAt(0).toUpperCase() + secId.slice(1);
       renderActiveSection(secId);
     }
 
@@ -1559,19 +1820,30 @@
       const products = AfterquietStore.getProducts(true);
 
       const paidOrders = orders.filter(o => o.paymentStatus === 'paid');
+      const unpaidOrders = orders.filter(o => o.paymentStatus === 'unpaid');
       const unfulfilledOrders = orders.filter(o => o.fulfillmentStatus === 'unfulfilled');
+
       const totalRevenue = paidOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+      const pendingRevenue = unpaidOrders.reduce((sum, o) => sum + (o.total || 0), 0);
       const aov = paidOrders.length > 0 ? Math.round(totalRevenue / paidOrders.length) : 0;
-      const totalUnits = products.reduce((sum, p) => sum + Number(p.stock || 0), 0);
-      const lowStockCount = products.filter(p => Number(p.stock || 0) < 10).length;
+
+      const totalPhysical = products.reduce((sum, p) => sum + Number(p.stock || 0), 0);
+      const totalReserved = products.reduce((sum, p) => sum + Number(p.reserved || 0), 0);
+      const totalAvailable = Math.max(0, totalPhysical - totalReserved);
+      const lowStockCount = products.filter(p => Number(p.availableStock || 0) < 10).length;
 
       document.getElementById('dashTotalRevenue').innerText = AfterquietStore.formatRupiah(totalRevenue);
-      document.getElementById('dashPaidCount').innerText = `${paidOrders.length} paid customer orders`;
+      document.getElementById('dashPaidCount').innerText = `from ${paidOrders.length} verified paid orders`;
+      document.getElementById('dashPendingRevenue').innerText = `${AfterquietStore.formatRupiah(pendingRevenue)} awaiting payment (${unpaidOrders.length} pending)`;
+      
       document.getElementById('dashTotalOrders').innerText = orders.length;
       document.getElementById('dashUnfulfilledCount').innerText = `${unfulfilledOrders.length} pending fulfillment`;
+      
       document.getElementById('dashAOV').innerText = AfterquietStore.formatRupiah(aov);
-      document.getElementById('dashTotalUnits').innerText = totalUnits;
-      document.getElementById('dashLowStockWarn').innerText = `${lowStockCount} units low stock`;
+      
+      document.getElementById('dashAvailableUnits').innerText = totalAvailable;
+      document.getElementById('dashInventoryBreakdown').innerText = `${totalPhysical} physical • ${totalReserved} reserved`;
+      document.getElementById('dashLowStockWarn').innerText = `${lowStockCount} low stock alerts`;
       document.getElementById('badgePendingOrders').innerText = unfulfilledOrders.length;
 
       // Render Overview Recent Orders
@@ -1584,7 +1856,7 @@
           <td style="font-family:var(--mono); font-size:11px;">${AfterquietStore.formatDate(o.createdAt)}</td>
           <td>${escapeHtml(o.customer.name)}</td>
           <td><strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(o.total)}</strong></td>
-          <td><span class="status-badge status-${o.paymentStatus}">${o.paymentStatus}</span></td>
+          <td><span class="status-badge status-${o.paymentStatus}">${o.paymentStatus === 'unpaid' ? 'Awaiting Payment' : o.paymentStatus}</span></td>
           <td><span class="status-badge status-${o.fulfillmentStatus}">${o.fulfillmentStatus}</span></td>
           <td style="text-align:right;">
             <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openOrderModal('${o.id}')">Manage</button>
@@ -1619,22 +1891,43 @@
       filtered.forEach(o => {
         const itemsSummary = o.items.map(i => `${i.title} (${i.qty}x)`).join(', ');
         const tr = document.createElement('tr');
+
+        let actionsHtml = '';
+        if (o.paymentStatus === 'unpaid') {
+          actionsHtml = `
+            <div style="display:flex; gap:6px; justify-content:flex-end;">
+              <button class="btn-action-primary" style="font-size:11px; padding:4px 8px; background:#1A5928; border-color:#1A5928;" onclick="quickConfirmPayment('${o.id}')">✓ Confirm Paid</button>
+              <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px; color:var(--accent-brand);" onclick="quickCancelOrder('${o.id}')">✕ Cancel</button>
+              <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openOrderModal('${o.id}')">View</button>
+            </div>
+          `;
+        } else if (o.paymentStatus === 'paid' && o.fulfillmentStatus === 'unfulfilled') {
+          actionsHtml = `
+            <div style="display:flex; gap:6px; justify-content:flex-end;">
+              <button class="btn-action-primary" style="font-size:11px; padding:4px 8px;" onclick="openOrderModal('${o.id}')">📦 Fulfill</button>
+              <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openOrderModal('${o.id}')">View</button>
+            </div>
+          `;
+        } else {
+          actionsHtml = `
+            <div style="display:flex; gap:6px; justify-content:flex-end;">
+              <button class="btn-action-secondary" style="font-size:11px; padding:4px 8px;" onclick="openOrderModal('${o.id}')">View Order</button>
+            </div>
+          `;
+        }
+
         tr.innerHTML = `
           <td><strong>${o.id}</strong></td>
           <td style="font-family:var(--mono); font-size:11px;">${AfterquietStore.formatDate(o.createdAt)}</td>
-          <div>
-            <td>
-              <strong>${escapeHtml(o.customer.name)}</strong>
-              <div style="font-size:11px; color:var(--text-sub); font-family:var(--mono);">${escapeHtml(o.customer.phone || '')}</div>
-            </td>
-          </div>
-          <td style="font-size:12px; color:var(--text-sub); max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(itemsSummary)}</td>
-          <td><strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(o.total)}</strong></td>
-          <td><span class="status-badge status-${o.paymentStatus}">${o.paymentStatus}</span></td>
-          <td><span class="status-badge status-${o.fulfillmentStatus}">${o.fulfillmentStatus}</span></td>
-          <td style="text-align:right;">
-            <button class="btn-action-secondary" style="font-size:11px; padding:5px 10px;" onclick="openOrderModal('${o.id}')">View Order</button>
+          <td>
+            <strong>${escapeHtml(o.customer.name)}</strong>
+            <div style="font-size:11px; color:var(--text-sub); font-family:var(--mono);">${escapeHtml(o.customer.phone || '')}</div>
           </td>
+          <td style="font-size:12px; color:var(--text-sub); max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(itemsSummary)}</td>
+          <td><strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(o.total)}</strong></td>
+          <td><span class="status-badge status-${o.paymentStatus}">${o.paymentStatus === 'unpaid' ? 'Awaiting Payment' : o.paymentStatus}</span></td>
+          <td><span class="status-badge status-${o.fulfillmentStatus}">${o.fulfillmentStatus}</span></td>
+          <td style="text-align:right;">${actionsHtml}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -1650,11 +1943,36 @@
       document.getElementById('orderModalCustPhone').innerText = order.customer.phone || '-';
       document.getElementById('orderModalCustAddress').innerText = (order.customer.address || '') + (order.customer.city ? `, ${order.customer.city}` : '');
       document.getElementById('orderModalDate').innerText = AfterquietStore.formatDate(order.createdAt);
-      document.getElementById('orderModalPaymentBadge').innerHTML = `<span class="status-badge status-${order.paymentStatus}">${order.paymentStatus}</span>`;
+      document.getElementById('orderModalPaymentBadge').innerHTML = `<span class="status-badge status-${order.paymentStatus}">${order.paymentStatus === 'unpaid' ? 'Awaiting Payment' : order.paymentStatus}</span>`;
       document.getElementById('orderModalTotalVal').innerText = AfterquietStore.formatRupiah(order.total);
       document.getElementById('orderModalCourierInput').value = order.courier || '';
       document.getElementById('orderModalTrackingInput').value = order.trackingNumber || '';
 
+      // Status Notice Box
+      const noticeBox = document.getElementById('orderModalStatusNotice');
+      if (order.paymentStatus === 'unpaid') {
+        noticeBox.style.background = '#FFFBEB';
+        noticeBox.style.color = '#92400E';
+        noticeBox.style.border = '1px solid #FCD34D';
+        noticeBox.innerHTML = `⚠️ <strong>Awaiting Customer Transfer:</strong> Units are currently locked in 24-hour reservation. Click <em>Confirm Payment & Deduct Stock</em> when payment is verified in WhatsApp or bank account.`;
+      } else if (order.paymentStatus === 'paid') {
+        noticeBox.style.background = '#ECFDF5';
+        noticeBox.style.color = '#065F46';
+        noticeBox.style.border = '1px solid #A7F3D0';
+        noticeBox.innerHTML = `✅ <strong>Payment Verified:</strong> Confirmed on ${AfterquietStore.formatDate(order.paidAt)}. Inventory permanently deducted & revenue recognized.`;
+      } else if (order.paymentStatus === 'expired') {
+        noticeBox.style.background = '#F3F4F6';
+        noticeBox.style.color = '#4B5563';
+        noticeBox.style.border = '1px solid #E5E7EB';
+        noticeBox.innerHTML = `⏱️ <strong>Reservation Expired:</strong> Order exceeded 24-hour payment hold. Reserved units were automatically released back into inventory.`;
+      } else {
+        noticeBox.style.background = '#FEF2F2';
+        noticeBox.style.color = '#991B1B';
+        noticeBox.style.border = '1px solid #FECACA';
+        noticeBox.innerHTML = `✕ <strong>Order Cancelled:</strong> Stock restored to active catalogue.`;
+      }
+
+      // Items list
       const itemsBox = document.getElementById('orderModalItemsList');
       itemsBox.innerHTML = '';
       order.items.forEach(i => {
@@ -1667,6 +1985,24 @@
         itemsBox.appendChild(row);
       });
 
+      // Actions Container
+      const actionsBox = document.getElementById('orderModalActionsContainer');
+      if (order.paymentStatus === 'unpaid') {
+        actionsBox.innerHTML = `
+          <button class="btn-action-primary" style="flex:1; background:#1A5928; border-color:#1A5928;" onclick="markOrderPaid()">✓ Confirm Payment & Deduct Stock</button>
+          <button class="btn-action-secondary" style="color:var(--status-critical-text);" onclick="cancelActiveOrder()">✕ Cancel & Release Stock</button>
+        `;
+      } else if (order.paymentStatus === 'paid' && order.fulfillmentStatus === 'unfulfilled') {
+        actionsBox.innerHTML = `
+          <button class="btn-action-primary" style="flex:1;" onclick="markOrderFulfilled()">Mark as Fulfilled</button>
+          <button class="btn-action-secondary" style="color:var(--status-critical-text);" onclick="cancelActiveOrder()">Refund & Restock</button>
+        `;
+      } else {
+        actionsBox.innerHTML = `
+          <button class="btn-action-secondary" style="flex:1;" onclick="closeOrderModal()">Close</button>
+        `;
+      }
+
       document.getElementById('orderModal').classList.add('open');
     }
 
@@ -1675,10 +2011,25 @@
       activeOrderId = null;
     }
 
+    function quickConfirmPayment(orderId) {
+      AfterquietStore.confirmOrderPayment(orderId);
+      showToast(`Order ${orderId} marked as paid & stock permanently deducted`);
+      renderOrdersTable();
+      renderOverview();
+    }
+
+    function quickCancelOrder(orderId) {
+      if (!confirm(`Cancel order ${orderId}? Reserved stock will be released back to catalogue.`)) return;
+      AfterquietStore.cancelOrder(orderId, 'Cancelled by admin');
+      showToast(`Order ${orderId} cancelled & reservation released`);
+      renderOrdersTable();
+      renderOverview();
+    }
+
     function markOrderPaid() {
       if (!activeOrderId) return;
-      AfterquietStore.updateOrderStatus(activeOrderId, { paymentStatus: 'paid' });
-      showToast('Order marked as paid');
+      AfterquietStore.confirmOrderPayment(activeOrderId);
+      showToast('Payment verified, stock permanently deducted & revenue recognized');
       closeOrderModal();
       renderOrdersTable();
       renderOverview();
@@ -1697,7 +2048,7 @@
 
     function cancelActiveOrder() {
       if (!activeOrderId) return;
-      if (!confirm('Are you sure you want to cancel this order? Reserved stock will automatically be returned to inventory.')) return;
+      if (!confirm('Are you sure you want to cancel this order? Stock will be released/refunded.')) return;
       AfterquietStore.cancelOrder(activeOrderId, 'Cancelled by admin');
       showToast('Order cancelled & stock restored');
       closeOrderModal();
@@ -1729,6 +2080,9 @@
 
       filtered.forEach(p => {
         const tr = document.createElement('tr');
+        const available = p.availableStock !== undefined ? p.availableStock : AfterquietStore.getAvailableStock(p);
+        const reserved = Number(p.reserved || 0);
+
         tr.innerHTML = `
           <td>
             <div style="display:flex; align-items:center; gap:12px;">
@@ -1748,7 +2102,10 @@
             <strong style="font-family:var(--mono);">${AfterquietStore.formatRupiah(p.price || 5000)}</strong>
             ${p.compareAtPrice && p.compareAtPrice > p.price ? `<div style="font-size:10px; text-decoration:line-through; color:var(--text-muted); font-family:var(--mono);">${AfterquietStore.formatRupiah(p.compareAtPrice)}</div>` : ''}
           </td>
-          <td><span style="font-family:var(--mono); font-weight:600; color:${Number(p.stock || 0) < 10 ? 'var(--accent-brand)' : 'inherit'};">${p.stock !== undefined ? p.stock : 50} in stock</span></td>
+          <td>
+            <strong style="font-family:var(--mono); color:${available <= 0 ? 'var(--accent-brand)' : 'inherit'};">${available} for sale</strong>
+            ${reserved > 0 ? `<div style="font-size:10px; font-family:var(--mono); color:var(--text-muted);">(${reserved} reserved hold)</div>` : ''}
+          </td>
           <td><span class="status-badge status-${p.status}">${p.status}</span></td>
           <td style="text-align:right;">
             <div style="display:flex; gap:8px; justify-content:flex-end;">
@@ -1849,26 +2206,32 @@
         .toString()
         .toLowerCase()
         .trim()
-        .replace(/[\s\W-]+/g, '-')
-        .replace(/^-+|-+$/g, '');
+        .replace(/s+/g, '-')
+        .replace(/[^w-]+/g, '')
+        .replace(/--+/g, '-');
     }
 
-    function updateSeoPreview() {
-      const title = document.getElementById('prodTitle').value.trim() || 'Untitled Product';
-      const desc = document.getElementById('prodDesc').value.trim() || 'No description provided.';
-      const customSeoTitle = document.getElementById('prodSeoTitle').value.trim();
-      const customSeoDesc = document.getElementById('prodSeoDesc').value.trim();
-      const handle = document.getElementById('prodHandle').value.trim() || slugify(title);
+    function updateSeoPreview(manualHandle = false) {
+      const title = document.getElementById('prodTitle').value.trim();
+      const desc = document.getElementById('prodDesc').value.trim();
+      let seoTitle = document.getElementById('prodSeoTitle').value.trim();
+      let seoDesc = document.getElementById('prodSeoDesc').value.trim();
+      let handle = document.getElementById('prodHandle').value.trim();
 
-      const finalTitle = customSeoTitle || (title + ' — afterquiet');
-      const finalDesc = customSeoDesc || (desc.slice(0, 155) + (desc.length > 155 ? '...' : ''));
+      if (manualHandle) {
+        document.getElementById('prodHandle').dataset.manualEdited = 'true';
+      }
 
-      document.getElementById('googlePreviewTitle').innerText = finalTitle;
-      document.getElementById('googlePreviewSnippet').innerText = finalDesc;
-      document.getElementById('googlePreviewHandle').innerText = handle;
+      const displayTitle = seoTitle || (title ? `${title} — afterquiet` : 'Product Title — afterquiet');
+      const displayDesc = seoDesc || (desc ? desc.slice(0, 160) : 'Independent accessories & visual culture. All items flat 5k.');
+      const displaySlug = handle || slugify(title) || 'product-handle';
 
-      document.getElementById('seoTitleCount').innerText = `${document.getElementById('prodSeoTitle').value.length} of 70 characters used`;
-      document.getElementById('seoDescCount').innerText = `${document.getElementById('prodSeoDesc').value.length} of 320 characters used`;
+      document.getElementById('serpPreviewTitle').innerText = displayTitle;
+      document.getElementById('serpPreviewDesc').innerText = displayDesc;
+      document.getElementById('serpPreviewSlug').innerText = displaySlug;
+
+      document.getElementById('seoTitleCharCount').innerText = `${seoTitle.length} / 70`;
+      document.getElementById('seoDescCharCount').innerText = `${seoDesc.length} / 320`;
     }
 
     function calculateProfitMargin() {
@@ -1883,48 +2246,36 @@
 
       const profit = price - cost;
       const margin = Math.round((profit / price) * 100);
-      display.innerHTML = `<span style="color:${profit >= 0 ? '#1A5928' : '#8E1F1A'}; font-weight:600;">Profit: ${AfterquietStore.formatRupiah(profit)} (${margin}% margin)</span>`;
-    }
-
-    function previewCurrentProductStore() {
-      const id = document.getElementById('modalProductId').value;
-      if (!id) {
-        alert('Please save the product first before previewing.');
-        return;
-      }
-      window.open(`/product?id=${id}`, '_blank');
+      display.innerHTML = `<strong style="color:${profit >= 0 ? '#1A5928' : '#8E1F1A'};">${AfterquietStore.formatRupiah(profit)}</strong> (${margin}% margin)`;
     }
 
     function openNewProductModal() {
-      document.getElementById('modalProductHeadTitle').innerText = 'Add Product';
       document.getElementById('modalProductId').value = '';
+      document.getElementById('modalProductHeadTitle').innerText = 'Add Product';
       document.getElementById('prodTitle').value = '';
       document.getElementById('prodDesc').value = '';
-      document.getElementById('prodSku').value = 'AQ-' + Math.floor(1000 + Math.random() * 9000);
-      document.getElementById('prodBarcode').value = '';
-      document.getElementById('prodCategory').value = 'accessories';
-      document.getElementById('prodType').value = 'Enamel Pin';
-      document.getElementById('prodVolume').value = 'vol. 01';
       document.getElementById('prodPrice').value = '5000';
       document.getElementById('prodCompareAtPrice').value = '';
       document.getElementById('prodCostPerItem').value = '';
+      document.getElementById('prodSku').value = 'AQ-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('prodBarcode').value = '';
       document.getElementById('prodStock').value = '50';
       document.getElementById('prodWeight').value = '0.05';
-      document.getElementById('prodStatus').value = 'active';
-      document.getElementById('prodTags').value = '';
-      document.getElementById('prodKind').value = '';
+      document.getElementById('prodCategory').value = 'accessories';
+      document.getElementById('prodTag').value = 'pin';
+      document.getElementById('prodVolume').value = 'vol. 01';
+      document.getElementById('prodKind').value = 'hard enamel • black nickel • 32mm';
       document.getElementById('prodGraphic').value = '';
+      document.getElementById('prodStatus').value = 'active';
       document.getElementById('prodSeoTitle').value = '';
       document.getElementById('prodSeoDesc').value = '';
       document.getElementById('prodHandle').value = '';
       document.getElementById('prodHandle').dataset.manualEdited = '';
-      document.getElementById('btnPreviewStore').style.display = 'none';
-
       setProductActiveImage('');
-      handleStatusChange('active');
       calculateProfitMargin();
       updateSeoPreview();
-
+      handleStatusChange('active');
+      document.getElementById('btnPreviewStore').style.display = 'none';
       document.getElementById('productModal').classList.add('open');
     }
 
@@ -1932,34 +2283,38 @@
       const p = AfterquietStore.getProductById(id);
       if (!p) return;
 
-      document.getElementById('modalProductHeadTitle').innerText = p.title || 'Edit Product';
       document.getElementById('modalProductId').value = p.id;
+      document.getElementById('modalProductHeadTitle').innerText = `Edit: ${p.title}`;
       document.getElementById('prodTitle').value = p.title || '';
       document.getElementById('prodDesc').value = p.description || '';
-      document.getElementById('prodSku').value = p.sku || '';
-      document.getElementById('prodBarcode').value = p.barcode || '';
-      document.getElementById('prodCategory').value = p.category || 'accessories';
-      document.getElementById('prodType').value = p.type || p.kind || '';
-      document.getElementById('prodVolume').value = p.volume || 'vol. 01';
-      document.getElementById('prodPrice').value = p.price || 5000;
+      document.getElementById('prodPrice').value = p.price !== undefined ? p.price : 5000;
       document.getElementById('prodCompareAtPrice').value = p.compareAtPrice || '';
       document.getElementById('prodCostPerItem').value = p.costPerItem || '';
+      document.getElementById('prodSku').value = p.sku || '';
+      document.getElementById('prodBarcode').value = p.barcode || '';
       document.getElementById('prodStock').value = p.stock !== undefined ? p.stock : 50;
       document.getElementById('prodWeight').value = p.weight || '0.05';
-      document.getElementById('prodStatus').value = p.status || 'active';
-      document.getElementById('prodTags').value = Array.isArray(p.tags) ? p.tags.join(', ') : (p.tags || '');
+      document.getElementById('prodCategory').value = p.category || 'accessories';
+      document.getElementById('prodTag').value = p.tag || 'item';
+      document.getElementById('prodVolume').value = p.volume || 'vol. 01';
       document.getElementById('prodKind').value = p.kind || '';
       document.getElementById('prodGraphic').value = p.graphic || '';
+      document.getElementById('prodStatus').value = p.status || 'active';
       document.getElementById('prodSeoTitle').value = p.seoTitle || '';
-      document.getElementById('prodSeoDesc').value = p.seoDescription || '';
+      document.getElementById('prodSeoDesc').value = p.seoDesc || p.seoDescription || '';
       document.getElementById('prodHandle').value = p.handle || p.id;
       document.getElementById('prodHandle').dataset.manualEdited = 'true';
-      document.getElementById('btnPreviewStore').style.display = 'inline-flex';
 
       setProductActiveImage(p.image || '');
-      handleStatusChange(p.status || 'active');
       calculateProfitMargin();
       updateSeoPreview();
+      handleStatusChange(p.status || 'active');
+
+      const previewBtn = document.getElementById('btnPreviewStore');
+      previewBtn.style.display = 'inline-flex';
+      previewBtn.onclick = () => {
+        window.open(`/product?id=${p.handle || p.id}`, '_blank');
+      };
 
       document.getElementById('productModal').classList.add('open');
     }
@@ -1968,59 +2323,46 @@
       document.getElementById('productModal').classList.remove('open');
     }
 
-    function saveProductRecord() {
-      const id = document.getElementById('modalProductId').value;
-      const title = document.getElementById('prodTitle').value.trim();
-      const sku = document.getElementById('prodSku').value.trim();
-      const barcode = document.getElementById('prodBarcode').value.trim();
-      const category = document.getElementById('prodCategory').value;
-      const type = document.getElementById('prodType').value.trim();
-      const volume = document.getElementById('prodVolume').value;
-      const price = Number(document.getElementById('prodPrice').value) || 5000;
-      const compareAtPrice = Number(document.getElementById('prodCompareAtPrice').value) || null;
-      const costPerItem = Number(document.getElementById('prodCostPerItem').value) || null;
-      const stock = Number(document.getElementById('prodStock').value) || 0;
-      const weight = Number(document.getElementById('prodWeight').value) || 0.05;
-      const status = document.getElementById('prodStatus').value;
-      const kind = document.getElementById('prodKind').value.trim();
-      const graphic = document.getElementById('prodGraphic').value.trim() || title;
-      const description = document.getElementById('prodDesc').value.trim();
-      const image = document.getElementById('modalProductImageData').value.trim();
-      const tags = document.getElementById('prodTags').value.split(',').map(t => t.trim()).filter(Boolean);
-      const seoTitle = document.getElementById('prodSeoTitle').value.trim();
-      const seoDescription = document.getElementById('prodSeoDesc').value.trim();
-      const handle = document.getElementById('prodHandle').value.trim() || slugify(title);
+    function previewCurrentProductStore() {
+      const handle = document.getElementById('prodHandle').value.trim() || document.getElementById('modalProductId').value;
+      if (handle) window.open(`/product?id=${handle}`, '_blank');
+    }
 
+    function saveProductRecord() {
+      const title = document.getElementById('prodTitle').value.trim();
       if (!title) {
-        alert('Product title is required.');
+        alert('Please enter a product title.');
         document.getElementById('prodTitle').focus();
         return;
       }
 
-      AfterquietStore.saveProduct({
+      const id = document.getElementById('modalProductId').value;
+      const handle = document.getElementById('prodHandle').value.trim() || slugify(title);
+
+      const productData = {
         id: id || undefined,
         title,
-        handle,
-        sku,
-        barcode,
-        category,
-        type,
-        volume,
-        price,
-        compareAtPrice,
-        costPerItem,
-        stock,
-        weight,
-        status,
-        kind,
-        graphic,
-        description,
-        image,
-        tags,
-        seoTitle,
-        seoDescription
-      });
+        description: document.getElementById('prodDesc').value.trim(),
+        price: Number(document.getElementById('prodPrice').value) || 5000,
+        compareAtPrice: Number(document.getElementById('prodCompareAtPrice').value) || null,
+        costPerItem: Number(document.getElementById('prodCostPerItem').value) || null,
+        sku: document.getElementById('prodSku').value.trim(),
+        barcode: document.getElementById('prodBarcode').value.trim(),
+        stock: Number(document.getElementById('prodStock').value) || 0,
+        weight: Number(document.getElementById('prodWeight').value) || 0.05,
+        category: document.getElementById('prodCategory').value,
+        tag: document.getElementById('prodTag').value.trim() || 'item',
+        volume: document.getElementById('prodVolume').value,
+        kind: document.getElementById('prodKind').value.trim(),
+        graphic: document.getElementById('prodGraphic').value.trim() || title,
+        status: document.getElementById('prodStatus').value,
+        seoTitle: document.getElementById('prodSeoTitle').value.trim(),
+        seoDescription: document.getElementById('prodSeoDesc').value.trim(),
+        handle: handle,
+        image: document.getElementById('modalProductImageData').value
+      };
 
+      AfterquietStore.saveProduct(productData);
       closeProductModal();
       showToast('Product saved successfully');
       renderProductsTable();
@@ -2036,14 +2378,13 @@
     }
 
     function bulkSetFlat5K() {
-      if (!confirm('Set all product prices to standard Rp 5.000 flat?')) return;
+      if (!confirm('Reset all active products to flat Rp 5.000?')) return;
       const products = AfterquietStore.getProducts(true);
-      products.forEach(p => {
-        p.price = 5000;
-      });
+      products.forEach(p => { p.price = 5000; });
       localStorage.setItem('aq_products', JSON.stringify(products));
-      showToast('All products updated to flat 5K');
+      showToast('All items adjusted to flat Rp 5.000');
       renderProductsTable();
+      renderOverview();
     }
 
     // ================= 4. INVENTORY =================
@@ -2053,13 +2394,16 @@
       tbody.innerHTML = '';
 
       products.forEach(p => {
-        const stock = Number(p.stock || 0);
+        const physical = Number(p.stock !== undefined ? p.stock : 50);
+        const reserved = Number(p.reserved || 0);
+        const available = Math.max(0, physical - reserved);
+
         let statusClass = 'in_stock';
         let statusLabel = 'In Stock';
-        if (stock === 0) {
+        if (available === 0) {
           statusClass = 'out_of_stock';
-          statusLabel = 'Out of Stock';
-        } else if (stock < 10) {
+          statusLabel = 'Sold Out';
+        } else if (available < 10) {
           statusClass = 'low_stock';
           statusLabel = 'Low Stock';
         }
@@ -2068,7 +2412,9 @@
         tr.innerHTML = `
           <td><strong>${escapeHtml(p.title)}</strong></td>
           <td style="font-family:var(--mono);">${p.sku || '-'}</td>
-          <td><strong style="font-family:var(--mono); font-size:15px;">${stock}</strong></td>
+          <td><strong style="font-family:var(--mono); font-size:14px;">${physical}</strong></td>
+          <td><span style="font-family:var(--mono); color:${reserved > 0 ? '#92400E' : '#888'}; font-weight:600;">${reserved} hold</span></td>
+          <td><strong style="font-family:var(--mono); font-size:15px; color:${available <= 0 ? 'var(--accent-brand)' : '#1A5928'};">${available}</strong></td>
           <td><span class="status-badge status-${statusClass}">${statusLabel}</span></td>
           <td style="text-align:right;">
             <button class="btn-action-secondary" style="font-size:11px; padding:5px 10px;" onclick="openStockModal('${p.id}')">Adjust Stock</button>
@@ -2097,7 +2443,7 @@
       const p = AfterquietStore.getProductById(prodId);
       if (!p) return;
       document.getElementById('stockAdjProdId').value = prodId;
-      document.getElementById('stockAdjTitle').innerText = `${p.title} (${p.sku}) — Current: ${p.stock} units`;
+      document.getElementById('stockAdjTitle').innerText = `${p.title} (${p.sku}) — Physical On Hand: ${p.stock} units`;
       document.getElementById('stockAdjDelta').value = '';
       document.getElementById('stockModal').classList.add('open');
     }
@@ -2118,7 +2464,7 @@
 
       AfterquietStore.adjustStock(id, delta, reason);
       closeStockModal();
-      showToast('Inventory adjusted');
+      showToast('Inventory adjusted successfully');
       renderInventoryTable();
       renderOverview();
     }
@@ -2197,17 +2543,119 @@
       document.getElementById('setAnnouncement').value = s.announcement || '';
       document.getElementById('setInstagram').value = s.instagram || 'afterquiet_____';
       document.getElementById('setCurrency').value = s.currency || 'Rp';
+
+      const cfg = s.cloudDb || {};
+      document.getElementById('setCloudProvider').value = cfg.provider || 'firebase';
+      document.getElementById('setCloudEnabled').value = cfg.enabled ? 'true' : 'false';
+      document.getElementById('setCloudEndpoint').value = cfg.endpoint || '';
+      document.getElementById('setCloudAuthSecret').value = cfg.authSecret || '';
+      document.getElementById('setCloudPollInterval').value = Math.round((cfg.pollIntervalMs || 25000) / 1000);
+      document.getElementById('setSessionTimeout').value = String(s.sessionTimeoutMinutes || 30);
     }
 
     function saveStoreSettingsForm() {
+      const cloudEnabled = document.getElementById('setCloudEnabled').value === 'true';
+      const pollSec = Number(document.getElementById('setCloudPollInterval').value) || 25;
+
       AfterquietStore.saveSettings({
         storeName: document.getElementById('setStoreName').value.trim(),
         waNumber: document.getElementById('setWaNumber').value.trim(),
         announcement: document.getElementById('setAnnouncement').value.trim(),
         instagram: document.getElementById('setInstagram').value.trim(),
-        currency: document.getElementById('setCurrency').value.trim()
+        currency: document.getElementById('setCurrency').value.trim(),
+        sessionTimeoutMinutes: Number(document.getElementById('setSessionTimeout').value) || 30,
+        cloudDb: {
+          enabled: cloudEnabled,
+          provider: document.getElementById('setCloudProvider').value,
+          endpoint: document.getElementById('setCloudEndpoint').value.trim(),
+          authSecret: document.getElementById('setCloudAuthSecret').value.trim(),
+          pollIntervalMs: Math.max(10, pollSec) * 1000
+        }
       });
+
       showToast('Settings saved successfully');
+      syncCloudPill();
+      AfterquietStore.CloudSync.schedulePolling();
+    }
+
+    // Cloud Connection Testing
+    async function testCloudConnectionUI() {
+      const resultBox = document.getElementById('cloudTestResult');
+      resultBox.style.display = 'block';
+      resultBox.style.background = '#F3F4F6';
+      resultBox.style.color = '#374151';
+      resultBox.innerText = 'Testing connection to cloud database...';
+
+      const tempConfig = {
+        enabled: true,
+        provider: document.getElementById('setCloudProvider').value,
+        endpoint: document.getElementById('setCloudEndpoint').value.trim(),
+        authSecret: document.getElementById('setCloudAuthSecret').value.trim()
+      };
+
+      const res = await AfterquietStore.CloudSync.testConnection(tempConfig);
+      if (res.success) {
+        resultBox.style.background = '#ECFDF5';
+        resultBox.style.color = '#065F46';
+        resultBox.innerText = `✓ Connection successful: ${res.message}`;
+      } else {
+        resultBox.style.background = '#FEF2F2';
+        resultBox.style.color = '#991B1B';
+        resultBox.innerText = `✕ Connection failed: ${res.message}`;
+      }
+    }
+
+    async function forcePushCloudData() {
+      if (!confirm('Push current local products, orders, and settings to the remote database?')) return;
+      showToast('Pushing local data to cloud...');
+      const settings = AfterquietStore.getSettings();
+      await Promise.all([
+        AfterquietStore.CloudSync.push('aq_products', AfterquietStore.getProducts(true)),
+        AfterquietStore.CloudSync.push('aq_orders', AfterquietStore.getOrders()),
+        AfterquietStore.CloudSync.push('aq_settings', settings)
+      ]);
+      showToast('Local catalogue pushed to cloud');
+      syncCloudPill();
+    }
+
+    async function forcePullCloudData() {
+      if (!confirm('Fetch latest orders and products from cloud and merge locally?')) return;
+      showToast('Pulling data from cloud...');
+      await AfterquietStore.CloudSync.syncAll();
+      showToast('Data merged from cloud');
+      renderActiveSection('overview');
+      syncCloudPill();
+    }
+
+    // Security PIN Management
+    function openChangePinModal() {
+      document.getElementById('curAdminPinInput').value = '';
+      document.getElementById('newAdminPinInput').value = '';
+      document.getElementById('confirmAdminPinInput').value = '';
+      document.getElementById('changePinModal').classList.add('open');
+    }
+
+    function closeChangePinModal() {
+      document.getElementById('changePinModal').classList.remove('open');
+    }
+
+    async function submitChangePin() {
+      const cur = document.getElementById('curAdminPinInput').value.trim();
+      const next = document.getElementById('newAdminPinInput').value.trim();
+      const confirmP = document.getElementById('confirmAdminPinInput').value.trim();
+
+      if (next !== confirmP) {
+        alert('New PIN and Confirm PIN do not match.');
+        return;
+      }
+
+      const res = await AfterquietStore.changeAdminPin(cur, next);
+      if (res.success) {
+        alert(res.message);
+        closeChangePinModal();
+      } else {
+        alert(res.message);
+      }
     }
 
     // CSV Data Exchange
@@ -2238,16 +2686,24 @@
               category: cols[3] || 'accessories',
               volume: cols[4] || 'vol. 01',
               price: Number(cols[5]) || 5000,
-              stock: Number(cols[6]) || 50,
-              kind: cols[7] || '',
-              tag: cols[8] || 'item',
-              status: cols[9] || 'active',
-              description: cols[10] || ''
+              compareAtPrice: Number(cols[6]) || null,
+              costPerItem: Number(cols[7]) || null,
+              stock: Number(cols[8]) || 50,
+              reserved: Number(cols[9]) || 0,
+              kind: cols[10] || '',
+              tag: cols[11] || 'item',
+              status: cols[12] || 'active',
+              description: cols[13] || '',
+              seoTitle: cols[14] || '',
+              seoDescription: cols[15] || '',
+              handle: cols[16] || '',
+              image: cols[17] || ''
             });
           }
 
           if (imported.length > 0) {
             localStorage.setItem('aq_products', JSON.stringify(imported));
+            AfterquietStore.CloudSync.push('aq_products', imported);
             showToast(`Imported ${imported.length} products`);
             renderProductsTable();
             renderOverview();
@@ -2267,10 +2723,12 @@
 
     // Initial check
     AfterquietStore.init();
-    if (sessionStorage.getItem('aq_admin_auth') === '1') {
+    if (AfterquietStore.isAdminAuthenticated()) {
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('adminDashboard').style.display = 'grid';
+      startInactivityTracker();
       renderActiveSection('overview');
+      syncCloudPill();
     }
   </script>
 </body>

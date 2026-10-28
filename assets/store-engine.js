@@ -1,6 +1,7 @@
 /**
  * afterquiet — Independent Commerce Operating Engine
  * Unified persistent data layer for Storefront & Admin
+ * Featuring Centralized Multi-Device Persistence, Stock Reservation Lifecycle, & Cryptographic Security
  */
 
 (function(window) {
@@ -13,7 +14,8 @@
     CUSTOMERS: 'aq_customers',
     DISCOUNTS: 'aq_discounts',
     SETTINGS: 'aq_settings',
-    CART: 'aq_cart'
+    CART: 'aq_cart',
+    CLOUD_META: 'aq_cloud_sync_meta'
   };
 
   const DEFAULT_SETTINGS = {
@@ -26,7 +28,16 @@
     email: 'studio@afterquiet.com',
     shippingCourierPresets: ['J&T Express', 'SiCepat Regular', 'JNE Regular', 'Instant Courier (GoSend/Grab)'],
     accentColor: '#843B40',
-    adminPin: '1234'
+    adminPinHash: 'd82c3598202da92e4c62402f115ac8da0d32cb8aec3b3959cd1e025a89913ad6', // salted SHA-256 for '1234'
+    adminSalt: 'afterquiet_sec_2026',
+    sessionTimeoutMinutes: 30,
+    cloudDb: {
+      enabled: false,
+      provider: 'firebase', // 'firebase' | 'rest' | 'local'
+      endpoint: '', // e.g. https://afterquiet-store-default-rtdb.firebaseio.com
+      authSecret: '',
+      pollIntervalMs: 25000
+    }
   };
 
   const DEFAULT_PRODUCTS = [
@@ -39,6 +50,7 @@
       kind: "hard enamel • black nickel finish • 32mm",
       price: 5000,
       stock: 45,
+      reserved: 0,
       tag: "pin",
       graphic: "restless\nmind.",
       description: "a small reminder of thoughts that refuse to stay quiet. die-cast hard enamel with black nickel plating and dual rubber clutches.",
@@ -54,6 +66,7 @@
       kind: "die-struck metal • antique silver • 38mm",
       price: 5000,
       stock: 60,
+      reserved: 0,
       tag: "badge",
       graphic: "too soft\nfor this world",
       description: "exploring vulnerability, sensitivity, and the courage to remain emotionally honest in an aggressive world.",
@@ -69,6 +82,7 @@
       kind: "screenprinted weatherproof matte vinyl",
       price: 5000,
       stock: 120,
+      reserved: 0,
       tag: "sticker",
       graphic: "silence isn't\nalways peace.",
       description: "heavy-duty screenprinted outdoor matte vinyl sticker. uv protected, waterproof, and scratch resistant.",
@@ -84,6 +98,7 @@
       kind: "solid metal motel tag • gunmetal plated",
       price: 5000,
       stock: 35,
+      reserved: 0,
       tag: "tag",
       graphic: "emotional\nhonesty",
       description: "classic hotel motel key tag silhouette rendered in solid zinc alloy with deep engraved lettering.",
@@ -99,6 +114,7 @@
       kind: "stamped iron • archival antique finish",
       price: 5000,
       stock: 40,
+      reserved: 0,
       tag: "pin",
       graphic: "fragile\narchives.",
       description: "centered on identity, memory, and the things people carry internally without speaking out loud.",
@@ -114,6 +130,7 @@
       kind: "raw metal stamped pin • archival card",
       price: 5000,
       stock: 55,
+      reserved: 0,
       tag: "pin",
       graphic: "easier to wear\nthan explain.",
       description: "some things are simply easier to wear than to explain. high contrast relief typography.",
@@ -129,6 +146,7 @@
       kind: "matte laminated button • 44mm pinback",
       price: 5000,
       stock: 80,
+      reserved: 0,
       tag: "badge",
       graphic: "creative\nresistance",
       description: "art and design can question social expectations and challenge familiar comfortable ideas.",
@@ -144,58 +162,29 @@
       kind: "16oz raw organic cotton • ecru archive",
       price: 5000,
       stock: 25,
+      reserved: 0,
       tag: "tote",
       graphic: "archive\ntote.",
       description: "heavyweight 16oz unbleached organic cotton canvas tote bag. reinforced box-x stitching on handles.",
       status: "active",
-      createdAt: "2026-10-20T08:20:00Z"
-    },
-    {
-      id: "tote_black",
-      sku: "AQ-TOT-02",
-      title: "utility black canvas tote",
-      category: "totes",
-      volume: "vol. 02",
-      kind: "washed heavyweight canvas • reinforced webbing",
-      price: 5000,
-      stock: 30,
-      tag: "tote",
-      graphic: "utility\nblack.",
-      description: "deep washed black cotton canvas with military-spec nylon webbing strap and front attachment bar for pins.",
-      status: "active",
-      createdAt: "2026-10-22T09:15:00Z"
-    },
-    {
-      id: "bag_tactical",
-      sku: "AQ-BAG-01",
-      title: "restless tactical mini carrier",
-      category: "bags",
-      volume: "vol. 01",
-      kind: "water-resistant nylon • adjustable utility strap",
-      price: 5000,
-      stock: 20,
-      tag: "bag",
-      graphic: "tactical\ncarrier.",
-      description: "compact everyday crossbody carrier engineered for essentials, featuring cordura nylon and ykk zippers.",
-      status: "active",
-      createdAt: "2026-10-20T08:25:00Z"
+      createdAt: "2026-10-24T11:00:00Z"
     }
   ];
 
   const DEFAULT_DISCOUNTS = [
-    { code: 'QUIET10', type: 'percentage', value: 10, minSpend: 15000, active: true },
-    { code: 'AFTER5K', type: 'fixed', value: 5000, minSpend: 20000, active: true }
+    { code: 'QUIET10', type: 'percentage', value: 10, minSpend: 10000, active: true },
+    { code: 'FIRST5K', type: 'fixed', value: 5000, minSpend: 25000, active: true }
   ];
 
   const DEFAULT_CUSTOMERS = [
-    { id: 'CUST-001', name: 'Rian Pratama', phone: '081298765432', city: 'Jakarta Selatan', orderCount: 2, totalSpend: 25000, lastOrder: '2026-10-27T14:30:00Z' },
+    { id: 'CUST-001', name: 'Rian Adhitama', phone: '081298765432', city: 'Jakarta Selatan', orderCount: 1, totalSpend: 15000, lastOrder: '2026-10-27T14:30:00Z' },
     { id: 'CUST-002', name: 'Nadia S.', phone: '085712345678', city: 'Bandung', orderCount: 1, totalSpend: 15000, lastOrder: '2026-10-28T08:15:00Z' }
   ];
 
   const DEFAULT_ORDERS = [
     {
       id: 'AQ-1082',
-      customer: { name: 'Rian Pratama', phone: '081298765432', city: 'Jakarta Selatan', address: 'Kebayoran Baru, Jakarta Selatan' },
+      customer: { name: 'Rian Adhitama', phone: '081298765432', city: 'Jakarta Selatan', address: 'Jl. Senopati No. 42, Kebayoran Baru' },
       items: [
         { id: 'pin_restless', title: 'restless mind enamel pin', price: 5000, qty: 2, total: 10000 },
         { id: 'sticker_pack', title: 'silence isn\'t peace sticker', price: 5000, qty: 1, total: 5000 }
@@ -205,6 +194,8 @@
       total: 15000,
       paymentStatus: 'paid',
       fulfillmentStatus: 'fulfilled',
+      lifecycleStatus: 'completed',
+      paidAt: '2026-10-27T14:35:00Z',
       courier: 'J&T Express',
       trackingNumber: 'JT892019281',
       notes: 'Please pack in protective sleeve',
@@ -223,7 +214,9 @@
       total: 15000,
       paymentStatus: 'paid',
       fulfillmentStatus: 'unfulfilled',
-      courier: 'SiCepat',
+      lifecycleStatus: 'paid',
+      paidAt: '2026-10-28T08:20:00Z',
+      courier: 'SiCepat Regular',
       trackingNumber: '',
       notes: 'Custom placement studio order',
       createdAt: '2026-10-28T08:15:00Z'
@@ -251,10 +244,259 @@
     }
   }
 
-  function initDatabase() {
-    if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
-      setJson(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS);
+  // ================= CRYPTOGRAPHIC SECURITY MODULE =================
+  async function computeSha256(text) {
+    try {
+      if (window.crypto && window.crypto.subtle) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+    } catch (e) {
+      console.warn('SubtleCrypto error, falling back:', e);
     }
+    // Fallback deterministic hash
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      hash = ((hash << 5) - hash) + text.charCodeAt(i);
+      hash |= 0;
+    }
+    return 'fb_' + Math.abs(hash);
+  }
+
+  // ================= CENTRALIZED CLOUD PERSISTENCE ADAPTER =================
+  const CloudSync = {
+    status: 'idle', // 'idle' | 'connected' | 'syncing' | 'offline' | 'error'
+    lastSyncTime: null,
+    pollTimer: null,
+    bus: null,
+
+    init() {
+      // 1. Cross-tab BroadcastChannel for real-time bus
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          this.bus = new BroadcastChannel('afterquiet_commerce_bus');
+          this.bus.onmessage = (event) => {
+            if (event.data && event.data.type === 'STORE_UPDATED') {
+              window.dispatchEvent(new CustomEvent('aq_store_updated', { detail: event.data }));
+            }
+          };
+        }
+      } catch (e) {
+        console.warn('BroadcastChannel not available:', e);
+      }
+
+      // 2. Schedule polling loop
+      this.schedulePolling();
+    },
+
+    broadcastLocalChange(key) {
+      if (this.bus) {
+        try {
+          this.bus.postMessage({ type: 'STORE_UPDATED', key, timestamp: Date.now() });
+        } catch (e) {}
+      }
+    },
+
+    getConfig() {
+      const settings = Engine.getSettings();
+      return settings.cloudDb || DEFAULT_SETTINGS.cloudDb;
+    },
+
+    async testConnection(customConfig = null) {
+      const cfg = customConfig || this.getConfig();
+      if (!cfg || !cfg.endpoint) {
+        return { success: false, message: 'Cloud database endpoint URL is empty.' };
+      }
+      try {
+        const cleanUrl = cfg.endpoint.replace(/\/+$/, '');
+        let targetUrl = '';
+        if (cfg.provider === 'firebase') {
+          targetUrl = `${cleanUrl}/afterquiet/ping.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
+        } else {
+          targetUrl = `${cleanUrl}/ping`;
+        }
+
+        const start = Date.now();
+        const res = await fetch(targetUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ping: Date.now(), client: 'afterquiet_os' })
+        });
+        const latency = Date.now() - start;
+
+        if (res.ok) {
+          return { success: true, latency, message: `Connected successfully (${latency}ms latency).` };
+        } else {
+          return { success: false, message: `Cloud returned HTTP ${res.status}: ${res.statusText}` };
+        }
+      } catch (err) {
+        return { success: false, message: `Network error connecting to cloud: ${err.message}` };
+      }
+    },
+
+    async push(key, data) {
+      this.broadcastLocalChange(key);
+      const cfg = this.getConfig();
+      if (!cfg || !cfg.enabled || !cfg.endpoint) return;
+
+      try {
+        this.status = 'syncing';
+        window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'syncing' } }));
+
+        const cleanUrl = cfg.endpoint.replace(/\/+$/, '');
+        let targetUrl = '';
+        if (cfg.provider === 'firebase') {
+          targetUrl = `${cleanUrl}/afterquiet/${key}.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
+        } else {
+          targetUrl = `${cleanUrl}/${key}`;
+        }
+
+        await fetch(targetUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        this.status = 'connected';
+        this.lastSyncTime = new Date().toISOString();
+        window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'connected', lastSync: this.lastSyncTime } }));
+      } catch (err) {
+        console.warn('Cloud sync push deferred:', err);
+        this.status = 'offline';
+        window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'offline', error: err.message } }));
+      }
+    },
+
+    async pull(key) {
+      const cfg = this.getConfig();
+      if (!cfg || !cfg.enabled || !cfg.endpoint) return null;
+
+      try {
+        const cleanUrl = cfg.endpoint.replace(/\/+$/, '');
+        let targetUrl = '';
+        if (cfg.provider === 'firebase') {
+          targetUrl = `${cleanUrl}/afterquiet/${key}.json${cfg.authSecret ? `?auth=${encodeURIComponent(cfg.authSecret)}` : ''}`;
+        } else {
+          targetUrl = `${cleanUrl}/${key}`;
+        }
+
+        const res = await fetch(targetUrl);
+        if (!res.ok) return null;
+        const remoteData = await res.json();
+        if (remoteData === null || remoteData === undefined) return null;
+
+        this.mergeCollection(key, remoteData);
+        return remoteData;
+      } catch (err) {
+        console.warn(`Cloud pull failed for ${key}:`, err);
+        return null;
+      }
+    },
+
+    mergeCollection(key, remote) {
+      const local = getJson(key, null);
+      if (!local) {
+        setJson(key, remote);
+        return;
+      }
+
+      if (key === STORAGE_KEYS.ORDERS) {
+        const map = new Map();
+        local.forEach(o => map.set(o.id, o));
+        const remoteList = Array.isArray(remote) ? remote : Object.values(remote);
+        remoteList.forEach(ro => {
+          if (!ro || !ro.id) return;
+          if (!map.has(ro.id)) {
+            map.set(ro.id, ro);
+          } else {
+            const lo = map.get(ro.id);
+            const rTime = new Date(ro.updatedAt || ro.paidAt || ro.createdAt || 0).getTime();
+            const lTime = new Date(lo.updatedAt || lo.paidAt || lo.createdAt || 0).getTime();
+            if (rTime >= lTime) {
+              map.set(ro.id, ro);
+            }
+          }
+        });
+        const merged = Array.from(map.values()).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setJson(key, merged);
+      } else if (key === STORAGE_KEYS.PRODUCTS) {
+        const map = new Map();
+        local.forEach(p => map.set(p.id, p));
+        const remoteList = Array.isArray(remote) ? remote : Object.values(remote);
+        remoteList.forEach(rp => {
+          if (!rp || !rp.id) return;
+          if (!map.has(rp.id)) {
+            map.set(rp.id, rp);
+          } else {
+            const lp = map.get(rp.id);
+            const rTime = new Date(rp.updatedAt || rp.createdAt || 0).getTime();
+            const lTime = new Date(lp.updatedAt || lp.createdAt || 0).getTime();
+            if (rTime >= lTime) {
+              map.set(rp.id, rp);
+            }
+          }
+        });
+        setJson(key, Array.from(map.values()));
+      }
+    },
+
+    async syncAll() {
+      const cfg = this.getConfig();
+      if (!cfg || !cfg.enabled || !cfg.endpoint) return;
+
+      this.status = 'syncing';
+      window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'syncing' } }));
+      try {
+        await Promise.all([
+          this.pull(STORAGE_KEYS.ORDERS),
+          this.pull(STORAGE_KEYS.PRODUCTS),
+          this.pull(STORAGE_KEYS.SETTINGS)
+        ]);
+        this.status = 'connected';
+        this.lastSyncTime = new Date().toISOString();
+        window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'connected', lastSync: this.lastSyncTime } }));
+      } catch (err) {
+        this.status = 'offline';
+        window.dispatchEvent(new CustomEvent('aq_cloud_status', { detail: { status: 'offline' } }));
+      }
+    },
+
+    schedulePolling() {
+      if (typeof clearInterval !== 'undefined') clearInterval(this.pollTimer);
+      const cfg = this.getConfig();
+      const interval = (cfg && cfg.pollIntervalMs) || 25000;
+      if (typeof setInterval !== 'undefined') {
+        this.pollTimer = setInterval(() => {
+          this.syncAll();
+          Engine.checkExpiredReservations();
+        }, interval);
+      }
+    }
+  };
+
+  // ================= DATABASE INITIALIZER =================
+  function initDatabase() {
+    let settings = getJson(STORAGE_KEYS.SETTINGS, null);
+    if (!settings) {
+      setJson(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS);
+    } else {
+      // Migrate plain text PIN to secure salt hash if found
+      if (settings.adminPin && !settings.adminPinHash) {
+        computeSha256((settings.adminSalt || DEFAULT_SETTINGS.adminSalt) + settings.adminPin).then(hash => {
+          settings.adminPinHash = hash;
+          delete settings.adminPin;
+          setJson(STORAGE_KEYS.SETTINGS, settings);
+        });
+      }
+      if (!settings.cloudDb) {
+        settings.cloudDb = DEFAULT_SETTINGS.cloudDb;
+        setJson(STORAGE_KEYS.SETTINGS, settings);
+      }
+    }
+
     if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) {
       setJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
     }
@@ -276,6 +518,11 @@
         { timestamp: '2026-10-20T08:05:00Z', sku: 'AQ-BDG-01', delta: 60, reason: 'Initial inventory intake' }
       ]);
     }
+
+    // Clean up expired reservations on initialization
+    Engine.checkExpiredReservations();
+    // Initialize CloudSync
+    CloudSync.init();
   }
 
   // ================= FORMATTERS =================
@@ -298,6 +545,7 @@
     init: initDatabase,
     formatRupiah,
     formatDate,
+    CloudSync,
 
     // SETTINGS
     getSettings() {
@@ -305,23 +553,38 @@
     },
     saveSettings(newSettings) {
       const current = this.getSettings();
-      const updated = { ...current, ...newSettings };
+      const updated = { ...current, ...newSettings, updatedAt: new Date().toISOString() };
       setJson(STORAGE_KEYS.SETTINGS, updated);
+      CloudSync.push(STORAGE_KEYS.SETTINGS, updated);
       return updated;
     },
 
-    // PRODUCTS & INVENTORY
+    // PRODUCTS & INVENTORY LIFECYCLE
+    getAvailableStock(p) {
+      if (!p) return 0;
+      const physical = Number(p.stock !== undefined ? p.stock : 50);
+      const reserved = Number(p.reserved || 0);
+      return Math.max(0, physical - reserved);
+    },
+
     getProducts(includeDrafts = true) {
       const list = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
-      if (includeDrafts) return list;
-      return list.filter(p => p.status === 'active');
+      const enriched = list.map(p => ({
+        ...p,
+        reserved: Number(p.reserved || 0),
+        availableStock: this.getAvailableStock(p)
+      }));
+      if (includeDrafts) return enriched;
+      return enriched.filter(p => p.status === 'active');
     },
+
     getProductById(id) {
       const list = this.getProducts(true);
-      return list.find(p => p.id === id) || null;
+      return list.find(p => p.id === id || p.handle === id) || null;
     },
+
     saveProduct(productData) {
-      const list = this.getProducts(true);
+      const list = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
       if (productData.id) {
         const index = list.findIndex(p => p.id === productData.id);
         if (index !== -1) {
@@ -330,9 +593,14 @@
           if (oldStock !== newStock) {
             this.logInventoryAdjustment(productData.sku || productData.id, newStock - oldStock, 'Manual stock update');
           }
-          list[index] = { ...list[index], ...productData, updatedAt: new Date().toISOString() };
+          list[index] = {
+            ...list[index],
+            ...productData,
+            reserved: list[index].reserved !== undefined ? list[index].reserved : 0,
+            updatedAt: new Date().toISOString()
+          };
         } else {
-          list.unshift({ ...productData, createdAt: new Date().toISOString() });
+          list.unshift({ ...productData, reserved: 0, createdAt: new Date().toISOString() });
         }
       } else {
         const newId = 'aq_' + Date.now().toString(36);
@@ -340,29 +608,37 @@
           ...productData,
           id: newId,
           sku: productData.sku || ('AQ-' + Math.floor(1000 + Math.random() * 9000)),
+          reserved: 0,
           createdAt: new Date().toISOString()
         };
         list.unshift(newProduct);
         this.logInventoryAdjustment(newProduct.sku, Number(newProduct.stock || 0), 'Initial intake');
       }
       setJson(STORAGE_KEYS.PRODUCTS, list);
+      CloudSync.push(STORAGE_KEYS.PRODUCTS, list);
       return list;
     },
+
     deleteProduct(id) {
-      const list = this.getProducts(true).filter(p => p.id !== id);
+      const list = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS).filter(p => p.id !== id);
       setJson(STORAGE_KEYS.PRODUCTS, list);
+      CloudSync.push(STORAGE_KEYS.PRODUCTS, list);
       return list;
     },
+
     adjustStock(idOrSku, delta, reason = 'Adjustment') {
-      const list = this.getProducts(true);
+      const list = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
       const item = list.find(p => p.id === idOrSku || p.sku === idOrSku);
       if (!item) return false;
 
       item.stock = Math.max(0, Number(item.stock || 0) + Number(delta));
+      item.updatedAt = new Date().toISOString();
       this.logInventoryAdjustment(item.sku || item.id, delta, reason);
       setJson(STORAGE_KEYS.PRODUCTS, list);
+      CloudSync.push(STORAGE_KEYS.PRODUCTS, list);
       return item;
     },
+
     logInventoryAdjustment(sku, delta, reason) {
       const logs = getJson(STORAGE_KEYS.INVENTORY_LOGS, []);
       logs.unshift({
@@ -374,21 +650,52 @@
       if (logs.length > 200) logs.pop();
       setJson(STORAGE_KEYS.INVENTORY_LOGS, logs);
     },
+
     getInventoryLogs() {
       return getJson(STORAGE_KEYS.INVENTORY_LOGS, []);
     },
 
-    // ORDERS LIFECYCLE
+    // ================= STRICT ORDER LIFECYCLE & RESERVATION =================
     getOrders() {
       return getJson(STORAGE_KEYS.ORDERS, DEFAULT_ORDERS);
     },
+
     getOrderById(id) {
       const list = this.getOrders();
       return list.find(o => o.id === id) || null;
     },
+
+    /**
+     * Creates an order with strict stock reservation.
+     * Physical stock is NOT permanently deducted until payment is confirmed.
+     * Instead, items are held in 'reserved' status with a 24-hour expiration.
+     */
     createOrder({ customer, items, subtotal, discount = 0, total, notes = '', courier = 'Standard Courier' }) {
+      // 1. Validate available stock for each line item
+      const products = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
+      for (const item of items) {
+        const prod = products.find(p => p.id === item.id);
+        const available = prod ? this.getAvailableStock(prod) : 0;
+        if (item.qty > available) {
+          throw new Error(`Insufficient available stock for ${item.title}. Only ${available} units available.`);
+        }
+      }
+
+      // 2. Lock reserved stock for each item
+      items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        if (prod) {
+          prod.reserved = Number(prod.reserved || 0) + Number(item.qty);
+          prod.updatedAt = new Date().toISOString();
+        }
+      });
+      setJson(STORAGE_KEYS.PRODUCTS, products);
+
+      // 3. Initialize order in awaiting payment state
       const orders = this.getOrders();
       const orderId = 'AQ-' + Math.floor(1000 + Math.random() * 9000);
+      const reservationExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24-hour hold
+
       const newOrder = {
         id: orderId,
         customer,
@@ -398,61 +705,187 @@
         total,
         paymentStatus: 'unpaid',
         fulfillmentStatus: 'unfulfilled',
+        lifecycleStatus: 'awaiting_payment',
+        reservedExpiresAt: reservationExpiry,
         courier,
         trackingNumber: '',
         notes,
         createdAt: new Date().toISOString()
       };
 
-      // Automatically deduct inventory stock & log
-      items.forEach(item => {
-        this.adjustStock(item.id, -item.qty, `Order placement ${orderId}`);
-      });
-
-      // Upsert Customer
-      this.upsertCustomer(customer, total);
+      this.logInventoryAdjustment('HOLD', 0, `Stock reservation: ${items.map(i => `${i.title} (${i.qty}x)`).join(', ')} held for ${orderId} (awaiting payment)`);
 
       orders.unshift(newOrder);
       setJson(STORAGE_KEYS.ORDERS, orders);
+
+      // Push to Centralized Cloud
+      CloudSync.push(STORAGE_KEYS.ORDERS, orders);
+      CloudSync.push(STORAGE_KEYS.PRODUCTS, products);
+
       return newOrder;
     },
+
+    /**
+     * Verifies payment receipt from WhatsApp/Bank/QRIS.
+     * Permanently decrements physical stock and clears reservation.
+     * Only orders confirmed via this method count towards Total Sales and AOV.
+     */
+    confirmOrderPayment(orderId) {
+      const orders = this.getOrders();
+      const order = orders.find(o => o.id === orderId);
+      if (!order) return null;
+      if (order.paymentStatus === 'paid') return order; // already confirmed
+
+      const products = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
+
+      // Permanently decrement physical stock & release reservation hold
+      order.items.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        if (prod) {
+          prod.stock = Math.max(0, Number(prod.stock || 0) - Number(item.qty));
+          prod.reserved = Math.max(0, Number(prod.reserved || 0) - Number(item.qty));
+          prod.updatedAt = new Date().toISOString();
+          this.logInventoryAdjustment(prod.sku || prod.id, -item.qty, `Payment verified for ${orderId}: permanent stock deduction`);
+        }
+      });
+
+      order.paymentStatus = 'paid';
+      order.lifecycleStatus = 'paid';
+      order.paidAt = new Date().toISOString();
+      order.updatedAt = new Date().toISOString();
+
+      // Upsert customer verified spend only now
+      this.upsertCustomer(order.customer, order.total);
+
+      setJson(STORAGE_KEYS.PRODUCTS, products);
+      setJson(STORAGE_KEYS.ORDERS, orders);
+
+      CloudSync.push(STORAGE_KEYS.PRODUCTS, products);
+      CloudSync.push(STORAGE_KEYS.ORDERS, orders);
+
+      return order;
+    },
+
+    /**
+     * Cancels an order.
+     * If order was unpaid, releases reserved stock back into available pool.
+     * If order was paid, restocks physical units back onto shelf.
+     */
+    cancelOrder(orderId, reason = 'Cancelled by store operator') {
+      const orders = this.getOrders();
+      const order = orders.find(o => o.id === orderId);
+      if (!order || order.paymentStatus === 'cancelled' || order.paymentStatus === 'expired') return null;
+
+      const products = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
+
+      if (order.paymentStatus === 'unpaid') {
+        // Release reservation hold
+        order.items.forEach(item => {
+          const prod = products.find(p => p.id === item.id);
+          if (prod) {
+            prod.reserved = Math.max(0, Number(prod.reserved || 0) - Number(item.qty));
+            prod.updatedAt = new Date().toISOString();
+            this.logInventoryAdjustment(prod.sku || prod.id, 0, `Unpaid order ${orderId} cancelled: ${item.qty} reserved units released back to catalogue`);
+          }
+        });
+        order.paymentStatus = 'cancelled';
+        order.fulfillmentStatus = 'cancelled';
+        order.lifecycleStatus = 'cancelled';
+      } else if (order.paymentStatus === 'paid') {
+        // Restock physical inventory
+        order.items.forEach(item => {
+          const prod = products.find(p => p.id === item.id);
+          if (prod) {
+            prod.stock = Number(prod.stock || 0) + Number(item.qty);
+            prod.updatedAt = new Date().toISOString();
+            this.logInventoryAdjustment(prod.sku || prod.id, item.qty, `Paid order ${orderId} refunded: ${item.qty} units restocked to shelf`);
+          }
+        });
+        order.paymentStatus = 'refunded';
+        order.fulfillmentStatus = 'cancelled';
+        order.lifecycleStatus = 'refunded';
+      }
+
+      order.notes = (order.notes ? order.notes + ' | ' : '') + 'Cancelled: ' + reason;
+      order.updatedAt = new Date().toISOString();
+
+      setJson(STORAGE_KEYS.PRODUCTS, products);
+      setJson(STORAGE_KEYS.ORDERS, orders);
+
+      CloudSync.push(STORAGE_KEYS.PRODUCTS, products);
+      CloudSync.push(STORAGE_KEYS.ORDERS, orders);
+
+      return order;
+    },
+
     updateOrderStatus(orderId, { paymentStatus, fulfillmentStatus, trackingNumber, courier }) {
+      if (paymentStatus === 'paid') {
+        return this.confirmOrderPayment(orderId);
+      }
+      if (paymentStatus === 'cancelled') {
+        return this.cancelOrder(orderId, 'Operator cancellation');
+      }
+
       const orders = this.getOrders();
       const order = orders.find(o => o.id === orderId);
       if (!order) return null;
 
-      if (paymentStatus !== undefined) order.paymentStatus = paymentStatus;
       if (fulfillmentStatus !== undefined) order.fulfillmentStatus = fulfillmentStatus;
       if (trackingNumber !== undefined) order.trackingNumber = trackingNumber;
       if (courier !== undefined) order.courier = courier;
       order.updatedAt = new Date().toISOString();
 
       setJson(STORAGE_KEYS.ORDERS, orders);
+      CloudSync.push(STORAGE_KEYS.ORDERS, orders);
       return order;
     },
-    cancelOrder(orderId, reason = 'Customer cancellation') {
-      const orders = this.getOrders();
-      const order = orders.find(o => o.id === orderId);
-      if (!order || order.fulfillmentStatus === 'cancelled') return null;
 
-      // Restore stock
-      order.items.forEach(item => {
-        this.adjustStock(item.id, item.qty, `Order cancellation refund ${orderId}`);
+    /**
+     * Checks for unpaid orders that exceeded the 24-hour reservation window.
+     * Automatically releases reserved units and marks order as expired.
+     */
+    checkExpiredReservations() {
+      const orders = getJson(STORAGE_KEYS.ORDERS, DEFAULT_ORDERS);
+      const now = new Date();
+      let expiredCount = 0;
+      const products = getJson(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
+      let productsModified = false;
+
+      orders.forEach(o => {
+        if (o.paymentStatus === 'unpaid' && o.reservedExpiresAt && new Date(o.reservedExpiresAt) < now) {
+          o.items.forEach(item => {
+            const prod = products.find(p => p.id === item.id);
+            if (prod) {
+              prod.reserved = Math.max(0, Number(prod.reserved || 0) - Number(item.qty));
+              prod.updatedAt = now.toISOString();
+              productsModified = true;
+            }
+          });
+          o.paymentStatus = 'expired';
+          o.fulfillmentStatus = 'cancelled';
+          o.lifecycleStatus = 'expired';
+          o.notes = (o.notes ? o.notes + ' | ' : '') + 'Reservation auto-expired after 24h.';
+          o.updatedAt = now.toISOString();
+          expiredCount++;
+        }
       });
 
-      order.fulfillmentStatus = 'cancelled';
-      order.paymentStatus = 'refunded';
-      order.notes = (order.notes ? order.notes + ' | ' : '') + 'Cancelled: ' + reason;
-      order.updatedAt = new Date().toISOString();
+      if (expiredCount > 0) {
+        if (productsModified) setJson(STORAGE_KEYS.PRODUCTS, products);
+        setJson(STORAGE_KEYS.ORDERS, orders);
+        this.logInventoryAdjustment('EXPIRE', 0, `${expiredCount} unpaid orders expired: reserved units released`);
+        CloudSync.push(STORAGE_KEYS.PRODUCTS, products);
+        CloudSync.push(STORAGE_KEYS.ORDERS, orders);
+      }
 
-      setJson(STORAGE_KEYS.ORDERS, orders);
-      return order;
+      return expiredCount;
     },
 
     // CUSTOMERS
     getCustomers() {
       return getJson(STORAGE_KEYS.CUSTOMERS, DEFAULT_CUSTOMERS);
     },
+
     upsertCustomer(customerData, spendAmount) {
       if (!customerData || !customerData.phone) return;
       const customers = this.getCustomers();
@@ -522,22 +955,22 @@
       const product = this.getProductById(productId);
       if (!product || product.status !== 'active') return cart;
 
-      const currentStock = Number(product.stock !== undefined ? product.stock : 50);
-      if (currentStock <= 0) {
+      const availableStock = this.getAvailableStock(product);
+      if (availableStock <= 0) {
         this.showToast(`Sorry, ${product.title} is currently sold out.`);
         return cart;
       }
 
       const existing = cart.find(item => item.id === productId);
       if (existing) {
-        if (existing.qty + qty > currentStock) {
-          existing.qty = currentStock;
-          this.showToast(`Maximum available stock reached (${currentStock} units).`);
+        if (existing.qty + qty > availableStock) {
+          existing.qty = availableStock;
+          this.showToast(`Maximum available stock reached (${availableStock} units).`);
         } else {
           existing.qty += qty;
         }
       } else {
-        const safeQty = Math.min(qty, currentStock);
+        const safeQty = Math.min(qty, availableStock);
         cart.push({
           id: product.id,
           title: product.title,
@@ -548,26 +981,23 @@
           qty: safeQty
         });
       }
+
       setJson(STORAGE_KEYS.CART, cart);
       this.syncCartBadge();
-      this.renderCartDrawerUI();
-      this.showToast(`Added "${product.title}" to bag`);
+      this.showToast(`Added ${product.title} to bag`);
       return cart;
     },
     updateCartQty(productId, qty) {
       let cart = this.getCart();
       const product = this.getProductById(productId);
-      const maxStock = product ? Number(product.stock !== undefined ? product.stock : 999) : 999;
+      const availableStock = product ? this.getAvailableStock(product) : 999;
 
       if (qty <= 0) {
         cart = cart.filter(item => item.id !== productId);
       } else {
-        const item = cart.find(i => i.id === productId);
-        if (item) {
-          item.qty = Math.min(qty, maxStock);
-          if (qty > maxStock) {
-            this.showToast(`Stock limit reached (${maxStock} units).`);
-          }
+        const target = cart.find(item => item.id === productId);
+        if (target) {
+          target.qty = Math.min(qty, availableStock);
         }
       }
       setJson(STORAGE_KEYS.CART, cart);
@@ -582,70 +1012,63 @@
       setJson(STORAGE_KEYS.CART, []);
       this.syncCartBadge();
       this.renderCartDrawerUI();
-      return [];
     },
     getCartTotals(discountCode = null) {
       const cart = this.getCart();
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
       const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      let deduction = 0;
+      let discountDeduction = 0;
       let appliedDiscount = null;
 
       if (discountCode) {
-        const res = this.validateDiscount(discountCode, subtotal);
-        if (res.valid) {
-          deduction = res.deduction;
-          appliedDiscount = res.discount;
+        const valRes = this.validateDiscount(discountCode, subtotal);
+        if (valRes.valid) {
+          discountDeduction = valRes.deduction;
+          appliedDiscount = valRes.discount;
         }
       }
 
-      return {
-        count: cart.reduce((sum, item) => sum + item.qty, 0),
-        subtotal,
-        discountDeduction: deduction,
-        appliedDiscount,
-        total: Math.max(0, subtotal - deduction)
-      };
+      const total = Math.max(0, subtotal - discountDeduction);
+      return { count, subtotal, discountDeduction, appliedDiscount, total };
     },
     syncCartBadge() {
       const totals = this.getCartTotals();
-      document.querySelectorAll('#bagCounter, .bag-count-indicator').forEach(el => {
+      document.querySelectorAll('#navCartCount, .nav-cart-count, #cartCount').forEach(el => {
         el.innerText = totals.count;
+        el.style.display = totals.count > 0 ? 'inline-block' : 'none';
       });
     },
 
-    // CSV IMPORT & EXPORT
+    // CSV IMPORT / EXPORT (POLARIS COMPATIBLE)
     exportProductsCSV() {
-      const list = this.getProducts(true);
-      const headers = ['id', 'sku', 'title', 'handle', 'category', 'volume', 'price', 'compareAtPrice', 'stock', 'image', 'kind', 'tag', 'status', 'seoTitle', 'seoDescription', 'description'];
-      const rows = [headers.join(',')];
+      const products = this.getProducts(true);
+      const headers = ['id', 'sku', 'title', 'category', 'volume', 'price', 'compareAtPrice', 'costPerItem', 'stock', 'reserved', 'kind', 'tag', 'status', 'description', 'seoTitle', 'seoDescription', 'handle', 'image'];
+      const rows = products.map(p => [
+        p.id,
+        p.sku || '',
+        `"${(p.title || '').replace(/"/g, '""')}"`,
+        p.category || 'accessories',
+        p.volume || 'vol. 01',
+        p.price || 5000,
+        p.compareAtPrice || '',
+        p.costPerItem || '',
+        p.stock !== undefined ? p.stock : 50,
+        p.reserved || 0,
+        `"${(p.kind || '').replace(/"/g, '""')}"`,
+        p.tag || 'item',
+        p.status || 'active',
+        `"${(p.description || '').replace(/"/g, '""')}"`,
+        `"${(p.seoTitle || '').replace(/"/g, '""')}"`,
+        `"${(p.seoDescription || '').replace(/"/g, '""')}"`,
+        p.handle || '',
+        `"${(p.image || '').replace(/"/g, '""')}"`
+      ].join(','));
 
-      list.forEach(p => {
-        const row = [
-          `"${p.id || ''}"`,
-          `"${p.sku || ''}"`,
-          `"${(p.title || '').replace(/"/g, '""')}"`,
-          `"${p.handle || ''}"`,
-          `"${p.category || 'accessories'}"`,
-          `"${p.volume || 'vol. 01'}"`,
-          p.price || 5000,
-          p.compareAtPrice || '',
-          p.stock !== undefined ? p.stock : 50,
-          `"${(p.image || '').replace(/"/g, '""')}"`,
-          `"${(p.kind || '').replace(/"/g, '""')}"`,
-          `"${p.tag || 'item'}"`,
-          `"${p.status || 'active'}"`,
-          `"${(p.seoTitle || '').replace(/"/g, '""')}"`,
-          `"${(p.seoDescription || '').replace(/"/g, '""')}"`,
-          `"${(p.description || '').replace(/"/g, '""').replace(/\n/g, ' ')}"`
-        ];
-        rows.push(row.join(','));
-      });
-
-      const blob = new Blob([rows.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows].join('\n');
+      const encodedUri = encodeURI(csvContent);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `afterquiet_products_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.setAttribute('href', encodedUri);
+      a.setAttribute('download', `afterquiet_products_${new Date().toISOString().slice(0, 10)}.csv`);
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -666,16 +1089,22 @@
         total: i.price * i.qty
       }));
 
-      // Record formal order into engine!
-      const formalOrder = this.createOrder({
-        customer: customerData,
-        items: itemsList,
-        subtotal: totals.subtotal,
-        discount: totals.discountDeduction,
-        total: totals.total,
-        courier,
-        notes: customerData.notes || 'Order placed via storefront'
-      });
+      // Record formal order into engine with stock reservation
+      let formalOrder = null;
+      try {
+        formalOrder = this.createOrder({
+          customer: customerData,
+          items: itemsList,
+          subtotal: totals.subtotal,
+          discount: totals.discountDeduction,
+          total: totals.total,
+          courier,
+          notes: customerData.notes || 'Order placed via storefront'
+        });
+      } catch (err) {
+        alert(err.message);
+        return null;
+      }
 
       // Clear shopping bag after successful placement
       this.clearCart();
@@ -684,6 +1113,7 @@
       const cleanWa = (settings.waNumber || '6285708500546').replace(/[^0-9]/g, '');
       let text = `Halo afterquiet,\nSaya ingin melakukan pemesanan resmi:\n\n`;
       text += `*ORDER REF:* ${formalOrder.id}\n`;
+      text += `*STATUS:* Menunggu Pembayaran (Reservasi 24 Jam)\n`;
       text += `*NAMA:* ${customerData.name}\n`;
       text += `*NO. WHATSAPP:* ${customerData.phone}\n`;
       text += `*ALAMAT:* ${customerData.address}, ${customerData.city}\n`;
@@ -700,7 +1130,7 @@
         text += `*DISCOUNT:* -${formatRupiah(totals.discountDeduction)} (${totals.appliedDiscount.code})\n`;
       }
       text += `\n*TOTAL PEMBAYARAN:* ${formatRupiah(totals.total)}\n\n`;
-      text += `Mohon konfirmasi ketersediaan stok & rincian rekening transfer bank/QRIS. Terima kasih.`;
+      text += `Mohon info rincian rekening transfer bank/QRIS untuk menyelesaikan pesanan ini. Terima kasih!`;
 
       return `https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`;
     },
@@ -722,6 +1152,82 @@
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(-50%) translateY(10px)';
       }, 3000);
+    },
+
+    // ================= SECURE AUTH & SESSION MANAGEMENT =================
+    async verifyAdminPin(enteredPin) {
+      const lockoutUntil = Number(sessionStorage.getItem('aq_pin_lockout_until') || 0);
+      if (Date.now() < lockoutUntil) {
+        const remainingSec = Math.ceil((lockoutUntil - Date.now()) / 1000);
+        return { success: false, locked: true, remainingSec, message: `Access temporarily locked. Try again in ${remainingSec}s.` };
+      }
+
+      const settings = this.getSettings();
+      const salt = settings.adminSalt || DEFAULT_SETTINGS.adminSalt;
+      const hashedEntered = await computeSha256(salt + enteredPin);
+
+      if (hashedEntered === (settings.adminPinHash || DEFAULT_SETTINGS.adminPinHash)) {
+        sessionStorage.removeItem('aq_pin_fail_count');
+        sessionStorage.removeItem('aq_pin_lockout_until');
+
+        const sessionToken = 'aq_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+        const timeoutMs = (settings.sessionTimeoutMinutes || 30) * 60 * 1000;
+        sessionStorage.setItem('aq_admin_session_token', sessionToken);
+        sessionStorage.setItem('aq_admin_session_expires', String(Date.now() + timeoutMs));
+        sessionStorage.setItem('aq_admin_auth', '1');
+
+        return { success: true };
+      } else {
+        let fails = Number(sessionStorage.getItem('aq_pin_fail_count') || 0) + 1;
+        sessionStorage.setItem('aq_pin_fail_count', String(fails));
+
+        if (fails >= 5) {
+          sessionStorage.setItem('aq_pin_lockout_until', String(Date.now() + 60000)); // 60s lockout
+          return { success: false, locked: true, remainingSec: 60, message: 'Too many failed attempts. Locked for 60 seconds.' };
+        }
+        return { success: false, locked: false, remainingAttempts: 5 - fails, message: `Incorrect PIN. ${5 - fails} attempts remaining.` };
+      }
+    },
+
+    async changeAdminPin(currentPin, newPin) {
+      const verifyRes = await this.verifyAdminPin(currentPin);
+      if (!verifyRes.success) {
+        return { success: false, message: 'Current PIN is incorrect.' };
+      }
+      if (!newPin || newPin.length < 4) {
+        return { success: false, message: 'New PIN must be at least 4 digits.' };
+      }
+
+      const settings = this.getSettings();
+      const salt = settings.adminSalt || DEFAULT_SETTINGS.adminSalt;
+      const newHash = await computeSha256(salt + newPin);
+      this.saveSettings({ adminPinHash: newHash });
+
+      return { success: true, message: 'Admin PIN updated successfully.' };
+    },
+
+    isAdminAuthenticated() {
+      const auth = sessionStorage.getItem('aq_admin_auth') === '1';
+      const expires = Number(sessionStorage.getItem('aq_admin_session_expires') || 0);
+      if (auth && expires > Date.now()) {
+        return true;
+      }
+      return false;
+    },
+
+    refreshAdminSession() {
+      if (this.isAdminAuthenticated()) {
+        const settings = this.getSettings();
+        const timeoutMs = (settings.sessionTimeoutMinutes || 30) * 60 * 1000;
+        sessionStorage.setItem('aq_admin_session_expires', String(Date.now() + timeoutMs));
+      }
+    },
+
+    lockAdminSession() {
+      sessionStorage.removeItem('aq_admin_auth');
+      sessionStorage.removeItem('aq_admin_session_token');
+      sessionStorage.removeItem('aq_admin_session_expires');
+      location.reload();
     },
 
     // ================= UNIVERSAL SLIDE-OVER CART & CHECKOUT UI =================
@@ -821,7 +1327,7 @@
       );
 
       if (waUrl) {
-        this.showToast('Order recorded! Redirecting to WhatsApp...');
+        this.showToast('Order recorded & stock reserved! Redirecting to WhatsApp...');
         this.closeBag();
         window.open(waUrl, '_blank');
       }
@@ -980,7 +1486,7 @@
               <span>↗</span>
             </button>
             <p style="font-size:11px; color:#85827D; text-align:center; margin-top:10px; font-family:'IBM Plex Mono',monospace;">
-              order ref & inventory reserved automatically
+              order ref & 24h stock reservation held automatically
             </p>
           </div>
         `;

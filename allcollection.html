@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -653,7 +653,8 @@
       document.getElementById('itemsCountDisplay').innerText = `showing ${filtered.length} piece${filtered.length === 1 ? '' : 's'}`;
 
       filtered.forEach(p => {
-        const isSoldOut = Number(p.stock !== undefined ? p.stock : 50) <= 0;
+        const availableStock = p.availableStock !== undefined ? p.availableStock : Math.max(0, Number(p.stock || 0) - Number(p.reserved || 0));
+        const isSoldOut = availableStock <= 0;
         const card = document.createElement('div');
         card.className = 'collection-product-card';
         card.onclick = () => {
