@@ -903,7 +903,7 @@
       const orderId = 'AQ-' + Math.floor(1000 + Math.random() * 9000);
       const reservationExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24-hour hold
       const isOffline = (typeof navigator !== 'undefined' && !navigator.onLine);
-      const idempotencyKey = 'idem_' + orderId + '_' + Date.now();
+      const idempotencyKey = 'idem_' + orderId;
 
       const newOrder = {
         id: orderId,
@@ -1437,7 +1437,8 @@
         text += `*STATUS:* Menunggu Konfirmasi Stok (Dibuat Saat Offline)\n`;
         text += `*CATATAN KHUSUS:* Pesanan dibuat saat perangkat offline. Ketersediaan stok akan diverifikasi secara otomatis oleh sistem afterquiet.\n`;
       } else {
-        text += `*STATUS:* Menunggu Pembayaran (Reservasi 24 Jam)\n`;
+        text += `*STATUS:* Menunggu Pembayaran & Konfirmasi Admin\n`;
+        text += `*CATATAN KHUSUS:* Nomor order ini merupakan reservasi sementara (berlaku 24 jam). Pesanan akan diproses & dikirim setelah pembayaran diverifikasi oleh Admin afterquiet.\n`;
       }
       text += `*NAMA:* ${customerData.name}\n`;
       text += `*NO. WHATSAPP:* ${customerData.phone}\n`;
