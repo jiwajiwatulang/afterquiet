@@ -718,9 +718,8 @@
 
   <!-- Sticky Navigation Header -->
   <header class="site-nav" id="top">
-    <a href="#top" class="brand-logo" style="display:flex; align-items:center; gap:12px;">
-      <img src="/assets/profile.jpg" alt="afterquiet logo" style="width:34px; height:34px; border-radius:50%; object-fit:cover; border:1.5px solid var(--ink);">
-      <span>afterquiet</span>
+    <a href="#top" class="brand-logo" aria-label="afterquiet home" style="display:inline-flex; align-items:center;">
+      <img src="/assets/profile.jpg" alt="afterquiet logo" style="width:42px; height:42px; border-radius:50%; object-fit:cover; border:1.5px solid var(--ink); display:block; transition:transform 0.15s ease;">
     </a>
 
     <nav class="nav-links">
@@ -905,7 +904,7 @@
     <div class="footer-bottom">
       <span>© 2026 afterquiet. all rights reserved.</span>
       <span>wear what you can't always say.</span>
-      <a href="#top" style="color:inherit;">back to top ↑</a>
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background:none; border:none; color:inherit; font-size:inherit; font-family:inherit; cursor:pointer; text-decoration:underline; padding:0;">back to top ↑</button>
     </div>
   </footer>
 
