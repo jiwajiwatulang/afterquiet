@@ -1528,6 +1528,209 @@
       100% { opacity: 0.4; transform: scale(0.9); }
     }
 
+  
+    /* ================= UNIVERSAL DARK STUDIO OVERHAUL ================= */
+    :root {
+      --bg-base: #0B0B0D;
+      --bg-sidebar: #101013;
+      --bg-card: #151518;
+      --bg-card-hover: #1A1A1F;
+      --bg-input: #18181D;
+      --sidebar-width: 260px;
+      --text-main: #FFFFFF;
+      --text-sub: #A1A1AA;
+      --text-muted: #71717A;
+      --border-subtle: #202026;
+      --border-card: #1E1E24;
+      --border-focus: #3F3F4A;
+      --accent-brand: #E4E4E7;
+      --accent-pill: #FFFFFF;
+      --accent-pill-text: #0B0B0D;
+      --status-active-bg: #0d2818;
+      --status-active-text: #4ade80;
+      --status-critical-bg: #2d0e12;
+      --status-critical-text: #f87171;
+      --status-warning-bg: #2d2008;
+      --status-warning-text: #fbbf24;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base) !important;
+      color: var(--text-main) !important;
+    }
+
+    /* All Cards & Panels Dark */
+    .admin-card-panel,
+    .metric-summary-card,
+    .shopify-card,
+    .admin-modal-window,
+    .pin-box,
+    .card-stat,
+    .pro-card,
+    .orders-table-card,
+    .data-card {
+      background: var(--bg-card) !important;
+      border: 1px solid var(--border-subtle) !important;
+      color: var(--text-main) !important;
+      box-shadow: none !important;
+    }
+
+    /* All Secondary Action Buttons Visible */
+    .btn-action-secondary,
+    .btn-topbar-lock,
+    .btn-cancel,
+    .btn-preview-link,
+    .btn-lock {
+      background: #1C1C22 !important;
+      color: #FFFFFF !important;
+      border: 1px solid #2E2E38 !important;
+      font-weight: 500 !important;
+      border-radius: 6px !important;
+      cursor: pointer !important;
+    }
+    .btn-action-secondary:hover,
+    .btn-topbar-lock:hover,
+    .btn-cancel:hover {
+      background: #27272F !important;
+      border-color: #3F3F4A !important;
+      color: #FFFFFF !important;
+    }
+
+    /* All Primary Action Buttons Visible */
+    .btn-action-primary,
+    .btn-pin-submit,
+    .btn-save-settings,
+    .btn-confirm-act,
+    .sb-btn-primary {
+      background: #FFFFFF !important;
+      color: #0B0B0D !important;
+      border: 1px solid #FFFFFF !important;
+      font-weight: 600 !important;
+      border-radius: 6px !important;
+      cursor: pointer !important;
+    }
+    .btn-action-primary:hover,
+    .btn-pin-submit:hover {
+      background: #E4E4E7 !important;
+      color: #0B0B0D !important;
+    }
+
+    /* Cloud Status Pill Dark */
+    .cloud-status-pill {
+      background: #18181D !important;
+      border: 1px solid var(--border-subtle) !important;
+      color: #D4D4D8 !important;
+    }
+
+    /* Inputs & Selects Dark */
+    .search-input-field,
+    .filter-select-box,
+    .form-control-input,
+    .form-input,
+    .filter-select,
+    .pin-input {
+      background: #18181D !important;
+      border: 1px solid var(--border-subtle) !important;
+      color: #FFFFFF !important;
+    }
+    .search-input-field:focus,
+    .filter-select-box:focus,
+    .form-control-input:focus,
+    .pin-input:focus {
+      border-color: #52525B !important;
+      outline: none !important;
+    }
+
+    /* Table & Rows Dark on Both Desktop & Mobile */
+    .commerce-table tr,
+    .sb-table tr {
+      background: var(--bg-card) !important;
+      border: 1px solid var(--border-subtle) !important;
+      color: var(--text-main) !important;
+    }
+    .commerce-table th,
+    .sb-table th {
+      background: #111114 !important;
+      color: var(--text-sub) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+    }
+    .commerce-table td,
+    .sb-table td {
+      color: var(--text-main) !important;
+      border-bottom: 1px solid #1E1E24 !important;
+    }
+
+    /* Status Badges High Contrast */
+    .status-badge.status-paid {
+      background: #0d2818 !important;
+      color: #4ade80 !important;
+      border: 1px solid #166534 !important;
+    }
+    .status-badge.status-unpaid {
+      background: #2d2008 !important;
+      color: #fbbf24 !important;
+      border: 1px solid #854d0e !important;
+    }
+    .status-badge.status-unfulfilled {
+      background: #252010 !important;
+      color: #fcd34d !important;
+      border: 1px solid #78350f !important;
+    }
+    .status-badge.status-fulfilled {
+      background: #0d2028 !important;
+      color: #38bdf8 !important;
+      border: 1px solid #0369a1 !important;
+    }
+
+    /* Responsive Mobile Overrides */
+    @media (max-width: 900px) {
+      .theme-customizer-split {
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .theme-drawer {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        max-height: none !important;
+      }
+      .theme-preview-canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 12px 8px !important;
+      }
+      .theme-frame-wrapper.mobile-mode {
+        width: 100% !important;
+        max-width: 100% !important;
+        border: 2px solid #282832 !important;
+        border-radius: 12px !important;
+      }
+      .metric-summary-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .page-header-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+      }
+      .header-action-group {
+        width: 100% !important;
+        display: flex !important;
+        gap: 8px !important;
+      }
+      .header-action-group button {
+        flex: 1 !important;
+        justify-content: center !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -3080,7 +3283,7 @@ mind." oninput="onThemeDraftChange()">
         document.getElementById('pinGate').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'grid';
         startInactivityTracker();
-        switchSection('theme');
+        switchSection('overview');
         syncCloudPill();
       } else {
         errEl.innerText = res.message;
@@ -4823,7 +5026,7 @@ mind." oninput="onThemeDraftChange()">
       showToast('Pulling data from cloud...');
       await AfterquietStore.CloudSync.syncAll();
       showToast('Data merged from cloud');
-      switchSection('theme');
+      switchSection('overview');
       syncCloudPill();
     }
 
@@ -4927,7 +5130,7 @@ mind." oninput="onThemeDraftChange()">
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('adminDashboard').style.display = 'grid';
       startInactivityTracker();
-      switchSection('theme');
+      switchSection('overview');
       syncCloudPill();
     }
   </script>
