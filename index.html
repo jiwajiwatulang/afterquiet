@@ -1759,6 +1759,151 @@
     });
 
     renderGrid();
+
+    // --- Live Theme Customizer Engine ---
+    window.applyStoreTheme = function(theme) {
+      if (!theme) return;
+
+      // 1. CSS Variables
+      if (theme.accentColor) document.documentElement.style.setProperty('--red', theme.accentColor);
+      if (theme.paperBg) document.documentElement.style.setProperty('--paper', theme.paperBg);
+      if (theme.inkColor) document.documentElement.style.setProperty('--ink', theme.inkColor);
+
+      // 2. Announcement Bar
+      const annBar = document.querySelector('.announcement-bar');
+      if (annBar) {
+        if (theme.announcementVisible === false) {
+          annBar.style.display = 'none';
+        } else {
+          annBar.style.display = 'flex';
+          if (theme.announcementBg) annBar.style.background = theme.announcementBg;
+          if (theme.announcementColor) annBar.style.color = theme.announcementColor;
+
+          const textSpan = annBar.querySelector('span:first-child');
+          if (textSpan && theme.announcementText !== undefined) {
+            textSpan.innerHTML = `<span class="dot-pulse"></span> ${theme.announcementText}`;
+          }
+
+          const linkA = annBar.querySelector('a');
+          if (linkA) {
+            if (theme.announcementLinkText) linkA.textContent = theme.announcementLinkText;
+            if (theme.announcementLinkUrl) linkA.href = theme.announcementLinkUrl;
+            if (theme.announcementColor) linkA.style.color = theme.announcementColor;
+          }
+        }
+      }
+
+      // 3. Hero Eyebrows
+      const heroMetaSpans = document.querySelectorAll('.hero-meta span');
+      if (heroMetaSpans.length >= 2) {
+        if (theme.heroEyebrowLeft) heroMetaSpans[0].textContent = theme.heroEyebrowLeft;
+        if (theme.heroEyebrowRight) heroMetaSpans[1].textContent = theme.heroEyebrowRight;
+      }
+
+      // 4. Hero Heading & Philosophy
+      const heroHeading = document.querySelector('.hero-heading');
+      if (heroHeading && theme.heroHeading) {
+        heroHeading.innerHTML = theme.heroHeading.includes('<') 
+          ? theme.heroHeading 
+          : theme.heroHeading.replace(/\n/g, '<br>') + '<span class="accent-period">.</span>';
+      }
+
+      const heroPhilosophy = document.querySelector('.hero-philosophy');
+      if (heroPhilosophy && theme.heroPhilosophy) {
+        heroPhilosophy.textContent = theme.heroPhilosophy;
+      }
+
+      // 5. Hero CTA Buttons
+      const btnPrimary = document.querySelector('.hero-cta-group .btn-primary');
+      if (btnPrimary) {
+        const textSpan = btnPrimary.querySelector('span:first-child');
+        if (textSpan && theme.heroPrimaryBtnText) textSpan.textContent = theme.heroPrimaryBtnText;
+        if (theme.heroPrimaryBtnUrl) btnPrimary.href = theme.heroPrimaryBtnUrl;
+      }
+
+      const btnSecondary = document.querySelector('.hero-cta-group .btn-secondary-link');
+      if (btnSecondary) {
+        const textSpan = btnSecondary.querySelector('span:first-child');
+        if (textSpan && theme.heroSecondaryBtnText) textSpan.textContent = theme.heroSecondaryBtnText;
+        if (theme.heroSecondaryBtnUrl) btnSecondary.href = theme.heroSecondaryBtnUrl;
+      }
+
+      // 6. Hero Artifact Feature Card
+      const heroCard = document.querySelector('.hero-artifact-card');
+      if (heroCard) {
+        if (theme.heroArtifactShow === false) {
+          heroCard.style.display = 'none';
+        } else {
+          heroCard.style.display = 'flex';
+          if (theme.heroArtifactUrl) heroCard.href = theme.heroArtifactUrl;
+          const metaSpans = heroCard.querySelectorAll('.hero-artifact-meta span');
+          if (metaSpans.length >= 2) {
+            if (theme.heroArtifactCategory) metaSpans[0].textContent = theme.heroArtifactCategory;
+            if (theme.heroArtifactBadge) metaSpans[1].textContent = theme.heroArtifactBadge;
+          }
+          const graphic = heroCard.querySelector('.hero-artifact-graphic');
+          if (graphic && theme.heroArtifactTitle) {
+            graphic.innerHTML = theme.heroArtifactTitle.replace(/\n/g, '<br>');
+          }
+          const tag = heroCard.querySelector('.hero-artifact-tag');
+          if (tag && theme.heroArtifactTag) tag.textContent = theme.heroArtifactTag;
+          const cardTitle = heroCard.querySelector('.hero-artifact-title');
+          if (cardTitle && theme.heroArtifactCardTitle) cardTitle.textContent = theme.heroArtifactCardTitle;
+          const cardSub = heroCard.querySelector('.hero-artifact-sub');
+          if (cardSub && theme.heroArtifactCardSub) cardSub.textContent = theme.heroArtifactCardSub;
+          const price = heroCard.querySelector('.hero-artifact-price');
+          if (price && theme.heroArtifactPrice) price.textContent = theme.heroArtifactPrice;
+        }
+      }
+
+      // 7. Manifesto Section
+      const manifestoH2 = document.querySelector('.manifesto-grid h2');
+      if (manifestoH2 && theme.manifestoHeading) {
+        manifestoH2.innerHTML = theme.manifestoHeading;
+      }
+      const manifestoP = document.querySelectorAll('.manifesto-body p');
+      if (manifestoP.length >= 2) {
+        if (theme.manifestoBody1) manifestoP[0].textContent = theme.manifestoBody1;
+        if (theme.manifestoBody2) manifestoP[1].textContent = theme.manifestoBody2;
+      }
+
+      // 8. Footer & Socials
+      const footerSpans = document.querySelectorAll('.footer-bottom span');
+      if (footerSpans.length >= 2) {
+        if (theme.footerCopyright) footerSpans[0].textContent = theme.footerCopyright;
+        if (theme.footerTagline) footerSpans[1].textContent = theme.footerTagline;
+      }
+      if (theme.instagramUrl) {
+        document.querySelectorAll('a[href*="instagram.com"]').forEach(a => a.href = theme.instagramUrl);
+      }
+      if (theme.waNumber) {
+        const cleanWa = theme.waNumber.replace(/\D/g, '');
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.href = `https://wa.me/${cleanWa}`);
+      }
+    };
+
+    // Load initial theme from store
+    try {
+      if (window.AfterquietStore && window.AfterquietStore.getThemeSettings) {
+        window.applyStoreTheme(window.AfterquietStore.getThemeSettings());
+      } else {
+        const raw = localStorage.getItem('aq_theme_settings');
+        if (raw) window.applyStoreTheme(JSON.parse(raw));
+      }
+    } catch(err) {
+      console.warn('Theme boot initialization notice:', err);
+    }
+
+    // Live preview event listener from Theme Editor iframe
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'AQ_THEME_PREVIEW') {
+        window.applyStoreTheme(event.data.theme);
+      }
+    });
+
+    window.addEventListener('aq_theme_updated', (e) => {
+      if (e.detail) window.applyStoreTheme(e.detail);
+    });
   </script>
 </body>
 </html>

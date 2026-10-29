@@ -18,7 +18,9 @@
     COLLECTIONS: 'aq_collections',
     CATEGORIES: 'aq_categories',
     PRODUCT_TYPES: 'aq_product_types',
-    CLOUD_META: 'aq_cloud_sync_meta'
+    CLOUD_META: 'aq_cloud_sync_meta',
+    THEME: 'aq_theme_settings',
+    FAQS: 'aq_faq_items'
   };
 
   const DEFAULT_SETTINGS = {
@@ -42,6 +44,62 @@
       pollIntervalMs: 20000
     }
   };
+
+  const DEFAULT_THEME_SETTINGS = {
+    announcementVisible: true,
+    announcementText: 'all items flat 5k • independent accessories & visual culture',
+    announcementLinkText: 'contact me',
+    announcementLinkUrl: 'https://wa.me/6285708500546',
+    announcementBg: '#171717',
+    announcementColor: '#F1EFE9',
+
+    heroEyebrowLeft: 'independent accessories label',
+    heroEyebrowRight: 'autumn 2026',
+    heroHeading: "wear what you<br>can't always say.",
+    heroPhilosophy: 'independent accessories for personal expression, restless thoughts, and everything in between. curated hard enamel pins and archival objects flat 5k.',
+    heroPrimaryBtnText: 'explore all catalogue',
+    heroPrimaryBtnUrl: '/allcollection',
+    heroSecondaryBtnText: 'visual archive',
+    heroSecondaryBtnUrl: '/visual-archive',
+
+    heroArtifactShow: true,
+    heroArtifactCategory: 'volume 01 archive',
+    heroArtifactBadge: 'hard enamel pin',
+    heroArtifactTitle: 'restless\nmind.',
+    heroArtifactTag: 'die-cast black nickel • 32mm',
+    heroArtifactCardTitle: 'restless mind enamel pin',
+    heroArtifactCardSub: 'signature archival drop',
+    heroArtifactPrice: 'Rp 5.000',
+    heroArtifactStock: 'ready stock',
+    heroArtifactUrl: '/product?id=pin_restless',
+
+    accentColor: '#843B40',
+    paperBg: '#F1EFE9',
+    inkColor: '#171717',
+
+    manifestoHeading: "not made for everyone.<br><em>that's kind of the point.</em>",
+    manifestoBody1: 'afterquiet is an independent brand exploring identity, emotions, and personal expression through wearable objects and visual storytelling.',
+    manifestoBody2: "an object can be more than an accessory. it can be a reminder, a personal statement, a memory, or a quiet form of resistance. we believe in imperfection, individuality, and the freedom to express yourself without needing everyone's approval.",
+
+    waNumber: '6285708500546',
+    instagramUrl: 'https://www.instagram.com/afterquiet_____/',
+    footerCopyright: '© 2026 afterquiet. independent accessories & visual culture.',
+    footerTagline: "wear what you can't always say."
+  };
+
+  const DEFAULT_FAQS = [
+    { id: 'faq_1', question: 'Why are all catalogue items flat 5k?', answer: 'afterquiet believes art and visual culture should be accessible to everyone without price-barrier pretension. Every enamel pin and accessory is priced flat at Rp 5.000.', topic: 'Ordering', updated: '2 Sept 2026, 10:38', order: 1 },
+    { id: 'faq_2', question: 'What are your delivery lead times?', answer: 'Standard shipping takes 1-3 business days for Jabodetabek and 2-5 days for other cities across Indonesia via J&T, SiCepat, and JNE.', topic: 'Ordering', updated: '2 Sept 2026, 10:38', order: 2 },
+    { id: 'faq_3', question: 'Is there a minimum order quantity?', answer: 'No minimum order required. You can order a single pin or multiple pieces.', topic: 'Ordering', updated: '2 Sept 2026, 10:38', order: 3 },
+    { id: 'faq_4', question: 'Can I see a material sample first?', answer: 'High-resolution macro photos and video turnarounds are documented in our Visual Archive. Direct studio viewing can be requested via WhatsApp.', topic: 'Ordering', updated: '2 Sept 2026, 10:38', order: 4 },
+    { id: 'faq_5', question: 'Do you work with trade and stockists?', answer: 'Yes, we collaborate with independent bookstores, record shops, and lifestyle spaces for consignment and wholesale curation.', topic: 'Trade', updated: '2 Sept 2026, 10:38', order: 5 },
+    { id: 'faq_6', question: 'Can you make something bespoke?', answer: 'We take custom commissions for indie bands, zines, and creative collectives with minimum runs of 50 units.', topic: 'Trade', updated: '2 Sept 2026, 10:38', order: 6 },
+    { id: 'faq_7', question: 'Where do you ship?', answer: 'We ship nationwide across Indonesia and offer worldwide international trackable shipping upon direct request.', topic: 'Delivery', updated: '2 Sept 2026, 10:38', order: 7 },
+    { id: 'faq_8', question: 'Does anything need assembling?', answer: 'No, every enamel pin comes mounted on archival card backing with black rubber clutch fastenings ready to wear.', topic: 'Delivery', updated: '2 Sept 2026, 10:38', order: 8 },
+    { id: 'faq_9', question: 'How should I care for hard enamel pins?', answer: 'Keep dry, avoid direct perfume contact, and wipe gently with a micro-fibre cloth to maintain polished nickel plating.', topic: 'Care', updated: '2 Sept 2026, 10:38', order: 9 },
+    { id: 'faq_10', question: 'Where does your materials come from?', answer: 'Our pins are crafted from die-cast zinc alloy with polished black nickel plating and hand-filled synthetic enamel colors.', topic: 'Materials', updated: '2 Sept 2026, 10:38', order: 10 }
+  ];
+
 
   const DEFAULT_PRODUCTS = [
     {
@@ -692,6 +750,12 @@
     }
     if (!localStorage.getItem(STORAGE_KEYS.ORDERS)) {
       setJson(STORAGE_KEYS.ORDERS, DEFAULT_ORDERS);
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.THEME)) {
+      setJson(STORAGE_KEYS.THEME, DEFAULT_THEME_SETTINGS);
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.FAQS)) {
+      setJson(STORAGE_KEYS.FAQS, DEFAULT_FAQS);
     }
     if (!localStorage.getItem(STORAGE_KEYS.CART)) {
       setJson(STORAGE_KEYS.CART, []);
@@ -1355,6 +1419,27 @@
 
       const total = Math.max(0, subtotal - discountDeduction);
       return { count, subtotal, discountDeduction, appliedDiscount, total };
+    },
+    
+    getThemeSettings() {
+      return getJson(STORAGE_KEYS.THEME, DEFAULT_THEME_SETTINGS);
+    },
+    saveThemeSettings(newTheme) {
+      setJson(STORAGE_KEYS.THEME, newTheme);
+      window.dispatchEvent(new CustomEvent('aq_theme_updated', { detail: newTheme }));
+      return newTheme;
+    },
+    resetThemeSettings() {
+      setJson(STORAGE_KEYS.THEME, DEFAULT_THEME_SETTINGS);
+      window.dispatchEvent(new CustomEvent('aq_theme_updated', { detail: DEFAULT_THEME_SETTINGS }));
+      return DEFAULT_THEME_SETTINGS;
+    },
+    getFaqs() {
+      return getJson(STORAGE_KEYS.FAQS, DEFAULT_FAQS);
+    },
+    saveFaqs(faqs) {
+      setJson(STORAGE_KEYS.FAQS, faqs);
+      return faqs;
     },
     syncCartBadge() {
       const totals = this.getCartTotals();

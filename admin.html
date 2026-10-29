@@ -1029,6 +1029,505 @@
       }
     }
 
+  
+    /* STUDIO BIZAR / PRO DARK THEME PALETTE */
+    :root {
+      --bg-base: #0B0B0D;
+      --bg-sidebar: #101013;
+      --bg-card: #151518;
+      --bg-card-hover: #1A1A1F;
+      --bg-input: #151519;
+      --sidebar-width: 260px;
+      --text-main: #FFFFFF;
+      --text-sub: #A1A1AA;
+      --text-muted: #71717A;
+      --border-subtle: #202026;
+      --border-card: #1E1E24;
+      --border-focus: #3F3F4A;
+      --accent-brand: #E4E4E7;
+      --accent-pill: #FFFFFF;
+      --accent-pill-text: #0B0B0D;
+      --status-active-bg: #0d2818;
+      --status-active-text: #4ade80;
+      --status-critical-bg: #2d0e12;
+      --status-critical-text: #f87171;
+      --status-warning-bg: #2d2008;
+      --status-warning-text: #fbbf24;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Space Grotesk', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base) !important;
+      color: var(--text-main) !important;
+    }
+
+    /* Enhanced Dark Elements */
+    .admin-sidebar {
+      background: var(--bg-sidebar) !important;
+      border-right: 1px solid var(--border-subtle) !important;
+    }
+    .admin-main {
+      background: var(--bg-base) !important;
+      color: var(--text-main) !important;
+    }
+    .admin-topbar {
+      border-bottom: 1px solid var(--border-subtle) !important;
+    }
+    .card-stat, .pro-card, .orders-table-card, .data-card {
+      background: var(--bg-card) !important;
+      border: 1px solid var(--border-card) !important;
+      color: var(--text-main) !important;
+    }
+    .table-container table {
+      color: var(--text-main) !important;
+    }
+    .table-container th {
+      background: var(--bg-sidebar) !important;
+      color: var(--text-sub) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+      font-family: var(--mono) !important;
+      font-size: 11px !important;
+      letter-spacing: 0.05em !important;
+      text-transform: uppercase !important;
+    }
+    .table-container td {
+      border-bottom: 1px solid var(--border-subtle) !important;
+      color: var(--text-main) !important;
+    }
+    .table-container tr:hover td {
+      background: var(--bg-card-hover) !important;
+    }
+    .form-input, .filter-select, .search-input {
+      background: var(--bg-input) !important;
+      border: 1px solid var(--border-subtle) !important;
+      color: var(--text-main) !important;
+    }
+    .form-input:focus, .filter-select:focus, .search-input:focus {
+      border-color: #52525B !important;
+      outline: none !important;
+    }
+
+    /* Studio Bizar Filter Bar & Buttons */
+    .sb-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .sb-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 260px;
+    }
+    .sb-search-box {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+    }
+    .sb-search-box input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 8px 12px 8px 32px;
+      font-size: 13px;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .sb-search-box input:focus {
+      border-color: #52525B;
+    }
+    .sb-search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+    .sb-pill-filter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sb-pill-filter:hover {
+      border-color: #52525B;
+      color: var(--text-main);
+    }
+    .sb-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sb-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sb-btn-secondary:hover {
+      background: #202026;
+      border-color: #3F3F4A;
+    }
+    .sb-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFFFFF;
+      color: #0B0B0D;
+      border: 1px solid #FFFFFF;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sb-btn-primary:hover {
+      background: #E4E4E7;
+      border-color: #E4E4E7;
+    }
+
+    /* Studio Bizar Data Table Row Styles */
+    .sb-table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .sb-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .sb-table th {
+      background: #111114;
+      padding: 12px 16px;
+      font-size: 11px;
+      font-family: var(--mono);
+      font-weight: 500;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+    .sb-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #1C1C22;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+    .sb-table tr:last-child td {
+      border-bottom: none;
+    }
+    .sb-table tr:hover td {
+      background: #19191E;
+    }
+    .sb-drag-grip {
+      color: #52525B;
+      cursor: grab;
+      font-size: 14px;
+      user-select: none;
+      padding-right: 8px;
+    }
+    .sb-drag-grip:hover { color: #A1A1AA; }
+    .sb-topic-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-family: var(--mono);
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #202026;
+      color: #D4D4D8;
+      border: 1px solid #2E2E38;
+    }
+    .sb-date-text {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-sub);
+      white-space: nowrap;
+    }
+    .sb-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    .sb-icon-btn {
+      background: none;
+      border: none;
+      color: #71717A;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .sb-icon-btn:hover {
+      color: #FFFFFF;
+      background: #27272F;
+    }
+    .sb-icon-btn.delete:hover {
+      color: #F87171;
+    }
+
+    /* Table Pagination Bar */
+    .sb-pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #111114;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 12px;
+      color: var(--text-sub);
+      font-family: var(--mono);
+    }
+    .sb-page-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sb-page-btn {
+      background: #1A1A1E;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .sb-page-btn:hover {
+      background: #27272F;
+    }
+
+    /* SHOPIFY THEME CUSTOMIZER SPLIT SCREEN STYLES */
+    .theme-customizer-split {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-top: 16px;
+      min-height: calc(100vh - 180px);
+    }
+    .theme-drawer {
+      width: 390px;
+      flex-shrink: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 18px;
+      max-height: calc(100vh - 180px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #333 transparent;
+    }
+    .theme-accordion {
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      background: #111114;
+    }
+    .theme-accordion-header {
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      background: #141418;
+      border-bottom: 1px solid transparent;
+      user-select: none;
+    }
+    .theme-accordion-header:hover {
+      background: #1A1A20;
+    }
+    .theme-accordion.open .theme-accordion-header {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .theme-accordion-body {
+      display: none;
+      padding: 14px;
+      flex-direction: column;
+      gap: 12px;
+      background: #111114;
+    }
+    .theme-accordion.open .theme-accordion-body {
+      display: flex;
+    }
+    .theme-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .theme-field-label {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .theme-field-input {
+      width: 100%;
+      background: #18181D;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text-main);
+      outline: none;
+      box-sizing: border-box;
+    }
+    .theme-field-input:focus {
+      border-color: #52525B;
+    }
+    .theme-color-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-color-picker {
+      -webkit-appearance: none;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: none;
+      padding: 0;
+    }
+    .theme-color-picker::-webkit-color-swatch-wrapper { padding: 0; }
+    .theme-color-picker::-webkit-color-swatch { border-radius: 6px; border: 1px solid #444; }
+
+    /* Canvas Frame Container */
+    .theme-preview-canvas {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #0E0E11;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: calc(100vh - 180px);
+    }
+    .theme-viewport-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .theme-vp-btn-group {
+      display: flex;
+      align-items: center;
+      background: #141418;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .theme-vp-btn {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .theme-vp-btn.active {
+      background: #26262E;
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+    .theme-frame-wrapper {
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      height: calc(100vh - 270px);
+      background: #F1EFE9;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 1px solid #2C2C36;
+      position: relative;
+    }
+    .theme-frame-wrapper.mobile-mode {
+      width: 375px;
+      border-radius: 36px;
+      border: 8px solid #202026;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+    .theme-frame-wrapper.tablet-mode {
+      width: 768px;
+      border-radius: 16px;
+      border: 6px solid #202026;
+    }
+    .theme-frame-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Live Sync Dot */
+    .sync-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: var(--mono);
+      background: #0d2818;
+      color: #4ade80;
+      border: 1px solid #166534;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .sync-live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulseSync 1.5s infinite;
+    }
+    @keyframes pulseSync {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+
   </style>
 </head>
 <body>
@@ -1069,53 +1568,89 @@
     <!-- Sidebar -->
     <aside class="admin-sidebar">
       <div>
-        <div class="sidebar-brand-line">
-          <img src="/assets/profile.jpg" alt="afterquiet logo">
+        <div class="sidebar-brand-line" style="display:flex; align-items:center; gap:12px; padding:0 8px 18px; border-bottom:1px solid #1F1F24; margin-bottom:16px;">
+          <div style="width:36px; height:36px; border-radius:50%; background:#202026; border:1px solid #33333D; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; color:#FFFFFF; font-family:var(--display); flex-shrink:0;">
+            AQ
+          </div>
           <div>
-            <strong>afterquiet</strong>
-            <span>operations</span>
+            <strong style="font-family:var(--display); font-size:15px; font-weight:700; color:#FFFFFF; display:block; letter-spacing:-0.02em;">afterquiet</strong>
+            <span style="font-size:11px; color:#71717A; font-family:var(--mono);">Admin</span>
           </div>
         </div>
 
-        <div class="nav-section-title">Store Management</div>
         <nav class="sidebar-menu">
-          <button class="nav-tab-btn active" id="btnTabOverview" onclick="switchSection('overview')">
-            <span>📊</span> Overview
+          <!-- Top Shortcuts -->
+          <button class="nav-tab-btn active" id="btnTabTheme" onclick="switchSection('theme')">
+            <span style="font-size:14px;">🎨</span> Theme Customizer <span class="badge-pill" style="background:#0d2818; color:#4ade80; border:1px solid #166534; font-size:9px; padding:1px 6px;">LIVE PREVIEW</span>
           </button>
-          <button class="nav-tab-btn" id="btnTabOrders" onclick="switchSection('orders')">
-            <span>📋</span> Orders <span class="badge-pill" id="badgePendingOrders">0</span>
+          <button class="nav-tab-btn" id="btnTabOverview" onclick="switchSection('overview')">
+            <span>📊</span> Dashboard
+          </button>
+          <button class="nav-tab-btn" id="btnTabMenus" onclick="switchSection('settings')">
+            <span>🗂</span> Menus
+          </button>
+          <button class="nav-tab-btn" id="btnTabHeaderFooter" onclick="switchSection('theme')">
+            <span>🖼</span> Header & footer
+          </button>
+          <button class="nav-tab-btn" id="btnTabMedia" onclick="switchSection('media')">
+            <span>📁</span> Media
+          </button>
+
+          <!-- Content Library -->
+          <div class="nav-section-title" style="margin-top:10px;">Content Library</div>
+          <button class="nav-tab-btn" id="btnTabFaq" onclick="switchSection('faq')">
+            <span>❓</span> FAQ <span class="badge-pill" id="badgeFaqCount" style="background:#202026; color:#D4D4D8;">10</span>
+          </button>
+          <button class="nav-tab-btn" id="btnTabServices" onclick="switchSection('settings')">
+            <span>⚡</span> Services & Care
+          </button>
+
+          <!-- Catalogue -->
+          <div class="nav-section-title" style="margin-top:10px;">Catalogue</div>
+          <button class="nav-tab-btn" id="btnTabCollections" onclick="switchSection('collections')">
+            <span>📦</span> Collections
           </button>
           <button class="nav-tab-btn" id="btnTabProducts" onclick="switchSection('products')">
-            <span>📦</span> Products
-          </button>
-          <button class="nav-tab-btn" id="btnTabCollections" onclick="switchSection('collections')">
-            <span>📁</span> Collections
+            <span>🏷</span> Products
           </button>
           <button class="nav-tab-btn" id="btnTabInventory" onclick="switchSection('inventory')">
-            <span>🏷️</span> Inventory
+            <span>📊</span> Inventory
+          </button>
+          <button class="nav-tab-btn" id="btnTabDiscounts" onclick="switchSection('discounts')">
+            <span>🎟</span> Discounts
+          </button>
+
+          <!-- Inbox -->
+          <div class="nav-section-title" style="margin-top:10px;">Inbox</div>
+          <button class="nav-tab-btn" id="btnTabOrders" onclick="switchSection('orders')">
+            <span>📋</span> Orders & Inquiries <span class="badge-pill" id="badgePendingOrders" style="background:#843B40; color:#FFF;">0</span>
           </button>
           <button class="nav-tab-btn" id="btnTabCustomers" onclick="switchSection('customers')">
             <span>👥</span> Customers
           </button>
-          <button class="nav-tab-btn" id="btnTabDiscounts" onclick="switchSection('discounts')">
-            <span>🎟️</span> Discounts
-          </button>
+
+          <!-- Settings -->
+          <div class="nav-section-title" style="margin-top:10px;">Settings</div>
           <button class="nav-tab-btn" id="btnTabSettings" onclick="switchSection('settings')">
-            <span>⚙️</span> Settings
+            <span>🌐</span> Site-wide Settings
+          </button>
+          <button class="nav-tab-btn" id="btnTabStaff" onclick="openChangePinModal()">
+            <span>🔑</span> Staff & sign-in
           </button>
         </nav>
       </div>
 
-      <div class="sidebar-footer">
-        <a href="/" target="_blank" class="sidebar-link-btn">
-          <span>View Live Store</span>
-          <span>↗</span>
-        </a>
-        <a href="/try-on" target="_blank" class="sidebar-link-btn">
-          <span>Customizer Studio</span>
-          <span>↗</span>
-        </a>
-        <button class="btn-lock" onclick="lockAdminSession()">Lock Session</button>
+      <div class="sidebar-footer" style="padding-top:16px; border-top:1px solid #1F1F24;">
+        <div style="font-size:11px; font-family:var(--mono); color:#71717A; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span>studio@afterquiet.com</span>
+          <a href="/" target="_blank" style="color:#A1A1AA; text-decoration:none;">↗</a>
+        </div>
+        <div style="font-size:10px; font-family:var(--mono); color:#52525B; margin-bottom:12px;">
+          https://afterquiet.vercel.app
+        </div>
+        <button class="btn-lock" onclick="lockAdminSession()" style="width:100%; background:#16161A; border:1px solid #27272F; color:#A1A1AA; padding:8px; border-radius:6px; font-size:12px; cursor:pointer;">
+          🔒 Lock Session
+        </button>
       </div>
     </aside>
 
@@ -1125,10 +1660,13 @@
       <!-- Topbar Header with Cloud Sync and Session Monitor -->
       <header class="admin-topbar">
         <div class="admin-topbar-left">
-          <span class="store-badge-tag">afterquiet os</span>
-          <span class="topbar-divider">/</span>
-          <span id="topbarCurrentView">Overview</span>
-        </div>
+        <button type="button" onclick="toggleSidebarCollapse()" class="sb-icon-btn" title="Toggle Sidebar" style="font-size:14px; margin-right:4px;">
+          ◫
+        </button>
+        <span style="color:#71717A; font-size:12px; font-family:var(--mono);">Dashboard</span>
+        <span class="topbar-divider" style="color:#3F3F46;">›</span>
+        <span id="topbarCurrentView" style="font-weight:600; color:#FFFFFF; font-size:13px;">Theme Customizer</span>
+      </div>
         <div class="admin-topbar-right">
           <div class="cloud-status-pill" id="cloudStatusContainer">
             <span class="cloud-status-dot" id="cloudStatusDot"></span>
@@ -1137,7 +1675,363 @@
           </div>
           <button type="button" class="btn-topbar-lock" onclick="lockAdminSession()">Lock Session</button>
         </div>
+      
+
       </header>
+
+      <!-- ================= 0. SHOPIFY-STYLE THEME CUSTOMIZER ================= -->
+      <section id="secTheme" style="display:block;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h1 style="font-family:var(--display); font-size:24px; font-weight:700; color:#FFFFFF; letter-spacing:-0.03em; margin-bottom:4px;">
+              Theme Customizer
+            </h1>
+            <p style="font-size:13px; color:#A1A1AA;">
+              Edit your storefront homepage content & styling in real-time. Changes sync live to the preview canvas.
+            </p>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="sync-live-badge"><span class="sync-live-dot"></span> Live Sync Active</span>
+            <button class="sb-btn-secondary" onclick="resetThemeDefaults()">↺ Reset</button>
+            <button class="sb-btn-primary" onclick="saveThemeCustomizer()">💾 Save Theme</button>
+          </div>
+        </div>
+
+        <div class="theme-customizer-split">
+          <!-- Left Control Panel -->
+          <div class="theme-drawer">
+            
+            <!-- Accordion 1: Announcement Bar -->
+            <div class="theme-accordion open" id="accAnnouncement">
+              <div class="theme-accordion-header" onclick="toggleAccordion('accAnnouncement')">
+                <span>📢 Top Announcement Bar</span>
+                <span style="font-size:10px;">▾</span>
+              </div>
+              <div class="theme-accordion-body">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <span class="theme-field-label">Enable Banner</span>
+                  <input type="checkbox" id="themeAnnVisible" checked onchange="onThemeDraftChange()" style="cursor:pointer; width:16px; height:16px; accent-color:#FFF;">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Announcement Text</label>
+                  <input type="text" id="themeAnnText" class="theme-field-input" value="all items flat 5k • independent accessories & visual culture" oninput="onThemeDraftChange()">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Action Link Label</label>
+                  <input type="text" id="themeAnnLinkText" class="theme-field-input" value="contact me" oninput="onThemeDraftChange()">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Action Link URL</label>
+                  <input type="text" id="themeAnnLinkUrl" class="theme-field-input" value="https://wa.me/6285708500546" oninput="onThemeDraftChange()">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Background</label>
+                    <div class="theme-color-row">
+                      <input type="color" id="themeAnnBg" class="theme-color-picker" value="#171717" oninput="document.getElementById('themeAnnBgHex').value=this.value; onThemeDraftChange();">
+                      <input type="text" id="themeAnnBgHex" class="theme-field-input" value="#171717" style="font-family:var(--mono);" oninput="document.getElementById('themeAnnBg').value=this.value; onThemeDraftChange();">
+                    </div>
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Text Color</label>
+                    <div class="theme-color-row">
+                      <input type="color" id="themeAnnColor" class="theme-color-picker" value="#F1EFE9" oninput="document.getElementById('themeAnnColorHex').value=this.value; onThemeDraftChange();">
+                      <input type="text" id="themeAnnColorHex" class="theme-field-input" value="#F1EFE9" style="font-family:var(--mono);" oninput="document.getElementById('themeAnnColor').value=this.value; onThemeDraftChange();">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accordion 2: Hero Section & Headlines -->
+            <div class="theme-accordion open" id="accHero">
+              <div class="theme-accordion-header" onclick="toggleAccordion('accHero')">
+                <span>✨ Hero Section & Headlines</span>
+                <span style="font-size:10px;">▾</span>
+              </div>
+              <div class="theme-accordion-body">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Left Eyebrow</label>
+                    <input type="text" id="themeHeroEyebrowLeft" class="theme-field-input" value="independent accessories label" oninput="onThemeDraftChange()">
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Right Eyebrow</label>
+                    <input type="text" id="themeHeroEyebrowRight" class="theme-field-input" value="autumn 2026" oninput="onThemeDraftChange()">
+                  </div>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Main Heading</label>
+                  <textarea id="themeHeroHeading" class="theme-field-input" rows="2" oninput="onThemeDraftChange()">wear what you&#10;can't always say.</textarea>
+                  <span style="font-size:10px; color:#71717A;">Enter newlines to break text into lines.</span>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Philosophy / Subtitle</label>
+                  <textarea id="themeHeroPhilosophy" class="theme-field-input" rows="3" oninput="onThemeDraftChange()">independent accessories for personal expression, restless thoughts, and everything in between. curated hard enamel pins and archival objects flat 5k.</textarea>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Primary CTA Label</label>
+                    <input type="text" id="themeHeroPrimaryBtnText" class="theme-field-input" value="explore all catalogue" oninput="onThemeDraftChange()">
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Primary CTA Link</label>
+                    <input type="text" id="themeHeroPrimaryBtnUrl" class="theme-field-input" value="/allcollection" oninput="onThemeDraftChange()">
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Secondary CTA Label</label>
+                    <input type="text" id="themeHeroSecondaryBtnText" class="theme-field-input" value="visual archive" oninput="onThemeDraftChange()">
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Secondary CTA Link</label>
+                    <input type="text" id="themeHeroSecondaryBtnUrl" class="theme-field-input" value="/visual-archive" oninput="onThemeDraftChange()">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accordion 3: Hero Featured Drop Showcase Card -->
+            <div class="theme-accordion" id="accArtifact">
+              <div class="theme-accordion-header" onclick="toggleAccordion('accArtifact')">
+                <span>🏷️ Hero Featured Drop Box</span>
+                <span style="font-size:10px;">▾</span>
+              </div>
+              <div class="theme-accordion-body">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <span class="theme-field-label">Show Drop Card</span>
+                  <input type="checkbox" id="themeHeroArtifactShow" checked onchange="onThemeDraftChange()" style="cursor:pointer; width:16px; height:16px; accent-color:#FFF;">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Category Badge</label>
+                    <input type="text" id="themeHeroArtifactCategory" class="theme-field-input" value="volume 01 archive" oninput="onThemeDraftChange()">
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Sub Badge</label>
+                    <input type="text" id="themeHeroArtifactBadge" class="theme-field-input" value="hard enamel pin" oninput="onThemeDraftChange()">
+                  </div>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Graphic Title Text</label>
+                  <input type="text" id="themeHeroArtifactTitle" class="theme-field-input" value="restless
+mind." oninput="onThemeDraftChange()">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Spec Details Tag</label>
+                  <input type="text" id="themeHeroArtifactTag" class="theme-field-input" value="die-cast black nickel • 32mm" oninput="onThemeDraftChange()">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Title</label>
+                    <input type="text" id="themeHeroArtifactCardTitle" class="theme-field-input" value="restless mind enamel pin" oninput="onThemeDraftChange()">
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Subtitle</label>
+                    <input type="text" id="themeHeroArtifactCardSub" class="theme-field-input" value="signature archival drop" oninput="onThemeDraftChange()">
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Price Display</label>
+                    <input type="text" id="themeHeroArtifactPrice" class="theme-field-input" value="Rp 5.000" oninput="onThemeDraftChange()">
+                  </div>
+                  <div class="theme-field-group">
+                    <label class="theme-field-label">Product Link URL</label>
+                    <input type="text" id="themeHeroArtifactUrl" class="theme-field-input" value="/product?id=pin_restless" oninput="onThemeDraftChange()">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accordion 4: Brand Palette & Colors -->
+            <div class="theme-accordion" id="accColors">
+              <div class="theme-accordion-header" onclick="toggleAccordion('accColors')">
+                <span>🎨 Brand Palette & Accent</span>
+                <span style="font-size:10px;">▾</span>
+              </div>
+              <div class="theme-accordion-body">
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Accent Color (Red Maroon)</label>
+                  <div class="theme-color-row">
+                    <input type="color" id="themeAccentColor" class="theme-color-picker" value="#843B40" oninput="document.getElementById('themeAccentColorHex').value=this.value; onThemeDraftChange();">
+                    <input type="text" id="themeAccentColorHex" class="theme-field-input" value="#843B40" style="font-family:var(--mono);" oninput="document.getElementById('themeAccentColor').value=this.value; onThemeDraftChange();">
+                  </div>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Paper Background Tone</label>
+                  <div class="theme-color-row">
+                    <input type="color" id="themePaperBg" class="theme-color-picker" value="#F1EFE9" oninput="document.getElementById('themePaperBgHex').value=this.value; onThemeDraftChange();">
+                    <input type="text" id="themePaperBgHex" class="theme-field-input" value="#F1EFE9" style="font-family:var(--mono);" oninput="document.getElementById('themePaperBg').value=this.value; onThemeDraftChange();">
+                  </div>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Ink / Text Color</label>
+                  <div class="theme-color-row">
+                    <input type="color" id="themeInkColor" class="theme-color-picker" value="#171717" oninput="document.getElementById('themeInkColorHex').value=this.value; onThemeDraftChange();">
+                    <input type="text" id="themeInkColorHex" class="theme-field-input" value="#171717" style="font-family:var(--mono);" oninput="document.getElementById('themeInkColor').value=this.value; onThemeDraftChange();">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accordion 5: Brand Story / Manifesto -->
+            <div class="theme-accordion" id="accManifesto">
+              <div class="theme-accordion-header" onclick="toggleAccordion('accManifesto')">
+                <span>📖 Brand Story & Manifesto</span>
+                <span style="font-size:10px;">▾</span>
+              </div>
+              <div class="theme-accordion-body">
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Section Heading</label>
+                  <textarea id="themeManifestoHeading" class="theme-field-input" rows="2" oninput="onThemeDraftChange()">not made for everyone.&#10;&lt;em&gt;that's kind of the point.&lt;/em&gt;</textarea>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Paragraph 1</label>
+                  <textarea id="themeManifestoBody1" class="theme-field-input" rows="3" oninput="onThemeDraftChange()">afterquiet is an independent brand exploring identity, emotions, and personal expression through wearable objects and visual storytelling.</textarea>
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Paragraph 2</label>
+                  <textarea id="themeManifestoBody2" class="theme-field-input" rows="3" oninput="onThemeDraftChange()">an object can be more than an accessory. it can be a reminder, a personal statement, a memory, or a quiet form of resistance. we believe in imperfection, individuality, and the freedom to express yourself without needing everyone's approval.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accordion 6: WhatsApp & Footer -->
+            <div class="theme-accordion" id="accFooter">
+              <div class="theme-accordion-header" onclick="toggleAccordion('accFooter')">
+                <span>💬 WhatsApp, Social & Footer</span>
+                <span style="font-size:10px;">▾</span>
+              </div>
+              <div class="theme-accordion-body">
+                <div class="theme-field-group">
+                  <label class="theme-field-label">WhatsApp Number (Orders)</label>
+                  <input type="text" id="themeWaNumber" class="theme-field-input" value="6285708500546" oninput="onThemeDraftChange()">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Instagram URL</label>
+                  <input type="text" id="themeInstagramUrl" class="theme-field-input" value="https://www.instagram.com/afterquiet_____/" oninput="onThemeDraftChange()">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Copyright Text</label>
+                  <input type="text" id="themeFooterCopyright" class="theme-field-input" value="© 2026 afterquiet. independent accessories & visual culture." oninput="onThemeDraftChange()">
+                </div>
+                <div class="theme-field-group">
+                  <label class="theme-field-label">Tagline</label>
+                  <input type="text" id="themeFooterTagline" class="theme-field-input" value="wear what you can't always say." oninput="onThemeDraftChange()">
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:16px; padding-top:14px; border-top:1px solid #1F1F24; display:flex; gap:8px;">
+              <button class="sb-btn-secondary" style="flex:1;" onclick="resetThemeDefaults()">↺ Reset to Defaults</button>
+              <button class="sb-btn-primary" style="flex:1; justify-content:center;" onclick="saveThemeCustomizer()">💾 Save Changes</button>
+            </div>
+          </div>
+
+          <!-- Right Preview Canvas Area -->
+          <div class="theme-preview-canvas">
+            <div class="theme-viewport-bar">
+              <div class="theme-vp-btn-group">
+                <button type="button" class="theme-vp-btn active" id="btnVpMobile" onclick="setThemeViewport('mobile')">📱 Mobile (375px)</button>
+                <button type="button" class="theme-vp-btn" id="btnVpTablet" onclick="setThemeViewport('tablet')">💻 Tablet (768px)</button>
+                <button type="button" class="theme-vp-btn" id="btnVpDesktop" onclick="setThemeViewport('desktop')">🖥️ Desktop (Full)</button>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="sb-btn-secondary" onclick="reloadPreviewIframe()" title="Reload preview iframe">🔄 Refresh</button>
+                <a href="/" target="_blank" class="sb-btn-secondary" style="text-decoration:none;">↗ Open Store</a>
+              </div>
+            </div>
+
+            <div class="theme-frame-wrapper mobile-mode" id="themeFrameWrapper">
+              <iframe id="storePreviewIframe" src="/index.html?preview=admin" title="Live Storefront Preview"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 0B. STUDIO BIZAR FAQ SECTION ================= -->
+      <section id="secFaq" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h1 style="font-family:var(--display); font-size:24px; font-weight:700; color:#FFFFFF; letter-spacing:-0.03em; margin-bottom:4px;">
+              FAQ
+            </h1>
+            <p style="font-size:13px; color:#A1A1AA;">
+              Questions and answers on the FAQ page. Drag the rows to change their order.
+            </p>
+          </div>
+          <div>
+            <button class="sb-btn-primary" onclick="openFaqModal()">+ New question</button>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="sb-toolbar">
+          <div class="sb-toolbar-left">
+            <div class="sb-search-box">
+              <span class="sb-search-icon">🔍</span>
+              <input type="text" id="faqSearchInput" placeholder="Search" oninput="renderFaqTable()">
+            </div>
+            <select id="faqTopicFilter" class="sb-pill-filter" onchange="renderFaqTable()">
+              <option value="all">Topic: All</option>
+              <option value="Ordering">Ordering</option>
+              <option value="Trade">Trade</option>
+              <option value="Delivery">Delivery</option>
+              <option value="Care">Care</option>
+              <option value="Materials">Materials</option>
+            </select>
+            <button class="sb-pill-filter" onclick="toggleFaqSort()">
+              <span>Updated</span> <span>↕</span>
+            </button>
+          </div>
+          <div class="sb-toolbar-right">
+            <button class="sb-btn-secondary" onclick="showToast('Columns configuration saved')">
+              <span>|||</span> Columns
+            </button>
+            <button class="sb-btn-secondary" onclick="exportFaqList()">
+              <span>⬇</span> Download list
+            </button>
+          </div>
+        </div>
+
+        <!-- Data Table Wrap -->
+        <div class="sb-table-wrap">
+          <table class="sb-table">
+            <thead>
+              <tr>
+                <th style="width:30px;"></th>
+                <th>Question ↕</th>
+                <th style="width:140px;">Topic ↕</th>
+                <th style="width:160px;">Updated ↕</th>
+                <th style="width:80px; text-align:right;"></th>
+              </tr>
+            </thead>
+            <tbody id="faqTableBody">
+              <!-- Dynamically populated from AfterquietStore -->
+            </tbody>
+          </table>
+
+          <!-- Pagination Bar -->
+          <div class="sb-pagination">
+            <div id="faqCountDisplay">1-10 of 10</div>
+            <div class="sb-page-nav">
+              <select class="sb-page-btn" style="padding:4px 6px;">
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+              </select>
+              <span>Page 1 of 1</span>
+              <button class="sb-page-btn" disabled>«</button>
+              <button class="sb-page-btn" disabled>‹</button>
+              <button class="sb-page-btn" disabled>›</button>
+              <button class="sb-page-btn" disabled>»</button>
+            </div>
+          </div>
+        </div>
+      </section>
+</header>
 
       <!-- ================= SECTION 1: OVERVIEW ================= -->
       <section id="secOverview">
@@ -2186,7 +3080,7 @@
         document.getElementById('pinGate').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'grid';
         startInactivityTracker();
-        renderActiveSection('overview');
+        switchSection('theme');
         syncCloudPill();
       } else {
         errEl.innerText = res.message;
@@ -2323,20 +3217,35 @@
 
     function switchSection(secId) {
       toggleMobileSidebar(false);
-      const sections = ['overview', 'orders', 'products', 'collections', 'inventory', 'customers', 'discounts', 'settings'];
+      const sections = ['theme', 'faq', 'overview', 'orders', 'products', 'collections', 'inventory', 'customers', 'discounts', 'settings'];
       sections.forEach(s => {
         const secEl = document.getElementById('sec' + s.charAt(0).toUpperCase() + s.slice(1));
         const btnEl = document.getElementById('btnTab' + s.charAt(0).toUpperCase() + s.slice(1));
         if (secEl) secEl.style.display = s === secId ? 'block' : 'none';
         if (btnEl) btnEl.classList.toggle('active', s === secId);
       });
-      document.getElementById('topbarCurrentView').innerText = secId.charAt(0).toUpperCase() + secId.slice(1);
+      const sectionLabels = {
+        theme: 'Theme Customizer',
+        faq: 'FAQ',
+        overview: 'Dashboard',
+        orders: 'Orders & Inquiries',
+        products: 'Products',
+        collections: 'Collections',
+        inventory: 'Inventory',
+        customers: 'Customers',
+        discounts: 'Discounts',
+        settings: 'Site-wide Settings'
+      };
+      const displayTitle = sectionLabels[secId] || (secId.charAt(0).toUpperCase() + secId.slice(1));
+      document.getElementById('topbarCurrentView').innerText = displayTitle;
       const mobTitle = document.getElementById('mobileHeaderViewTitle');
       if (mobTitle) mobTitle.innerText = secId.charAt(0).toUpperCase() + secId.slice(1);
       renderActiveSection(secId);
     }
 
     function renderActiveSection(secId) {
+      if (secId === 'theme') initThemeCustomizer();
+      if (secId === 'faq') renderFaqTable();
       if (secId === 'overview') renderOverview();
       if (secId === 'orders') renderOrdersTable();
       if (secId === 'products') renderProductsTable();
@@ -2347,7 +3256,364 @@
       if (secId === 'settings') loadSettingsForm();
     }
 
-    // ================= 1. OVERVIEW =================
+    
+    // ================= 0. SHOPIFY-STYLE THEME CUSTOMIZER LOGIC =================
+    let currentThemeDraft = null;
+
+    function toggleAccordion(accId) {
+      const el = document.getElementById(accId);
+      if (el) el.classList.toggle('open');
+    }
+
+    function toggleSidebarCollapse() {
+      const shell = document.querySelector('.admin-shell');
+      if (shell) {
+        shell.classList.toggle('sidebar-collapsed');
+      }
+    }
+
+    function setThemeViewport(mode) {
+      const wrapper = document.getElementById('themeFrameWrapper');
+      const btnMobile = document.getElementById('btnVpMobile');
+      const btnTablet = document.getElementById('btnVpTablet');
+      const btnDesktop = document.getElementById('btnVpDesktop');
+
+      if (!wrapper) return;
+      wrapper.classList.remove('mobile-mode', 'tablet-mode');
+      if (btnMobile) btnMobile.classList.remove('active');
+      if (btnTablet) btnTablet.classList.remove('active');
+      if (btnDesktop) btnDesktop.classList.remove('active');
+
+      if (mode === 'mobile') {
+        wrapper.classList.add('mobile-mode');
+        if (btnMobile) btnMobile.classList.add('active');
+      } else if (mode === 'tablet') {
+        wrapper.classList.add('tablet-mode');
+        if (btnTablet) btnTablet.classList.add('active');
+      } else {
+        if (btnDesktop) btnDesktop.classList.add('active');
+      }
+    }
+
+    function reloadPreviewIframe() {
+      const iframe = document.getElementById('storePreviewIframe');
+      if (iframe) {
+        iframe.src = '/index.html?preview=admin&t=' + Date.now();
+        setTimeout(sendLiveThemePreview, 600);
+      }
+    }
+
+    function initThemeCustomizer() {
+      const theme = AfterquietStore.getThemeSettings ? AfterquietStore.getThemeSettings() : {};
+      currentThemeDraft = Object.assign({}, theme);
+
+      // Populate form
+      setVal('themeAnnVisible', theme.announcementVisible !== false, 'checked');
+      setVal('themeAnnText', theme.announcementText || '');
+      setVal('themeAnnLinkText', theme.announcementLinkText || 'contact me');
+      setVal('themeAnnLinkUrl', theme.announcementLinkUrl || 'https://wa.me/6285708500546');
+      setVal('themeAnnBg', theme.announcementBg || '#171717');
+      setVal('themeAnnBgHex', theme.announcementBg || '#171717');
+      setVal('themeAnnColor', theme.announcementColor || '#F1EFE9');
+      setVal('themeAnnColorHex', theme.announcementColor || '#F1EFE9');
+
+      setVal('themeHeroEyebrowLeft', theme.heroEyebrowLeft || 'independent accessories label');
+      setVal('themeHeroEyebrowRight', theme.heroEyebrowRight || 'autumn 2026');
+      setVal('themeHeroHeading', (theme.heroHeading || "wear what you<br>can't always say.").replace(/<br>/g, '\n').replace(/<span.*<\/span>/g, ''));
+      setVal('themeHeroPhilosophy', theme.heroPhilosophy || '');
+      setVal('themeHeroPrimaryBtnText', theme.heroPrimaryBtnText || 'explore all catalogue');
+      setVal('themeHeroPrimaryBtnUrl', theme.heroPrimaryBtnUrl || '/allcollection');
+      setVal('themeHeroSecondaryBtnText', theme.heroSecondaryBtnText || 'visual archive');
+      setVal('themeHeroSecondaryBtnUrl', theme.heroSecondaryBtnUrl || '/visual-archive');
+
+      setVal('themeHeroArtifactShow', theme.heroArtifactShow !== false, 'checked');
+      setVal('themeHeroArtifactCategory', theme.heroArtifactCategory || 'volume 01 archive');
+      setVal('themeHeroArtifactBadge', theme.heroArtifactBadge || 'hard enamel pin');
+      setVal('themeHeroArtifactTitle', (theme.heroArtifactTitle || 'restless\nmind.').replace(/<br>/g, '\n'));
+      setVal('themeHeroArtifactTag', theme.heroArtifactTag || 'die-cast black nickel • 32mm');
+      setVal('themeHeroArtifactCardTitle', theme.heroArtifactCardTitle || 'restless mind enamel pin');
+      setVal('themeHeroArtifactCardSub', theme.heroArtifactCardSub || 'signature archival drop');
+      setVal('themeHeroArtifactPrice', theme.heroArtifactPrice || 'Rp 5.000');
+      setVal('themeHeroArtifactUrl', theme.heroArtifactUrl || '/product?id=pin_restless');
+
+      setVal('themeAccentColor', theme.accentColor || '#843B40');
+      setVal('themeAccentColorHex', theme.accentColor || '#843B40');
+      setVal('themePaperBg', theme.paperBg || '#F1EFE9');
+      setVal('themePaperBgHex', theme.paperBg || '#F1EFE9');
+      setVal('themeInkColor', theme.inkColor || '#171717');
+      setVal('themeInkColorHex', theme.inkColor || '#171717');
+
+      setVal('themeManifestoHeading', theme.manifestoHeading || "not made for everyone.<br><em>that's kind of the point.</em>");
+      setVal('themeManifestoBody1', theme.manifestoBody1 || '');
+      setVal('themeManifestoBody2', theme.manifestoBody2 || '');
+
+      setVal('themeWaNumber', theme.waNumber || '6285708500546');
+      setVal('themeInstagramUrl', theme.instagramUrl || 'https://www.instagram.com/afterquiet_____/');
+      setVal('themeFooterCopyright', theme.footerCopyright || '© 2026 afterquiet. independent accessories & visual culture.');
+      setVal('themeFooterTagline', theme.footerTagline || "wear what you can't always say.");
+
+      sendLiveThemePreview();
+    }
+
+    function setVal(id, val, prop = 'value') {
+      const el = document.getElementById(id);
+      if (el) {
+        if (prop === 'checked') el.checked = !!val;
+        else el.value = val;
+      }
+    }
+
+    function getVal(id, prop = 'value') {
+      const el = document.getElementById(id);
+      if (!el) return '';
+      return prop === 'checked' ? el.checked : el.value;
+    }
+
+    function collectThemeDraft() {
+      return {
+        announcementVisible: getVal('themeAnnVisible', 'checked'),
+        announcementText: getVal('themeAnnText'),
+        announcementLinkText: getVal('themeAnnLinkText'),
+        announcementLinkUrl: getVal('themeAnnLinkUrl'),
+        announcementBg: getVal('themeAnnBg'),
+        announcementColor: getVal('themeAnnColor'),
+
+        heroEyebrowLeft: getVal('themeHeroEyebrowLeft'),
+        heroEyebrowRight: getVal('themeHeroEyebrowRight'),
+        heroHeading: getVal('themeHeroHeading').replace(/\n/g, '<br>'),
+        heroPhilosophy: getVal('themeHeroPhilosophy'),
+        heroPrimaryBtnText: getVal('themeHeroPrimaryBtnText'),
+        heroPrimaryBtnUrl: getVal('themeHeroPrimaryBtnUrl'),
+        heroSecondaryBtnText: getVal('themeHeroSecondaryBtnText'),
+        heroSecondaryBtnUrl: getVal('themeHeroSecondaryBtnUrl'),
+
+        heroArtifactShow: getVal('themeHeroArtifactShow', 'checked'),
+        heroArtifactCategory: getVal('themeHeroArtifactCategory'),
+        heroArtifactBadge: getVal('themeHeroArtifactBadge'),
+        heroArtifactTitle: getVal('themeHeroArtifactTitle'),
+        heroArtifactTag: getVal('themeHeroArtifactTag'),
+        heroArtifactCardTitle: getVal('themeHeroArtifactCardTitle'),
+        heroArtifactCardSub: getVal('themeHeroArtifactCardSub'),
+        heroArtifactPrice: getVal('themeHeroArtifactPrice'),
+        heroArtifactUrl: getVal('themeHeroArtifactUrl'),
+
+        accentColor: getVal('themeAccentColor'),
+        paperBg: getVal('themePaperBg'),
+        inkColor: getVal('themeInkColor'),
+
+        manifestoHeading: getVal('themeManifestoHeading'),
+        manifestoBody1: getVal('themeManifestoBody1'),
+        manifestoBody2: getVal('themeManifestoBody2'),
+
+        waNumber: getVal('themeWaNumber'),
+        instagramUrl: getVal('themeInstagramUrl'),
+        footerCopyright: getVal('themeFooterCopyright'),
+        footerTagline: getVal('themeFooterTagline')
+      };
+    }
+
+    function onThemeDraftChange() {
+      currentThemeDraft = collectThemeDraft();
+      sendLiveThemePreview();
+    }
+
+    function sendLiveThemePreview() {
+      const iframe = document.getElementById('storePreviewIframe');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({
+          type: 'AQ_THEME_PREVIEW',
+          theme: currentThemeDraft || collectThemeDraft()
+        }, '*');
+      }
+    }
+
+    function saveThemeCustomizer() {
+      const theme = collectThemeDraft();
+      if (AfterquietStore.saveThemeSettings) {
+        AfterquietStore.saveThemeSettings(theme);
+      } else {
+        localStorage.setItem('aq_theme_settings', JSON.stringify(theme));
+      }
+      showToast('✓ Theme published and saved to storefront!');
+      sendLiveThemePreview();
+    }
+
+    function resetThemeDefaults() {
+      if (confirm('Reset all theme settings back to original defaults?')) {
+        if (AfterquietStore.resetThemeSettings) {
+          AfterquietStore.resetThemeSettings();
+        } else {
+          localStorage.removeItem('aq_theme_settings');
+        }
+        initThemeCustomizer();
+        showToast('Theme reset to defaults.');
+      }
+    }
+
+    // ================= 0B. STUDIO BIZAR FAQ LOGIC =================
+    let faqSortAsc = true;
+
+    function renderFaqTable() {
+      const tbody = document.getElementById('faqTableBody');
+      const badge = document.getElementById('badgeFaqCount');
+      const countDisplay = document.getElementById('faqCountDisplay');
+      if (!tbody) return;
+
+      const faqs = AfterquietStore.getFaqs ? AfterquietStore.getFaqs() : [];
+      const query = (document.getElementById('faqSearchInput')?.value || '').toLowerCase().trim();
+      const topicFilter = document.getElementById('faqTopicFilter')?.value || 'all';
+
+      let filtered = faqs.filter(item => {
+        const matchTopic = (topicFilter === 'all') || (item.topic === topicFilter);
+        const matchQuery = !query || 
+          (item.question && item.question.toLowerCase().includes(query)) ||
+          (item.answer && item.answer.toLowerCase().includes(query));
+        return matchTopic && matchQuery;
+      });
+
+      if (!faqSortAsc) {
+        filtered.reverse();
+      }
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:#71717A;">No questions found matching criteria.</td></tr>`;
+      } else {
+        filtered.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><span class="sb-drag-grip" title="Drag to reorder">:::</span></td>
+            <td style="font-weight:500;">
+              <div>${escapeHtml(item.question)}</div>
+              ${item.answer ? `<div style="font-size:11px; color:#71717A; margin-top:2px; max-width:550px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(item.answer)}</div>` : ''}
+            </td>
+            <td><span class="sb-topic-pill">${escapeHtml(item.topic || 'General')}</span></td>
+            <td><span class="sb-date-text">${escapeHtml(item.updated || '2 Sept 2026, 10:38')}</span></td>
+            <td>
+              <div class="sb-actions">
+                <button type="button" class="sb-icon-btn" onclick="openFaqModal('${item.id}')" title="Edit question">✏️</button>
+                <button type="button" class="sb-icon-btn delete" onclick="deleteFaqItem('${item.id}')" title="Delete question">🗑️</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      if (badge) badge.innerText = faqs.length;
+      if (countDisplay) countDisplay.innerText = `1-${filtered.length} of ${faqs.length}`;
+    }
+
+    function toggleFaqSort() {
+      faqSortAsc = !faqSortAsc;
+      renderFaqTable();
+    }
+
+    function openFaqModal(id = null) {
+      const modal = document.getElementById('faqModal');
+      const title = document.getElementById('faqModalTitle');
+      const idField = document.getElementById('faqModalId');
+      const qField = document.getElementById('faqModalQuestion');
+      const aField = document.getElementById('faqModalAnswer');
+      const tField = document.getElementById('faqModalTopic');
+
+      if (!modal) return;
+
+      if (id) {
+        const faqs = AfterquietStore.getFaqs ? AfterquietStore.getFaqs() : [];
+        const item = faqs.find(f => f.id === id);
+        if (item) {
+          title.innerText = 'Edit Question';
+          idField.value = item.id;
+          qField.value = item.question || '';
+          aField.value = item.answer || '';
+          tField.value = item.topic || 'General';
+        }
+      } else {
+        title.innerText = 'New Question';
+        idField.value = '';
+        qField.value = '';
+        aField.value = '';
+        tField.value = 'Ordering';
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeFaqModal() {
+      const modal = document.getElementById('faqModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function saveFaqModalItem() {
+      const id = document.getElementById('faqModalId').value;
+      const question = document.getElementById('faqModalQuestion').value.trim();
+      const answer = document.getElementById('faqModalAnswer').value.trim();
+      const topic = document.getElementById('faqModalTopic').value;
+
+      if (!question) {
+        alert('Please enter a question');
+        return;
+      }
+
+      let faqs = AfterquietStore.getFaqs ? AfterquietStore.getFaqs() : [];
+      const nowStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+      if (id) {
+        const idx = faqs.findIndex(f => f.id === id);
+        if (idx !== -1) {
+          faqs[idx].question = question;
+          faqs[idx].answer = answer;
+          faqs[idx].topic = topic;
+          faqs[idx].updated = nowStr;
+        }
+      } else {
+        const newId = 'faq_' + Date.now();
+        faqs.unshift({
+          id: newId,
+          question,
+          answer,
+          topic,
+          updated: nowStr,
+          order: faqs.length + 1
+        });
+      }
+
+      if (AfterquietStore.saveFaqs) {
+        AfterquietStore.saveFaqs(faqs);
+      }
+      closeFaqModal();
+      renderFaqTable();
+      showToast('✓ FAQ item saved successfully!');
+    }
+
+    function deleteFaqItem(id) {
+      if (confirm('Delete this question from FAQ?')) {
+        let faqs = AfterquietStore.getFaqs ? AfterquietStore.getFaqs() : [];
+        faqs = faqs.filter(f => f.id !== id);
+        if (AfterquietStore.saveFaqs) {
+          AfterquietStore.saveFaqs(faqs);
+        }
+        renderFaqTable();
+        showToast('Question deleted.');
+      }
+    }
+
+    function exportFaqList() {
+      const faqs = AfterquietStore.getFaqs ? AfterquietStore.getFaqs() : [];
+      const json = JSON.stringify(faqs, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'afterquiet_faqs.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('FAQ list downloaded.');
+    }
+
+// ================= 1. OVERVIEW =================
     function renderOverview() {
       const orders = AfterquietStore.getOrders();
       const products = AfterquietStore.getProducts(true);
@@ -3557,7 +4823,7 @@
       showToast('Pulling data from cloud...');
       await AfterquietStore.CloudSync.syncAll();
       showToast('Data merged from cloud');
-      renderActiveSection('overview');
+      switchSection('theme');
       syncCloudPill();
     }
 
@@ -3661,9 +4927,45 @@
       document.getElementById('pinGate').style.display = 'none';
       document.getElementById('adminDashboard').style.display = 'grid';
       startInactivityTracker();
-      renderActiveSection('overview');
+      switchSection('theme');
       syncCloudPill();
     }
   </script>
+
+  <!-- FAQ Modal -->
+  <div class="modal-overlay" id="faqModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#151518; border:1px solid #282830; border-radius:8px; width:92%; max-width:540px; padding:24px; color:#FFF; box-shadow:0 20px 40px rgba(0,0,0,0.6);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 id="faqModalTitle" style="font-family:var(--display); font-size:18px; font-weight:700;">Edit Question</h3>
+        <button onclick="closeFaqModal()" style="background:none; border:none; color:#71717A; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <input type="hidden" id="faqModalId">
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div>
+          <label style="display:block; font-size:11px; font-family:var(--mono); color:#A1A1AA; text-transform:uppercase; margin-bottom:6px;">Topic</label>
+          <select id="faqModalTopic" style="width:100%; background:#1A1A1E; border:1px solid #282830; border-radius:4px; padding:8px 10px; color:#FFF; font-size:13px;">
+            <option value="Ordering">Ordering</option>
+            <option value="Trade">Trade</option>
+            <option value="Delivery">Delivery</option>
+            <option value="Care">Care</option>
+            <option value="Materials">Materials</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block; font-size:11px; font-family:var(--mono); color:#A1A1AA; text-transform:uppercase; margin-bottom:6px;">Question</label>
+          <input type="text" id="faqModalQuestion" placeholder="e.g. What are your lead times?" style="width:100%; background:#1A1A1E; border:1px solid #282830; border-radius:4px; padding:10px; color:#FFF; font-size:13px; box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block; font-size:11px; font-family:var(--mono); color:#A1A1AA; text-transform:uppercase; margin-bottom:6px;">Answer</label>
+          <textarea id="faqModalAnswer" rows="4" placeholder="Detailed answer displayed on the store..." style="width:100%; background:#1A1A1E; border:1px solid #282830; border-radius:4px; padding:10px; color:#FFF; font-size:13px; box-sizing:border-box;"></textarea>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+        <button type="button" class="sb-btn-secondary" onclick="closeFaqModal()">Cancel</button>
+        <button type="button" class="sb-btn-primary" onclick="saveFaqModalItem()">Save Question</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
