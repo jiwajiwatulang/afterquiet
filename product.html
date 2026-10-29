@@ -1191,6 +1191,11 @@
 
   <!-- Product Page Controller -->
   <script>
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     let currentProduct = null;
     let quantity = 1;
 
